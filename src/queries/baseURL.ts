@@ -1,15 +1,17 @@
-export const rewardsBaseURL =
-  'https://us-east1-push-prod-apps.cloudfunctions.net/pushpointsrewardsystem';
+import appConfig from "../config";
 
-const appEnv = 'dev';
+export const rewardsBaseURL =
+  "https://us-east1-push-prod-apps.cloudfunctions.net/pushpointsrewardsystem";
+
+const appEnv = appConfig.APP_ENV;
 
 export const getRewardsBaseURL = () => {
   switch (appEnv) {
-    case 'prod':
+    case "prod":
       return `https://us-east1-push-prod-apps.cloudfunctions.net/pushpointsrewardsystem`;
-    case 'staging':
+    case "staging":
       return `https://us-east1-push-stage-apps.cloudfunctions.net/pushpointsrewardsystem`;
-    case 'dev':
+    case "dev":
       return `https://us-east1-push-dev-apps.cloudfunctions.net/helloWorld`;
     default:
       return `https://us-east1-push-dev-apps.cloudfunctions.net/helloWorld`;

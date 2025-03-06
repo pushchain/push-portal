@@ -1,8 +1,8 @@
 // React + Web3 Essentials
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from "react";
 
 // External Packages
-import styled, { useTheme } from 'styled-components';
+import styled, { useTheme } from "styled-components";
 
 // Internal Compoonents
 import {
@@ -12,32 +12,32 @@ import {
   Skeleton,
   SkeletonLine,
   SpanV2,
-} from '../../components/reusables/SharedStylingV2';
+} from "../../components/reusables/SharedStylingV2";
 import {
   retrieveUserPGPKeyFromStorage,
   walletToPCAIP10,
-} from '../../helpers/web3helper';
-import useMediaQuery from '../../hooks/useMediaQuery';
+} from "../../helpers/web3helper";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 // Assets
-import Tooltip from '../../components/reusables/tooltip';
-import UnlockLogo from '../../../static/assets/website/illustrations/unlock.svg';
-import Wallet from '../../../static/assets/website/illustrations/wallet.svg';
-import { Button, Box, deviceMediaQ, deviceSizes } from '../../blocks';
-import { checkUnlockProfileErrors } from './UnlockProfile.utils';
-import { colorBrands } from '../../blocks/theme/colors/colors.brands';
-import { useAccountContext } from '../../context/accountContext';
-import { usePushWalletContext } from '@pushprotocol/pushchain-ui-kit';
+import Tooltip from "../../components/reusables/tooltip";
+import UnlockLogo from "../../../static/assets/website/illustrations/unlock.svg";
+import Wallet from "../../../static/assets/website/illustrations/wallet.svg";
+import { Button, Box, deviceMediaQ, deviceSizes } from "../../blocks";
+import { checkUnlockProfileErrors } from "./UnlockProfile.utils";
+import { colorBrands } from "../../blocks/theme/colors/colors.brands";
+import { useAccountContext } from "../../context/accountContext";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 // Constants
 export enum UNLOCK_PROFILE_TYPE {
-  BOTTOM_BAR = 'bottombar',
-  MODAL = 'modal',
+  BOTTOM_BAR = "bottombar",
+  MODAL = "modal",
 }
 
 export enum PROFILESTATE {
-  CONNECT_WALLET = 'connectwallet',
-  UNLOCK_PROFILE = 'unlockprofile',
+  CONNECT_WALLET = "connectwallet",
+  UNLOCK_PROFILE = "unlockprofile",
 }
 
 // Interface
@@ -71,13 +71,13 @@ const UnlockProfile = ({
 
   const [activeStatus, setActiveStatus] = useState({
     status: PROFILESTATE.CONNECT_WALLET,
-    title: 'Connect Wallet',
-    body: 'Sign with wallet to continue.',
+    title: "Connect Wallet",
+    body: "Sign with wallet to continue.",
   });
 
   // const handleRememberMeChange = (event: any) => {
   const handleRememberMeChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setRememberMe(event.target.checked);
   };
@@ -103,10 +103,10 @@ const UnlockProfile = ({
     if (wallet) {
       setActiveStatus({
         status: PROFILESTATE.UNLOCK_PROFILE,
-        title: 'Unlock Profile',
+        title: "Unlock Profile",
         body: description
           ? description
-          : 'Unlock your profile to read and send messages',
+          : "Unlock your profile to read and send messages",
       });
     }
   }, [wallet]);
@@ -131,23 +131,23 @@ const UnlockProfile = ({
       <SubContainer type={type}>
         {/* Logo and Left Text */}
         <ItemHV2
-          flex='none'
-          gap='12px'
+          flex="none"
+          gap="12px"
           flexDirection={
-            type === UNLOCK_PROFILE_TYPE.MODAL || isMobile ? 'column' : 'row'
+            type === UNLOCK_PROFILE_TYPE.MODAL || isMobile ? "column" : "row"
           }
         >
           {activeStatus?.status == PROFILESTATE.CONNECT_WALLET ? (
-            <Wallet style={{ zIndex: 1 }} />
+            <img src={Wallet} style={{ zIndex: 1 }} />
           ) : (
-            <UnlockLogo style={{ zIndex: 1 }} />
+            <img src={UnlockLogo} style={{ zIndex: 1 }} />
           )}
 
           <ItemVV2
             alignItems={
               type === UNLOCK_PROFILE_TYPE.MODAL || isMobile
-                ? 'center'
-                : 'baseline'
+                ? "center"
+                : "baseline"
             }
           >
             {!isLoading ? (
@@ -155,11 +155,11 @@ const UnlockProfile = ({
                 <SpanV2
                   fontSize={
                     type === UNLOCK_PROFILE_TYPE.MODAL || isMobile
-                      ? '20px'
-                      : '24px'
+                      ? "20px"
+                      : "24px"
                   }
-                  fontWeight='500'
-                  lineHeight='28.8px'
+                  fontWeight="500"
+                  lineHeight="28.8px"
                   color={theme.default.color}
                 >
                   {activeStatus.title}
@@ -167,11 +167,11 @@ const UnlockProfile = ({
                 <SpanV2
                   fontSize={
                     type === UNLOCK_PROFILE_TYPE.MODAL || isMobile
-                      ? '14px'
-                      : '18px'
+                      ? "14px"
+                      : "18px"
                   }
-                  fontWeight='400'
-                  lineHeight='22.4px'
+                  fontWeight="400"
+                  lineHeight="22.4px"
                   color={theme.default.secondaryColor}
                 >
                   {activeStatus.body}
@@ -180,17 +180,17 @@ const UnlockProfile = ({
             ) : (
               <SkeletonWrapper>
                 <SkeletonLine
-                  height='24px'
-                  width='100%'
-                  margin='0 0 8px 0'
-                  borderRadius='4px'
+                  height="24px"
+                  width="100%"
+                  margin="0 0 8px 0"
+                  borderRadius="4px"
                 ></SkeletonLine>
 
                 <SkeletonLine
-                  height='16px'
-                  width='100%'
-                  margin='0 0 8px 0'
-                  borderRadius='4px'
+                  height="16px"
+                  width="100%"
+                  margin="0 0 8px 0"
+                  borderRadius="4px"
                 ></SkeletonLine>
               </SkeletonWrapper>
             )}
@@ -199,20 +199,20 @@ const UnlockProfile = ({
 
         {/* Buttons and Connecting Steps */}
         <ItemVV2
-          flex='none'
-          gap={type === UNLOCK_PROFILE_TYPE.MODAL || isMobile ? '16px' : '8px'}
+          flex="none"
+          gap={type === UNLOCK_PROFILE_TYPE.MODAL || isMobile ? "16px" : "8px"}
           flexDirection={
-            type === UNLOCK_PROFILE_TYPE.MODAL || isMobile ? 'row' : 'column'
+            type === UNLOCK_PROFILE_TYPE.MODAL || isMobile ? "row" : "column"
           }
         >
           <ItemHV2
-            flex='none'
+            flex="none"
             flexDirection={
-              type === UNLOCK_PROFILE_TYPE.MODAL || isMobile ? 'column' : 'row'
+              type === UNLOCK_PROFILE_TYPE.MODAL || isMobile ? "column" : "row"
             }
           >
             <StepsLeftDesign
-              background={colorBrands['primary-500']}
+              background={colorBrands["primary-500"]}
               color={theme.btn.primaryColor}
             >
               1
@@ -225,7 +225,7 @@ const UnlockProfile = ({
             <StepsLeftDesign
               background={
                 activeStatus.status !== PROFILESTATE.CONNECT_WALLET
-                  ? colorBrands['primary-500']
+                  ? colorBrands["primary-500"]
                   : theme.btn.disabledBg
               }
               color={
@@ -239,28 +239,28 @@ const UnlockProfile = ({
           </ItemHV2>
 
           <ItemHV2
-            gap='16px'
-            flex='none'
-            alignItems='baseline'
+            gap="16px"
+            flex="none"
+            alignItems="baseline"
             flexDirection={
-              type === UNLOCK_PROFILE_TYPE.MODAL || isMobile ? 'column' : 'row'
+              type === UNLOCK_PROFILE_TYPE.MODAL || isMobile ? "column" : "row"
             }
           >
             {!isLoading ? (
               <Box
-                display='flex'
+                display="flex"
                 flexDirection={
                   type === UNLOCK_PROFILE_TYPE.MODAL || isMobile
-                    ? 'column'
-                    : 'row'
+                    ? "column"
+                    : "row"
                 }
-                gap='spacing-sm'
+                gap="spacing-sm"
               >
                 <Button
                   disabled={
                     activeStatus.status !== PROFILESTATE.CONNECT_WALLET && true
                   }
-                  variant='primary'
+                  variant="primary"
                   onClick={() => connectWallet()}
                 >
                   Connect Wallet
@@ -271,22 +271,22 @@ const UnlockProfile = ({
                     activeStatus.status === PROFILESTATE.CONNECT_WALLET && true
                   }
                   onClick={handleChatprofileUnlock}
-                  variant='primary'
+                  variant="primary"
                 >
                   Unlock Profile
                 </Button>
               </Box>
             ) : (
               <SkeletonContainer
-                width='100%'
+                width="100%"
                 flexDirection={
                   type === UNLOCK_PROFILE_TYPE.MODAL || isMobile
-                    ? 'column'
-                    : 'row'
+                    ? "column"
+                    : "row"
                 }
               >
-                <SkeletonLine height='40px' width='150px'></SkeletonLine>
-                <SkeletonLine height='40px' width='150px'></SkeletonLine>
+                <SkeletonLine height="40px" width="150px"></SkeletonLine>
+                <SkeletonLine height="40px" width="150px"></SkeletonLine>
               </SkeletonContainer>
             )}
           </ItemHV2>
@@ -299,14 +299,14 @@ const UnlockProfile = ({
           {!isLoading ? (
             <RenderToolTip>
               <ItemHV2
-                gap='8px'
+                gap="8px"
                 justifyContent={
-                  type === UNLOCK_PROFILE_TYPE.MODAL ? 'center' : 'end'
+                  type === UNLOCK_PROFILE_TYPE.MODAL ? "center" : "end"
                 }
                 margin={
                   type === UNLOCK_PROFILE_TYPE.MODAL
-                    ? '24px 16px 0 40px'
-                    : '12px 16px 0 0px'
+                    ? "24px 16px 0 40px"
+                    : "12px 16px 0 0px"
                 }
               >
                 <CustomCheckbox
@@ -314,9 +314,9 @@ const UnlockProfile = ({
                   onChange={handleRememberMeChange}
                 />
                 <SpanV2
-                  fontSize='14px'
-                  fontWeight='500'
-                  lineHeight='130%'
+                  fontSize="14px"
+                  fontWeight="500"
+                  lineHeight="130%"
                   color={theme.default.color}
                 >
                   Remember Me
@@ -325,22 +325,22 @@ const UnlockProfile = ({
             </RenderToolTip>
           ) : (
             <ItemVV2
-              width='100%'
+              width="100%"
               flexDirection={
                 type === UNLOCK_PROFILE_TYPE.MODAL || isMobile
-                  ? 'column'
-                  : 'row'
+                  ? "column"
+                  : "row"
               }
               justifyContent={
-                type === UNLOCK_PROFILE_TYPE.MODAL ? 'center' : 'end'
+                type === UNLOCK_PROFILE_TYPE.MODAL ? "center" : "end"
               }
               margin={
                 type === UNLOCK_PROFILE_TYPE.MODAL
-                  ? '12px 0 0 40px'
-                  : '12px 0 0 0px'
+                  ? "12px 0 0 40px"
+                  : "12px 0 0 0px"
               }
             >
-              <SkeletonLine height='20px' width='150px'></SkeletonLine>
+              <SkeletonLine height="20px" width="150px"></SkeletonLine>
             </ItemVV2>
           )}
         </>
@@ -353,31 +353,31 @@ const RenderToolTip = ({ children, type }) => {
   return (
     <Tooltip
       wrapperProps={{
-        width: 'fit-content',
-        maxWidth: 'fit-content',
-        minWidth: 'fit-content',
+        width: "fit-content",
+        maxWidth: "fit-content",
+        minWidth: "fit-content",
       }}
       placementProps={
         type === UNLOCK_PROFILE_TYPE.MODAL
           ? {
-              background: 'black',
-              width: '220px',
-              padding: '8px 12px',
-              top: '10px',
-              left: '60px',
-              borderRadius: '4px 12px 12px 12px',
+              background: "black",
+              width: "220px",
+              padding: "8px 12px",
+              top: "10px",
+              left: "60px",
+              borderRadius: "4px 12px 12px 12px",
             }
           : {
-              background: 'black',
-              width: '120px',
-              padding: '8px 12px',
-              bottom: '0px',
-              right: '-30px',
-              borderRadius: '12px 12px 12px 4px',
+              background: "black",
+              width: "120px",
+              padding: "8px 12px",
+              bottom: "0px",
+              right: "-30px",
+              borderRadius: "12px 12px 12px 4px",
             }
       }
       tooltipContent={
-        <SpanV2 fontSize='10px' fontWeight='400'>
+        <SpanV2 fontSize="10px" fontWeight="400">
           Selecting 'Remember me' will save your Push Profile keys locally on
           this device. Proceed at your own risk.
         </SpanV2>
@@ -390,27 +390,27 @@ const RenderToolTip = ({ children, type }) => {
 const Container = styled(ItemHV2)`
   flex-direction: column;
   align-items: ${(props) =>
-    props.type === UNLOCK_PROFILE_TYPE.MODAL ? 'center' : 'end'};
+    props.type === UNLOCK_PROFILE_TYPE.MODAL ? "center" : "end"};
   width: ${(props) =>
-    props.type === UNLOCK_PROFILE_TYPE.MODAL ? '360px' : 'inherit'};
+    props.type === UNLOCK_PROFILE_TYPE.MODAL ? "360px" : "inherit"};
   padding: ${(props) =>
-    props.type === UNLOCK_PROFILE_TYPE.MODAL ? '10px' : '0px'};
+    props.type === UNLOCK_PROFILE_TYPE.MODAL ? "10px" : "0px"};
 
   @media (${deviceMediaQ.tablet}) {
     width: ${(props) =>
-      props.type === UNLOCK_PROFILE_TYPE.MODAL ? '360px' : 'inherit'};
+      props.type === UNLOCK_PROFILE_TYPE.MODAL ? "360px" : "inherit"};
     padding: ${(props) =>
-      props.type === UNLOCK_PROFILE_TYPE.MODAL ? '10px' : '0px'};
+      props.type === UNLOCK_PROFILE_TYPE.MODAL ? "10px" : "0px"};
     align-items: center;
   }
 `;
 
 const SubContainer = styled(ItemVV2)`
   gap: ${(props) =>
-    props.type === UNLOCK_PROFILE_TYPE.MODAL ? '24px' : '0px'};
+    props.type === UNLOCK_PROFILE_TYPE.MODAL ? "24px" : "0px"};
   align-items: end;
   flex-direction: ${(props) =>
-    props.type === UNLOCK_PROFILE_TYPE.MODAL ? 'column' : 'row'};
+    props.type === UNLOCK_PROFILE_TYPE.MODAL ? "column" : "row"};
   justify-content: space-between;
 
   @media ${deviceMediaQ.tablet} {
@@ -420,7 +420,7 @@ const SubContainer = styled(ItemVV2)`
   }
 `;
 
-const CustomCheckbox = styled.input.attrs({ type: 'checkbox' })`
+const CustomCheckbox = styled.input.attrs({ type: "checkbox" })`
   accent-color: #d53a94; /* Changes the checkbox color */
   &:checked {
     background-color: #d53a94;
@@ -446,13 +446,13 @@ const StepsLeftDesign = styled(SpanV2)`
 
 const HorizontalBar = styled.div`
   width: ${(props) =>
-    props.type === UNLOCK_PROFILE_TYPE.MODAL ? '2px' : '150px'};
+    props.type === UNLOCK_PROFILE_TYPE.MODAL ? "2px" : "150px"};
   height: ${(props) =>
-    props.type === UNLOCK_PROFILE_TYPE.MODAL ? '40px' : '3px'};
+    props.type === UNLOCK_PROFILE_TYPE.MODAL ? "40px" : "3px"};
   background: ${(props) =>
     props.activeState === PROFILESTATE.CONNECT_WALLET
-      ? `linear-gradient(to right, ${colorBrands['primary-500']}, ${props.theme.btn.disabledBg})`
-      : colorBrands['primary-500']};
+      ? `linear-gradient(to right, ${colorBrands["primary-500"]}, ${props.theme.btn.disabledBg})`
+      : colorBrands["primary-500"]};
 
   @media ${deviceMediaQ.tablet} {
     width: 2px;

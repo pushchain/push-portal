@@ -38,7 +38,7 @@ switch (env) {
     break;
   }
   default: {
-    dynamicConfig = stageConfig;
+    dynamicConfig = devConfig;
   }
 }
 

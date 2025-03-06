@@ -10,6 +10,7 @@ import { RewardsContextProvider } from "./context/rewardsContext";
 
 import RewardsPage from "./pages/RewardsPage";
 import { blocksColors, getBlocksCSSVariables } from "../src/blocks";
+import LeaderBoardPage from "./pages/LeaderBoardPage";
 
 const Home = () => <h1 style={{ color: "black" }}>Home Page</h1>;
 
@@ -96,6 +97,14 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/rewards" element={<RewardsPage />} />
+                  <Route
+                    path="/rewards/leaderboard"
+                    element={<LeaderBoardPage />}
+                  />
+                  <Route
+                    path="/rewards/leaderboard-s1"
+                    element={<LeaderBoardPage />}
+                  />
                 </Routes>
               </Router>
               <ReactQueryDevtools initialIsOpen={false} />
