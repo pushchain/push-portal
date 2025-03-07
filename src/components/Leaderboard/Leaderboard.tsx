@@ -26,19 +26,23 @@ const Leaderboard: FC = () => {
       width={{ initial: "1200px", ll: "calc(100% - 32px)", ml: "100%" }}
       flexDirection="column"
       gap="spacing-md"
-      css={css`
-        margin: var(--spacing-md) auto;
-      `}
       height={{ initial: "calc(100vh - 130px)", ml: "calc(100vh - 80px)" }}
       padding={{ ml: "spacing-sm" }}
+      css={css`
+        margin: var(--spacing-md) auto;
+        box-sizing: border-box;
+      `}
     >
       <LeaderboardHeader />
       <Box
         backgroundColor="surface-primary"
         padding="spacing-md"
-        width="100%"
         borderRadius="radius-md"
         overflow="hidden"
+        width={{ ml: "100%" }}
+        css={css`
+          box-sizing: border-box;
+        `}
       >
         <Tabs
           items={[

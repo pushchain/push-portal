@@ -43,7 +43,7 @@
     "eth-sig-util": "^3.0.1",
     "ethers": "^5.7.2",
     "firebase": "^10.12.2",
-    "openpgp": "^6.1.0",
+    "openpgp": "^5.5.0",
     "rc-pagination": "^5.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

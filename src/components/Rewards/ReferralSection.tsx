@@ -7,7 +7,7 @@ import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 //hooks
 import { useGetUserRewardsDetails } from "../../queries";
-import { useRewardsAuth } from "./hooks/useRewardsAuth";
+// import { useRewardsAuth } from "./hooks/useRewardsAuth";
 
 //helpers
 import { getPreviewBasePath } from "../../../basePath";
@@ -17,9 +17,7 @@ import { useCopy } from "../../hooks/useCopy";
 // components
 import { Box, Button, Copy, Text, Referral } from "../../blocks";
 
-export type ReferralSectionProps = {
-  handleUnlockProfile: () => void;
-};
+export type ReferralSectionProps = Record<string, never>;
 
 const ReferralSection: FC<ReferralSectionProps> = () => {
   const previewBasePath = getPreviewBasePath() || "";
@@ -34,7 +32,7 @@ const ReferralSection: FC<ReferralSectionProps> = () => {
     caip10WalletAddress: caip10WalletAddress,
   });
 
-  const { status } = useRewardsAuth();
+  // const { status } = useRewardsAuth();
 
   const { textRef, isCopied, copyToClipboard } = useCopy();
 
@@ -53,20 +51,22 @@ const ReferralSection: FC<ReferralSectionProps> = () => {
       justifyContent="space-between"
       gap={{ tb: "spacing-lg" }}
       css={css`
-        background: linear-gradient(
+        /* background: linear-gradient(
           90deg,
           var(--surface-primary, #fff) 41%,
           #d5b0fc 100%
-        );
+        ); */
+        background: linear-gradient(90deg, #cdcbff 41%, #ce9fff 100%);
       `}
     >
       <Box display="flex" flexDirection="column" gap="spacing-lg">
         <Box display="flex" flexDirection="column" gap="spacing-xxs">
-          <Text variant="h3-bold" color="text-primary">
-            Onboard Users on Push. <br /> Earn Points.
+          <Text variant="h3-bold" color="text-on-light-bg">
+            Onboard Users on Push Chain Devnet.
+            <br /> Earn Points.
           </Text>
           <Box>
-            <Text variant="bm-regular" color="text-tertiary">
+            <Text variant="bm-regular" color="text-on-light-bg">
               Earn +12% of any Points your invites earn, and +2% of any Points
               your invite’s invites earn.
             </Text>
@@ -86,9 +86,9 @@ const ReferralSection: FC<ReferralSectionProps> = () => {
               alignItems="center"
               padding="spacing-xs"
               borderRadius="radius-xs"
-              border="border-md solid stroke-secondary"
+              border="border-xmd solid stroke-secondary"
               css={css`
-                background-color: var(--components-inputs-background-default);
+                background: var(--components-inputs-background-default);
               `}
             >
               <Text

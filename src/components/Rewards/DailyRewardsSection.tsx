@@ -1,25 +1,24 @@
-/* eslint-disable @typescript-eslint/ban-types */
 // React and other libraries
-import React, { FC, useMemo, useState } from 'react';
-import { css } from 'styled-components';
+import React, { FC, useMemo, useState } from "react";
+import { css } from "styled-components";
 
 // hooks
-import { useDailyRewards } from './hooks/useDailyRewards';
-// import { useRewardsContext } from 'contexts/RewardsContext';
+import { useDailyRewards } from "./hooks/useDailyRewards";
+import { useRewardsContext } from "../../context/rewardsContext";
 // import { useDateExpiry } from '../hooks/useDateExpiry';
 
 // type
-import { ActvityType } from '../../queries';
+import { ActvityType } from "../../queries";
 
 // components
-import { Alert, Box, Button, Text } from '../../blocks';
-import { DailyRewardsItem } from './DailyRewardsItem';
-import { ActivityVerificationButton } from './ActivityVerificationButton';
+import { Alert, Box, Button, Text } from "../../blocks";
+import { DailyRewardsItem } from "./DailyRewardsItem";
+import { ActivityVerificationButton } from "./ActivityVerificationButton";
 
-export type DailyRewardsSectionProps = {};
+export type DailyRewardsSectionProps = Record<string, never>;
 
 const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const {
     activeItem,
@@ -31,7 +30,7 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
     refetchSendActivities,
   } = useDailyRewards();
 
-  const isLocked = false;
+  const { isLocked } = useRewardsContext();
   const hasRewardsExpired = false;
 
   const isDailyRewardClaimed =
@@ -43,43 +42,43 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
 
   return (
     <Box
-      display='flex'
-      flexDirection='column'
-      gap='spacing-md'
-      backgroundColor='surface-primary'
-      padding='spacing-md'
-      borderRadius='radius-md'
+      display="flex"
+      flexDirection="column"
+      gap="spacing-md"
+      backgroundColor="surface-primary"
+      padding="spacing-md"
+      borderRadius="radius-md"
     >
       <Box
-        display='flex'
-        flexDirection='row'
-        width='-webkit-fill-available'
-        justifyContent='space-between'
+        display="flex"
+        flexDirection="row"
+        width="-webkit-fill-available"
+        justifyContent="space-between"
       >
         <Box>
-          <Text variant='h4-semibold' color='text-primary'>
+          <Text variant="h4-semibold" color="text-primary">
             Check-in daily to earn points
           </Text>
-          <Text variant='bm-regular' color='text-tertiary'>
+          <Text variant="bm-regular" color="text-tertiary">
             Check-in for 7 days to unlock maximum points.
           </Text>
         </Box>
 
         {/* daily checkIn button state */}
         {!hasRewardsExpired && isLocked && (
-          <Button variant='tertiary' size='small' disabled>
+          <Button variant="tertiary" size="small" disabled>
             Locked
           </Button>
         )}
         {hasRewardsExpired && (
-          <Button variant='tertiary' size='small' disabled>
+          <Button variant="tertiary" size="small" disabled>
             Ended
           </Button>
         )}
         {!hasRewardsExpired && !isLocked && (
           <>
             {isDailyRewardClaimed && (
-              <Button variant='tertiary' size='small' disabled>
+              <Button variant="tertiary" size="small" disabled>
                 Claimed
               </Button>
             )}
@@ -92,7 +91,7 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
                 refetchActivity={() => refetchSendActivities()}
                 setErrorMessage={setErrorMessage}
                 isLoadingActivity={false}
-                label='Check In'
+                label="Check In"
               />
             )}
           </>
@@ -100,18 +99,18 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
       </Box>
 
       {errorMessage && (
-        <Box width='-webkit-fill-available'>
+        <Box width="-webkit-fill-available">
           <Alert
             heading={errorMessage}
-            variant='error'
-            onClose={() => setErrorMessage('')}
+            variant="error"
+            onClose={() => setErrorMessage("")}
           />
         </Box>
       )}
 
       <Box
-        display='grid'
-        gap={{ ml: 'spacing-xs', initial: 'spacing-sm' }}
+        display="grid"
+        gap={{ ml: "spacing-xs", initial: "spacing-sm" }}
         css={css`
           grid-template-columns: repeat(7, minmax(0, 1fr));
 

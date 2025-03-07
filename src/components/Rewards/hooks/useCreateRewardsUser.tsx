@@ -1,5 +1,5 @@
 // React and other libraries
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PushAPI } from "@pushprotocol/restapi";
 
 // helpers
@@ -47,25 +47,27 @@ const useCreateRewardsUser = () => {
       data,
       userPushSDKInstance,
     );
+    console.log("got here 5", verificationProof, data, userPushSDKInstance);
+
     if (!verificationProof) return;
 
-    createUser(
-      {
-        pgpPublicKey: userPushSDKInstance?.pgpPublicKey,
-        userWallet: caip10WalletAddress,
-        verificationProof: verificationProof as string,
-        refPrimary: ref,
-      },
-      {
-        onSuccess: () => {
-          setIsSuccess(true);
-          refetch();
-        },
-        onError: (err) => {
-          console.error("Error", err);
-        },
-      },
-    );
+    // createUser(
+    //   {
+    //     pgpPublicKey: userPushSDKInstance?.pgpPublicKey,
+    //     userWallet: caip10WalletAddress,
+    //     verificationProof: verificationProof as string,
+    //     refPrimary: ref,
+    //   },
+    //   {
+    //     onSuccess: () => {
+    //       setIsSuccess(true);
+    //       refetch();
+    //     },
+    //     onError: (err) => {
+    //       console.error("Error", err);
+    //     },
+    //   },
+    // );
   };
 
   useEffect(() => {

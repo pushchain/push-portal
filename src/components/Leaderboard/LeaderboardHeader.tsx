@@ -1,8 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import React, { FC } from "react";
-import { Box, Button, Points, Text, CaretLeft } from "../../blocks";
 import { useNavigate } from "react-router-dom";
+import { css } from "styled-components";
+
+import { Box, Button, Points, Text, CaretLeft } from "../../blocks";
+import { device } from "../../config/globals";
 
 const LeaderboardHeader: FC = () => {
   const navigate = useNavigate();
@@ -15,21 +18,26 @@ const LeaderboardHeader: FC = () => {
       justifyContent="space-between"
       alignItems="center"
       width="100%"
-      flexDirection={{ initial: "row", ml: "column" }}
+      flexDirection={{ initial: "row", tb: "column" }}
       gap="spacing-sm"
     >
       <Box
         display="flex"
         gap="spacing-sm"
-        flexDirection={{ initial: "row", ml: "column" }}
+        flexDirection={{ initial: "row", tb: "column", ml: "column" }}
         alignItems={{ ml: "center" }}
       >
-        <Points />
         <Box
-          display="flex"
-          flexDirection="column"
-          display={{ initial: "flex", ml: "none" }}
+          css={css`
+            @media ${device.tablet} {
+              margin: 0 auto;
+            }
+          `}
         >
+          <Points />
+        </Box>
+
+        <Box flexDirection="column" display={{ initial: "flex", tb: "none" }}>
           <Text variant="h3-semibold">
             Welcome to Push Chain Devnet Drop S2!
           </Text>
@@ -38,11 +46,8 @@ const LeaderboardHeader: FC = () => {
             and earn airdrops.
           </Text>
         </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          display={{ initial: "none", ml: "flex" }}
-        >
+
+        <Box flexDirection="column" display={{ initial: "none", tb: "flex" }}>
           <Text variant="h3-semibold" textAlign="center">
             Welcome to Push Chain Devnet Drop S2!
           </Text>
@@ -52,7 +57,8 @@ const LeaderboardHeader: FC = () => {
           </Text>
         </Box>
       </Box>
-      <Box display={{ initial: "flex", ml: "none" }}>
+
+      <Box display={{ initial: "flex", tb: "none" }}>
         <Button
           variant="outline"
           leadingIcon={<CaretLeft />}
@@ -61,7 +67,8 @@ const LeaderboardHeader: FC = () => {
           Back to Home
         </Button>
       </Box>
-      <Box display={{ initial: "none", ml: "flex" }} width="100%">
+
+      <Box display={{ initial: "none", tb: "flex" }} width="100%">
         <Button
           variant="outline"
           leadingIcon={<CaretLeft />}

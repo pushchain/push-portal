@@ -1,13 +1,13 @@
-import axios from 'axios';
-import { getRewardsActivitiesModelCreator } from '../../models/rewards';
-import { getRewardsBaseURL } from '../../baseURL';
+import axios from "axios";
+import { getRewardsActivitiesModelCreator } from "../../models/rewards";
+import { getRewardsBaseURL } from "../../baseURL";
 
-const pageSize = 100;
+const pageSize = 300;
 
 export const getRewardsActivities = () =>
   axios({
-    method: 'GET',
-    url: `${`${getRewardsBaseURL()}`}/activities/all`,
+    method: "GET",
+    url: `${`${getRewardsBaseURL()}`}/v2/activities/all`,
     params: {
       pageSize: pageSize,
     },

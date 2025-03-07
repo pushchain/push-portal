@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 // import { usePushWalletContext } from '@pushprotocol/pushchain-ui-kit';
 import { useAccountContext } from "../../../src/context/accountContext";
 import { useRewardsContext } from "../../../src/context/rewardsContext";
+import { useSearchParams } from "react-router-dom";
 
 import { device } from "../../config/globals";
 import { useRewardsAuth } from "./hooks/useRewardsAuth";
@@ -16,13 +17,20 @@ import UnlockProfileWrapper, {
   UNLOCK_PROFILE_TYPE,
 } from "../../components/unlockProfile/UnlockProfileWrapper";
 import RewardsFooter from "./RewardsFooter";
+import { useCreateRewardsUser } from "./hooks/useCreateRewardsUser";
 
 const Rewards: FC = () => {
-  // const { universalAddress } = usePushWalletContext();
+  // //fetch ref from url
+  const [searchParams] = useSearchParams();
+
+  const ref = searchParams.get("ref");
+  if (ref) sessionStorage.setItem("ref", ref);
+
   const { userPushSDKInstance } = useAccountContext();
   const { isAuthModalVisible } = useRewardsContext();
 
   const { hideAuthModal } = useRewardsAuth();
+  useCreateRewardsUser();
 
   return (
     <RewardsWrapper>

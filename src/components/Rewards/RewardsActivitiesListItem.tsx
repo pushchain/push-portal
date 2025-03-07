@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { usePushWalletContext } from '@pushprotocol/pushchain-ui-kit';
-import React, { FC, useState, useMemo, useEffect } from 'react';
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import React, { FC, useState, useMemo, useEffect } from "react";
 
-import { Activity, StakeActivityResponse, UsersActivity } from '../../queries';
+import { Activity, StakeActivityResponse, UsersActivity } from "../../queries";
 
 import {
   Box,
@@ -17,12 +17,12 @@ import {
   Lock,
   Multiplier,
   Star,
-} from '../../blocks';
-import { css } from 'styled-components';
-import { ActivityButton } from './ActivityButton';
-import { RewardsActivityIcon } from './RewardsActivityIcon';
-import { RewardsActivityTitle } from './RewardsActivityTitle';
-import useLockedStatus from './hooks/useLockedStatus';
+} from "../../blocks";
+import { css } from "styled-components";
+import { ActivityButton } from "./ActivityButton";
+import { RewardsActivityIcon } from "./RewardsActivityIcon";
+import { RewardsActivityTitle } from "./RewardsActivityTitle";
+import useLockedStatus from "./hooks/useLockedStatus";
 
 export type RewardActivitiesListItemProps = {
   userId: string;
@@ -61,21 +61,21 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
   const usersSingleActivity = allUsersActivity?.[activity?.activityType];
   const isLoading = isAllActivitiesLoading;
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const { refetchRecentActivities, getLockStatus, statusRecentActivities } =
     useLockedStatus();
 
   const isRewardsLocked = useMemo(() => {
     return (
       (isLocked || !isWalletConnected) &&
-      activity.activityType !== 'follow_push_on_discord' &&
-      activity.activityType !== 'follow_push_on_twitter'
+      activity.activityType !== "follow_push_on_discord" &&
+      activity.activityType !== "follow_push_on_twitter"
     );
   }, [isLocked, isWalletConnected, activity.activityType]);
 
   const isNotDiscordOrTwitter =
-    activity.activityType !== 'follow_push_on_discord' &&
-    activity.activityType !== 'follow_push_on_twitter';
+    activity.activityType !== "follow_push_on_discord" &&
+    activity.activityType !== "follow_push_on_twitter";
 
   const updateActivities = () => {
     refetchActivity();
@@ -85,8 +85,8 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
   // if activityType is twitter or discord, then re-call check lock status fn
   useEffect(() => {
     if (
-      activity.activityType == 'follow_push_on_discord' ||
-      activity.activityType == 'follow_push_on_twitter'
+      activity.activityType == "follow_push_on_discord" ||
+      activity.activityType == "follow_push_on_twitter"
     ) {
       getLockStatus();
     }
@@ -99,45 +99,45 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
   return (
     <Skeleton isLoading={isLoadingItem}>
       <Box
-        display='flex'
-        flexDirection='column'
-        borderRadius='radius-md'
-        backgroundColor='surface-primary'
+        display="flex"
+        flexDirection="column"
+        borderRadius="radius-md"
+        backgroundColor="surface-primary"
       >
         <Box
-          display='flex'
-          flexDirection='row'
+          display="flex"
+          flexDirection="row"
           padding={{
-            ml: 'spacing-xs',
-            lp: 'spacing-sm spacing-xxs',
-            initial: 'spacing-sm',
+            ml: "spacing-xs",
+            lp: "spacing-sm spacing-xxs",
+            initial: "spacing-sm",
           }}
-          borderRadius='radius-md radius-md radius-none radius-none'
-          alignItems={{ ml: 'flex-start', initial: 'center' }}
-          gap='spacing-sm'
+          borderRadius="radius-md radius-md radius-none radius-none"
+          alignItems={{ ml: "flex-start", initial: "center" }}
+          gap="spacing-sm"
         >
           {isRewardsLocked ? (
             <Box
-              width='48px'
-              height='48px'
-              borderRadius='radius-round'
-              backgroundColor='surface-tertiary'
-              display='flex'
-              alignItems='center'
-              justifyContent='center'
-              border='border-xs solid stroke-tertiary'
+              width="48px"
+              height="48px"
+              borderRadius="radius-round"
+              backgroundColor="surface-tertiary"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              border="border-xs solid stroke-tertiary"
               css={css`
                 flex-shrink: 0;
               `}
             >
-              <Lock size={28} color='icon-tertiary' />
+              <Lock size={28} color="icon-tertiary" />
             </Box>
           ) : (
             <Box
-              display='flex'
-              alignItems='center'
-              justifyContent='center'
-              padding='spacing-xxs'
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              padding="spacing-xxs"
               // margin='spacing-none spacing-none spacing-none spacing-xxs'
             >
               <RewardsActivityIcon type={activity.activityType} />
@@ -145,42 +145,42 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
           )}
 
           <Box
-            display='flex'
-            flexDirection={{ ml: 'column', initial: 'row' }}
-            gap={{ ml: 'spacing-sm', initial: 'spacing-md' }}
-            width='100%'
-            alignItems={{ ml: 'baseline', initial: 'center' }}
+            display="flex"
+            flexDirection={{ ml: "column", initial: "row" }}
+            gap={{ ml: "spacing-sm", initial: "spacing-md" }}
+            width="100%"
+            alignItems={{ ml: "baseline", initial: "center" }}
           >
             {/* Rewards Contents */}
             <Box
-              display='flex'
-              flexDirection={{ ml: 'column', initial: 'row' }}
-              gap={{ ml: 'spacing-xxxs', initial: 'spacing-sm' }}
-              alignItems={{ ml: 'flex-start', initial: 'center' }}
-              justifyContent='space-between'
-              width='100%'
+              display="flex"
+              flexDirection={{ ml: "column", initial: "row" }}
+              gap={{ ml: "spacing-xxxs", initial: "spacing-sm" }}
+              alignItems={{ ml: "flex-start", initial: "center" }}
+              justifyContent="space-between"
+              width="100%"
             >
               {/* Rewards Description */}
-              <Box display='flex' flexDirection='column' gap='spacing-xxxs'>
+              <Box display="flex" flexDirection="column" gap="spacing-xxxs">
                 <Box
-                  display='flex'
-                  flexDirection={{ lp: 'column-reverse', initial: 'row' }}
-                  gap={{ lp: 'spacing-xxxs', initial: 'spacing-sm' }}
+                  display="flex"
+                  flexDirection={{ lp: "column-reverse", initial: "row" }}
+                  gap={{ lp: "spacing-xxxs", initial: "spacing-sm" }}
                 >
                   <RewardsActivityTitle
                     activityTitle={activity.activityTitle}
                     isLoading={isLoading}
                   />
 
-                  <Box display='flex' gap='spacing-xxs'>
+                  <Box display="flex" gap="spacing-xxs">
                     {!!activity.expiryType &&
                       getUpdatedExpiryTime(activity?.expiryType) > 0 && (
-                        <Lozenge size='small'>
+                        <Lozenge size="small">
                           {`Expires in ${getUpdatedExpiryTime(activity?.expiryType)} days`.toUpperCase()}
                         </Lozenge>
                       )}
                     {activity?.tags?.map((tag) => (
-                      <Lozenge size='small' icon={<Star />}>
+                      <Lozenge size="small" icon={<Star />}>
                         {tag}
                       </Lozenge>
                     ))}
@@ -188,8 +188,8 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
                 </Box>
 
                 {/* We don't need to show the Description when the title is discord and twitter according to the design */}
-                {activity.activityType !== 'follow_push_on_discord' &&
-                  activity.activityType !== 'follow_push_on_twitter' && (
+                {activity.activityType !== "follow_push_on_discord" &&
+                  activity.activityType !== "follow_push_on_twitter" && (
                     <Skeleton isLoading={isLoading}>
                       {/* <RewardsActivityTitle
                         activityTitle={activity.activityDesc}
@@ -202,36 +202,36 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
               </Box>
 
               <Box
-                display='flex'
-                flexDirection='row'
-                gap='spacing-sm'
-                alignItems='center'
+                display="flex"
+                flexDirection="row"
+                gap="spacing-sm"
+                alignItems="center"
               >
                 {/* Rewards Multiplier and Points */}
                 {activity.multiplier > 1 && (
                   <Box
-                    display='flex'
-                    flexDirection='row'
-                    alignItems='center'
-                    gap='spacing-xxxs'
+                    display="flex"
+                    flexDirection="row"
+                    alignItems="center"
+                    gap="spacing-xxxs"
                   >
                     <Multiplier />
-                    <Text variant='bm-semibold' color='text-state-success-bold'>
+                    <Text variant="bm-semibold" color="text-state-success-bold">
                       {activity.multiplier?.toLocaleString()}x
                     </Text>
                   </Box>
                 )}
 
                 <Box
-                  display='flex'
-                  minWidth='200px'
-                  flexDirection='row'
-                  gap='spacing-xxs'
-                  alignItems='center'
+                  display="flex"
+                  minWidth="200px"
+                  flexDirection="row"
+                  gap="spacing-xxs"
+                  alignItems="center"
                 >
-                  <Skeleton isLoading={isLoading} height='32px'>
+                  <Skeleton isLoading={isLoading} height="32px">
                     <RewardsBell width={32} height={32} />
-                    <Text variant='bm-semibold' color='text-primary'>
+                    <Text variant="bm-semibold" color="text-primary">
                       {activity.points?.toLocaleString()}
                     </Text>
                   </Skeleton>
@@ -240,9 +240,9 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
             </Box>
 
             {/* Buttons Logic */}
-            <Box display='flex'>
+            <Box display="flex">
               {isRewardsLocked && (
-                <Button size='small' variant='tertiary' disabled>
+                <Button size="small" variant="tertiary" disabled>
                   Locked
                 </Button>
               )}
@@ -256,52 +256,52 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
                   setErrorMessage={setErrorMessage}
                   usersSingleActivity={usersSingleActivity}
                   isLoadingActivity={isLoading}
-                  label={isNotDiscordOrTwitter ? 'Claim' : 'Verify'}
+                  label={isNotDiscordOrTwitter ? "Claim" : "Verify"}
                 />
               )}
             </Box>
           </Box>
         </Box>
 
-        {(errorMessage || usersSingleActivity?.status === 'REJECTED') && (
+        {(errorMessage || usersSingleActivity?.status === "REJECTED") && (
           <Box
-            gap='spacing-xxs'
-            display='flex'
-            flexDirection='row'
-            alignItems='center'
-            backgroundColor='surface-state-danger-subtle'
-            borderRadius='radius-none radius-none radius-md radius-md'
+            gap="spacing-xxs"
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            backgroundColor="surface-state-danger-subtle"
+            borderRadius="radius-none radius-none radius-md radius-md"
             padding={{
-              ml: 'spacing-xxs',
-              lp: 'spacing-xxs',
-              initial: 'spacing-xxs',
+              ml: "spacing-xxs",
+              lp: "spacing-xxs",
+              initial: "spacing-xxs",
             }}
           >
-            <ErrorFilled color='icon-state-danger-bold' size={24} />
-            <Text variant='h5-semibold' color='text-state-danger-bold'>
+            <ErrorFilled color="icon-state-danger-bold" size={24} />
+            <Text variant="h5-semibold" color="text-state-danger-bold">
               {errorMessage ||
-                'Verification Rejected. Please contact the Push team over discord.'}
+                "Verification Rejected. Please contact the Push team over discord."}
             </Text>
           </Box>
         )}
 
-        {usersSingleActivity?.status === 'PENDING' && (
+        {usersSingleActivity?.status === "PENDING" && (
           <Box
-            gap='spacing-xs'
-            display='flex'
-            flexDirection='row'
-            alignItems='center'
-            backgroundColor='surface-state-disabled'
-            borderRadius='radius-none radius-none radius-md radius-md'
+            gap="spacing-xs"
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            backgroundColor="surface-state-disabled"
+            borderRadius="radius-none radius-none radius-md radius-md"
             padding={{
-              ml: 'spacing-xxs',
-              lp: 'spacing-xxs',
-              initial: 'spacing-xxs',
+              ml: "spacing-xxs",
+              lp: "spacing-xxs",
+              initial: "spacing-xxs",
             }}
           >
-            <InfoFilled color='icon-tertiary' size={24} />
+            <InfoFilled color="icon-tertiary" size={24} />
 
-            <Text variant='h5-semibold' color='text-tertiary'>
+            <Text variant="h5-semibold" color="text-tertiary">
               Verification Pending: Expected completion within 24-72 hours.
             </Text>
           </Box>

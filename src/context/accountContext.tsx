@@ -116,6 +116,8 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
     ? new ethers.providers.Web3Provider(window.ethereum)
     : null;
 
+  // console.log(provider, appConfig.coreRPC, window.location.hostname);
+
   const handleConnectWalletAndEnableProfile = async ({
     remember = false,
     showToast = false,

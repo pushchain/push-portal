@@ -1,28 +1,30 @@
 // react and other libraries
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 // third party libraries
-import { usePushWalletContext } from '@pushprotocol/pushchain-ui-kit';
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 // helpers
-import { walletToPCAIP10 } from '../../../helpers/web3helper';
-import { useAccountContext } from '../../../context/accountContext';
-import { generateVerificationProof } from '../utils/generateVerificationProof';
-import { isUserNotFound } from '../utils/resolveError';
+import { walletToPCAIP10 } from "../../../helpers/web3helper";
+import { useAccountContext } from "../../../context/accountContext";
+import { generateVerificationProof } from "../utils/generateVerificationProof";
+import { isUserNotFound } from "../utils/resolveError";
 
 // hooks
-import { useGetUserRewardsDetails } from '../../../queries/hooks/rewards';
+import { useGetUserRewardsDetails } from "../../../queries/hooks/rewards";
 
 // types
-import { useRewardsContext } from '../../../context/rewardsContext';
-import { checkUnlockProfileErrors } from '../../../components/unlockProfile/UnlockProfile.utils';
+import { useRewardsContext } from "../../../context/rewardsContext";
+import { checkUnlockProfileErrors } from "../../../components/unlockProfile/UnlockProfile.utils";
 
 const useRewardsAuth = () => {
+  const location = useLocation();
   const { universalAddress } = usePushWalletContext();
   const account = universalAddress?.address;
   const isWalletConnected = Boolean(universalAddress?.address);
   const caip10WalletAddress = walletToPCAIP10(
-    universalAddress?.address as string
+    universalAddress?.address as string,
   );
 
   const { userPushSDKInstance } = useAccountContext();
@@ -31,7 +33,8 @@ const useRewardsAuth = () => {
 
   const [isVerifyClicked, setIsVerifyClicked] = useState(false);
   const [handleVerify, setHandleVerify] = useState(false);
-  const activeTab = 'dashboard';
+  const activeRoute = location.pathname == "/rewards";
+  // console.log(location, "active route", activeRoute);
 
   const {
     data: userDetails,
@@ -69,7 +72,7 @@ const useRewardsAuth = () => {
   // unlock profile function
   const unlockProfile = async () => {
     // get ref, send with user wallet. if ref is null, send only user wallet
-    const ref = sessionStorage.getItem('ref');
+    const ref = sessionStorage.getItem("ref");
     const data = {
       ...(ref && { refPrimary: ref }),
       userWallet: caip10WalletAddress,
@@ -78,7 +81,7 @@ const useRewardsAuth = () => {
     // generate verification proof
     const verificationProof = await generateVerificationProof(
       data,
-      userPushSDKInstance
+      userPushSDKInstance,
     );
 
     //if verification proof is null, unlock push profile update to update userPUSHSDKInstance
@@ -88,7 +91,7 @@ const useRewardsAuth = () => {
         userPushSDKInstance &&
         userPushSDKInstance.readmode()
       ) {
-        console.log('open modal');
+        console.log("open modal");
         setIsAuthModalVisible(true);
       }
     }
@@ -104,7 +107,7 @@ const useRewardsAuth = () => {
     if (!isWalletConnected || !userPushSDKInstance) return;
 
     // dashboard connect wallet flow
-    if (status === 'error' && activeTab == 'dashboard' && !isVerifyClicked) {
+    if (status === "error" && activeRoute && !isVerifyClicked) {
       if (isUserNotFound(error)) {
         const errorExistsInUnlockProfile =
           checkUnlockProfileErrors(userPushSDKInstance);
@@ -114,12 +117,12 @@ const useRewardsAuth = () => {
     }
 
     // user disconnects while modal is open
-    if (status === 'pending' && !isWalletConnected) {
+    if (status === "pending" && !isWalletConnected) {
       setIsAuthModalVisible(false);
     }
 
     // rewards activity first user
-    if (isVerifyClicked && status === 'error') {
+    if (isVerifyClicked && status === "error") {
       if (isUserNotFound(error)) {
         unlockProfile();
       }

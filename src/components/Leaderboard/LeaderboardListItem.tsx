@@ -1,15 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { FC, useContext } from "react";
+import { FC } from "react";
 
 import { css } from "styled-components";
 import BlockiesSvg from "blockies-react-svg";
 
-import { Box, Skeleton, Text } from "../../blocks";
-
 import { useResolveWeb3Name } from "../../hooks/useResolveWeb3Name";
-
 import { shortenText } from "../../helpers/web3helper";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import { device } from "../../config/globals";
+
+import { Box, Skeleton, Text } from "../../blocks";
 
 export type LeaderboardListItemProps = {
   rank: number;
@@ -25,9 +26,12 @@ const LeaderboardListItem: FC<LeaderboardListItemProps> = ({
   isLoading,
 }) => {
   const web3NameList = useResolveWeb3Name(address);
+  const isMobile = useMediaQuery(device.mobileL);
 
   const web3Name = web3NameList?.[address];
-  const displayName = web3Name ? web3Name : shortenText(address, 10, 10);
+  const displayName = web3Name
+    ? web3Name
+    : shortenText(address, isMobile ? 4 : 10, isMobile ? 4 : 10);
 
   return (
     <Box

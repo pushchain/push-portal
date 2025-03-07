@@ -79,6 +79,8 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
     .map((activity) => activity?.activityType) // Extract `activityType`
     .filter(Boolean); // Remove undefined/null values
 
+  // console.log(isLocked);
+
   const {
     data: allUsersActivity,
     isLoading: isAllActivitiesLoading,
@@ -90,12 +92,7 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
 
   return (
     <Box display="flex" flexDirection="column" gap="spacing-md">
-      <Box
-        gap="spacing-md"
-        display="flex"
-        flexDirection="column"
-        // padding={{ ml: 'spacing-sm', initial: 'spacing-md' }}
-      >
+      <Box gap="spacing-md" display="flex" flexDirection="column">
         {/* These are the social activites Twitter and discord */}
         {socialActivities.map((activity: any) => (
           <RewardsActivitiesListItem
@@ -109,7 +106,9 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
             refetchActivity={refetchActivity}
           />
         ))}
-        <Box
+
+        {/* TODO: This activity is to implemented after 1st launch */}
+        {/* <Box
           display="flex"
           flexDirection="row"
           alignItems="center"
@@ -148,18 +147,7 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
             isAllActivitiesLoading={isAllActivitiesLoading}
             refetchActivity={refetchActivity}
           />
-        ))}
-
-        {/* <SocialHandleItem
-          key={emailTelegramActivities?.activityType}
-          userId={userDetails?.userId || ''}
-          activity={emailTelegramActivities!}
-          isLoadingItem={isLoading}
-          isLocked={isLocked}
-          allUsersActivity={allUsersActivity as StakeActivityResponse}
-          isAllActivitiesLoading={isAllActivitiesLoading}
-          refetchActivity={refetchActivity}
-        /> */}
+        ))} */}
       </Box>
     </Box>
   );

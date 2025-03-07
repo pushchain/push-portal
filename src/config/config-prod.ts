@@ -1,3 +1,9 @@
+// environmental configurations for the dapp for different environments
+const infuraAPIKey =
+  window.location.hostname === "localhost"
+    ? import.meta.env.VITE_APP_INFURA_PROJECT_ID
+    : "dd262cc008764b29bd6a15249db4772e";
+
 export const config = {
   /**
    * APP INFO
@@ -20,6 +26,14 @@ export const config = {
     7560, // Cyber mainnet
   ],
   DEFAULT_CHAIN: 1,
+
+  /**
+   * Core Network Related Data
+   */
+  infuraAPIKey: infuraAPIKey,
+  coreContractChain: 1, //the chain id of the network which the core contract relies on
+  coreRPC: `https://mainnet.infura.io/v3/${infuraAPIKey}`,
+
   firebaseConfig: {
     apiKey: "AIzaSyB4aXx2pJ9T5sw0Q1bba3jI1EAGp0Z5kBI",
     authDomain: "push-dev-a6a63.firebaseapp.com",
