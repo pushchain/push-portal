@@ -1,16 +1,16 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface AuthModalContextType {
   isAuthModalVisible: boolean;
   setIsAuthModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isLocked: boolean;
   setIsLocked: React.Dispatch<React.SetStateAction<boolean>>;
-  resetEpoch: boolean;
-  setResetEpoch: React.Dispatch<React.SetStateAction<boolean>>;
+  isVerifyClicked: boolean;
+  setIsVerifyClicked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AuthModalContext = createContext<AuthModalContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export const RewardsContextProvider = ({
@@ -23,7 +23,7 @@ export const RewardsContextProvider = ({
   // context state for locked status in rewards activities
   const [isLocked, setIsLocked] = useState(true);
   // context state for current epoch status
-  const [resetEpoch, setResetEpoch] = useState(false);
+  const [isVerifyClicked, setIsVerifyClicked] = useState(false);
 
   return (
     <AuthModalContext.Provider
@@ -32,8 +32,8 @@ export const RewardsContextProvider = ({
         setIsAuthModalVisible,
         isLocked,
         setIsLocked,
-        resetEpoch,
-        setResetEpoch,
+        isVerifyClicked,
+        setIsVerifyClicked,
       }}
     >
       {children}
@@ -45,7 +45,7 @@ export const useRewardsContext = () => {
   const context = useContext(AuthModalContext);
   if (context === undefined) {
     throw new Error(
-      'useRewardsContext must be used within an RewardsContextProvider'
+      "useRewardsContext must be used within an RewardsContextProvider",
     );
   }
   return context;

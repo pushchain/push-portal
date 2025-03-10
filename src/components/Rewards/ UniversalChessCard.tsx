@@ -95,7 +95,7 @@ const UniversalChessCard = () => {
             max={200}
             size="large"
             progressIcon={<RewardsStarGradient size={35} />}
-            progressIconText="200%"
+            progressIconText="200XP"
           />
         </Box>
       </Box>

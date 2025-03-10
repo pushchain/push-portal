@@ -116,8 +116,6 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
     ? new ethers.providers.Web3Provider(window.ethereum)
     : null;
 
-  // console.log(provider, appConfig.coreRPC, window.location.hostname);
-
   const handleConnectWalletAndEnableProfile = async ({
     remember = false,
     showToast = false,
@@ -207,6 +205,25 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
       !userPushSDKInstance.readmode()
     );
   };
+
+  // const initializePushSdkGuestMode = async () => {
+  //   // Return if new push user is not necessary
+  //   if (!shouldCreateNewPushUser(readOnlyWallet, null))
+  //     return userPushSDKInstance;
+
+  //   let userInstance;
+  //   userInstance = await PushAPI.initialize({
+  //     account: readOnlyWallet,
+  //     env: appConfig.appEnv,
+  //     alpha: { feature: ["SCALABILITY_V2"] },
+  //   });
+
+  //   console.debug(
+  //     "src::contexts::AppContext::initializePushSdkGuestMode::User Instance Initialized",
+  //     userInstance,
+  //   );
+  //   dispatch(setUserPushSDKInstance(userInstance));
+  // };
 
   const initializePushSdkReadMode = async () => {
     // traceStackCalls(); // Incase we want to see what function called this

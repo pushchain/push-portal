@@ -9,6 +9,6 @@ export const getRewardsActivity = (userId: string, activityTypes: string[]) => {
   return axios({
     method: "GET",
 
-    url: `${getRewardsBaseURL()}/users/${userId}/activities/bytype?types=${activitiesString}`,
+    url: `${getRewardsBaseURL()}/v2/users/${userId}/activities/bytype?types=${activitiesString}`,
   }).then((response) => getRewardsActivityModelCreator(response.data));
 };

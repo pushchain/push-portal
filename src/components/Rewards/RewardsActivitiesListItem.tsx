@@ -55,7 +55,7 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
   isAllActivitiesLoading,
   refetchActivity,
 }) => {
-  const { universalAddress } = usePushWalletContext();
+  const { universalAddress, connectionStatus } = usePushWalletContext();
   const isWalletConnected = Boolean(universalAddress?.address);
 
   const usersSingleActivity = allUsersActivity?.[activity?.activityType];
@@ -256,7 +256,13 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
                   setErrorMessage={setErrorMessage}
                   usersSingleActivity={usersSingleActivity}
                   isLoadingActivity={isLoading}
-                  label={isNotDiscordOrTwitter ? "Claim" : "Verify"}
+                  label={
+                    isNotDiscordOrTwitter
+                      ? "Claim"
+                      : connectionStatus === "connected"
+                        ? "Claim"
+                        : "Unlock Rewards"
+                  }
                 />
               )}
             </Box>

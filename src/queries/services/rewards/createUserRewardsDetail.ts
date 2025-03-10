@@ -1,12 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { createUserRewardsDetailModel } from '../../models';
-import { getRewardsBaseURL } from '../../../queries/baseURL';
+import { createUserRewardsDetailModel } from "../../models";
+import { getRewardsBaseURL } from "../../../queries/baseURL";
 
 export const createUserRewardsDetail = (payload: any) =>
   axios({
-    method: 'POST',
-    url: `${getRewardsBaseURL()}/users/`,
+    method: "POST",
+    url: `${getRewardsBaseURL()}/v2/users/`,
     data: {
       userWallet: payload.userWallet,
       pgpPublicKey: payload.pgpPublicKey,
@@ -14,6 +14,6 @@ export const createUserRewardsDetail = (payload: any) =>
       refPrimary: payload.refPrimary,
     },
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   }).then((response) => createUserRewardsDetailModel(response.data));

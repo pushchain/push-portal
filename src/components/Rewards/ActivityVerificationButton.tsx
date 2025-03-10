@@ -45,7 +45,7 @@ export const ActivityVerificationButton = ({
   isLoadingActivity,
   label,
 }: ActivityVerificationButtonProps) => {
-  const { universalAddress } = usePushWalletContext();
+  const { universalAddress, connectionStatus } = usePushWalletContext();
   const isWalletConnected = Boolean(universalAddress?.address);
   const { userPushSDKInstance } = useAccountContext();
 
@@ -129,16 +129,15 @@ export const ActivityVerificationButton = ({
   ]);
 
   const { isAuthenticated, authButton } = useAuthWithButton({
-    isLoading: isLoadingActivity,
+    isLoading:
+      isLoadingActivity ||
+      connectionStatus === "connecting" ||
+      connectionStatus === "authenticating",
     onSuccess: (userDetails) => activityData?.action(userDetails?.userId),
     label: label,
   });
 
-  if (
-    isAuthenticated &&
-    isWalletConnected &&
-    !userPushSDKInstance?.readmode()
-  ) {
+  if (isAuthenticated && isWalletConnected) {
     return (
       <Button
         variant="tertiary"
@@ -146,7 +145,9 @@ export const ActivityVerificationButton = ({
         loading={
           activityData?.isLoading || activityData?.isVerificationComplete
         }
-        onClick={() => activityData?.action(userId)}
+        onClick={() => {
+          activityData?.action(userId);
+        }}
         disabled={isLoadingActivity}
       >
         {activityData?.isVerificationComplete

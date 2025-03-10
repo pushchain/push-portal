@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { getRewardsLeaderboardModalCreator } from '../../models';
-import { LeaderboardParams } from '../../types';
-import { getRewardsBaseURL } from '../../baseURL';
+import { getRewardsLeaderboardModalCreator } from "../../models";
+import { LeaderboardParams } from "../../types";
+import { getRewardsBaseURL } from "../../baseURL";
 
 export const getRewardsLeaderboardS2 = async ({
   order,
@@ -10,10 +10,10 @@ export const getRewardsLeaderboardS2 = async ({
   pageNumber,
 }: LeaderboardParams) =>
   axios({
-    method: 'GET',
-    url: `${getRewardsBaseURL()}/users/leaderboard`,
+    method: "GET",
+    url: `${getRewardsBaseURL()}/v2/users/leaderboard`,
     params: {
-      order: order || 'desc',
+      order: order || "desc",
       pageSize: pageSize || 20,
       pageNumber: pageNumber || 1,
     },

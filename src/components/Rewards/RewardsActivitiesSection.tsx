@@ -22,7 +22,7 @@ import { RewardsActivitiesListItem } from "./RewardsActivitiesListItem";
 import { walletToPCAIP10 } from "../../../src/helpers/web3helper";
 // import SocialHandleItem from './SocialHandleItem';
 
-export type RewardActivitiesProps = {};
+export type RewardActivitiesProps = Record<string, never>;
 
 const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
   const { universalAddress } = usePushWalletContext();
@@ -51,24 +51,6 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
           activity?.status === "ENABLED",
       );
 
-  const emailTelegramActivities = activityList.filter(
-    (activity) =>
-      activity.index.startsWith(`custom-delivery`) &&
-      activity?.status === "ENABLED",
-  )[0];
-
-  const platformRewardActivities = isLoading
-    ? Array(7).fill(0)
-    : activityList.filter(
-        (activity) =>
-          activity.index.startsWith(`reward-activity`) &&
-          activity?.status === "ENABLED",
-      );
-
-  const channelSubscriptionActivities = activityList.filter((activity) =>
-    activity.index.startsWith(`channel-subscription`),
-  );
-
   const { isLocked } = useRewardsContext();
 
   // Combine all activities into a single array
@@ -78,8 +60,6 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
   const activityTypes = allActivities
     .map((activity) => activity?.activityType) // Extract `activityType`
     .filter(Boolean); // Remove undefined/null values
-
-  // console.log(isLocked);
 
   const {
     data: allUsersActivity,

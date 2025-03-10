@@ -1,28 +1,23 @@
-// React and other libraries
-import { useEffect, useState } from "react";
-import { PushAPI } from "@pushprotocol/restapi";
-
-// helpers
-import { generateVerificationProof } from "../utils/generateVerificationProof";
-import { useAccountContext } from "../../../context/accountContext";
-
-// hooks
+import { useState, useRef, useCallback, useEffect } from "react";
 import {
   useCreateRewardsUser as useCreateRewardsUserQuery,
   useGetUserRewardsDetails,
 } from "../../../queries/hooks";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import { walletToPCAIP10 } from "../../../helpers/web3helper";
+import { UserRewardsDetailResponse } from "../../../queries";
+import { useRewardsContext } from "../../../context/rewardsContext";
 
 const useCreateRewardsUser = () => {
-  const { userPushSDKInstance, isUserProfileUnlocked } = useAccountContext();
+  const hasRun = useRef(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const { universalAddress } = usePushWalletContext();
+  const { setIsVerifyClicked } = useRewardsContext();
+
   const account = universalAddress?.address as string;
-
+  const isWalletConnected = Boolean(universalAddress?.address);
   const caip10WalletAddress = walletToPCAIP10(account);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const isActiveAccount = userPushSDKInstance?.account === account;
 
   const { status, refetch } = useGetUserRewardsDetails({
     caip10WalletAddress: caip10WalletAddress,
@@ -31,52 +26,61 @@ const useCreateRewardsUser = () => {
   const { mutate: createUser } = useCreateRewardsUserQuery();
 
   const handleCreateUser = async ({
-    userPushSDKInstance,
+    onSuccessCallback,
   }: {
-    userPushSDKInstance: PushAPI;
+    onSuccessCallback?: (user: UserRewardsDetailResponse) => void;
   }) => {
-    // get ref, send with user wallet. if ref is null, send only user wallet
-    const ref = sessionStorage.getItem("ref");
-    const data = {
-      ...(ref && { refPrimary: ref }),
-      userWallet: caip10WalletAddress,
-    };
+    if (hasRun.current) return;
+    hasRun.current = true;
 
-    //generate verification proof again, after unlocking profile
-    const verificationProof = await generateVerificationProof(
-      data,
-      userPushSDKInstance,
+    console.log("Creating user...");
+
+    createUser(
+      {
+        pgpPublicKey: "abcd",
+        // userWallet: caip10WalletAddress,
+        userWallet: "new new",
+        verificationProof: "abcd",
+        refPrimary: sessionStorage.getItem("ref"),
+      },
+      {
+        onSuccess: (data) => {
+          setErrorMessage(null);
+          refetch();
+          onSuccessCallback?.(data);
+        },
+        onError: (err) => {
+          console.error("Error", err);
+          setErrorMessage("Failed to create user");
+        },
+      },
     );
-    console.log("got here 5", verificationProof, data, userPushSDKInstance);
-
-    if (!verificationProof) return;
-
-    // createUser(
-    //   {
-    //     pgpPublicKey: userPushSDKInstance?.pgpPublicKey,
-    //     userWallet: caip10WalletAddress,
-    //     verificationProof: verificationProof as string,
-    //     refPrimary: ref,
-    //   },
-    //   {
-    //     onSuccess: () => {
-    //       setIsSuccess(true);
-    //       refetch();
-    //     },
-    //     onError: (err) => {
-    //       console.error("Error", err);
-    //     },
-    //   },
-    // );
   };
 
-  useEffect(() => {
-    if (isUserProfileUnlocked && isActiveAccount && status !== "success") {
-      handleCreateUser({ userPushSDKInstance });
-    }
-  }, [isUserProfileUnlocked, userPushSDKInstance, account]);
+  const autoCreateUser = () => {
+    if (!isWalletConnected || status !== "error") return;
 
-  return { handleCreateUser, isSuccess, setIsSuccess, isUserProfileUnlocked };
+    handleCreateUser({});
+  };
+
+  /** Reset function when user logs out or switches accounts */
+  const resetState = useCallback(() => {
+    hasRun.current = false;
+    setErrorMessage(null);
+    setIsVerifyClicked(false);
+    console.log("State reset after logout/account change");
+  }, []);
+
+  useEffect(() => {
+    if (!isWalletConnected) resetState();
+  }, [isWalletConnected]);
+
+  return {
+    handleCreateUser,
+    errorMessage,
+    shouldRun: !hasRun.current && isWalletConnected && status === "error",
+    autoCreateUser,
+  };
 };
 
 export { useCreateRewardsUser };

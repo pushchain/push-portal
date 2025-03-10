@@ -1,22 +1,26 @@
 // React and other libraries
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from "react";
 
 // third party libraries
-import { usePushWalletContext } from '@pushprotocol/pushchain-ui-kit';
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 //Hooks
-import { useAccountContext } from '../../../context/accountContext';
-import { useCreateRewardsUser } from './useCreateRewardsUser';
-import { UserRewardsDetailResponse } from '../../../queries';
+import { useCreateRewardsUser } from "./useCreateRewardsUser";
+import {
+  useGetUserRewardsDetails,
+  UserRewardsDetailResponse,
+} from "../../../queries";
 
 // components
-import { Button } from '../../../blocks';
-import { useRewardsAuth } from './useRewardsAuth';
+import { Button } from "../../../blocks";
+import { walletToPCAIP10 } from "../../../helpers/web3helper";
+import { useRewardsContext } from "../../../context/rewardsContext";
+// import { useRewardsAuth } from "./useRewardsAuth";
 
 export const useAuthWithButton = ({
   onSuccess,
   isLoading,
-  label = 'verify',
+  label = "verify",
 }: {
   onSuccess: (userDetails: UserRewardsDetailResponse) => void;
   isLoading: boolean;
@@ -26,73 +30,85 @@ export const useAuthWithButton = ({
     isWalletConnectedAndProfileUnlocked,
     setIsWalletConnectedAndProfileUnlocked,
   ] = useState(false);
-  const [showAuth, setShowAuth] = useState(false); // Track button click
+  const [step, setStep] = useState<"idle" | "connecting" | "creating" | "done">(
+    "idle",
+  );
 
-  const { universalAddress } = usePushWalletContext();
+  const { universalAddress, handleConnectToPushWallet, connectionStatus } =
+    usePushWalletContext();
+  const { setIsVerifyClicked } = useRewardsContext();
   const isWalletConnected = Boolean(universalAddress?.address);
-  const { userPushSDKInstance } = useAccountContext();
-  const {
-    isAuthModalVisible,
-    connectWallet,
-    handleVerify,
-    userDetails,
-    hideAuthModal,
-  } = useRewardsAuth();
-  const { isSuccess, setIsSuccess, isUserProfileUnlocked } =
-    useCreateRewardsUser();
+  const caip10WalletAddress = walletToPCAIP10(universalAddress?.address);
 
-  const handleAuthModal = async () => {
-    setShowAuth(true);
-    connectWallet();
-  };
+  const { data: userDetails } = useGetUserRewardsDetails({
+    caip10WalletAddress: caip10WalletAddress,
+  });
 
-  const isAuthenticated = useMemo(() => {
-    return (
-      userDetails &&
-      isUserProfileUnlocked &&
-      handleVerify &&
-      userPushSDKInstance &&
-      !userPushSDKInstance.readmode()
-    );
-  }, [userDetails, isUserProfileUnlocked, handleVerify, userPushSDKInstance]);
+  const { handleCreateUser } = useCreateRewardsUser();
 
-  const handleSuccess = (userDetails: UserRewardsDetailResponse) => {
-    setIsWalletConnectedAndProfileUnlocked(true);
-    onSuccess(userDetails);
-    setIsSuccess(false);
-    setShowAuth(false);
+  const handleVerifyAction = async () => {
+    setIsVerifyClicked(true);
+
+    if (!isWalletConnected) {
+      setStep("connecting");
+      handleConnectToPushWallet();
+      return;
+    }
+
+    if (!userDetails) {
+      setStep("creating");
+
+      await handleCreateUser({
+        onSuccessCallback: (updatedUserDetails: UserRewardsDetailResponse) => {
+          if (updatedUserDetails) {
+            console.log("handle here", updatedUserDetails);
+            handleSuccess(updatedUserDetails);
+          }
+        },
+      });
+    }
+
+    if (userDetails == undefined) return;
+
+    handleSuccess(userDetails);
+    console.log("handle here 2", userDetails);
   };
 
   useEffect(() => {
     if (
-      (showAuth && isAuthenticated && userDetails) ||
-      (isSuccess && userDetails)
+      step === "connecting" &&
+      isWalletConnected &&
+      connectionStatus &&
+      "connected"
     ) {
-      handleSuccess(userDetails);
-      console.log('handle Success');
+      handleVerifyAction(); // Retry the process after wallet connects
     }
-  }, [isAuthenticated, userDetails, isSuccess]);
+  }, [connectionStatus]);
+
+  const handleSuccess = (userDetails: UserRewardsDetailResponse) => {
+    setIsWalletConnectedAndProfileUnlocked(true);
+    onSuccess(userDetails);
+    setStep("done");
+  };
 
   const authButton = useMemo(
     () => (
       <>
         <Button
-          variant='tertiary'
-          size='small'
-          onClick={handleAuthModal}
+          variant="tertiary"
+          size="small"
+          onClick={handleVerifyAction}
           disabled={isLoading}
         >
           {label}
         </Button>
       </>
     ),
-    [isWalletConnected, isLoading]
+    [isWalletConnected, isLoading, label],
   );
 
   return {
     authButton,
     isAuthenticated: isWalletConnectedAndProfileUnlocked,
-    isAuthModalVisible,
-    hideAuthModal,
   };
 };

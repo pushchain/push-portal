@@ -24,7 +24,6 @@ const RewardsDashboard: FC = () => {
     isFetching,
   } = useGetUserRewardsDetails({ caip10WalletAddress: caip10WalletAddress });
 
-  // console.log(userDetails, 'new new', caip10WalletAddress);
   const isLoading = isUserLoading;
 
   return (

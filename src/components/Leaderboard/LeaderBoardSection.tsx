@@ -6,7 +6,7 @@ import { LeaderboardListS1 } from "./LeaderboardListS1";
 import { LeaderboardListS2 } from "./LeaderboardListS2";
 import { Box, Text } from "../../blocks";
 
-export type LeaderBoardSectionProps = {};
+export type LeaderBoardSectionProps = Record<string, never>;
 
 const LeaderBoardSection: FC<LeaderBoardSectionProps> = () => {
   const location = useLocation();
@@ -35,7 +35,7 @@ const LeaderBoardSection: FC<LeaderBoardSectionProps> = () => {
         Leaderboard {season}
       </Text>
 
-      {season === "s1" ? <LeaderboardListS1 /> : <LeaderboardListS2 />}
+      {season === "S1" ? <LeaderboardListS1 /> : <LeaderboardListS2 />}
     </Box>
   );
 };
