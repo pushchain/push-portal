@@ -73,7 +73,6 @@ const useCreateRewardsUser = () => {
     hasRun.current = false;
     setErrorMessage(null);
     setIsVerifyClicked(false);
-    console.log("State reset after logout/account change");
   }, []);
 
   useEffect(() => {

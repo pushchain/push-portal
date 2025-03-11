@@ -8,27 +8,32 @@ import {
 export const useFilteredActivities = (
   account: string,
   activityIndexes: string[],
+  filterType: "includes" | "startsWith" = "includes", // Default is "includes"
 ) => {
   const caip10WalletAddress = walletToPCAIP10(account);
 
-  // Fetch all available activities
   const { data: allActivities, isLoading: isLoadingActivities } =
     useGetRewardsActivities();
-
-  // Fetch user details
   const { data: userDetails } = useGetUserRewardsDetails({
     caip10WalletAddress,
   });
 
-  // Filter activities based on given indexes
   const filteredActivities =
-    allActivities?.activities?.filter(
-      (activity) =>
-        activityIndexes.includes(activity.index) &&
-        activity?.status === "ENABLED",
-    ) || [];
+    allActivities?.activities?.filter((activity) => {
+      if (filterType === "includes") {
+        return (
+          activityIndexes.includes(activity.index) &&
+          activity?.status === "ENABLED"
+        );
+      } else if (filterType === "startsWith") {
+        return (
+          activityIndexes.some((index) => activity.index.startsWith(index)) &&
+          activity?.status === "ENABLED"
+        );
+      }
+      return false;
+    }) || [];
 
-  // Fetch user-specific activities
   const activityTypes = filteredActivities.map(
     (activity) => activity.activityType,
   );

@@ -9,6 +9,7 @@ import { useRewardsContext } from "../../context/rewardsContext";
 import { RewardsActivityTitle } from "./RewardsActivityTitle";
 import { ActivityButton } from "./ActivityButton";
 import { useFilteredActivities } from "./hooks/useFilteredActivities";
+import { UsersActivity } from "../../queries";
 
 export type SendTestTxCardProps = {
   errorMessage: string;
@@ -17,9 +18,10 @@ export type SendTestTxCardProps = {
 
 const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
   const { universalAddress } = usePushWalletContext();
+  const { isLocked } = useRewardsContext();
+
   const account = universalAddress?.address as string;
 
-  const { isLocked } = useRewardsContext();
   const {
     filteredActivities,
     userDetails,
@@ -30,7 +32,6 @@ const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
   } = useFilteredActivities(account, ["chain-activity-1"]);
 
   const finalActivity = filteredActivities[0];
-
   const updateActivities = () => {
     refetch();
   };
@@ -38,8 +39,18 @@ const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
   const usersSingleActivity =
     (userActivity?.[finalActivity?.activityType] as UsersActivity) ?? null;
 
+  // const isLoadingActivities = true;
+
   return (
-    <Skeleton isLoading={isLoadingActivities}>
+    <Skeleton
+      isLoading={isLoadingActivities}
+      borderRadius="radius-md"
+      width="100%"
+      css={css`
+        display: flex;
+        flex: 1;
+      `}
+    >
       <Box
         backgroundColor="surface-primary"
         padding="spacing-sm spacing-md"

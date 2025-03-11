@@ -1,23 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/ban-types */
 import React, { FC } from "react";
 
 import { css } from "styled-components";
 
 import { Box, Lock, Text } from "../../blocks";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
-import {
-  Activity,
-  StakeActivityResponse,
-  useGetRewardsActivities,
-  useGetRewardsActivity,
-  useGetUserRewardsDetails,
-} from "../../queries";
+import { StakeActivityResponse } from "../../queries";
 import { useRewardsContext } from "../../context/rewardsContext";
 
 import { RewardsActivitiesListItem } from "./RewardsActivitiesListItem";
-import { walletToPCAIP10 } from "../../../src/helpers/web3helper";
 import { useFilteredActivities } from "./hooks/useFilteredActivities";
 
 export type RewardActivitiesProps = Record<string, never>;
