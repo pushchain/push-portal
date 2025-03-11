@@ -6,16 +6,11 @@ import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 //Hooks
 import { useCreateRewardsUser } from "./useCreateRewardsUser";
-import {
-  useGetUserRewardsDetails,
-  UserRewardsDetailResponse,
-} from "../../../queries";
+import { UserRewardsDetailResponse } from "../../../queries";
 
 // components
 import { Button } from "../../../blocks";
-import { walletToPCAIP10 } from "../../../helpers/web3helper";
 import { useRewardsContext } from "../../../context/rewardsContext";
-// import { useRewardsAuth } from "./useRewardsAuth";
 
 export const useAuthWithButton = ({
   onSuccess,
@@ -38,13 +33,8 @@ export const useAuthWithButton = ({
     usePushWalletContext();
   const { setIsVerifyClicked } = useRewardsContext();
   const isWalletConnected = Boolean(universalAddress?.address);
-  const caip10WalletAddress = walletToPCAIP10(universalAddress?.address);
 
-  const { data: userDetails } = useGetUserRewardsDetails({
-    caip10WalletAddress: caip10WalletAddress,
-  });
-
-  const { handleCreateUser } = useCreateRewardsUser();
+  const { handleCreateUser, userDetails } = useCreateRewardsUser();
 
   const handleVerifyAction = async () => {
     setIsVerifyClicked(true);
@@ -67,11 +57,10 @@ export const useAuthWithButton = ({
         },
       });
     }
+    if (!userDetails) return;
 
-    if (userDetails == undefined) return;
-
+    console.log("before auth");
     handleSuccess(userDetails);
-    console.log("handle here 2", userDetails);
   };
 
   useEffect(() => {

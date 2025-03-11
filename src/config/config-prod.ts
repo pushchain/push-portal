@@ -43,5 +43,5 @@ export const config = {
     appId: "1:974364469170:web:47fd6304c6cf36b5bfe6ab",
     measurementId: "G-5YR8N35DY4",
   },
-  discord_client_id: import.meta.env.REACT_APP_DISCORD_CLIENT_ID,
+  discord_client_id: import.meta.env.VITE_APP_DISCORD_CLIENT_ID,
 };

@@ -7,66 +7,71 @@ export type RewardsAcitivitesResponse = {
 
 //TODO: Remove the test expiry type
 export type ActvityType =
-  | 'follow_push_on_discord'
-  | 'follow_push_on_twitter'
-  | 'notifications_integration_email_telegram_discord'
-  | 'create_gated_group_push_chat'
-  | 'subscribe_5_channels_push'
-  | 'subscribe_20_channels_push'
-  | 'setup_push_user_profile'
-  | 'active_push_chat_user'
-  | 'hold_push_alpha_access_nft'
-  | 'hold_push_rockstar_nft'
-  | 'create_channel_push'
-  | 'reach_100_subscribers'
-  | 'reach_500_subscribers'
-  | 'reach_1000_subscribers'
-  | 'reach_5000_subscribers'
-  | 'reach_10000_subscribers'
-  | 'reach_50000_subscribers'
-  | 'reach_100000_subscribers'
-  | 'daily_check_in_7_days_day1'
-  | 'daily_check_in_7_days_day2'
-  | 'daily_check_in_7_days_day3'
-  | 'daily_check_in_7_days_day4'
-  | 'daily_check_in_7_days_day5'
-  | 'daily_check_in_7_days_day6'
-  | 'daily_check_in_7_days_day7'
-  | 'channel_specific_subscriptions:BTC_PRICE_TRACKER_CHANNEL'
-  | 'channel_specific_subscriptions:QUICKSWAP_CHANNEL'
-  | 'channel_specific_subscriptions:WALLETTRACKER_CHANNEL'
-  | 'channel_specific_subscriptions:PRICETRACKER_CHANNEL'
-  | 'channel_specific_subscriptions:SHAPESHIFT_CHANNEL'
-  | 'channel_specific_subscriptions:CYBER_CHANNEL'
-  | 'channel_specific_subscriptions:REVOKE_NOTIFICATIONS_CHANNEL'
-  | 'channel_specific_subscriptions:PWN_NOTIFICATIONS_CHANNEL'
-  | 'channel_specific_subscriptions:UNSTOPPABLE_DOMAINS_CHANNEL'
-  | 'channel_specific_subscriptions:RIVO_CHANNEL'
-  | 'atleast_5_defi_channel_specific_subscriptions'
-  | 'stake_1k_push_epoch'
-  | 'stake_5k_push_epoch'
-  | 'stake_10k_push_epoch'
-  | 'stake_50k_push_epoch'
-  | 'stake_100k_push_epoch'
-  | 'stake_500k_push_epoch'
-  | 'stake_1_uni_v2_lp_epoch'
-  | 'stake_5_uni_v2_lp_epoch'
-  | 'stake_10_uni_v2_lp_epoch'
-  | 'stake_50_uni_v2_lp_epoch'
-  | 'stake_100_uni_v2_lp_epoch'
-  | 'stake_500_uni_v2_lp_epoch'
-  | 'stake_1k_push_one_time'
-  | 'stake_5k_push_one_time'
-  | 'stake_10k_push_one_time'
-  | 'stake_50k_push_one_time'
-  | 'stake_100k_push_one_time'
-  | 'stake_500k_push_one_time'
-  | 'stake_1_uni_v2_lp_one_time'
-  | 'stake_5_uni_v2_lp_one_time'
-  | 'stake_10_uni_v2_lp_one_time'
-  | 'stake_50_uni_v2_lp_one_time'
-  | 'stake_100_uni_v2_lp_one_time'
-  | 'stake_500_uni_v2_lp_one_time';
+  | "follow_push_on_discord"
+  | "follow_push_on_twitter"
+  | "notifications_integration_email_telegram_discord"
+  | "create_gated_group_push_chat"
+  | "subscribe_5_channels_push"
+  | "subscribe_20_channels_push"
+  | "setup_push_user_profile"
+  | "active_push_chat_user"
+  | "hold_push_alpha_access_nft"
+  | "hold_push_rockstar_nft"
+  | "create_channel_push"
+  | "reach_100_subscribers"
+  | "reach_500_subscribers"
+  | "reach_1000_subscribers"
+  | "reach_5000_subscribers"
+  | "reach_10000_subscribers"
+  | "reach_50000_subscribers"
+  | "reach_100000_subscribers"
+  | "daily_check_in_7_days_day1"
+  | "daily_check_in_7_days_day2"
+  | "daily_check_in_7_days_day3"
+  | "daily_check_in_7_days_day4"
+  | "daily_check_in_7_days_day5"
+  | "daily_check_in_7_days_day6"
+  | "daily_check_in_7_days_day7"
+  | "channel_specific_subscriptions:BTC_PRICE_TRACKER_CHANNEL"
+  | "channel_specific_subscriptions:QUICKSWAP_CHANNEL"
+  | "channel_specific_subscriptions:WALLETTRACKER_CHANNEL"
+  | "channel_specific_subscriptions:PRICETRACKER_CHANNEL"
+  | "channel_specific_subscriptions:SHAPESHIFT_CHANNEL"
+  | "channel_specific_subscriptions:CYBER_CHANNEL"
+  | "channel_specific_subscriptions:REVOKE_NOTIFICATIONS_CHANNEL"
+  | "channel_specific_subscriptions:PWN_NOTIFICATIONS_CHANNEL"
+  | "channel_specific_subscriptions:UNSTOPPABLE_DOMAINS_CHANNEL"
+  | "channel_specific_subscriptions:RIVO_CHANNEL"
+  | "atleast_5_defi_channel_specific_subscriptions"
+  | "stake_1k_push_epoch"
+  | "stake_5k_push_epoch"
+  | "stake_10k_push_epoch"
+  | "stake_50k_push_epoch"
+  | "stake_100k_push_epoch"
+  | "stake_500k_push_epoch"
+  | "stake_1_uni_v2_lp_epoch"
+  | "stake_5_uni_v2_lp_epoch"
+  | "stake_10_uni_v2_lp_epoch"
+  | "stake_50_uni_v2_lp_epoch"
+  | "stake_100_uni_v2_lp_epoch"
+  | "stake_500_uni_v2_lp_epoch"
+  | "stake_1k_push_one_time"
+  | "stake_5k_push_one_time"
+  | "stake_10k_push_one_time"
+  | "stake_50k_push_one_time"
+  | "stake_100k_push_one_time"
+  | "stake_500k_push_one_time"
+  | "stake_1_uni_v2_lp_one_time"
+  | "stake_5_uni_v2_lp_one_time"
+  | "stake_10_uni_v2_lp_one_time"
+  | "stake_50_uni_v2_lp_one_time"
+  | "stake_100_uni_v2_lp_one_time"
+  | "stake_500_uni_v2_lp_one_time"
+  | " test_transaction_on_push_chain"
+  | "chess:xp_level_1"
+  | "chess:xp_level_2"
+  | "chess:xp_level_3"
+  | "chess:xp_level_4";
 
 export type Activity = {
   id: string;
@@ -79,7 +84,7 @@ export type Activity = {
   name?: string;
   JoinURL: string;
   index: string;
-  status: 'ENABLED' | 'DISABLED';
+  status: "ENABLED" | "DISABLED";
   tags: [];
   isExpired?: boolean;
 };
@@ -105,7 +110,7 @@ export type UsersActivity = {
         toTimestamp?: number;
       }
     | any;
-  status: 'COMPLETED' | 'PENDING' | 'REJECTED';
+  status: "COMPLETED" | "PENDING" | "REJECTED";
   points: number;
   multiplier: number;
   verificationProof: string;
@@ -148,7 +153,7 @@ export type PointsVaultUserLoginPayload = {
 };
 
 export type ClaimActivitesResponse = {
-  status: 'COMPLETED' | 'PENDING';
+  status: "COMPLETED" | "PENDING";
 };
 
 export type DiscordDetails = {

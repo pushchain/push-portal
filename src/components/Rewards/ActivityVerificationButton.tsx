@@ -11,9 +11,10 @@ import { useVerifyRewards } from "./hooks/useVerifyRewards";
 import {
   bonusRewardActivities,
   channelSubscriptionActivities,
+  chessRewardsActivities,
   dailyRewardActivities,
   otherRewardActivities,
-  stakeRewardActivities,
+  simulateRewardsActivities,
 } from "./utils/activityTypeArray";
 
 // types
@@ -22,7 +23,6 @@ import { ActvityType } from "../../queries/types";
 // components
 import { Button } from "../../blocks";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
-import { useAccountContext } from "../../../src/context/accountContext";
 
 type ActivityVerificationButtonProps = {
   userId: string;
@@ -47,7 +47,6 @@ export const ActivityVerificationButton = ({
 }: ActivityVerificationButtonProps) => {
   const { universalAddress, connectionStatus } = usePushWalletContext();
   const isWalletConnected = Boolean(universalAddress?.address);
-  const { userPushSDKInstance } = useAccountContext();
 
   const { handleTwitterVerification, verifyingTwitter, twitterActivityStatus } =
     useVerifyTwitter({
@@ -95,8 +94,8 @@ export const ActivityVerificationButton = ({
     if (
       otherRewardActivities.includes(activityType) ||
       bonusRewardActivities.includes(activityType) ||
-      stakeRewardActivities.includes(activityType) ||
-      channelSubscriptionActivities.includes(activityType)
+      chessRewardsActivities.includes(activityType) ||
+      simulateRewardsActivities.includes(activityType)
     ) {
       return {
         isLoading: verifyingRewards,
@@ -120,7 +119,6 @@ export const ActivityVerificationButton = ({
     }
   }, [
     activityType,
-    userPushSDKInstance,
     twitterActivityStatus,
     discordActivityStatus,
     verifyingRewards,
@@ -146,6 +144,7 @@ export const ActivityVerificationButton = ({
           activityData?.isLoading || activityData?.isVerificationComplete
         }
         onClick={() => {
+          console.log("after auth");
           activityData?.action(userId);
         }}
         disabled={isLoadingActivity}

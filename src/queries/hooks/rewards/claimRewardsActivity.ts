@@ -1,12 +1,9 @@
-import { useMutation } from '@tanstack/react-query';
-import { claimRewards } from '../../../queries/queryKeys';
-import { claimRewardsActivity } from '../../../queries/services';
+import { useMutation } from "@tanstack/react-query";
+import { claimRewards } from "../../../queries/queryKeys";
+import { claimRewardsActivity } from "../../../queries/services";
 
-export const useClaimRewardsActivity = (payload: {
-  userId: string;
-  activityTypeId: string;
-}) =>
+export const useClaimRewardsActivity = () =>
   useMutation({
-    mutationKey: [claimRewards, payload.userId, payload.activityTypeId],
+    mutationKey: [claimRewards],
     mutationFn: claimRewardsActivity,
   });

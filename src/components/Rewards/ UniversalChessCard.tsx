@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, useState } from "react";
 import { css } from "styled-components";
 
 import { RewardsActivityTitle } from "./RewardsActivityTitle";
@@ -13,8 +13,81 @@ import {
   Text,
 } from "../../../src/blocks";
 import ChessImg from "../../../static/assets/website/rewards/chess-app.webp";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import {
+  useGetRewardsActivities,
+  useGetRewardsActivity,
+  useGetUserRewardsDetails,
+  useGetUserXP,
+  UsersActivity,
+} from "../../queries";
+import { walletToPCAIP10 } from "../../helpers/web3helper";
+import { ActivityButton } from "./ActivityButton";
 
-const UniversalChessCard = () => {
+export type UniversalChessCardProps = {
+  errorMessage: string;
+  setErrorMessage: (errorMessage: string) => void;
+};
+const UniversalChessCard: FC<UniversalChessCardProps> = ({
+  setErrorMessage,
+}) => {
+  const { universalAddress } = usePushWalletContext();
+  const account = universalAddress?.address as string;
+  // const [activeActivity, setActivity] = useState(null);
+
+  const { data: rewardActivitiesResponse, isLoading: isLoadingActivities } =
+    useGetRewardsActivities();
+
+  // // Getting user Id by wallet address
+  const caip10WalletAddress = walletToPCAIP10(account);
+  const { data: userDetails } = useGetUserRewardsDetails({
+    caip10WalletAddress: caip10WalletAddress,
+  });
+  const { data: allXPData } = useGetUserXP({
+    userId: userDetails?.userId as string,
+  });
+
+  const isLoading = isLoadingActivities;
+
+  const activityList =
+    rewardActivitiesResponse?.activities?.map((page) => page) || [];
+
+  const emailActivities = isLoading
+    ? Array(1).fill(0)
+    : activityList.filter(
+        (activity) =>
+          activity.index.startsWith(`chess:xp`) &&
+          activity?.status === "ENABLED",
+      );
+
+  const activityTypes = [...emailActivities]
+    ?.map((activity) => activity?.activityType) // Extract `activityType`
+    .filter(Boolean);
+
+  const {
+    data: allUsersActivity,
+    // isLoading: isAllActivitiesLoading,
+    refetch: refetchActivity,
+  } = useGetRewardsActivity(
+    { userId: userDetails?.userId as string, activityTypes: activityTypes },
+    { enabled: !!userDetails?.userId && activityTypes.length > 0 },
+  );
+
+  const chessXPLevel = allXPData?.chess ?? 0;
+  const levelToPick = emailActivities?.filter(
+    (item) => item?.index == `chess:xp-level-${chessXPLevel + 1}`,
+  )[0];
+
+  const usersSingleActivity =
+    (allUsersActivity?.[levelToPick?.activityType] as UsersActivity) ?? null;
+
+  // console.log(allUsersActivity, levelToPick);
+  //
+  const updateActivities = () => {
+    refetchActivity();
+    // refetchRecentActivities();
+  };
+
   return (
     <Box
       backgroundColor="surface-primary"
@@ -55,9 +128,20 @@ const UniversalChessCard = () => {
           justifyContent="space-between"
           margin="spacing-md spacing-none"
         >
-          <Button variant="tertiary" size="small" disabled>
+          {/* <Button variant="tertiary" size="small" disabled>
             Level Up to Claim
-          </Button>
+          </Button> */}
+
+          <ActivityButton
+            userId={userDetails?.userId}
+            activityTypeId={levelToPick?.id}
+            activityType={levelToPick?.activityType}
+            refetchActivity={() => updateActivities()}
+            setErrorMessage={setErrorMessage}
+            usersSingleActivity={usersSingleActivity}
+            isLoadingActivity={isLoading}
+            label={"Level Up to Claim"}
+          />
         </Box>
 
         <Box display="flex" flexDirection="column" gap="spacing-xs">
@@ -76,7 +160,9 @@ const UniversalChessCard = () => {
               borderRadius="radius-xxs"
               padding="spacing-xxxs"
             >
-              <Text>Lvl. 1</Text>
+              <Text>
+                {levelToPick?.activityTitle ?? "No activity available"}
+              </Text>
               <RewardsStar color="icon-brand-medium" />
             </Box>
             <Box
@@ -86,7 +172,7 @@ const UniversalChessCard = () => {
               alignItems="center"
             >
               <RewardsBell width={23} height={25} />
-              <Text variant="bm-semibold">10,000</Text>
+              <Text variant="bm-semibold">{levelToPick?.points ?? "0"}</Text>
             </Box>
           </Box>
 

@@ -1,24 +1,19 @@
 // React and other libraries
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from "react";
 
 // Third-party libraries
-import { PushAPI } from '@pushprotocol/restapi';
-import { usePushWalletContext } from '@pushprotocol/pushchain-ui-kit';
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 // hooks;
-import appConfig from '../../../config';
+import appConfig from "../../../config";
 import {
   useClaimRewardsActivity,
   useGetUserRewardsDetails,
-} from '../../../queries';
+} from "../../../queries";
 
 // helpers
-import { generateVerificationProof } from '../utils/generateVerificationProof';
-import { walletToPCAIP10 } from '../../../helpers/web3helper';
-import { useAccountContext } from '../../../context/accountContext';
-
-//Config
-// import APP_PATHS from 'config/AppPaths';
+import { walletToPCAIP10 } from "../../../helpers/web3helper";
+import { useAccountContext } from "../../../context/accountContext";
 
 type UseDiscordActivityVerificationProps = {
   activityTypeId: string;
@@ -31,26 +26,25 @@ const useVerifyDiscord = ({
   refetchActivity,
   setErrorMessage,
 }: UseDiscordActivityVerificationProps) => {
-  const token = localStorage.getItem('access_token');
+  const token = localStorage.getItem("access_token");
   const { userPushSDKInstance } = useAccountContext();
 
   const [discordActivityStatus, setDiscordActivityStatus] = useState<
-    'Claimed' | null
+    "Claimed" | null
   >(null);
   const [verifyingDiscord, setVerifyingDiscord] = useState(
-    token ? true : false
+    token ? true : false,
   );
   const [updatedId, setUpdatedId] = useState<string | null>(null);
 
   const { universalAddress } = usePushWalletContext();
   const account = universalAddress?.address;
-  const isActiveAccount = userPushSDKInstance?.account === account;
   const caip10WalletAddress = walletToPCAIP10(
-    universalAddress?.address as string
+    universalAddress?.address as string,
   );
 
   useEffect(() => {
-    setErrorMessage('');
+    setErrorMessage("");
   }, [setErrorMessage]);
 
   const { refetch: refetchUserDetails } = useGetUserRewardsDetails({
@@ -64,7 +58,7 @@ const useVerifyDiscord = ({
 
   const handleDiscordVerification = (userId: string) => {
     setUpdatedId(userId);
-    setErrorMessage('');
+    setErrorMessage("");
     setVerifyingDiscord(true);
 
     handleConnect(userId);
@@ -73,25 +67,25 @@ const useVerifyDiscord = ({
   const handleConnect = (userId: string) => {
     const clientID = appConfig.discord_client_id;
     const baseURL = window.location.origin;
-    const redirectURI = `${baseURL}${APP_PATHS.DiscordVerification}`;
-    const scope = 'identify email guilds.members.read';
+    const redirectURI = `${baseURL}/discord/verification`;
+    const scope = "identify email guilds.members.read";
 
     const authURL = `https://discord.com/api/oauth2/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=token&scope=${scope}`;
 
-    const newWindow = window.open(authURL, '_blank');
+    const newWindow = window.open(authURL, "_blank");
 
     const checkAuth = setInterval(() => {
       if (newWindow?.closed) {
         clearInterval(checkAuth);
-        handleVerify(userPushSDKInstance, userId);
+        handleVerify(userId);
       }
     }, 1000);
   };
 
   const handleVerify = useCallback(
-    async (userPushSDKInstance: PushAPI, userId: string) => {
-      const token = localStorage.getItem('access_token');
-      const username = localStorage.getItem('username');
+    async (userId: string) => {
+      const token = localStorage.getItem("access_token");
+      const username = localStorage.getItem("username");
 
       if (username && token) {
         const data = {
@@ -99,53 +93,57 @@ const useVerifyDiscord = ({
           discord_token: token,
         };
 
-        const verificationProof = await generateVerificationProof(
-          data,
-          userPushSDKInstance
-        );
+        // const verificationProof = await generateVerificationProof(
+        //   data,
+        //   userPushSDKInstance,
+        // );
+        const verificationProof = "abcd";
 
-        if (verificationProof == null || verificationProof == undefined) {
-          if (userPushSDKInstance && userPushSDKInstance.readmode()) {
-            setVerifyingDiscord(false);
-            setErrorMessage('Please Enable Push profile');
-          }
-          return;
-        }
+        // if (verificationProof == null || verificationProof == undefined) {
+        //   if (userPushSDKInstance && userPushSDKInstance.readmode()) {
+        //     setVerifyingDiscord(false);
+        //     setErrorMessage("Please Enable Push profile");
+        //   }
+        //   return;
+        // }
 
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('expires_in');
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("expires_in");
 
-        claimRewardsActivity(
-          {
-            userId: updatedId || (userId as string),
-            activityTypeId,
-            pgpPublicKey: userPushSDKInstance.pgpPublicKey as string,
-            data: data,
-            verificationProof: verificationProof as string,
-          },
-          {
-            onSuccess: (response) => {
-              if (response.status === 'COMPLETED') {
-                setDiscordActivityStatus('Claimed');
-                refetchActivity();
-                refetchUserDetails();
-                setVerifyingDiscord(false);
-                setErrorMessage('');
-              }
-            },
-            onError: (error: any) => {
-              console.log('Error in creating activity', error);
-              setVerifyingDiscord(false);
-              if (error.name) {
-                setErrorMessage(error.response.data.error);
-              }
-            },
-          }
-        );
+        console.log(appConfig.discord_client_id, "discord session");
+
+        // claimRewardsActivity(
+        //   {
+        //     userId: updatedId || (userId as string),
+        //     activityTypeId,
+        //     pgpPublicKey: "abcd",
+        //     data: data,
+        //     verificationProof: verificationProof as string,
+        //   },
+        //   {
+        //     onSuccess: (response) => {
+        //       if (response.status === "COMPLETED") {
+        //         setDiscordActivityStatus("Claimed");
+        //         refetchActivity();
+        //         refetchUserDetails();
+        //         setVerifyingDiscord(false);
+        //         setErrorMessage("");
+        //       }
+        //     },
+        //     onError: (error: any) => {
+        //       console.log("Error in creating activity", error);
+        //       setVerifyingDiscord(false);
+        //       if (error.name) {
+        //         setErrorMessage(error.response.data.error);
+        //       }
+        //     },
+        //   },
+        // );
+        setVerifyingDiscord(false);
       }
     },
-    [isActiveAccount, userPushSDKInstance]
+    [account],
   );
 
   return {

@@ -11,6 +11,7 @@ import { RewardsContextProvider } from "./context/rewardsContext";
 import RewardsPage from "./pages/RewardsPage";
 import { blocksColors, getBlocksCSSVariables } from "../src/blocks";
 import LeaderBoardPage from "./pages/LeaderBoardPage";
+import { DiscordVerificationPage } from "./pages/DiscordVerificationPage";
 
 const Home = () => <h1 style={{ color: "black" }}>Home Page</h1>;
 
@@ -73,7 +74,7 @@ const GlobalStyle = createGlobalStyle`
       .join("")}
 
     /* Font Family */
-      --font-family: 'FK Grotesk Neue';
+      --font-family: "FK Grotesk Neue", Helvetica, sans-serif;
 
     /* New blocks theme css variables*/
     ${(props) => getBlocksCSSVariables(props.theme.blocksTheme)}
@@ -104,6 +105,10 @@ function App() {
                   <Route
                     path="/rewards/leaderboard-s1"
                     element={<LeaderBoardPage />}
+                  />
+                  <Route
+                    path="/discord/verification"
+                    element={<DiscordVerificationPage />}
                   />
                 </Routes>
               </Router>

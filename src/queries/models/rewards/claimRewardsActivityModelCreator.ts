@@ -1,5 +1,5 @@
-import { ClaimActivitesResponse } from '../../../queries/types';
+import { ClaimActivitesResponse } from "../../../queries/types";
 
 export const claimRewardsActivityModelCreator = (
-  response: ClaimActivitesResponse
+  response: ClaimActivitesResponse,
 ): ClaimActivitesResponse => response;

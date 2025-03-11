@@ -12,7 +12,6 @@ import {
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 // hooks
-import { useAccountContext } from "../../../context/accountContext";
 import {
   useClaimRewardsActivity,
   useGetUserRewardsDetails,
@@ -20,7 +19,6 @@ import {
 
 // helpers
 import appConfig from "../../../config";
-import { generateVerificationProof } from "../utils/generateVerificationProof";
 import { walletToPCAIP10 } from "../../../helpers/web3helper";
 
 export type UseTwitterVerifyParams = {
@@ -38,12 +36,10 @@ const useVerifyTwitter = ({
   const [twitterActivityStatus, setTwitterActivityStatus] = useState<
     "Claimed" | "Pending" | null
   >(null);
-  const { userPushSDKInstance } = useAccountContext();
   const [updatedId, setUpdatedId] = useState<string | null>(null);
 
   const { universalAddress } = usePushWalletContext();
   const account = universalAddress?.address;
-  const isActiveAccount = userPushSDKInstance?.account === account;
   const caip10WalletAddress = walletToPCAIP10(
     universalAddress?.address as string,
   );
@@ -104,8 +100,6 @@ const useVerifyTwitter = ({
     async (userId: string | null) => {
       setErrorMessage("");
 
-      if (!isActiveAccount) return;
-
       const userTwitterDetails = await handleConnect();
 
       if (userTwitterDetails) {
@@ -130,7 +124,7 @@ const useVerifyTwitter = ({
         //   return;
         // }
 
-        console.log("twitter rewards");
+        console.log("twitter rewards", appConfig);
 
         // claimRewardsActivity(
         //   {
@@ -167,7 +161,7 @@ const useVerifyTwitter = ({
         // );
       }
     },
-    [isActiveAccount, userPushSDKInstance, handleConnect],
+    [handleConnect],
   );
 
   return {

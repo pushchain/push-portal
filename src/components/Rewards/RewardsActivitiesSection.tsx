@@ -7,8 +7,6 @@ import { css } from "styled-components";
 
 import { Box, Lock, Text } from "../../blocks";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
-// import { useAccount } from 'hooks';
-// import { walletToCAIP10 } from 'helpers/w2w';
 import {
   Activity,
   StakeActivityResponse,
@@ -20,7 +18,7 @@ import { useRewardsContext } from "../../context/rewardsContext";
 
 import { RewardsActivitiesListItem } from "./RewardsActivitiesListItem";
 import { walletToPCAIP10 } from "../../../src/helpers/web3helper";
-// import SocialHandleItem from './SocialHandleItem';
+import { useFilteredActivities } from "./hooks/useFilteredActivities";
 
 export type RewardActivitiesProps = Record<string, never>;
 
@@ -28,67 +26,44 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
   const { universalAddress } = usePushWalletContext();
   const account = universalAddress?.address as string;
 
-  const { data: rewardActivitiesResponse, isLoading: isLoadingActivities } =
-    useGetRewardsActivities();
-
-  // // Getting user Id by wallet address
-  const caip10WalletAddress = walletToPCAIP10(account);
-  const { data: userDetails } = useGetUserRewardsDetails({
-    caip10WalletAddress: caip10WalletAddress,
-  });
-
-  const isLoading = isLoadingActivities;
-
-  // If there are activities then render them else render 2 skeletons
-  const activityList =
-    rewardActivitiesResponse?.activities?.map((page) => page) || [];
-
-  const socialActivities = isLoading
-    ? Array(2).fill(0)
-    : activityList.filter(
-        (activity) =>
-          activity.index.startsWith(`social-activity`) &&
-          activity?.status === "ENABLED",
-      );
-
   const { isLocked } = useRewardsContext();
 
-  // Combine all activities into a single array
-  const allActivities = [...socialActivities];
-
-  // Extract the `activityType` from each activity and filter out any undefined values
-  const activityTypes = allActivities
-    .map((activity) => activity?.activityType) // Extract `activityType`
-    .filter(Boolean); // Remove undefined/null values
-
   const {
-    data: allUsersActivity,
-    isLoading: isAllActivitiesLoading,
-    refetch: refetchActivity,
-  } = useGetRewardsActivity(
-    { userId: userDetails?.userId as string, activityTypes: activityTypes },
-    { enabled: !!userDetails?.userId && activityTypes.length > 0 },
+    filteredActivities: topLevelActivities,
+    userDetails,
+    isLoadingActivities,
+    isUserActivityLoading,
+    userActivity,
+    refetch,
+  } = useFilteredActivities(account, [
+    "social-activity-1",
+    "social-activity-2",
+  ]);
+
+  const { filteredActivities: otherLevelActivities } = useFilteredActivities(
+    account,
+    ["social-activity-3"],
   );
 
   return (
     <Box display="flex" flexDirection="column" gap="spacing-md">
       <Box gap="spacing-md" display="flex" flexDirection="column">
         {/* These are the social activites Twitter and discord */}
-        {socialActivities.map((activity: any) => (
+        {topLevelActivities.map((activity: any) => (
           <RewardsActivitiesListItem
             key={activity.activityType}
             userId={userDetails?.userId || ""}
             activity={activity}
-            isLoadingItem={isLoading}
+            isLoadingItem={isLoadingActivities}
             isLocked={isLocked}
-            allUsersActivity={allUsersActivity as StakeActivityResponse}
-            isAllActivitiesLoading={isAllActivitiesLoading}
-            refetchActivity={refetchActivity}
+            allUsersActivity={userActivity as StakeActivityResponse}
+            isAllActivitiesLoading={isUserActivityLoading}
+            refetchActivity={refetch}
           />
         ))}
 
         {/* TODO: This activity is to implemented after 1st launch */}
-        {/* <Box
+        <Box
           display="flex"
           flexDirection="row"
           alignItems="center"
@@ -116,18 +91,18 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
           </Text>
         </Box>
 
-        {socialActivities.map((activity: any) => (
+        {otherLevelActivities.map((activity: any) => (
           <RewardsActivitiesListItem
             key={activity.activityType}
             userId={userDetails?.userId || ""}
             activity={activity}
-            isLoadingItem={isLoading}
+            isLoadingItem={isLoadingActivities}
             isLocked={isLocked}
-            allUsersActivity={allUsersActivity as StakeActivityResponse}
-            isAllActivitiesLoading={isAllActivitiesLoading}
-            refetchActivity={refetchActivity}
+            allUsersActivity={userActivity as StakeActivityResponse}
+            isAllActivitiesLoading={isUserActivityLoading}
+            refetchActivity={refetch}
           />
-        ))} */}
+        ))}
       </Box>
     </Box>
   );

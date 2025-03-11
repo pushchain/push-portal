@@ -19,7 +19,11 @@ const useCreateRewardsUser = () => {
   const isWalletConnected = Boolean(universalAddress?.address);
   const caip10WalletAddress = walletToPCAIP10(account);
 
-  const { status, refetch } = useGetUserRewardsDetails({
+  const {
+    data: userDetails,
+    status,
+    refetch,
+  } = useGetUserRewardsDetails({
     caip10WalletAddress: caip10WalletAddress,
   });
 
@@ -30,7 +34,7 @@ const useCreateRewardsUser = () => {
   }: {
     onSuccessCallback?: (user: UserRewardsDetailResponse) => void;
   }) => {
-    if (hasRun.current) return;
+    if (hasRun.current || userDetails) return;
     hasRun.current = true;
 
     console.log("Creating user...");
@@ -58,6 +62,7 @@ const useCreateRewardsUser = () => {
   };
 
   const autoCreateUser = () => {
+    if (userDetails) return;
     if (!isWalletConnected || status !== "error") return;
 
     handleCreateUser({});
@@ -80,6 +85,7 @@ const useCreateRewardsUser = () => {
     errorMessage,
     shouldRun: !hasRun.current && isWalletConnected && status === "error",
     autoCreateUser,
+    userDetails,
   };
 };
 

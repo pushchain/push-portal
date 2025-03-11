@@ -5,16 +5,11 @@ import { useEffect, useState } from "react";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 // helpers
-import { generateVerificationProof } from "../utils/generateVerificationProof";
 import {
   useClaimRewardsActivity,
   useGetUserRewardsDetails,
 } from "../../../queries";
 import { walletToPCAIP10 } from "../../../helpers/web3helper";
-import { useAccountContext } from "../../../context/accountContext";
-
-// types
-// import { getActivityData } from '../utils/stakeRewardUtilities';
 
 export type UseVerifyRewardsParams = {
   activityTypeId: string;
@@ -33,7 +28,6 @@ const useVerifyRewards = ({
   const [rewardsActivityStatus, setRewardsActivityStatus] = useState<
     "Claimed" | "Pending" | null
   >(null);
-  const { userPushSDKInstance } = useAccountContext();
 
   const [updatedId, setUpdatedId] = useState<string | null>(null);
 
@@ -57,36 +51,19 @@ const useVerifyRewards = ({
     caip10WalletAddress: caip10WalletAddress,
   });
 
-  const { mutate: claimRewardsActivity } = useClaimRewardsActivity({
-    userId: updatedId as string,
-    activityTypeId,
-  });
+  const { mutate: claimRewardsActivity } = useClaimRewardsActivity();
 
   const handleVerify = async (userId: string | null) => {
     setErrorMessage("");
-
     const data = {};
-
-    const verificationProof = await generateVerificationProof(
-      data,
-      userPushSDKInstance,
-    );
-
-    if (verificationProof == null || verificationProof == undefined) {
-      if (userPushSDKInstance && userPushSDKInstance.readmode()) {
-        setVerifyingRewards(false);
-        setErrorMessage("Please Enable Push profile");
-      }
-      return;
-    }
 
     claimRewardsActivity(
       {
         userId: updatedId || (userId as string),
         activityTypeId,
-        pgpPublicKey: userPushSDKInstance.pgpPublicKey as string,
+        pgpPublicKey: "abcd",
         data: data,
-        verificationProof: verificationProof as string,
+        verificationProof: "abcd",
       },
       {
         onSuccess: (response) => {
