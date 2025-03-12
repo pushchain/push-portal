@@ -5,7 +5,6 @@ import vitePluginRequire from "vite-plugin-require";
 import svgr from "vite-plugin-svgr";
 import topLevelAwait from "vite-plugin-top-level-await";
 import viteTsconfigPaths from "vite-tsconfig-paths";
-import { ghPages } from "vite-plugin-gh-pages";
 
 import { getPreviewBasePath } from "./basePath";
 
@@ -15,7 +14,6 @@ export default defineConfig({
     topLevelAwait(),
     react(),
     svgr(),
-    ghPages(),
     viteTsconfigPaths({
       root: "./",
     }),
