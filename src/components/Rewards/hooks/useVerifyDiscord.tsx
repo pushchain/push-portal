@@ -13,7 +13,6 @@ import {
 
 // helpers
 import { walletToPCAIP10 } from "../../../helpers/web3helper";
-import { useAccountContext } from "../../../context/accountContext";
 
 type UseDiscordActivityVerificationProps = {
   activityTypeId: string;
@@ -27,7 +26,6 @@ const useVerifyDiscord = ({
   setErrorMessage,
 }: UseDiscordActivityVerificationProps) => {
   const token = localStorage.getItem("access_token");
-  const { userPushSDKInstance } = useAccountContext();
 
   const [discordActivityStatus, setDiscordActivityStatus] = useState<
     "Claimed" | null
@@ -51,10 +49,7 @@ const useVerifyDiscord = ({
     caip10WalletAddress: caip10WalletAddress,
   });
 
-  const { mutate: claimRewardsActivity } = useClaimRewardsActivity({
-    userId: updatedId as string,
-    activityTypeId,
-  });
+  const { mutate: claimRewardsActivity } = useClaimRewardsActivity();
 
   const handleDiscordVerification = (userId: string) => {
     setUpdatedId(userId);
@@ -93,54 +88,39 @@ const useVerifyDiscord = ({
           discord_token: token,
         };
 
-        // const verificationProof = await generateVerificationProof(
-        //   data,
-        //   userPushSDKInstance,
-        // );
         const verificationProof = "abcd";
-
-        // if (verificationProof == null || verificationProof == undefined) {
-        //   if (userPushSDKInstance && userPushSDKInstance.readmode()) {
-        //     setVerifyingDiscord(false);
-        //     setErrorMessage("Please Enable Push profile");
-        //   }
-        //   return;
-        // }
 
         localStorage.removeItem("access_token");
         localStorage.removeItem("username");
         localStorage.removeItem("expires_in");
 
-        console.log(appConfig.discord_client_id, "discord session");
-
-        // claimRewardsActivity(
-        //   {
-        //     userId: updatedId || (userId as string),
-        //     activityTypeId,
-        //     pgpPublicKey: "abcd",
-        //     data: data,
-        //     verificationProof: verificationProof as string,
-        //   },
-        //   {
-        //     onSuccess: (response) => {
-        //       if (response.status === "COMPLETED") {
-        //         setDiscordActivityStatus("Claimed");
-        //         refetchActivity();
-        //         refetchUserDetails();
-        //         setVerifyingDiscord(false);
-        //         setErrorMessage("");
-        //       }
-        //     },
-        //     onError: (error: any) => {
-        //       console.log("Error in creating activity", error);
-        //       setVerifyingDiscord(false);
-        //       if (error.name) {
-        //         setErrorMessage(error.response.data.error);
-        //       }
-        //     },
-        //   },
-        // );
-        setVerifyingDiscord(false);
+        claimRewardsActivity(
+          {
+            userId: updatedId || (userId as string),
+            activityTypeId,
+            pgpPublicKey: "abcd",
+            data: data,
+            verificationProof: verificationProof as string,
+          },
+          {
+            onSuccess: (response) => {
+              if (response.status === "COMPLETED") {
+                setDiscordActivityStatus("Claimed");
+                refetchActivity();
+                refetchUserDetails();
+                setVerifyingDiscord(false);
+                setErrorMessage("");
+              }
+            },
+            onError: (error: any) => {
+              console.log("Error in creating activity", error);
+              setVerifyingDiscord(false);
+              if (error.name) {
+                setErrorMessage(error.response.data.error);
+              }
+            },
+          },
+        );
       }
     },
     [account],

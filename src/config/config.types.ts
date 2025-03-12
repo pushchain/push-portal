@@ -1,3 +1,13 @@
+type FirebaseConfig = {
+  apiKey: string;
+  authDomain: string;
+  projectId: string;
+  storageBucket: string;
+  messagingSenderId: string;
+  appId: string;
+  measurementId?: string; // Optional because some Firebase projects may not use Analytics
+};
+
 export interface Config {
   // App-specific Configuration
   APP_NAME: string;
@@ -8,4 +18,5 @@ export interface Config {
   ALLOWED_NETWORKS: number[];
   DEFAULT_CHAIN: number;
   discord_client_id: number;
+  firebaseConfig: FirebaseConfig;
 }
