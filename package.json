@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build:pr:preview": "node build.mjs preview && NODE_OPTIONS=--max-old-space-size=8192 yarn build"
+    "build:pr:preview": "node build.mjs preview && NODE_OPTIONS=--max-old-space-size=8192 vite build"
   },
   "dependencies": {
     "@babel/runtime": "^7.26.9",
