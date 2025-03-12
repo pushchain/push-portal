@@ -16,25 +16,7 @@ const prepForDeployment = async () => {
   console.log(chalk.green("Starting Custom Deployment Prebuild..."));
 
   const appEnv = "preview"; // Only preview environment
-  await changeIndexHTML(appEnv);
   await changeENV(appEnv);
-};
-
-const changeIndexHTML = async (appEnv) => {
-  const indexPath = "./index.html";
-  const indexReplacePath = `./public/index-${appEnv}.html`;
-
-  fs.copyFileSync(indexReplacePath, indexPath);
-
-  const robotsPath = "./public/robots.txt";
-  const robotsReplacePath = `./public/robots-${appEnv}.txt`;
-
-  fs.copyFileSync(robotsReplacePath, robotsPath);
-
-  const sitemapPath = "./public/sitemap.txt";
-  const sitemapReplacePath = `./public/sitemap-${appEnv}.txt`;
-
-  fs.copyFileSync(sitemapReplacePath, sitemapPath);
 };
 
 const changeENV = async (appEnv) => {
