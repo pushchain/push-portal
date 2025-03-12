@@ -6,6 +6,8 @@ import svgr from "vite-plugin-svgr";
 import topLevelAwait from "vite-plugin-top-level-await";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 
+import { getPreviewBasePath } from "./basePath";
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -24,6 +26,7 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  base: getPreviewBasePath() || undefined,
   build: {
     outDir: "build",
     sourcemap: false,
