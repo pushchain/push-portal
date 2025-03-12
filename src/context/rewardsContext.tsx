@@ -7,6 +7,8 @@ interface AuthModalContextType {
   setIsLocked: React.Dispatch<React.SetStateAction<boolean>>;
   isVerifyClicked: boolean;
   setIsVerifyClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  isXPRefreshCompleted: boolean;
+  setIsXPRefreshCompleted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AuthModalContext = createContext<AuthModalContextType | undefined>(
@@ -22,8 +24,10 @@ export const RewardsContextProvider = ({
   const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
   // context state for locked status in rewards activities
   const [isLocked, setIsLocked] = useState(true);
-  // context state for current epoch status
+  // context state for current rewards login status(manual or auto, manual if verify button is clicked, and auto - on wallet conect)
   const [isVerifyClicked, setIsVerifyClicked] = useState(false);
+  // context state for if refresh xp api is done and successful
+  const [isXPRefreshCompleted, setIsXPRefreshCompleted] = useState(false);
 
   return (
     <AuthModalContext.Provider
@@ -34,6 +38,8 @@ export const RewardsContextProvider = ({
         setIsLocked,
         isVerifyClicked,
         setIsVerifyClicked,
+        isXPRefreshCompleted,
+        setIsXPRefreshCompleted,
       }}
     >
       {children}

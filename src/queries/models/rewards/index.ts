@@ -10,3 +10,4 @@ export * from "./getPreviousPushStakeEpochModel";
 export * from "./getUniV2StakeEpochModel";
 export * from "./getRewardsLeaderboardModelCreator";
 export * from "./getUserXPModel";
+export * from "./updateUserXPModel";

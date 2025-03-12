@@ -4,7 +4,6 @@ import { useSearchParams } from "react-router-dom";
 // import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 import { device } from "../../config/globals";
-// import { useRewardsAuth } from "./hooks/useRewardsAuth";
 
 import RewardsDashboard from "./RewardsDashboard";
 import RewardsContent from "./RewardsContent";
@@ -14,6 +13,7 @@ import RewardsFooter from "./RewardsFooter";
 import { useCreateRewardsUser } from "./hooks/useCreateRewardsUser";
 import { Alert } from "../../blocks";
 import { useRewardsContext } from "../../context/rewardsContext";
+import { useRefreshUserXP } from "./hooks/useRefreshUserXp";
 
 const Rewards: FC = () => {
   // //fetch ref from url
@@ -25,6 +25,8 @@ const Rewards: FC = () => {
   const { errorMessage, autoCreateUser, shouldRun, handleCreateUser } =
     useCreateRewardsUser();
   const { isVerifyClicked } = useRewardsContext();
+
+  useRefreshUserXP();
 
   useEffect(() => {
     if (isVerifyClicked) return;

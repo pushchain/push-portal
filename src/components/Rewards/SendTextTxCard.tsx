@@ -31,7 +31,7 @@ const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
     refetch,
   } = useFilteredActivities(account, ["chain-activity-1"]);
 
-  const finalActivity = filteredActivities[0];
+  const finalActivity = filteredActivities?.[0];
   const updateActivities = () => {
     refetch();
   };

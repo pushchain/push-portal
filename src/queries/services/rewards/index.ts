@@ -12,3 +12,4 @@ export * from "./getUniV2StakeEpoch";
 export * from "./getRewardsLeaderboardS1";
 export * from "./getRewardsleaderboardS2";
 export * from "./getUserXP";
+export * from "./updateUserXP";

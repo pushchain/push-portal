@@ -31,8 +31,9 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
   setErrorMessage,
 }) => {
   const { universalAddress } = usePushWalletContext();
+
   const account = universalAddress?.address as string;
-  const { isLocked } = useRewardsContext();
+  const { isLocked, isXPRefreshCompleted } = useRewardsContext();
 
   // Get user activities and XP data
   const {
@@ -82,13 +83,8 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
 
   const isReadyToClaim = chessXP > chessCurrentLevelXPCumulative;
   const isEnded = chessXP > totalCount;
-
-  // console.log(
-  //   chessXP,
-  //   chessCurrentLevelXPCumulative,
-  //   chessNextXPCumulative,
-  //   chessXPLevel,
-  // );
+  const isLoading =
+    isLoadingActivities || (!isXPRefreshCompleted && Boolean(universalAddress));
 
   const updateActivities = () => {
     refetch();
@@ -137,43 +133,45 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
             color="text-tertiary"
           />
 
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            margin="spacing-md spacing-none"
-          >
-            {isLocked && (
-              <Button size="small" variant="tertiary" disabled>
-                Locked
-              </Button>
-            )}
+          <Skeleton isLoading={isLoading} width="fit-content">
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+              margin="spacing-md spacing-none"
+            >
+              {isLocked && (
+                <Button size="small" variant="tertiary" disabled>
+                  Locked
+                </Button>
+              )}
 
-            {!isLocked && isEnded && (
-              <Button variant="tertiary" size="small" disabled>
-                Ended
-              </Button>
-            )}
+              {!isLocked && isEnded && (
+                <Button variant="tertiary" size="small" disabled>
+                  Ended
+                </Button>
+              )}
 
-            {!isLocked && !isReadyToClaim && !isEnded && (
-              <Button variant="tertiary" size="small" disabled>
-                Level Up to Claim
-              </Button>
-            )}
+              {!isLocked && !isReadyToClaim && !isEnded && (
+                <Button variant="tertiary" size="small" disabled>
+                  Level Up to Claim
+                </Button>
+              )}
 
-            {!isLocked && isReadyToClaim && !isEnded && (
-              <ActivityButton
-                userId={userDetails?.userId}
-                activityTypeId={levelToPick?.id}
-                activityType={levelToPick?.activityType}
-                refetchActivity={updateActivities}
-                setErrorMessage={setErrorMessage}
-                usersSingleActivity={usersSingleActivity}
-                isLoadingActivity={isUserActivityLoading}
-                label={"Claim"}
-              />
-            )}
-          </Box>
+              {!isLocked && isReadyToClaim && !isEnded && (
+                <ActivityButton
+                  userId={userDetails?.userId}
+                  activityTypeId={levelToPick?.id}
+                  activityType={levelToPick?.activityType}
+                  refetchActivity={updateActivities}
+                  setErrorMessage={setErrorMessage}
+                  usersSingleActivity={usersSingleActivity}
+                  isLoadingActivity={isUserActivityLoading}
+                  label={"Claim"}
+                />
+              )}
+            </Box>
+          </Skeleton>
 
           <Box display="flex" flexDirection="column" gap="spacing-xs">
             <Box

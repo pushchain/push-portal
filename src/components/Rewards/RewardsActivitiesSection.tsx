@@ -57,33 +57,35 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
         ))}
 
         {/* TODO: This activity is to implemented after 1st launch */}
-        <Box
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          margin="spacing-xxs spacing-none"
-          gap="spacing-xxs"
-          css={css`
-            &:before,
-            &:after {
-              content: "";
-              flex: 1 1;
-              border-bottom: 1px solid var(--stroke-secondary);
-              margin: auto;
-            }
-            &:before {
-              margin-right: var(--s3);
-            }
-            &:after {
-              margin-left: var(--s3);
-            }
-          `}
-        >
-          <Lock size={28} color="icon-tertiary" />
-          <Text variant="bs-semibold" color="text-tertiary">
-            Verify X and Discord to unlock more activities
-          </Text>
-        </Box>
+        {isLocked && (
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            margin="spacing-xxs spacing-none"
+            gap="spacing-xxs"
+            css={css`
+              &:before,
+              &:after {
+                content: "";
+                flex: 1 1;
+                border-bottom: 1px solid var(--stroke-secondary);
+                margin: auto;
+              }
+              &:before {
+                margin-right: var(--s3);
+              }
+              &:after {
+                margin-left: var(--s3);
+              }
+            `}
+          >
+            <Lock size={28} color="icon-tertiary" />
+            <Text variant="bs-semibold" color="text-tertiary">
+              Verify X and Discord to unlock more activities
+            </Text>
+          </Box>
+        )}
 
         {otherLevelActivities?.map((activity: any) => (
           <RewardsActivitiesListItem
