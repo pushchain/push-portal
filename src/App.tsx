@@ -100,7 +100,7 @@ function App() {
 
               <Router basename={basename}>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route index element={<Home />} />
                   <Route path="/rewards" element={<RewardsPage />} />
                   <Route
                     path="/rewards/leaderboard"
