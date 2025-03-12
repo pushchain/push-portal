@@ -75,7 +75,7 @@ const GlobalStyle = createGlobalStyle`
       .join("")}
 
     /* Font Family */
-      --font-family: "FK Grotesk Neue", Helvetica, sans-serif;
+      --font-family: "FK Grotesk Neue";
 
     /* New blocks theme css variables*/
     ${(props) => getBlocksCSSVariables(props.theme.blocksTheme)}

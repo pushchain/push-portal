@@ -491,14 +491,14 @@ span,
 p,
 label,
 div {
-    font-family: "FK Grotesk Neue", Helvetica, sans-serif;
+    font-family: "FK Grotesk Neue";
 }
 
 button,
 a,
 a:before,
 a:after {
-    font-family: "FK Grotesk Neue", Helvetica, sans-serif;
+    font-family: "FK Grotesk Neue";
     border: 0;
     outline: 0;
 
@@ -509,7 +509,7 @@ a:after {
 }
 
 h1 {
-    font-family: "FK Grotesk Neue", Helvetica, sans-serif;
+    font-family: "FK Grotesk Neue";
     font-weight: 700;
     line-height: 1.25em;
     color: #fff;
@@ -524,7 +524,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "FK Grotesk Neue", Helvetica, sans-serif;
+    font-family: "FK Grotesk Neue";
     font-weight: 500;
     font-size: 32px;
     line-height: 1.25em;
