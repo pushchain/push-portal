@@ -12,6 +12,7 @@ import RewardsPage from "./pages/RewardsPage";
 import { blocksColors, getBlocksCSSVariables } from "../src/blocks";
 import LeaderBoardPage from "./pages/LeaderBoardPage";
 import { DiscordVerificationPage } from "./pages/DiscordVerificationPage";
+import { getPreviewBasePath } from "../basePath";
 
 const Home = () => <h1 style={{ color: "black" }}>Home Page</h1>;
 
@@ -82,6 +83,9 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
+const basename =
+  getPreviewBasePath() || import.meta.env.VITE_APP_PUBLIC_URL || "/";
+
 const queryClient = new QueryClient({});
 
 function App() {
@@ -94,7 +98,7 @@ function App() {
               {/* Global style */}
               <GlobalStyle />
 
-              <Router>
+              <Router basename={basename}>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/rewards" element={<RewardsPage />} />
