@@ -13,7 +13,7 @@ import RewardsFooter from "./RewardsFooter";
 import { useCreateRewardsUser } from "./hooks/useCreateRewardsUser";
 import { Alert } from "../../blocks";
 import { useRewardsContext } from "../../context/rewardsContext";
-import { useRefreshUserXP } from "./hooks/useRefreshUserXp";
+import { useRefreshUserXP } from "./hooks/useRefreshUserXP";
 
 const Rewards: FC = () => {
   // //fetch ref from url
