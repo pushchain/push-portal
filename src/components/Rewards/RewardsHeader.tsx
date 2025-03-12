@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -8,22 +8,29 @@ import {
 } from "@pushprotocol/pushchain-ui-kit";
 
 import { useTheme } from "../../context/themeContext";
-
 import { Box, LightFilled, MoonFilled } from "../../../src/blocks";
 import ChainLogo from "../../../static/assets/website/chain/ChainLogo.svg";
 import ChainLogoDark from "/static/assets/website/chain/ChainLogoDark.svg";
+import { AiOutlineClose } from "react-icons/ai";
+import Bars from "../../../static/assets/website/shared/bars@3x.png";
+import { Image } from "../../css/SharedStyling";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import { device, size } from "../../config/globals";
+import { BsList } from "react-icons/bs";
 
 const RewardsHeader: FC = () => {
   const baseURL = "/";
   const navigate = useNavigate();
   const { darkMode, toggleTheme } = useTheme();
-
   const { universalAddress } = usePushWalletContext();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isTablet = useMediaQuery(device.tablet);
 
   const GoToHome = () => {
-    const targetUrl = baseURL;
-    navigate(targetUrl);
+    navigate(baseURL);
+    setIsMenuOpen(false);
   };
+
   return (
     <Box
       width="100%"
@@ -57,29 +64,79 @@ const RewardsHeader: FC = () => {
         )}
       </Box>
 
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        width="fit-content"
-        css={css`
-          button {
-            font-family: FK Grotesk Neue !important;
-          }
-
-          @media (max-width: 768px) {
-            display: none;
-          }
-        `}
-      >
+      {isTablet ? (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          width="fit-content"
+          cursor="pointer"
+          onClick={() => setIsMenuOpen(true)}
+        >
+          <BsList size={28} color={darkMode ? "#fff" : "icon-primary"} />
+        </Box>
+      ) : (
         <PushWalletButton
           universalAddress={universalAddress}
           title="Connect Push Wallet"
           styling={{
-            width: "inherit",
+            width: "fit-content",
+            fontFamily: "FK Grotesk Neue, Helvetica, sans-serif",
           }}
         />
-      </Box>
+      )}
+
+      {isMenuOpen && isTablet && (
+        <Box
+          position="fixed"
+          backgroundColor="surface-primary"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          css={css`
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99999999;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            padding: 24px;
+            box-sizing: border-box;
+          `}
+        >
+          <Box
+            cursor="pointer"
+            width="100%"
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            onClick={() => setIsMenuOpen(false)}
+            css={css`
+              box-sizing: border-box;
+            `}
+          >
+            <Box cursor="pointer" onClick={GoToHome}>
+              {darkMode ? (
+                <img src={ChainLogoDark} width={150} />
+              ) : (
+                <img src={ChainLogo} width={150} />
+              )}
+            </Box>
+            <AiOutlineClose size={32} color="white" />
+          </Box>
+
+          <PushWalletButton
+            universalAddress={universalAddress}
+            title="Connect Push Wallet"
+            styling={{
+              width: "100%",
+              margin: "48px 0",
+              fontFamily: "FK Grotesk Neue, Helvetica, sans-serif",
+            }}
+          />
+        </Box>
+      )}
     </Box>
   );
 };
