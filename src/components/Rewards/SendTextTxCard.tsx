@@ -39,8 +39,6 @@ const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
   const usersSingleActivity =
     (userActivity?.[finalActivity?.activityType] as UsersActivity) ?? null;
 
-  // const isLoadingActivities = true;
-
   return (
     <Skeleton
       isLoading={isLoadingActivities}

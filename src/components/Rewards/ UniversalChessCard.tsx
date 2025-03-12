@@ -18,6 +18,10 @@ import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import { useGetUserXP, UsersActivity } from "../../queries";
 import { ActivityButton } from "./ActivityButton";
 import { useFilteredActivities } from "./hooks/useFilteredActivities";
+import { calculateLevelFromXP } from "./utils/calculateLevelfromXp";
+import { useRewardsContext } from "../../context/rewardsContext";
+
+const totalCount = 127000;
 
 export type UniversalChessCardProps = {
   errorMessage: string;
@@ -28,10 +32,11 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
 }) => {
   const { universalAddress } = usePushWalletContext();
   const account = universalAddress?.address as string;
-  // const [activeActivity, setActivity] = useState(null);
+  const { isLocked } = useRewardsContext();
 
+  // Get user activities and XP data
   const {
-    filteredActivities: emailActivities,
+    filteredActivities: chessActivities,
     userDetails,
     isLoadingActivities,
     isUserActivityLoading,
@@ -43,15 +48,48 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
     userId: userDetails?.userId as string,
   });
 
-  const chessXPLevel = allXPData?.chess ?? 0;
-  const levelToPick = emailActivities?.filter(
-    (item) => item?.index == `chess:xp-level-${chessXPLevel + 1}`,
-  )[0];
+  // Get XP details
+  const chessXP = allXPData?.xpData.chess ?? 0;
+  const xpForNextLevel = allXPData?.xpForNextLevelMap || {};
+
+  // Calculate level, next XP level, and progress
+  const {
+    currentLevel: chessXPLevel,
+    currentLevelXP: chessCurrentLevelXPCumulative,
+    nextLevelXP: chessNextXPCumulative,
+    progressToMaxLevel: chessProgress,
+  } = calculateLevelFromXP(chessXP, xpForNextLevel);
+
+  // Find unclaimed levels from userActivity
+  const unclaimedLevels = userActivity
+    ? Object.keys(userActivity)
+        .filter((key) => userActivity[key]?.error === "Not Found")
+        .map((key) => Number(key.replace("chess:xp_level_", "")))
+        .filter((level) => level <= chessXPLevel)
+        .sort((a, b) => a - b)
+    : [];
+
+  // Determine the next claimable level
+  const nextClaimableLevel = unclaimedLevels[0] ?? null;
+
+  // Get the corresponding activity for this level
+  const levelToPick = chessActivities?.find(
+    (item) => item?.index === `chess:xp-level-${nextClaimableLevel}`,
+  );
 
   const usersSingleActivity =
     (userActivity?.[levelToPick?.activityType] as UsersActivity) ?? null;
 
-  // console.log(allUsersActivity, levelToPick);
+  const isReadyToClaim = chessXP > chessCurrentLevelXPCumulative;
+  const isEnded = chessXP > totalCount;
+
+  // console.log(
+  //   chessXP,
+  //   chessCurrentLevelXPCumulative,
+  //   chessNextXPCumulative,
+  //   chessXPLevel,
+  // );
+
   const updateActivities = () => {
     refetch();
   };
@@ -105,20 +143,36 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
             justifyContent="space-between"
             margin="spacing-md spacing-none"
           >
-            {/* <Button variant="tertiary" size="small" disabled>
-            Level Up to Claim
-          </Button> */}
+            {isLocked && (
+              <Button size="small" variant="tertiary" disabled>
+                Locked
+              </Button>
+            )}
 
-            <ActivityButton
-              userId={userDetails?.userId}
-              activityTypeId={levelToPick?.id}
-              activityType={levelToPick?.activityType}
-              refetchActivity={() => updateActivities()}
-              setErrorMessage={setErrorMessage}
-              usersSingleActivity={usersSingleActivity}
-              isLoadingActivity={isUserActivityLoading}
-              label={"Level Up to Claim"}
-            />
+            {!isLocked && isEnded && (
+              <Button variant="tertiary" size="small" disabled>
+                Ended
+              </Button>
+            )}
+
+            {!isLocked && !isReadyToClaim && !isEnded && (
+              <Button variant="tertiary" size="small" disabled>
+                Level Up to Claim
+              </Button>
+            )}
+
+            {!isLocked && isReadyToClaim && !isEnded && (
+              <ActivityButton
+                userId={userDetails?.userId}
+                activityTypeId={levelToPick?.id}
+                activityType={levelToPick?.activityType}
+                refetchActivity={updateActivities}
+                setErrorMessage={setErrorMessage}
+                usersSingleActivity={usersSingleActivity}
+                isLoadingActivity={isUserActivityLoading}
+                label={"Claim"}
+              />
+            )}
           </Box>
 
           <Box display="flex" flexDirection="column" gap="spacing-xs">
@@ -154,11 +208,11 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
             </Box>
 
             <ProgressBar
-              progress={40}
-              max={200}
+              progress={chessProgress}
+              max={100}
               size="large"
               progressIcon={<RewardsStarGradient size={35} />}
-              progressIconText="200XP"
+              progressIconText={`${chessXP}XP`}
             />
           </Box>
         </Box>
