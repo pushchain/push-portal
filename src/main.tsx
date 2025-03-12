@@ -8,6 +8,8 @@ import { BrowserRouter } from "react-router-dom";
 const basename =
   getPreviewBasePath() || import.meta.env.VITE_APP_PUBLIC_URL || "/";
 
+console.log("Router basename:", basename);
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter basename={basename}>
