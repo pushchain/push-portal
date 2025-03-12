@@ -10,7 +10,7 @@ import {
 } from "../../queries";
 import { Box, Spinner } from "../../blocks";
 
-import { LeaderboardListItem } from "./LeaderBoardListItem";
+import { LeaderboardListItem } from "./LeaderboardListItem";
 
 import { pCAIP10ToWallet } from "../../helpers/web3helper";
 import { LeaderBoardNullState } from "./LeaderboardNullState";
