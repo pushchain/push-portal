@@ -138,7 +138,6 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
               alignItems="center"
               justifyContent="center"
               padding="spacing-xxs"
-              // margin='spacing-none spacing-none spacing-none spacing-xxs'
             >
               <RewardsActivityIcon type={activity.activityType} />
             </Box>

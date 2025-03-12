@@ -9,10 +9,9 @@ import { useVerifyRewards } from "./hooks/useVerifyRewards";
 
 // helpers
 import {
-  bonusRewardActivities,
-  channelSubscriptionActivities,
   chessRewardsActivities,
   dailyRewardActivities,
+  emailRewardsActivities,
   otherRewardActivities,
   simulateRewardsActivities,
 } from "./utils/activityTypeArray";
@@ -93,8 +92,8 @@ export const ActivityVerificationButton = ({
 
     if (
       otherRewardActivities.includes(activityType) ||
-      bonusRewardActivities.includes(activityType) ||
       chessRewardsActivities.includes(activityType) ||
+      emailRewardsActivities.includes(activityType) ||
       simulateRewardsActivities.includes(activityType)
     ) {
       return {

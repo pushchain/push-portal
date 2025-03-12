@@ -32,16 +32,18 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
     "social-activity-2",
   ]);
 
-  const { filteredActivities: otherLevelActivities } = useFilteredActivities(
-    account,
-    ["social-activity-3"],
-  );
+  const {
+    filteredActivities: otherLevelActivities,
+    isUserActivityLoading: isOtherUserActivityLoading,
+    userActivity: otherUserActivity,
+    refetch: othersRefetch,
+  } = useFilteredActivities(account, ["social-activity-3"]);
 
   return (
     <Box display="flex" flexDirection="column" gap="spacing-md">
       <Box gap="spacing-md" display="flex" flexDirection="column">
         {/* These are the social activites Twitter and discord */}
-        {topLevelActivities.map((activity: any) => (
+        {topLevelActivities?.map((activity: any) => (
           <RewardsActivitiesListItem
             key={activity.activityType}
             userId={userDetails?.userId || ""}
@@ -83,16 +85,16 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
           </Text>
         </Box>
 
-        {otherLevelActivities.map((activity: any) => (
+        {otherLevelActivities?.map((activity: any) => (
           <RewardsActivitiesListItem
             key={activity.activityType}
             userId={userDetails?.userId || ""}
             activity={activity}
             isLoadingItem={isLoadingActivities}
             isLocked={isLocked}
-            allUsersActivity={userActivity as StakeActivityResponse}
-            isAllActivitiesLoading={isUserActivityLoading}
-            refetchActivity={refetch}
+            allUsersActivity={otherUserActivity as StakeActivityResponse}
+            isAllActivitiesLoading={isOtherUserActivityLoading}
+            refetchActivity={othersRefetch}
           />
         ))}
       </Box>
