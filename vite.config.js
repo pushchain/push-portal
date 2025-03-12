@@ -7,20 +7,24 @@ import topLevelAwait from "vite-plugin-top-level-await";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [
-        topLevelAwait(),
-        react(),
-        svgr(),
-        viteTsconfigPaths({
-            root: "./",
-        }),
-        nodePolyfills(),
-        vitePluginRequire.default(),
-    ],
-    define: {
-        global: "globalThis",
-    },
-    server: {
-        port: 3000,
-    },
+  plugins: [
+    topLevelAwait(),
+    react(),
+    svgr(),
+    viteTsconfigPaths({
+      root: "./",
+    }),
+    nodePolyfills(),
+    vitePluginRequire.default(),
+  ],
+  define: {
+    global: "globalThis",
+  },
+  server: {
+    port: 3000,
+  },
+  build: {
+    outDir: "build",
+    sourcemap: false,
+  },
 });
