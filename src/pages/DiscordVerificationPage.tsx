@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DiscordVerification } from "../components/discordVerification/discordVerification";
+import { DiscordVerification } from "../../src/components/discordVerification/DiscordVerification";
 
 export const DiscordVerificationPage = () => {
   return (
