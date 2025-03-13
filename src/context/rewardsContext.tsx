@@ -9,6 +9,8 @@ interface AuthModalContextType {
   setIsVerifyClicked: React.Dispatch<React.SetStateAction<boolean>>;
   isXPRefreshCompleted: boolean;
   setIsXPRefreshCompleted: React.Dispatch<React.SetStateAction<boolean>>;
+  signature: string | null;
+  setSignature: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const AuthModalContext = createContext<AuthModalContextType | undefined>(
@@ -28,6 +30,8 @@ export const RewardsContextProvider = ({
   const [isVerifyClicked, setIsVerifyClicked] = useState(false);
   // context state for if refresh xp api is done and successful
   const [isXPRefreshCompleted, setIsXPRefreshCompleted] = useState(false);
+  // sign signature
+  const [signature, setSignature] = useState(null);
 
   return (
     <AuthModalContext.Provider
@@ -40,6 +44,8 @@ export const RewardsContextProvider = ({
         setIsVerifyClicked,
         isXPRefreshCompleted,
         setIsXPRefreshCompleted,
+        signature,
+        setSignature,
       }}
     >
       {children}

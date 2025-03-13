@@ -52,6 +52,7 @@
     "react-infinite-scroller": "^1.2.6",
     "react-router-dom": "^6.9.0",
     "react-slider": "^2.0.6",
+    "siwe": "^3.0.0",
     "sonner": "^2.0.1",
     "styled-components": "^5.3.8",
     "web3": "^1.8.2"

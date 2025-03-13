@@ -4,9 +4,10 @@ import {
   useGetUserRewardsDetails,
 } from "../../../queries/hooks";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
-import { walletToPCAIP10 } from "../../../helpers/web3helper";
+import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import { UserRewardsDetailResponse } from "../../../queries";
 import { useRewardsContext } from "../../../context/rewardsContext";
+import { useSignMessageWithEthereum } from "./useSignMessage";
 
 const useCreateRewardsUser = () => {
   const hasRun = useRef(false);
@@ -14,17 +15,21 @@ const useCreateRewardsUser = () => {
 
   const { universalAddress } = usePushWalletContext();
   const { setIsVerifyClicked } = useRewardsContext();
+  const { signMessage } = useSignMessageWithEthereum();
 
   const account = universalAddress?.address as string;
   const isWalletConnected = Boolean(universalAddress?.address);
-  const caip10WalletAddress = walletToPCAIP10(account);
+  const fullCaip10WalletAddress = walletToFullCAIP10(
+    account,
+    universalAddress?.chainId,
+  );
 
   const {
     data: userDetails,
     status,
     refetch,
   } = useGetUserRewardsDetails({
-    caip10WalletAddress: caip10WalletAddress,
+    caip10WalletAddress: fullCaip10WalletAddress,
   });
 
   const { mutate: createUser } = useCreateRewardsUserQuery();
@@ -37,14 +42,15 @@ const useCreateRewardsUser = () => {
     if (hasRun.current || userDetails) return;
     hasRun.current = true;
 
-    console.log("Creating user...");
+    const { signature, messageToSend } = await signMessage();
+    if (!signature) throw new Error("Failed to sign message");
 
     createUser(
       {
-        pgpPublicKey: "abcd",
-        userWallet: caip10WalletAddress,
-        verificationProof: "abcd",
+        userWallet: fullCaip10WalletAddress,
+        verificationProof: signature,
         refPrimary: sessionStorage.getItem("ref"),
+        data: messageToSend,
       },
       {
         onSuccess: (data) => {

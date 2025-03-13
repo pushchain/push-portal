@@ -5,7 +5,7 @@ import {
   useUpdateUserXP,
 } from "../../../queries";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
-import { walletToPCAIP10 } from "../../../helpers/web3helper";
+import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import { useRewardsContext } from "../../../context/rewardsContext";
 
 export const useRefreshUserXP = () => {
@@ -13,7 +13,10 @@ export const useRefreshUserXP = () => {
   const { setIsXPRefreshCompleted } = useRewardsContext();
 
   const account = universalAddress?.address as string;
-  const caip10WalletAddress = walletToPCAIP10(account);
+  const caip10WalletAddress = walletToFullCAIP10(
+    account,
+    universalAddress?.chainId,
+  );
 
   const { data: userDetails } = useGetUserRewardsDetails({
     caip10WalletAddress: caip10WalletAddress,

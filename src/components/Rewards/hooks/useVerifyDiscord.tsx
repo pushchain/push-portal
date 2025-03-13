@@ -12,7 +12,8 @@ import {
 } from "../../../queries";
 
 // helpers
-import { walletToPCAIP10 } from "../../../helpers/web3helper";
+import { walletToFullCAIP10 } from "../../../helpers/web3helper";
+import { useSignMessageWithEthereum } from "./useSignMessage";
 
 type UseDiscordActivityVerificationProps = {
   activityTypeId: string;
@@ -36,9 +37,12 @@ const useVerifyDiscord = ({
   const [updatedId, setUpdatedId] = useState<string | null>(null);
 
   const { universalAddress } = usePushWalletContext();
+  const { signMessage } = useSignMessageWithEthereum();
+
   const account = universalAddress?.address;
-  const caip10WalletAddress = walletToPCAIP10(
+  const caip10WalletAddress = walletToFullCAIP10(
     universalAddress?.address as string,
+    universalAddress?.chainId,
   );
 
   useEffect(() => {
@@ -83,12 +87,11 @@ const useVerifyDiscord = ({
       const username = localStorage.getItem("username");
 
       if (username && token) {
-        const data = {
+        const { signature, messageToSend } = await signMessage({
           discord: username,
           discord_token: token,
-        };
-
-        const verificationProof = "abcd";
+        });
+        if (!signature) throw new Error("Failed to sign message");
 
         localStorage.removeItem("access_token");
         localStorage.removeItem("username");
@@ -98,9 +101,8 @@ const useVerifyDiscord = ({
           {
             userId: updatedId || (userId as string),
             activityTypeId,
-            pgpPublicKey: "abcd",
-            data: data,
-            verificationProof: verificationProof as string,
+            data: messageToSend,
+            verificationProof: signature,
           },
           {
             onSuccess: (response) => {

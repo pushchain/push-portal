@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from "react";
 import styled from "styled-components";
 import { useSearchParams } from "react-router-dom";
-// import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 import { device } from "../../config/globals";
 

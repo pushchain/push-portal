@@ -11,7 +11,7 @@ import { useGetUserRewardsDetails } from "../../queries";
 
 //helpers
 import { getPreviewBasePath } from "../../../basePath";
-import { walletToPCAIP10 } from "../../helpers/web3helper";
+import { walletToFullCAIP10 } from "../../helpers/web3helper";
 import { useCopy } from "../../hooks/useCopy";
 
 // components
@@ -26,9 +26,12 @@ const ReferralSection: FC<ReferralSectionProps> = () => {
   const { universalAddress } = usePushWalletContext();
   const account = universalAddress?.address;
   const isWalletConnected = Boolean(universalAddress?.address);
-  const caip10WalletAddress = walletToPCAIP10(account);
+  const caip10WalletAddress = walletToFullCAIP10(
+    account,
+    universalAddress?.chainId,
+  );
 
-  const { data: userDetails, isLoading } = useGetUserRewardsDetails({
+  const { data: userDetails } = useGetUserRewardsDetails({
     caip10WalletAddress: caip10WalletAddress,
   });
 

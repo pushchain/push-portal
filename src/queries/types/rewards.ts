@@ -191,7 +191,6 @@ export type ClaimRewardsActivityProps = {
   activityTypeId: string;
   data: Prop | {};
   verificationProof: string;
-  pgpPublicKey: string;
 };
 
 export type RewardActivityStatusProps = {

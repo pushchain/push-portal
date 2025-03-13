@@ -9,7 +9,8 @@ import {
   useClaimRewardsActivity,
   useGetUserRewardsDetails,
 } from "../../../queries";
-import { walletToPCAIP10 } from "../../../helpers/web3helper";
+import { walletToFullCAIP10 } from "../../../helpers/web3helper";
+import { useSignMessageWithEthereum } from "./useSignMessage";
 
 export type UseVerifyRewardsParams = {
   activityTypeId: string;
@@ -32,9 +33,11 @@ const useVerifyRewards = ({
   const [updatedId, setUpdatedId] = useState<string | null>(null);
 
   const { universalAddress } = usePushWalletContext();
+  const { signMessage } = useSignMessageWithEthereum();
 
-  const caip10WalletAddress = walletToPCAIP10(
+  const caip10WalletAddress = walletToFullCAIP10(
     universalAddress?.address as string,
+    universalAddress?.chainId,
   );
 
   useEffect(() => {
@@ -55,15 +58,16 @@ const useVerifyRewards = ({
 
   const handleVerify = async (userId: string | null) => {
     setErrorMessage("");
-    const data = {};
+
+    const { signature, messageToSend } = await signMessage();
+    if (!signature) throw new Error("Failed to sign message");
 
     claimRewardsActivity(
       {
         userId: updatedId || (userId as string),
         activityTypeId,
-        pgpPublicKey: "abcd",
-        data: data,
-        verificationProof: "abcd",
+        data: messageToSend,
+        verificationProof: signature,
       },
       {
         onSuccess: (response) => {

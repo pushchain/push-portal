@@ -1,4 +1,5 @@
-import { walletToPCAIP10 } from "../../../helpers/web3helper";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import {
   useGetRewardsActivities,
   useGetRewardsActivity,
@@ -10,7 +11,11 @@ export const useFilteredActivities = (
   activityIndexes: string[],
   filterType: "includes" | "startsWith" = "includes", // Default is "includes"
 ) => {
-  const caip10WalletAddress = walletToPCAIP10(account);
+  const { universalAddress } = usePushWalletContext();
+  const caip10WalletAddress = walletToFullCAIP10(
+    account,
+    universalAddress?.chainId,
+  );
 
   const { data: allActivities, isLoading: isLoadingActivities } =
     useGetRewardsActivities();

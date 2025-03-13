@@ -1,8 +1,8 @@
 // React + Web3 Essentials
-import * as ethers from 'ethers';
-import Resolution from '@unstoppabledomains/resolution';
+import * as ethers from "ethers";
+import Resolution from "@unstoppabledomains/resolution";
 
-const infuraAPIKey = 'dd262cc008764b29bd6a15249db4772e';
+const infuraAPIKey = "dd262cc008764b29bd6a15249db4772e";
 
 export const allowedNetworks = [
   1, //for ethereum mainnet
@@ -18,13 +18,13 @@ export const allowedNetworks = [
 ];
 
 export enum ENV {
-  PROD = 'prod',
-  STAGING = 'staging',
-  DEV = 'dev',
+  PROD = "prod",
+  STAGING = "staging",
+  DEV = "dev",
   /**
    * **This is for local development only**
    */
-  LOCAL = 'local',
+  LOCAL = "local",
 }
 
 const Constants = {
@@ -58,7 +58,7 @@ const AddressValidators: AddressValidatorsType = {
 };
 
 export function validateCAIP(addressInCAIP: string) {
-  const [blockchain, networkId, address] = addressInCAIP.split(':');
+  const [blockchain, networkId, address] = addressInCAIP.split(":");
 
   if (!blockchain) return false;
   if (!networkId) return false;
@@ -103,14 +103,25 @@ export function getCAIPAddress(env: ENV, address: string, msg?: string) {
 
 // P = Partial CAIP
 export const walletToPCAIP10 = (account: string): string => {
-  if (account?.includes('eip155:')) {
+  if (account?.includes("eip155:")) {
     return account;
   }
-  return 'eip155:' + account;
+  return "eip155:" + account;
+};
+
+export const walletToFullCAIP10 = (
+  account: string,
+  chainId: string,
+): string => {
+  if (account?.includes("eip155:")) {
+    return account;
+  } else if (chainId) {
+    return "eip155:" + `${chainId}:` + account;
+  }
 };
 
 export const pCAIP10ToWallet = (wallet: string): string => {
-  wallet = wallet?.replace('eip155:', '');
+  wallet = wallet?.replace("eip155:", "");
   return wallet;
 };
 
@@ -121,10 +132,10 @@ export const toChecksumAddress = (address: string): string => {
 export const shortenText = (
   str: string,
   substringLengthStart: number,
-  substringLengthEnd?: number
+  substringLengthEnd?: number,
 ): string => {
   return `${str?.substring(0, substringLengthStart)}...${str?.substring(
-    str?.length - (substringLengthEnd ?? substringLengthStart)
+    str?.length - (substringLengthEnd ?? substringLengthStart),
   )}`;
 };
 
@@ -135,17 +146,17 @@ export const getUdResolver = (): Resolution => {
     uns: {
       locations: {
         Layer1: {
-          network: 'mainnet', // add config for sepolia once it's supported by UD
+          network: "mainnet", // add config for sepolia once it's supported by UD
           provider: new ethers.providers.InfuraProvider(
             l1ChainId,
-            infuraAPIKey
+            infuraAPIKey,
           ),
         },
         Layer2: {
-          network: 'polygon-mainnet',
+          network: "polygon-mainnet",
           provider: new ethers.providers.InfuraProvider(
             l2ChainId,
-            infuraAPIKey
+            infuraAPIKey,
           ),
         },
       },
@@ -154,16 +165,16 @@ export const getUdResolver = (): Resolution => {
 };
 
 export const traceStackCalls = () => {
-  const stack = new Error().stack || '';
-  const stackLines = stack.split('\n');
-  const caller = stackLines[3] || 'Caller not found'; // The 0th line is "Error", the 1st line is this function, the 2nd line is the function that called this function, and the 3rd line is the caller we're interested in.
+  const stack = new Error().stack || "";
+  const stackLines = stack.split("\n");
+  const caller = stackLines[3] || "Caller not found"; // The 0th line is "Error", the 1st line is this function, the 2nd line is the function that called this function, and the 3rd line is the caller we're interested in.
   console.debug(
-    `src::helpers::DebugHelper::traceStackCalls::Caller ${caller.trim()}`
+    `src::helpers::DebugHelper::traceStackCalls::Caller ${caller.trim()}`,
   );
 };
 
 export const retrieveUserPGPKeyFromStorage = (
-  account: string
+  account: string,
 ): string | null => {
   const key = getUniquePGPKey(account);
   const value = localStorage.getItem(key);

@@ -9,7 +9,8 @@ export const createUserRewardsDetail = (payload: any) =>
     url: `${getRewardsBaseURL()}/v2/users/`,
     data: {
       userWallet: payload.userWallet,
-      pgpPublicKey: payload.pgpPublicKey,
+      data: payload.data,
+      // pgpPublicKey: payload.pgpPublicKey,
       verificationProof: payload.verificationProof,
       refPrimary: payload.refPrimary,
     },

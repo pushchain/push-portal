@@ -20,7 +20,8 @@ import {
 
 // helpers
 import appConfig from "../../../config";
-import { walletToPCAIP10 } from "../../../helpers/web3helper";
+import { walletToFullCAIP10 } from "../../../helpers/web3helper";
+import { useSignMessageWithEthereum } from "./useSignMessage";
 
 export type UseTwitterVerifyParams = {
   activityTypeId: string;
@@ -40,9 +41,12 @@ const useVerifyTwitter = ({
   const [updatedId, setUpdatedId] = useState<string | null>(null);
 
   const { universalAddress } = usePushWalletContext();
+  const { signMessage } = useSignMessageWithEthereum();
+
   const account = universalAddress?.address;
-  const caip10WalletAddress = walletToPCAIP10(
+  const caip10WalletAddress = walletToFullCAIP10(
     universalAddress?.address as string,
+    universalAddress?.chainId,
   );
 
   const { refetch: refetchUserDetails } = useGetUserRewardsDetails({
@@ -104,17 +108,17 @@ const useVerifyTwitter = ({
         const twitterHandle = (userTwitterDetails as any)?.reloadUserInfo
           ?.screenName;
 
-        const verificationProof = "abcd";
+        const { signature, messageToSend } = await signMessage({
+          twitter: twitterHandle,
+        });
+        if (!signature) throw new Error("Failed to sign message");
 
         claimRewardsActivity(
           {
             userId: updatedId || (userId as string),
             activityTypeId,
-            pgpPublicKey: "abcd",
-            data: {
-              twitter: twitterHandle,
-            },
-            verificationProof: verificationProof as string,
+            data: messageToSend,
+            verificationProof: signature as string,
           },
           {
             onSuccess: (response) => {

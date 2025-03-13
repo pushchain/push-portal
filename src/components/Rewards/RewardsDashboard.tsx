@@ -9,12 +9,13 @@ import { useGetUserRewardsDetails } from "../../queries";
 import { device } from "../../config/globals";
 import { Box, Button, Leaderboard, Points, Link } from "../../blocks";
 import { DashboardSectionPoints } from "./DashboardSectionPoints";
-import { walletToPCAIP10 } from "../../helpers/web3helper";
+import { walletToFullCAIP10 } from "../../helpers/web3helper";
 
 const RewardsDashboard: FC = () => {
   const { universalAddress } = usePushWalletContext();
-  const caip10WalletAddress = walletToPCAIP10(
+  const caip10WalletAddress = walletToFullCAIP10(
     universalAddress?.address as string,
+    universalAddress?.chainId,
   );
 
   const {
