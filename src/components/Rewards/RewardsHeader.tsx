@@ -12,10 +12,8 @@ import { Box, LightFilled, MoonFilled } from "../../../src/blocks";
 import ChainLogo from "../../../static/assets/website/chain/ChainLogo.svg";
 import ChainLogoDark from "/static/assets/website/chain/ChainLogoDark.svg";
 import { AiOutlineClose } from "react-icons/ai";
-import Bars from "../../../static/assets/website/shared/bars@3x.png";
-import { Image } from "../../css/SharedStyling";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { device, size } from "../../config/globals";
+import { device } from "../../config/globals";
 import { BsList } from "react-icons/bs";
 
 const RewardsHeader: FC = () => {
@@ -81,7 +79,7 @@ const RewardsHeader: FC = () => {
           title="Connect Push Wallet"
           styling={{
             width: "fit-content",
-            fontFamily: "FK Grotesk Neue, Helvetica, sans-serif",
+            fontFamily: "inherit",
           }}
         />
       )}
@@ -132,7 +130,7 @@ const RewardsHeader: FC = () => {
             styling={{
               width: "100%",
               margin: "48px 0",
-              fontFamily: "FK Grotesk Neue, Helvetica, sans-serif",
+              fontFamily: "inherit",
             }}
           />
         </Box>

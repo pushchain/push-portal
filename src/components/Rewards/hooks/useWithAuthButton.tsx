@@ -1,5 +1,5 @@
 // React and other libraries
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 // third party libraries
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
@@ -36,7 +36,7 @@ export const useAuthWithButton = ({
 
   const { handleCreateUser, userDetails } = useCreateRewardsUser();
 
-  const handleVerifyAction = async () => {
+  const handleVerifyAction = useCallback(async () => {
     setIsVerifyClicked(true);
 
     if (!isWalletConnected) {
@@ -45,7 +45,7 @@ export const useAuthWithButton = ({
       return;
     }
 
-    if (!userDetails) {
+    if (!userDetails?.userId) {
       setStep("creating");
 
       await handleCreateUser({
@@ -57,19 +57,20 @@ export const useAuthWithButton = ({
         },
       });
     }
-    if (!userDetails) return;
+
+    if (!userDetails?.userId) return;
 
     console.log("before auth");
     handleSuccess(userDetails);
-  };
+  }, [userDetails?.userId, isWalletConnected]);
 
   useEffect(() => {
     if (
       step === "connecting" &&
       isWalletConnected &&
-      connectionStatus &&
-      "connected"
+      connectionStatus == "connected"
     ) {
+      console.log("go again");
       handleVerifyAction(); // Retry the process after wallet connects
     }
   }, [connectionStatus]);
@@ -78,6 +79,7 @@ export const useAuthWithButton = ({
     setIsWalletConnectedAndProfileUnlocked(true);
     onSuccess(userDetails);
     setStep("done");
+    setIsVerifyClicked(false);
   };
 
   const authButton = useMemo(

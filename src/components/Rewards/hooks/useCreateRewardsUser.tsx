@@ -42,8 +42,7 @@ const useCreateRewardsUser = () => {
     createUser(
       {
         pgpPublicKey: "abcd",
-        // userWallet: caip10WalletAddress,
-        userWallet: "new new",
+        userWallet: caip10WalletAddress,
         verificationProof: "abcd",
         refPrimary: sessionStorage.getItem("ref"),
       },

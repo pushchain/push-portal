@@ -83,8 +83,7 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
-const basename =
-  getPreviewBasePath() || import.meta.env.VITE_APP_PUBLIC_URL || "/";
+const basename = getPreviewBasePath() || "/";
 
 const queryClient = new QueryClient({});
 
