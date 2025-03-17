@@ -15,6 +15,7 @@ const useCreateRewardsUser = () => {
 
   const { universalAddress } = usePushWalletContext();
   const { setIsVerifyClicked } = useRewardsContext();
+
   const { signMessage } = useSignMessageWithEthereum();
 
   const account = universalAddress?.address as string;
