@@ -111,7 +111,11 @@ const useVerifyTwitter = ({
         const { signature, messageToSend } = await signMessage({
           twitter: twitterHandle,
         });
-        if (!signature) throw new Error("Failed to sign message");
+        if (!signature) {
+          setErrorMessage("Failed to sign message");
+          setVerifyingTwitter(false);
+          throw new Error("Failed to sign message");
+        }
 
         claimRewardsActivity(
           {

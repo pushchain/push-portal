@@ -13,6 +13,7 @@ import {
   dailyRewardActivities,
   emailRewardsActivities,
   otherRewardActivities,
+  rumorsRewardsActivities,
   simulateRewardsActivities,
 } from "./utils/activityTypeArray";
 
@@ -32,6 +33,9 @@ type ActivityVerificationButtonProps = {
   setErrorMessage: (errorMessage: string) => void;
   isLoadingActivity: boolean;
   label?: string;
+  currentLevel?: string;
+  setCurrentLevel?: (currentLevel: string) => void;
+  onStartClaim?: () => void;
 };
 
 export const ActivityVerificationButton = ({
@@ -43,6 +47,8 @@ export const ActivityVerificationButton = ({
   userId,
   isLoadingActivity,
   label,
+  setCurrentLevel,
+  onStartClaim,
 }: ActivityVerificationButtonProps) => {
   const { universalAddress, connectionStatus } = usePushWalletContext();
   const isWalletConnected = Boolean(universalAddress?.address);
@@ -67,6 +73,8 @@ export const ActivityVerificationButton = ({
       refetchActivity,
       setErrorMessage,
       activityTypeIndex,
+      setCurrentLevel,
+      onStartClaim,
     });
 
   const activityData = useMemo(() => {
@@ -94,6 +102,7 @@ export const ActivityVerificationButton = ({
       otherRewardActivities.includes(activityType) ||
       chessRewardsActivities.includes(activityType) ||
       emailRewardsActivities.includes(activityType) ||
+      rumorsRewardsActivities.includes(activityType) ||
       simulateRewardsActivities.includes(activityType)
     ) {
       return {

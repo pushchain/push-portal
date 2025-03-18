@@ -1,5 +1,11 @@
-import React from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { css } from "styled-components";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+
+import { useFilteredActivities } from "./hooks/useFilteredActivities";
+import { useRewardsContext } from "../../context/rewardsContext";
+import { useGetUserXP, UsersActivity } from "../../queries";
+import { useRefreshUserXP } from "./hooks/useRefreshUserXP";
 
 import {
   Box,
@@ -9,110 +15,307 @@ import {
   RewardsBell,
   RewardsStar,
   RewardsStarGradient,
+  Skeleton,
   Text,
 } from "../../../src/blocks";
 
 import RumorsImg from "../../../static/assets/website/rewards/rumors-app.webp";
 import { RewardsActivityTitle } from "./RewardsActivityTitle";
+import { ActivityButton } from "./ActivityButton";
 
-const RumorsAppCard = () => {
+const numberOfLevels = 50;
+
+export type RumorsCardProps = {
+  errorMessage: string;
+  setErrorMessage: (errorMessage: string) => void;
+};
+
+const RumorsAppCard: FC<RumorsCardProps> = ({ setErrorMessage }) => {
+  const { universalAddress } = usePushWalletContext();
+  const account = universalAddress?.address as string;
+  const { isLocked } = useRewardsContext();
+  const [currentLevel, setCurrentLevel] = useState(null);
+  const [processingClaim, setProcessingClaim] = useState(false);
+  const [claimedLevelInfo, setClaimedLevelInfo] = useState({
+    level: null,
+    activityType: null,
+    isProcessing: false,
+  });
+
+  // Get user activities and XP data
+  const {
+    filteredActivities: rumorsActivities,
+    refetchFilteredActivities,
+    userDetails,
+    isLoadingActivities,
+    isUserActivityLoading,
+    hasUserActivityLoading,
+    userActivity,
+    refetch,
+  } = useFilteredActivities(account, ["rumors:xp"], "startsWith");
+
+  const { data: allXPData, refetch: refetchXPData } = useGetUserXP({
+    userId: userDetails?.userId as string,
+  });
+
+  // Get XP details
+  const rumorsXP = allXPData?.xpData.rumors ?? 0;
+  const xpLevels = allXPData?.xpForNextLevelMap || {};
+
+  const nextUnclaimedLevel = useMemo(() => {
+    if (!userActivity || hasUserActivityLoading !== "success") {
+      return null;
+    }
+
+    // If we're processing a claim, return the level we're currently claiming
+    if (processingClaim && claimedLevelInfo) {
+      return claimedLevelInfo.level;
+    }
+
+    for (let i = 1; i <= 50; i++) {
+      const key = `rumors:xp_level_${i}`;
+      if (!userActivity[key] || userActivity[key].error == "Not Found") {
+        return i;
+      }
+    }
+    return 51; //if all 1 - 50 is claimed
+  }, [userActivity, processingClaim, claimedLevelInfo, currentLevel]);
+
+  const xpNeededForCurrentLevel = nextUnclaimedLevel
+    ? xpLevels[nextUnclaimedLevel]
+    : null;
+
+  const levelToPick = rumorsActivities?.find(
+    (item) => item?.index === `rumors:xp-level-${nextUnclaimedLevel}`,
+  );
+
+  const usersSingleActivity =
+    (userActivity?.[levelToPick?.activityType] as UsersActivity) ?? null;
+
+  const { isPending } = useRefreshUserXP();
+
+  const isReadyToClaim = rumorsXP >= xpNeededForCurrentLevel;
+  const isEnded = nextUnclaimedLevel > numberOfLevels;
+  const isLoading =
+    isLoadingActivities || (isPending && Boolean(universalAddress));
+
+  const startClaimProcess = (level, activityType) => {
+    setClaimedLevelInfo((prevInfo) => ({
+      ...prevInfo,
+      level,
+      activityType,
+      isProcessing: true,
+    }));
+    setProcessingClaim(true);
+  };
+
+  useEffect(() => {
+    if (processingClaim && claimedLevelInfo && currentLevel) {
+      handleVerification();
+    }
+  }, [claimedLevelInfo, currentLevel]);
+
+  const resetAndRefetch = async () => {
+    // Reset all state
+    setProcessingClaim(false);
+    setCurrentLevel(null);
+    setClaimedLevelInfo({
+      level: null,
+      activityType: null,
+      isProcessing: false,
+    });
+
+    // Trigger all refetches in parallel
+    await Promise.all([
+      refetch(),
+      refetchXPData(),
+      refetchFilteredActivities(),
+    ]);
+
+    console.log("Reset and refresh completed");
+  };
+
+  const handleVerification = async () => {
+    if (!claimedLevelInfo || !claimedLevelInfo.activityType) {
+      setProcessingClaim(false);
+      return;
+    }
+
+    try {
+      const activityKey = claimedLevelInfo.activityType;
+
+      console.log("Verification status:", {
+        activityKey,
+        claimedInfo: claimedLevelInfo,
+      });
+
+      setTimeout(async () => {
+        await resetAndRefetch();
+      }, 2000);
+    } catch (error) {
+      console.error("Verification error:", error);
+      setProcessingClaim(false);
+      setClaimedLevelInfo({
+        level: null,
+        activityType: null,
+        isProcessing: false,
+      });
+    }
+  };
+
+  console.log(levelToPick, "level", nextUnclaimedLevel, userActivity);
+
   return (
-    <Box
-      backgroundColor="surface-primary"
-      padding="spacing-sm spacing-md"
+    <Skeleton
+      isLoading={isLoadingActivities}
       borderRadius="radius-md"
-      display="flex"
-      flexDirection="column"
-      justifyContent="space-between"
+      width="100%"
       css={css`
+        display: flex;
         flex: 1;
       `}
     >
-      <Box>
-        <Box
-          display="flex"
-          flexDirection={{ initial: "row", ml: "column-reverse" }}
-          alignItems={{ initial: "center", ml: "flex-start" }}
-          gap="spacing-md"
-          justifyContent="space-between"
-          width="100%"
-        >
-          <Box>
-            <Text variant="h4-semibold" color="text-primary">
-              Rumors App
-            </Text>
-            <RewardsActivityTitle
-              activityTitle="Visit [rumors.push.org](https://rumors.push.org) and create or react to rumors to level up."
-              isLoading={false}
-              variant="bm-regular"
-              color="text-tertiary"
-            />
-
-            <Button
-              variant="tertiary"
-              size="small"
-              css={css`
-                margin: var(--spacing-md) 0 0 0;
-              `}
-              disabled
-            >
-              Level Up to Claim
-            </Button>
-          </Box>
-
-          <img
-            src={RumorsImg}
-            style={{ width: "auto", height: "180px", objectFit: "contain" }}
-          />
-        </Box>
-
-        <Box display="flex" flexDirection="column" gap="spacing-xs">
+      <Box
+        backgroundColor="surface-primary"
+        padding="spacing-sm spacing-md"
+        borderRadius="radius-md"
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-between"
+        css={css`
+          flex: 1;
+        `}
+      >
+        <Box>
           <Box
             display="flex"
-            flexDirection="row"
+            flexDirection={{ initial: "row", ml: "column-reverse" }}
+            alignItems={{ initial: "center", ml: "flex-start" }}
+            gap="spacing-md"
             justifyContent="space-between"
-            margin="spacing-md spacing-none spacing-none spacing-none"
+            width="100%"
           >
-            <Box
-              display="flex"
-              flexDirection="row"
-              gap="spacing-xxs"
-              backgroundColor="surface-secondary"
-              alignItems="center"
-              borderRadius="radius-xxs"
-              padding="spacing-xxxs"
-            >
-              <Text>Lvl. 1</Text>
-              <RewardsStar color="icon-brand-medium" />
-            </Box>
-            <Box
-              display="flex"
-              flexDirection="row"
-              gap="spacing-xxs"
-              alignItems="center"
-            >
-              <Multiplier width={23} height={25} />
-              <Text variant="bm-semibold" color="text-state-success-bold">
-                1.5x
+            <Box>
+              <Text variant="h4-semibold" color="text-primary">
+                Rumors App
               </Text>
+              <RewardsActivityTitle
+                activityTitle="Visit [rumors.push.org](https://rumors.push.org) and create or react to rumors to level up."
+                isLoading={false}
+                variant="bm-regular"
+                color="text-tertiary"
+              />
 
-              <br />
+              <Skeleton isLoading={isLoading} width="fit-content">
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  margin="spacing-md spacing-none spacing-none spacing-none"
+                >
+                  {isLocked && (
+                    <Button size="small" variant="tertiary" disabled>
+                      Locked
+                    </Button>
+                  )}
 
-              <RewardsBell width={23} height={25} />
-              <Text variant="bm-semibold">10,000</Text>
+                  {!isLocked && isEnded && (
+                    <Button variant="tertiary" size="small" disabled>
+                      Ended
+                    </Button>
+                  )}
+
+                  {!isLocked && !isReadyToClaim && !isEnded && (
+                    <Button variant="tertiary" size="small" disabled>
+                      Level Up to Claim
+                    </Button>
+                  )}
+
+                  {!isLocked && isReadyToClaim && !isEnded && (
+                    <ActivityButton
+                      userId={userDetails?.userId}
+                      activityTypeId={levelToPick?.id}
+                      activityType={levelToPick?.activityType}
+                      refetchActivity={refetch}
+                      setErrorMessage={setErrorMessage}
+                      usersSingleActivity={usersSingleActivity}
+                      isLoadingActivity={isUserActivityLoading}
+                      currentLevel={currentLevel}
+                      setCurrentLevel={setCurrentLevel}
+                      label={"Claim"}
+                      onStartClaim={() => {
+                        const level = nextUnclaimedLevel;
+                        const activityType = levelToPick?.activityType;
+                        if (level && activityType) {
+                          startClaimProcess(level, activityType);
+                        }
+                      }}
+                    />
+                  )}
+                </Box>
+              </Skeleton>
             </Box>
+
+            <img
+              src={RumorsImg}
+              style={{ width: "auto", height: "180px", objectFit: "contain" }}
+            />
           </Box>
 
-          <ProgressBar
-            progress={40}
-            max={200}
-            size="large"
-            progressIcon={<RewardsStarGradient size={35} />}
-            progressIconText="200XP"
-          />
+          <Box display="flex" flexDirection="column" gap="spacing-xs">
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+              margin="spacing-md spacing-none spacing-none spacing-none"
+            >
+              <Box
+                display="flex"
+                flexDirection="row"
+                gap="spacing-xxs"
+                backgroundColor="surface-secondary"
+                alignItems="center"
+                borderRadius="radius-xxs"
+                padding="spacing-xxxs"
+              >
+                <Text>
+                  {levelToPick?.activityTitle ?? "No activity available"}
+                </Text>
+                <RewardsStar color="icon-brand-medium" />
+              </Box>
+              <Box
+                display="flex"
+                flexDirection="row"
+                gap="spacing-xxs"
+                alignItems="center"
+              >
+                {levelToPick?.multiplier > 1 && (
+                  <>
+                    <Multiplier width={23} height={25} />
+                    <Text variant="bm-semibold" color="text-state-success-bold">
+                      {levelToPick?.multiplier}x
+                    </Text>
+                  </>
+                )}
+
+                <br />
+
+                <RewardsBell width={23} height={25} />
+                <Text variant="bm-semibold">{levelToPick?.points ?? "0"}</Text>
+              </Box>
+            </Box>
+
+            <ProgressBar
+              progress={(rumorsXP as number) || null}
+              max={xpNeededForCurrentLevel}
+              size="large"
+              progressIcon={<RewardsStarGradient size={35} />}
+              progressIconText={`${rumorsXP}XP`}
+            />
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Skeleton>
   );
 };
 

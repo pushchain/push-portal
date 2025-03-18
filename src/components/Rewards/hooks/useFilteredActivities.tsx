@@ -17,8 +17,11 @@ export const useFilteredActivities = (
     universalAddress?.chainId,
   );
 
-  const { data: allActivities, isLoading: isLoadingActivities } =
-    useGetRewardsActivities();
+  const {
+    data: allActivities,
+    isLoading: isLoadingActivities,
+    refetch: refetchFilteredActivities,
+  } = useGetRewardsActivities();
   const { data: userDetails } = useGetUserRewardsDetails({
     caip10WalletAddress,
   });
@@ -45,6 +48,7 @@ export const useFilteredActivities = (
   const {
     data: userActivity,
     isLoading: isUserActivityLoading,
+    status: hasUserActivityLoading,
     refetch,
   } = useGetRewardsActivity(
     { userId: userDetails?.userId, activityTypes },
@@ -53,9 +57,11 @@ export const useFilteredActivities = (
 
   return {
     filteredActivities,
+    refetchFilteredActivities,
     userDetails,
     isLoadingActivities,
     isUserActivityLoading,
+    hasUserActivityLoading,
     userActivity,
     refetch,
   };

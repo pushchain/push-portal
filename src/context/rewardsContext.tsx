@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 
 interface AuthModalContextType {
   isAuthModalVisible: boolean;
@@ -32,6 +39,14 @@ export const RewardsContextProvider = ({
   const [isXPRefreshCompleted, setIsXPRefreshCompleted] = useState(false);
   // sign signature
   const [signature, setSignature] = useState(null);
+
+  const { universalAddress } = usePushWalletContext();
+
+  useEffect(() => {
+    if (!universalAddress) {
+      setIsLocked(true);
+    }
+  }, [universalAddress]);
 
   return (
     <AuthModalContext.Provider

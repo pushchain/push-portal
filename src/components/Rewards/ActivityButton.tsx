@@ -18,8 +18,9 @@ type ActivityButtonProps = {
   usersSingleActivity?: UsersActivity;
   isLoadingActivity: boolean;
   label?: string;
-  isStakeSection?: boolean;
-  lifeTime?: boolean;
+  currentLevel?: string;
+  setCurrentLevel?: (currentLevel: string) => void;
+  onStartClaim?: () => void;
 };
 
 const ActivityButton: FC<ActivityButtonProps> = ({
@@ -32,6 +33,9 @@ const ActivityButton: FC<ActivityButtonProps> = ({
   usersSingleActivity,
   isLoadingActivity,
   label,
+  currentLevel,
+  setCurrentLevel,
+  onStartClaim,
 }) => {
   // const hasRewardsExpired = useDateExpiry('2025-02-28T23:59:59');
   const hasRewardsExpired = false;
@@ -71,6 +75,9 @@ const ActivityButton: FC<ActivityButtonProps> = ({
       setErrorMessage={setErrorMessage}
       isLoadingActivity={isLoadingActivity}
       label={label}
+      currentLevel={currentLevel}
+      setCurrentLevel={setCurrentLevel}
+      onStartClaim={onStartClaim}
     />
   );
 };

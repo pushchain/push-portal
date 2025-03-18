@@ -41,8 +41,14 @@ const RewardsContent = () => {
         flexDirection={{ initial: "row", tb: "column" }}
         gap="spacing-md"
       >
-        <AnyChainEmailCard />
-        <RumorsAppCard />
+        <AnyChainEmailCard
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+        />
+        <RumorsAppCard
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+        />
       </Box>
     </Box>
   );

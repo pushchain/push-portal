@@ -45,5 +45,5 @@ export const useRefreshUserXP = () => {
     );
   }, [userDetails?.userId, account]);
 
-  return { isPending };
+  return { isPending, refreshXP: mutate };
 };

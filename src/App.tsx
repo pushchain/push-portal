@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { PushWalletProvider, CONSTANTS } from "@pushprotocol/pushchain-ui-kit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -13,8 +18,6 @@ import { blocksColors, getBlocksCSSVariables } from "../src/blocks";
 import LeaderBoardPage from "./pages/LeaderBoardPage";
 import { DiscordVerificationPage } from "./pages/DiscordVerificationPage";
 import { getPreviewBasePath } from "../basePath";
-
-const Home = () => <h1 style={{ color: "black" }}>Home Page</h1>;
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -99,7 +102,10 @@ function App() {
 
               <Router basename={basename}>
                 <Routes>
-                  <Route index element={<Home />} />
+                  <Route
+                    path="/"
+                    element={<Navigate to="/rewards" replace />}
+                  />
                   <Route path="/rewards" element={<RewardsPage />} />
                   <Route
                     path="/rewards/leaderboard"

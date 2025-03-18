@@ -17,6 +17,8 @@ export type UseVerifyRewardsParams = {
   setErrorMessage: (errorMessage: string) => void;
   refetchActivity: () => void;
   activityTypeIndex?: string;
+  setCurrentLevel?: (currentLevel) => void;
+  onStartClaim?: () => void;
 };
 
 const useVerifyRewards = ({
@@ -24,6 +26,8 @@ const useVerifyRewards = ({
   setErrorMessage,
   refetchActivity,
   activityTypeIndex,
+  setCurrentLevel,
+  onStartClaim,
 }: UseVerifyRewardsParams) => {
   const [verifyingRewards, setVerifyingRewards] = useState(false);
   const [rewardsActivityStatus, setRewardsActivityStatus] = useState<
@@ -47,6 +51,12 @@ const useVerifyRewards = ({
   const handleRewardsVerification = (userId: string) => {
     setUpdatedId(userId);
     setVerifyingRewards(true);
+
+    // Signal that we're starting the claim process
+    if (onStartClaim) {
+      onStartClaim();
+    }
+
     handleVerify(userId);
   };
 
@@ -60,7 +70,11 @@ const useVerifyRewards = ({
     setErrorMessage("");
 
     const { signature, messageToSend } = await signMessage();
-    if (!signature) throw new Error("Failed to sign message");
+    if (!signature) {
+      setErrorMessage("Failed to sign message");
+      setVerifyingRewards(false);
+      throw new Error("Failed to sign message");
+    }
 
     claimRewardsActivity(
       {
@@ -73,6 +87,9 @@ const useVerifyRewards = ({
         onSuccess: (response) => {
           if (response.status === "COMPLETED") {
             setRewardsActivityStatus("Claimed");
+            if (setCurrentLevel) {
+              setCurrentLevel(activityTypeId);
+            }
             refetchActivity();
             refetchUserDetails();
             setVerifyingRewards(false);
