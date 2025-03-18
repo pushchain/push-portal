@@ -69,8 +69,13 @@ const useVerifyRewards = ({
   const handleVerify = async (userId: string | null) => {
     setErrorMessage("");
 
-    const { signature, messageToSend } = await signMessage();
-    if (!signature) throw new Error("Failed to sign message");
+    const { signature, messageToSend, error } = await signMessage();
+    if (error || !signature) {
+      console.log(error);
+      setErrorMessage(error);
+      setVerifyingRewards(false);
+      return;
+    }
 
     claimRewardsActivity(
       {

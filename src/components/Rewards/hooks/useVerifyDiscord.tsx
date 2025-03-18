@@ -87,11 +87,16 @@ const useVerifyDiscord = ({
       const username = localStorage.getItem("username");
 
       if (username && token) {
-        const { signature, messageToSend } = await signMessage({
+        const { signature, messageToSend, error } = await signMessage({
           discord: username,
           discord_token: token,
         });
-        if (!signature) throw new Error("Failed to sign message");
+        if (error || !signature) {
+          console.log(error);
+          setErrorMessage(error);
+          setVerifyingDiscord(false);
+          return;
+        }
 
         localStorage.removeItem("access_token");
         localStorage.removeItem("username");

@@ -18,6 +18,7 @@ import { blocksColors, getBlocksCSSVariables } from "../src/blocks";
 import LeaderBoardPage from "./pages/LeaderBoardPage";
 import { DiscordVerificationPage } from "./pages/DiscordVerificationPage";
 import { getPreviewBasePath } from "../basePath";
+import appConfig from "./config";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -93,7 +94,7 @@ const queryClient = new QueryClient({});
 function App() {
   return (
     <ThemeProviderWrapper>
-      <PushWalletProvider env={CONSTANTS.ENV.DEV}>
+      <PushWalletProvider env={CONSTANTS.ENV.PROD}>
         <AccountProvider>
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
