@@ -12,7 +12,7 @@ import { Box, Spinner } from "../../blocks";
 
 import { LeaderboardListItem } from "./LeaderboardListItem";
 
-import { pCAIP10ToWallet } from "../../helpers/web3helper";
+import { fullCAIP10ToWallet, pCAIP10ToWallet } from "../../helpers/web3helper";
 import { LeaderBoardNullState } from "./LeaderboardNullState";
 import { LeaderboardListColumns } from "./LeaderboardListColumns";
 
@@ -65,7 +65,7 @@ const LeaderboardListS2: FC = () => {
                 <LeaderboardListItem
                   key={`${index}`}
                   rank={item.rank}
-                  address={pCAIP10ToWallet(item.userWallet)}
+                  address={fullCAIP10ToWallet(item.userWallet)}
                   points={item.totalPoints}
                   isLoading={isLoading}
                 />

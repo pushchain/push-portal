@@ -163,8 +163,6 @@ const RumorsAppCard: FC<RumorsCardProps> = ({ setErrorMessage }) => {
     }
   };
 
-  console.log(levelToPick, "level", nextUnclaimedLevel, userActivity);
-
   return (
     <Skeleton
       isLoading={isLoadingActivities}

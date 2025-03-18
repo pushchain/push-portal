@@ -125,6 +125,12 @@ export const pCAIP10ToWallet = (wallet: string): string => {
   return wallet;
 };
 
+export const fullCAIP10ToWallet = (wallet: string): string => {
+  if (!wallet) return "";
+
+  return wallet.replace("eip155:", "").split(":").pop() || "";
+};
+
 export const toChecksumAddress = (address: string): string => {
   return ethers.utils.getAddress(address);
 };
