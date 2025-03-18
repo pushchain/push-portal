@@ -18,7 +18,7 @@ const LeaderBoardPage: React.FC = () => {
           content="Earn rewards on Push Protocol"
         />
         <meta property="og:image" content={OGPreviewImg} />
-        <meta property="og:url" content="https://yourwebsite.com/rewards" />
+        <meta property="og:url" content="https://portal.push.com/rewards" />
         <meta name="twitter:card" content="summary_large_image" />
 
         <meta name="twitter:image" content={TwitterImg} />

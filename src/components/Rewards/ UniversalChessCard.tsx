@@ -143,7 +143,7 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
                 padding: var(--spacing-xxs) var(--spacing-md);
               `}
             >
-              Quest Unlocks in <br /> {timeLeft?.days}D : {timeLeft?.hours}H :
+              Quest Unlocks in <br /> {timeLeft?.days}D : {timeLeft?.hours}H :{" "}
               {timeLeft?.minutes}M : {timeLeft?.seconds}S
             </Text>
           </Box>
