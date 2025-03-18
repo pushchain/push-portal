@@ -2,20 +2,34 @@ import chalk from "chalk";
 import { parse } from "envfile";
 import fs from "fs";
 import { getPreviewBasePath } from "./basePath.js";
+import process from "node:process";
 
-// Only one environment preset for preview
+// Define environment presets
 const envPresets = {
+  prod: {
+    VITE_APP_DEPLOY_ENV: "PROD",
+    VITE_APP_PUBLIC_URL: "https://portal.push.org/",
+  },
   preview: {
     VITE_APP_DEPLOY_ENV: "PREVIEW",
     VITE_APP_PUBLIC_URL: `https://push-protocol.github.io${getPreviewBasePath()}`,
   },
 };
 
-// Prep for deployment
-const prepForDeployment = async () => {
-  console.log(chalk.green("Starting Custom Deployment Prebuild..."));
+// Get environment from command line argument (default to "preview")
+const appEnv = process.argv[2] || "preview";
 
-  const appEnv = "preview"; // Only preview environment
+if (!envPresets[appEnv]) {
+  console.log(chalk.red(`❌ Invalid environment: "${appEnv}"`));
+  process.exit(1);
+}
+
+const prepForDeployment = async () => {
+  console.log(
+    chalk.green(
+      `Starting Custom Deployment Prebuild for ${appEnv.toUpperCase()}...`,
+    ),
+  );
   await changeENV(appEnv);
 };
 
@@ -55,7 +69,9 @@ const changeENV = async (appEnv) => {
   if (fileModified) {
     fs.writeFileSync(envPath, modifiedEnvContents);
     console.log(
-      chalk.green.bold("✅ ENV file modified for preview deployment."),
+      chalk.green.bold(
+        `✅ ENV file modified for ${appEnv.toUpperCase()} deployment.`,
+      ),
     );
   } else {
     console.log(chalk.green.dim("  -- ENV file verified, no changes needed."));

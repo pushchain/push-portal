@@ -30,8 +30,7 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
     refetchSendActivities,
   } = useDailyRewards();
 
-  const isLocked = false;
-  // const { isLocked } = useRewardsContext();
+  const { isLocked } = useRewardsContext();
   const hasRewardsExpired = false;
 
   const isDailyRewardClaimed =

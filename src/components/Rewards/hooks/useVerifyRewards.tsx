@@ -70,11 +70,7 @@ const useVerifyRewards = ({
     setErrorMessage("");
 
     const { signature, messageToSend } = await signMessage();
-    if (!signature) {
-      setErrorMessage("Failed to sign message");
-      setVerifyingRewards(false);
-      throw new Error("Failed to sign message");
-    }
+    if (!signature) throw new Error("Failed to sign message");
 
     claimRewardsActivity(
       {

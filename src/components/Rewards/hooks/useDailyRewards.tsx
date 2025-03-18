@@ -9,10 +9,8 @@ import {
   useGetRewardsActivities,
   useGetUserRewardsDetails,
 } from "../../../queries";
-// import { useAccount } from 'hooks';
 
 // helpers
-// import { walletToCAIP10 } from 'helpers/w2w';
 import {
   checkTimeToCurrent,
   getActivityStatus,

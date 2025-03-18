@@ -6,7 +6,7 @@ import { config as devConfig } from "./config-dev";
 import { config as stageConfig } from "./config-staging";
 import { config as prodConfig } from "./config-prod";
 
-const env = import.meta.env.REACT_APP_ENV;
+const env = import.meta.env.VITE_APP_ENV;
 
 export enum ENV {
   PROD = "prod",
@@ -38,7 +38,7 @@ switch (env) {
     break;
   }
   default: {
-    dynamicConfig = devConfig;
+    dynamicConfig = prodConfig;
   }
 }
 

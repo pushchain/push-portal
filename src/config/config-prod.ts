@@ -35,13 +35,14 @@ export const config = {
   coreRPC: `https://mainnet.infura.io/v3/${infuraAPIKey}`,
 
   firebaseConfig: {
-    apiKey: "AIzaSyB4aXx2pJ9T5sw0Q1bba3jI1EAGp0Z5kBI",
-    authDomain: "push-dev-a6a63.firebaseapp.com",
-    projectId: "push-dev-a6a63",
-    storageBucket: "push-dev-a6a63.appspot.com",
-    messagingSenderId: "974364469170",
-    appId: "1:974364469170:web:47fd6304c6cf36b5bfe6ab",
-    measurementId: "G-5YR8N35DY4",
+    apiKey: "AIzaSyBrzkFPyNmVDFzGY7dKz2HocUO4m-ni-Fc",
+    authDomain: "epns-ethereum-push-service.firebaseapp.com",
+    databaseURL: "https://epns-ethereum-push-service.firebaseio.com",
+    projectId: "epns-ethereum-push-service",
+    storageBucket: "epns-ethereum-push-service.appspot.com",
+    messagingSenderId: "915758146133",
+    appId: "1:915758146133:web:2de388356233f5c22f2adc",
+    measurementId: "G-X1L5P2E4EP",
   },
   discord_client_id: import.meta.env.VITE_APP_DISCORD_CLIENT_ID,
 };

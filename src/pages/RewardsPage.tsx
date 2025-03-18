@@ -17,11 +17,17 @@ const RewardsPage: React.FC = () => {
           property="og:description"
           content="Earn rewards on Push Protocol"
         />
-        <meta property="og:image" content={OGPreviewImg} />
-        <meta property="og:url" content="https://yourwebsite.com/rewards" />
+        <meta
+          property="og:image"
+          content="https://portal.push.org/static/assets/previews/og-preview.webp"
+        />
+        <meta property="og:url" content="https://portal.push.org/rewards" />
         <meta name="twitter:card" content="summary_large_image" />
 
-        <meta name="twitter:image" content={TwitterImg} />
+        <meta
+          name="twitter:image"
+          content="https://portal.push.org/static/assets/previews/twitter-preview.webp"
+        />
         <meta name="twitter:title" content="Push Rewards" />
         <meta
           name="twitter:description"
