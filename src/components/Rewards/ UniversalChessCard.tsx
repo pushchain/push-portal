@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { css } from "styled-components";
 
 import { RewardsActivityTitle } from "./RewardsActivityTitle";
@@ -20,6 +20,7 @@ import { ActivityButton } from "./ActivityButton";
 import { useFilteredActivities } from "./hooks/useFilteredActivities";
 import { calculateLevelFromXP } from "./utils/calculateLevelfromXp";
 import { useRewardsContext } from "../../context/rewardsContext";
+import { useCountdown } from "./hooks/useCountdown";
 
 const totalCount = 127000;
 
@@ -90,6 +91,8 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
     refetch();
   };
 
+  const { timeLeft, isExpired } = useCountdown("2025-03-28T23:59:59");
+
   return (
     <Skeleton
       isLoading={isLoadingActivities}
@@ -108,8 +111,43 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
         width="100%"
         css={css`
           flex: 2;
+          position: relative;
         `}
       >
+        {!isExpired && (
+          <Box
+            position="absolute"
+            width="100%"
+            height="100%"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            borderRadius="radius-md"
+            css={css`
+              top: 0;
+              left: 0;
+              z-index: 9;
+              backdrop-filter: blur(4px);
+              background: var(--surface-glass-bold);
+              backdrop-filter: blur(5.6px);
+            `}
+          >
+            <Text
+              variant="bes-semibold"
+              color="text-secondary"
+              textAlign="center"
+              css={css`
+                border-radius: 16px;
+                border: 1px solid var(--stroke-secondary);
+                background: var(--surface-primary);
+                padding: var(--spacing-xxs) var(--spacing-md);
+              `}
+            >
+              Quest Unlocks in <br /> {timeLeft?.days}D : {timeLeft?.hours}H :
+              {timeLeft?.minutes}M : {timeLeft?.seconds}S
+            </Text>
+          </Box>
+        )}
         <Box
           width="100%"
           display="flex"
