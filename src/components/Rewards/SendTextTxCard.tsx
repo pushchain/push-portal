@@ -98,8 +98,8 @@ const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
             {!isLocked && (
               <ActivityButton
                 userId={userDetails?.userId}
-                activityTypeId={finalActivity.id}
-                activityType={finalActivity.activityType}
+                activityTypeId={finalActivity?.id}
+                activityType={finalActivity?.activityType}
                 refetchActivity={() => updateActivities()}
                 setErrorMessage={setErrorMessage}
                 usersSingleActivity={usersSingleActivity}
