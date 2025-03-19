@@ -23,7 +23,7 @@ const RewardsContent = () => {
       )}
       <Box
         display="flex"
-        flexDirection={{ initial: "row", tb: "column" }}
+        flexDirection={{ initial: "row", ml: "column" }}
         gap="spacing-md"
       >
         <SendTestTxCard

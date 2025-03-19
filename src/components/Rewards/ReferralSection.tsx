@@ -7,7 +7,6 @@ import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 //hooks
 import { useGetUserRewardsDetails } from "../../queries";
-// import { useRewardsAuth } from "./hooks/useRewardsAuth";
 
 //helpers
 import { getPreviewBasePath } from "../../../basePath";
@@ -16,6 +15,7 @@ import { useCopy } from "../../hooks/useCopy";
 
 // components
 import { Box, Button, Copy, Text, Referral } from "../../blocks";
+import { device } from "../../config/globals";
 
 export type ReferralSectionProps = Record<string, never>;
 
@@ -35,14 +35,7 @@ const ReferralSection: FC<ReferralSectionProps> = () => {
     caip10WalletAddress: caip10WalletAddress,
   });
 
-  // const { status } = useRewardsAuth();
-
   const { textRef, isCopied, copyToClipboard } = useCopy();
-
-  // const handleConnectWallet = () => {
-  //   connect();
-  // };
-  //
 
   return (
     <Box
@@ -54,22 +47,41 @@ const ReferralSection: FC<ReferralSectionProps> = () => {
       justifyContent="space-between"
       gap={{ tb: "spacing-lg" }}
       css={css`
-        /* background: linear-gradient(
-          90deg,
-          var(--surface-primary, #fff) 41%,
-          #d5b0fc 100%
-        ); */
         background: linear-gradient(90deg, #cdcbff 41%, #ce9fff 100%);
       `}
     >
-      <Box display="flex" flexDirection="column" gap="spacing-lg">
-        <Box display="flex" flexDirection="column" gap="spacing-xxs">
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap={{ initial: "spacing-lg", ml: "spacing-xs" }}
+      >
+        <Box
+          display={{ initial: "flex", ml: "none" }}
+          flexDirection="column"
+          gap="spacing-xxs"
+        >
           <Text variant="h3-bold" color="text-on-light-bg">
             Onboard Users on Push Chain Devnet.
             <br /> Earn Points.
           </Text>
           <Box>
             <Text variant="bm-regular" color="text-on-light-bg">
+              Earn +12% of any Points your invites earn, and +2% of any Points
+              your invite’s invites earn.
+            </Text>
+          </Box>
+        </Box>
+
+        <Box
+          display={{ initial: "none", ml: "flex" }}
+          flexDirection="column"
+          gap="spacing-xxs"
+        >
+          <Text variant="h4-bold" color="text-on-light-bg">
+            Onboard Users on Push Chain Devnet. Earn Points.
+          </Text>
+          <Box>
+            <Text variant="bs-regular" color="text-on-light-bg">
               Earn +12% of any Points your invites earn, and +2% of any Points
               your invite’s invites earn.
             </Text>
@@ -104,31 +116,28 @@ const ReferralSection: FC<ReferralSectionProps> = () => {
                 {baseUrl}/rewards?ref={userDetails?.userId}
               </Text>
             </Box>
-            <Button leadingIcon={<Copy />} onClick={copyToClipboard}>
+            <Button
+              leadingIcon={<Copy />}
+              onClick={copyToClipboard}
+              css={css`
+                width: fit-content;
+              `}
+            >
               {isCopied ? "Copied" : "Copy Link"}
             </Button>
           </Box>
         )}
-
-        {/* {isWalletConnected && status == 'error' && !isLoading && (
-          <Box>
-            <Button size='small' onClick={handleUnlockProfile}>
-              Unlock Profile
-            </Button>
-          </Box>
-        )}
-
-        {!isWalletConnected && (
-          <Box>
-            <Button size='small' onClick={handleConnectWallet}>
-              Connect Wallet
-            </Button>
-          </Box>
-        )}
-      */}
       </Box>
 
-      <Box height="auto">
+      <Box
+        height="auto"
+        width={{ initial: "fit-content", ml: "200px" }}
+        display="flex"
+        css={css`
+          margin: var(--spacing-none);
+          @media ${device.tablet} {
+            margin: var(--spacing-none) auto;`}
+      >
         <Referral />
       </Box>
     </Box>

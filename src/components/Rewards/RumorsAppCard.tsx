@@ -22,6 +22,7 @@ import {
 import RumorsImg from "../../../static/assets/website/rewards/rumors-app.webp";
 import { RewardsActivityTitle } from "./RewardsActivityTitle";
 import { ActivityButton } from "./ActivityButton";
+import { device } from "../../config/globals";
 
 const numberOfLevels = 50;
 
@@ -254,10 +255,22 @@ const RumorsAppCard: FC<RumorsCardProps> = ({ setErrorMessage }) => {
               </Skeleton>
             </Box>
 
-            <img
-              src={RumorsImg}
-              style={{ width: "auto", height: "180px", objectFit: "contain" }}
-            />
+            <Box
+              width={{ initial: "fit-content", ml: "200px" }}
+              display="flex"
+              css={css`
+                margin: var(--spacing-sm) var(--spacing-none)
+                  var(--spacing-none) var(--spacing-none);
+                @media ${device.mobileL} {
+                  margin: var(--spacing-sm) auto;
+                }
+              `}
+            >
+              <img
+                src={RumorsImg}
+                style={{ width: "auto", height: "188px", objectFit: "contain" }}
+              />
+            </Box>
           </Box>
 
           <Box display="flex" flexDirection="column" gap="spacing-xs">

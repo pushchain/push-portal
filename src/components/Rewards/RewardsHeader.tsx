@@ -73,7 +73,7 @@ const RewardsHeader: FC = () => {
           cursor="pointer"
           onClick={() => setIsMenuOpen(true)}
         >
-          <BsList size={28} color={darkMode ? "#fff" : "icon-primary"} />
+          <BsList size={28} color={darkMode ? "#fff" : "#000"} />
         </Box>
       ) : (
         <PushWalletButton
@@ -123,7 +123,7 @@ const RewardsHeader: FC = () => {
                 <img src={ChainLogo} width={150} />
               )}
             </Box>
-            <AiOutlineClose size={32} color="white" />
+            <AiOutlineClose size={32} color={darkMode ? "#fff" : "#000"} />
           </Box>
 
           <PushWalletButton

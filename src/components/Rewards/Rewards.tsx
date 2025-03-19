@@ -12,7 +12,6 @@ import RewardsFooter from "./RewardsFooter";
 import { useCreateRewardsUser } from "./hooks/useCreateRewardsUser";
 import { Alert } from "../../blocks";
 import { useRewardsContext } from "../../context/rewardsContext";
-// import { useRefreshUserXP } from "./hooks/useRefreshUserXP";
 
 const Rewards: FC = () => {
   // //fetch ref from url
@@ -24,8 +23,6 @@ const Rewards: FC = () => {
   const { errorMessage, autoCreateUser, shouldRun, handleCreateUser } =
     useCreateRewardsUser();
   const { isVerifyClicked } = useRewardsContext();
-
-  // useRefreshUserXP();
 
   useEffect(() => {
     if (isVerifyClicked) return;
@@ -63,8 +60,14 @@ const RewardsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  box-sizing: border-box;
 
   @media ${device.laptopM} {
     width: calc(100% - 32px);
+  }
+
+  @media ${device.mobileL} {
+    width: calc(100% - 32px);
+    overflow-x: hidden;
   }
 `;

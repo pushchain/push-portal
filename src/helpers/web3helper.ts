@@ -113,22 +113,32 @@ export const walletToFullCAIP10 = (
   account: string,
   chainId: string,
 ): string => {
-  if (account?.includes("eip155:")) {
+  if (account?.includes(":")) {
     return account;
-  } else if (chainId) {
-    return "eip155:" + `${chainId}:` + account;
   }
-};
 
-export const pCAIP10ToWallet = (wallet: string): string => {
-  wallet = wallet?.replace("eip155:", "");
-  return wallet;
+  let prefix = "eip155";
+
+  if (chainId === "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp") {
+    prefix = "solana";
+  }
+
+  if (chainId === "devnet") {
+    prefix = "push";
+  }
+
+  return `${prefix}:${chainId}:${account}`;
 };
 
 export const fullCAIP10ToWallet = (wallet: string): string => {
   if (!wallet) return "";
 
   return wallet.replace("eip155:", "").split(":").pop() || "";
+};
+
+export const pCAIP10ToWallet = (wallet: string): string => {
+  wallet = wallet?.replace("eip155:", "");
+  return wallet;
 };
 
 export const toChecksumAddress = (address: string): string => {

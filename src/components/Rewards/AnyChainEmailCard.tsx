@@ -21,6 +21,7 @@ import { useFilteredActivities } from "./hooks/useFilteredActivities";
 import { useGetUserXP, UsersActivity } from "../../queries";
 import { ActivityButton } from "./ActivityButton";
 import { useRefreshUserXP } from "./hooks/useRefreshUserXP";
+import { device } from "../../config/globals";
 
 const numberOfLevels = 50;
 
@@ -253,10 +254,22 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
               </Skeleton>
             </Box>
 
-            <img
-              src={EmailImg}
-              style={{ width: "auto", height: "188px", objectFit: "contain" }}
-            />
+            <Box
+              width={{ initial: "fit-content", ml: "200px" }}
+              display="flex"
+              css={css`
+                margin: var(--spacing-sm) var(--spacing-none)
+                  var(--spacing-none) var(--spacing-none);
+                @media ${device.mobileL} {
+                  margin: var(--spacing-sm) auto;
+                }
+              `}
+            >
+              <img
+                src={EmailImg}
+                style={{ width: "auto", height: "188px", objectFit: "contain" }}
+              />
+            </Box>
           </Box>
 
           <Box display="flex" flexDirection="column" gap="spacing-xs">

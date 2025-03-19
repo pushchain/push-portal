@@ -145,17 +145,17 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
 
           <Box
             display="flex"
-            flexDirection={{ ml: "column", initial: "row" }}
-            gap={{ ml: "spacing-sm", initial: "spacing-md" }}
+            flexDirection={{ tb: "column", initial: "row" }}
+            gap={{ tb: "spacing-sm", initial: "spacing-md" }}
             width="100%"
-            alignItems={{ ml: "baseline", initial: "center" }}
+            alignItems={{ tb: "baseline", initial: "center" }}
           >
             {/* Rewards Contents */}
             <Box
               display="flex"
-              flexDirection={{ ml: "column", initial: "row" }}
-              gap={{ ml: "spacing-xxxs", initial: "spacing-sm" }}
-              alignItems={{ ml: "flex-start", initial: "center" }}
+              flexDirection={{ tb: "column", initial: "row" }}
+              gap={{ tb: "spacing-xxxs", initial: "spacing-sm" }}
+              alignItems={{ tb: "flex-start", initial: "center" }}
               justifyContent="space-between"
               width="100%"
             >

@@ -12,7 +12,7 @@ import { Box, Spinner } from "../../blocks";
 
 import { LeaderboardListItem } from "./LeaderboardListItem";
 
-import { fullCAIP10ToWallet, pCAIP10ToWallet } from "../../helpers/web3helper";
+import { fullCAIP10ToWallet } from "../../helpers/web3helper";
 import { LeaderBoardNullState } from "./LeaderboardNullState";
 import { LeaderboardListColumns } from "./LeaderboardListColumns";
 
