@@ -10,6 +10,7 @@ import { RewardsActivityTitle } from "./RewardsActivityTitle";
 import { ActivityButton } from "./ActivityButton";
 import { useFilteredActivities } from "./hooks/useFilteredActivities";
 import { UsersActivity } from "../../queries";
+import { device } from "../../config/globals";
 
 export type SendTestTxCardProps = {
   errorMessage: string;
@@ -61,10 +62,15 @@ const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
         `}
       >
         <Box
-          width="60%"
+          width={{ initial: "60%", ml: "200px" }}
           display="flex"
           overflow="hidden"
-          margin="spacing-sm spacing-none"
+          css={css`
+            margin: var(--spacing-sm) var(--spacing-none);
+            @media ${device.mobileL} {
+              margin: var(--spacing-sm) auto;
+            }
+          `}
         >
           <img
             src={SimulateImg}
@@ -87,7 +93,7 @@ const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
             display="flex"
             flexDirection="row"
             justifyContent="space-between"
-            margin="spacing-md spacing-none"
+            margin="spacing-md spacing-none spacing-sm spacing-none"
           >
             {isLocked && (
               <Button size="small" variant="tertiary" disabled>

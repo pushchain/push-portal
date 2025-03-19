@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import React, { FC } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 import { useGetUserRewardsDetails } from "../../queries";
@@ -39,11 +39,21 @@ const RewardsDashboard: FC = () => {
           </div>
         </HeaderText>
 
-        <Link to="/rewards/leaderboard" title="Terms of Service">
-          <Button variant="secondary" leadingIcon={<Leaderboard />}>
-            Leaderboard
-          </Button>
-        </Link>
+        <Box width={{ ml: "100%" }}>
+          <Link to="/rewards/leaderboard" title="Terms of Service">
+            <Button
+              variant="secondary"
+              leadingIcon={<Leaderboard />}
+              css={css`
+                @media ${device.mobileL} {
+                  width: 100%;
+                }
+              `}
+            >
+              Leaderboard
+            </Button>
+          </Link>
+        </Box>
       </HeaderSection>
 
       <Box
@@ -101,6 +111,14 @@ const RewardsDashboardWrapper = styled.div`
     #c0fff7 100%
   );
   font-family: "FK Grotesk Neu";
+
+  @media ${device.mobileL} {
+    background: radial-gradient(
+      174.95% 108.75% at 64.27% 0%,
+      #d6adff 30.74%,
+      #c0fff7 100%
+    );
+  }
 `;
 
 const HeaderSection = styled.div`
@@ -112,6 +130,7 @@ const HeaderSection = styled.div`
 
   @media ${device.laptopM} {
     flex-direction: column;
+    padding-top: 12px;
     gap: 16px;
   }
 `;
