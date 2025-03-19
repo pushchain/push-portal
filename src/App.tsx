@@ -95,7 +95,7 @@ function App() {
     <ThemeProviderWrapper>
       {/* Global style */}
       <GlobalStyle />
-      <PushWalletProvider env={CONSTANTS.ENV.PROD}>
+      <PushWalletProvider env={CONSTANTS.ENV.DEV}>
         <AccountProvider>
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
