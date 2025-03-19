@@ -16,6 +16,8 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import { device } from "../../config/globals";
 import { BsList } from "react-icons/bs";
 
+// Dummy
+
 const RewardsHeader: FC = () => {
   const baseURL = "/";
   const navigate = useNavigate();
