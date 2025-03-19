@@ -56,5 +56,5 @@ const RewardsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  font-family: "FK Grotesk Neue", Helvetica, sans-serif;
+  font-family: "FK Grotesk Neu", Helvetica, sans-serif;
 `;
