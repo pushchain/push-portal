@@ -100,7 +100,7 @@ const RewardsDashboardWrapper = styled.div`
     #d6adff 70%,
     #c0fff7 100%
   );
-  font-family: "FK Grotesk Neue";
+  font-family: "FK Grotesk Neu";
 `;
 
 const HeaderSection = styled.div`
@@ -123,7 +123,7 @@ const HeaderText = styled.div`
 
   h2 {
     color: #000;
-    font-family: "FK Grotesk Neue";
+    font-family: "FK Grotesk Neu";
     font-size: 26px;
     font-style: normal;
     font-weight: 500;
@@ -133,7 +133,7 @@ const HeaderText = styled.div`
 
   div {
     color: #000;
-    font-family: "FK Grotesk Neue";
+    font-family: "FK Grotesk Neu";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

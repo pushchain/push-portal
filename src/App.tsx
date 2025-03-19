@@ -78,7 +78,7 @@ const GlobalStyle = createGlobalStyle`
       .join("")}
 
     /* Font Family */
-      --font-family: "FK Grotesk Neue";
+      --font-family: "FK Grotesk Neu";
 
     /* New blocks theme css variables*/
     ${(props) => getBlocksCSSVariables(props.theme.blocksTheme)}
@@ -93,13 +93,12 @@ const queryClient = new QueryClient({});
 function App() {
   return (
     <ThemeProviderWrapper>
+      {/* Global style */}
+      <GlobalStyle />
       <PushWalletProvider env={CONSTANTS.ENV.PROD}>
         <AccountProvider>
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
-              {/* Global style */}
-              <GlobalStyle />
-
               <Router basename={basename}>
                 <Routes>
                   <Route
