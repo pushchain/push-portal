@@ -29,15 +29,13 @@ export const useFilteredActivities = (
   const filteredActivities =
     allActivities?.activities?.filter((activity) => {
       if (filterType === "includes") {
-        return (
-          activityIndexes.includes(activity.index) &&
-          activity?.status === "ENABLED"
-        );
+        return activityIndexes.includes(activity.index);
+        // && activity?.status === "ENABLED"
       } else if (filterType === "startsWith") {
-        return (
-          activityIndexes.some((index) => activity.index.startsWith(index)) &&
-          activity?.status === "ENABLED"
+        return activityIndexes.some((index) =>
+          activity.index.startsWith(index),
         );
+        // && activity?.status === "ENABLED"
       }
       return false;
     }) || [];

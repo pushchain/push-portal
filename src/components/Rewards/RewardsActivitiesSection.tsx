@@ -32,12 +32,12 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
     "social-activity-2",
   ]);
 
-  // const {
-  //   filteredActivities: otherLevelActivities,
-  //   isUserActivityLoading: isOtherUserActivityLoading,
-  //   userActivity: otherUserActivity,
-  //   refetch: othersRefetch,
-  // } = useFilteredActivities(account, ["social-activity-3"]);
+  const {
+    filteredActivities: otherLevelActivities,
+    isUserActivityLoading: isOtherUserActivityLoading,
+    userActivity: otherUserActivity,
+    refetch: othersRefetch,
+  } = useFilteredActivities(account, ["social-activity-3"]);
 
   return (
     <Box display="flex" flexDirection="column" gap="spacing-md">
@@ -87,7 +87,7 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
           </Box>
         )}
 
-        {/* {otherLevelActivities?.map((activity: any) => (
+        {otherLevelActivities?.map((activity: any) => (
           <RewardsActivitiesListItem
             key={activity.activityType}
             userId={userDetails?.userId || ""}
@@ -98,7 +98,7 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
             isAllActivitiesLoading={isOtherUserActivityLoading}
             refetchActivity={othersRefetch}
           />
-        ))} */}
+        ))}
       </Box>
     </Box>
   );
