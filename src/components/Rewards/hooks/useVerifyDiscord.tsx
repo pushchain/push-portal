@@ -14,6 +14,7 @@ import {
 // helpers
 import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import { useSignMessageWithEthereum } from "./useSignMessage";
+import { WalletChainType } from "../utils/wallet";
 
 type UseDiscordActivityVerificationProps = {
   activityTypeId: string;
@@ -87,15 +88,34 @@ const useVerifyDiscord = ({
       const username = localStorage.getItem("username");
 
       if (username && token) {
-        const { signature, messageToSend, error } = await signMessage({
+        let verificationProof = "abcd";
+        let messageToSend = {
           discord: username,
           discord_token: token,
-        });
-        if (error || !signature) {
-          console.log(error);
-          setErrorMessage(error);
-          setVerifyingDiscord(false);
-          return;
+        };
+
+        const isSupportedChain =
+          universalAddress?.chainId == WalletChainType.SEPOLIA ||
+          universalAddress?.chainId == WalletChainType.ETH;
+
+        if (isSupportedChain) {
+          const {
+            signature,
+            messageToSend: signedMessage,
+            error,
+          } = await signMessage({
+            discord: username,
+            discord_token: token,
+          });
+
+          if (error || !signature) {
+            console.log(error);
+            setErrorMessage(error);
+            setVerifyingDiscord(false);
+            return;
+          }
+          verificationProof = signature;
+          messageToSend = signedMessage;
         }
 
         localStorage.removeItem("access_token");
@@ -107,7 +127,7 @@ const useVerifyDiscord = ({
             userId: updatedId || (userId as string),
             activityTypeId,
             data: messageToSend,
-            verificationProof: signature,
+            verificationProof,
           },
           {
             onSuccess: (response) => {

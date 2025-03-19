@@ -11,6 +11,7 @@ import {
 } from "../../../queries";
 import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import { useSignMessageWithEthereum } from "./useSignMessage";
+import { WalletChainType } from "../utils/wallet";
 
 export type UseVerifyRewardsParams = {
   activityTypeId: string;
@@ -69,12 +70,29 @@ const useVerifyRewards = ({
   const handleVerify = async (userId: string | null) => {
     setErrorMessage("");
 
-    const { signature, messageToSend, error } = await signMessage();
-    if (error || !signature) {
-      console.log(error);
-      setErrorMessage(error);
-      setVerifyingRewards(false);
-      return;
+    // Check if the chain is Sepolia or Ethereum
+    const isSupportedChain =
+      universalAddress?.chainId == WalletChainType.SEPOLIA ||
+      universalAddress?.chainId == WalletChainType.ETH;
+
+    let verificationProof = "abcd";
+    let messageToSend = "";
+
+    if (isSupportedChain) {
+      const {
+        signature,
+        messageToSend: signedMessage,
+        error,
+      } = await signMessage();
+      if (error || !signature) {
+        console.log(error);
+        setErrorMessage(error);
+        setVerifyingRewards(false);
+        return;
+      }
+
+      verificationProof = signature;
+      messageToSend = signedMessage;
     }
 
     claimRewardsActivity(
@@ -82,7 +100,7 @@ const useVerifyRewards = ({
         userId: updatedId || (userId as string),
         activityTypeId,
         data: messageToSend,
-        verificationProof: signature,
+        verificationProof,
       },
       {
         onSuccess: (response) => {

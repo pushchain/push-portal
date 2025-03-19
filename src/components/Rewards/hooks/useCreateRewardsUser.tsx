@@ -8,6 +8,7 @@ import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import { UserRewardsDetailResponse } from "../../../queries";
 import { useRewardsContext } from "../../../context/rewardsContext";
 import { useSignMessageWithEthereum } from "./useSignMessage";
+import { WalletChainType } from "../utils/wallet";
 
 const useCreateRewardsUser = () => {
   const hasRun = useRef(false);
@@ -43,13 +44,34 @@ const useCreateRewardsUser = () => {
     if (hasRun.current || userDetails) return;
     hasRun.current = true;
 
-    const { signature, messageToSend } = await signMessage();
-    if (!signature) throw new Error("Failed to sign message");
+    // Check if the chain is Sepolia or Ethereum
+    const isSupportedChain =
+      universalAddress?.chainId == WalletChainType.SEPOLIA ||
+      universalAddress?.chainId == WalletChainType.ETH;
+
+    let verificationProof = "abcd";
+    let messageToSend = "";
+
+    if (isSupportedChain) {
+      const {
+        signature,
+        messageToSend: signedMessage,
+        error,
+      } = await signMessage();
+      if (error || !signature) {
+        console.log(error);
+        setErrorMessage(error);
+        return;
+      }
+
+      verificationProof = signature;
+      messageToSend = signedMessage;
+    }
 
     createUser(
       {
         userWallet: fullCaip10WalletAddress,
-        verificationProof: signature,
+        verificationProof,
         refPrimary: sessionStorage.getItem("ref"),
         data: messageToSend,
       },

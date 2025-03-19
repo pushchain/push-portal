@@ -22,6 +22,7 @@ import {
 import appConfig from "../../../config";
 import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import { useSignMessageWithEthereum } from "./useSignMessage";
+import { WalletChainType } from "../utils/wallet";
 
 export type UseTwitterVerifyParams = {
   activityTypeId: string;
@@ -108,14 +109,34 @@ const useVerifyTwitter = ({
         const twitterHandle = (userTwitterDetails as any)?.reloadUserInfo
           ?.screenName;
 
-        const { signature, messageToSend, error } = await signMessage({
+        // Check if the chain is Sepolia or Ethereum
+        const isSupportedChain =
+          universalAddress?.chainId == WalletChainType.SEPOLIA ||
+          universalAddress?.chainId == WalletChainType.ETH;
+
+        let verificationProof = "abcd";
+        let messageToSend: any = {
           twitter: twitterHandle,
-        });
-        if (error || !signature) {
-          console.log(error);
-          setErrorMessage(error);
-          setVerifyingTwitter(false);
-          return;
+        };
+
+        if (isSupportedChain) {
+          const {
+            signature,
+            messageToSend: signedMessage,
+            error,
+          } = await signMessage({
+            twitter: twitterHandle,
+          });
+
+          if (error || !signature) {
+            console.log(error);
+            setErrorMessage(error);
+            setVerifyingTwitter(false);
+            return;
+          }
+
+          verificationProof = signature;
+          messageToSend = signedMessage;
         }
 
         claimRewardsActivity(
@@ -123,7 +144,7 @@ const useVerifyTwitter = ({
             userId: updatedId || (userId as string),
             activityTypeId,
             data: messageToSend,
-            verificationProof: signature as string,
+            verificationProof,
           },
           {
             onSuccess: (response) => {
