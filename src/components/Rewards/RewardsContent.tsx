@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { Alert, Box } from "../../../src/blocks";
 
 import SendTestTxCard from "./SendTextTxCard";
-import UniversalChessCard from "./ UniversalChessCard";
 import AnyChainEmailCard from "./AnyChainEmailCard";
 import RumorsAppCard from "./RumorsAppCard";
+import UniversalChessCard from "./UniversalChessCard";
 
 const RewardsContent = () => {
   const [errorMessage, setErrorMessage] = useState("");
