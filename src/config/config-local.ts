@@ -1,9 +1,3 @@
-// environmental configurations for the dapp for different environments
-const infuraAPIKey =
-  window.location.hostname != "localhost"
-    ? process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
-    : "be75cf427a5c41f9badb591994019d22";
-
 export const config = {
   /**
    * APP INFO
@@ -29,9 +23,7 @@ export const config = {
   /**
    * Core Network Related Data
    */
-  infuraAPIKey: infuraAPIKey,
   coreContractChain: 11155111, //the chain id of the network which the core contract relies on
-  coreRPC: `https://sepolia.infura.io/v3/${infuraAPIKey}`,
 
   firebaseConfig: {
     apiKey: "AIzaSyB4aXx2pJ9T5sw0Q1bba3jI1EAGp0Z5kBI",

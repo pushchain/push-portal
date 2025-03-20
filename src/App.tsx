@@ -14,9 +14,9 @@ import { AccountProvider } from "./context/accountContext";
 import { RewardsContextProvider } from "./context/rewardsContext";
 
 import RewardsPage from "./pages/RewardsPage";
-import { blocksColors, getBlocksCSSVariables } from "../src/blocks";
 import LeaderBoardPage from "./pages/LeaderBoardPage";
-import { DiscordVerificationPage } from "./pages/DiscordVerificationPage";
+import DiscordVerificationPage from "./pages/DiscordVerificationPage";
+import { blocksColors, getBlocksCSSVariables } from "../src/blocks";
 import { getPreviewBasePath } from "../basePath";
 
 const GlobalStyle = createGlobalStyle`

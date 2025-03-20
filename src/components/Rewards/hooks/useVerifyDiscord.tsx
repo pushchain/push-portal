@@ -66,13 +66,14 @@ const useVerifyDiscord = ({
 
   const handleConnect = (userId: string) => {
     const clientID = appConfig.discord_client_id;
-    const baseURL = window.location.origin;
+    const baseURL = typeof window !== "undefined" ? window.location.origin : "";
     const redirectURI = `${baseURL}/discord/verification`;
     const scope = "identify email guilds.members.read";
 
     const authURL = `https://discord.com/api/oauth2/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=token&scope=${scope}`;
 
-    const newWindow = window.open(authURL, "_blank");
+    const newWindow =
+      typeof window !== "undefined" ? window.open(authURL, "_blank") : "";
 
     const checkAuth = setInterval(() => {
       if (newWindow?.closed) {

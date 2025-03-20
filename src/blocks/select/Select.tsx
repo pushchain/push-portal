@@ -4,19 +4,19 @@ import React, {
   ReactNode,
   useEffect,
   useCallback,
-} from 'react';
-import styled, { FlattenSimpleInterpolation, css } from 'styled-components';
+} from "react";
+import styled, { FlattenSimpleInterpolation, css } from "styled-components";
 import {
   Combobox,
   ComboboxInput,
   ComboboxPopover,
   ComboboxList,
   ComboboxOption,
-} from '@reach/combobox';
-import '@reach/combobox/styles.css';
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
 
-import { textVariants } from '../text';
-import { Asterisk, CaretDown } from '../icons';
+import { textVariants } from "../text";
+import { Asterisk, CaretDown } from "../icons";
 
 export type SelectOption = {
   icon?: React.ReactNode;
@@ -55,16 +55,16 @@ export type SelectProps = {
 
 const Container = styled.div<{
   css?: FlattenSimpleInterpolation;
-  label: SelectProps['label'];
+  label: SelectProps["label"];
 }>`
   align-items: flex-start;
   display: flex;
   flex-direction: column;
   flex: 1 0 0;
-  gap: var(--spacing-${({ label }) => (label ? 'xxs' : 'none')});
+  gap: var(--spacing-${({ label }) => (label ? "xxs" : "none")});
 
   /* Custom CSS applied via styled component css prop */
-  ${(props) => props.css || ''};
+  ${(props) => props.css || ""};
 `;
 
 const StyledBox = styled.div<{
@@ -75,13 +75,13 @@ const StyledBox = styled.div<{
   ${({ theme, success, error, disabled }) => {
     const colors = theme?.blocksTheme?.colors;
     const defaultState = error
-      ? 'danger'
+      ? "danger"
       : success
-        ? 'success'
+        ? "success"
         : disabled
-          ? 'disabled'
-          : 'default';
-    const focusState = error ? 'danger' : success ? 'success' : 'focus';
+          ? "disabled"
+          : "default";
+    const focusState = error ? "danger" : success ? "success" : "focus";
 
     return css`
       display: flex;
@@ -118,16 +118,16 @@ const StyledBox = styled.div<{
         border: none;
         color: var(
           --components-inputs-text-default,
-          ${colors['components-inputs-text-default']}
+          ${colors["components-inputs-text-default"]}
         );
 
         display: flex;
 
         font-family: var(--font-family);
-        font-size: ${textVariants['bs-regular'].fontSize};
-        font-style: ${textVariants['bs-regular'].fontStyle};
-        font-weight: ${textVariants['bs-regular'].fontWeight};
-        line-height: ${textVariants['bs-regular'].lineHeight};
+        font-size: ${textVariants["bs-regular"].fontSize};
+        font-style: ${textVariants["bs-regular"].fontStyle};
+        font-weight: ${textVariants["bs-regular"].fontWeight};
+        line-height: ${textVariants["bs-regular"].lineHeight};
 
         gap: var(--spacing-none, 0px);
 
@@ -142,14 +142,14 @@ const StyledBox = styled.div<{
           cursor: not-allowed;
           color: var(
             --components-inputs-text-disabled,
-            ${colors['components-inputs-text-disabled']}
+            ${colors["components-inputs-text-disabled"]}
           );
         }
 
         ::placeholder {
           color: var(
             --components-inputs-text-placeholder,
-            ${colors['components-inputs-text-placeholder']}
+            ${colors["components-inputs-text-placeholder"]}
           );
         }
       }
@@ -195,15 +195,15 @@ const StyledOption = styled(ComboboxOption)`
   gap: var(--spacing-xxs, 8px);
   color: var(--components-list-item-text-default);
   font-family: var(--font-family);
-  font-size: ${textVariants['bs-regular'].fontSize};
-  font-style: ${textVariants['bs-regular'].fontStyle};
-  font-weight: ${textVariants['bs-regular'].fontWeight};
-  line-height: ${textVariants['bs-regular'].lineHeight};
+  font-size: ${textVariants["bs-regular"].fontSize};
+  font-style: ${textVariants["bs-regular"].fontStyle};
+  font-weight: ${textVariants["bs-regular"].fontWeight};
+  line-height: ${textVariants["bs-regular"].lineHeight};
   &:hover {
     border-radius: var(--radius-xxs, 8px);
     background: var(--surface-secondary, #f5f6f8);
   }
-  [role='img'] {
+  [role="img"] {
     width: 24px;
     height: 24px;
   }
@@ -217,10 +217,10 @@ const LabelContainer = styled.div`
 const LabelText = styled.span<{ color: string }>`
   color: var(--${({ color }) => color});
   font-family: var(--font-family);
-  font-size: ${textVariants['h6-semibold'].fontSize};
-  font-style: ${textVariants['h6-semibold'].fontStyle};
-  font-weight: ${textVariants['h6-semibold'].fontWeight};
-  line-height: ${textVariants['h6-semibold'].lineHeight};
+  font-size: ${textVariants["h6-semibold"].fontSize};
+  font-style: ${textVariants["h6-semibold"].fontStyle};
+  font-weight: ${textVariants["h6-semibold"].fontWeight};
+  line-height: ${textVariants["h6-semibold"].lineHeight};
 `;
 
 const LabelTextContainer = styled.div`
@@ -231,17 +231,17 @@ const LabelTextContainer = styled.div`
 const Description = styled.span<{ color: string }>`
   color: var(--${({ color }) => color});
   font-family: var(--font-family);
-  font-size: ${textVariants['c-regular'].fontSize};
-  font-style: ${textVariants['c-regular'].fontStyle};
-  font-weight: ${textVariants['c-regular'].fontWeight};
-  line-height: ${textVariants['c-regular'].lineHeight};
+  font-size: ${textVariants["c-regular"].fontSize};
+  font-style: ${textVariants["c-regular"].fontStyle};
+  font-weight: ${textVariants["c-regular"].fontWeight};
+  line-height: ${textVariants["c-regular"].lineHeight};
 `;
 const Select: React.FC<SelectProps> = ({
   options,
   onSelect,
   css,
   value,
-  placeholder = '',
+  placeholder = "",
   error,
   success,
   label,
@@ -260,11 +260,13 @@ const Select: React.FC<SelectProps> = ({
 
   useEffect(() => {
     const handleScroll = () => setViewPopover(false);
-
-    window.addEventListener('scroll', handleScroll);
-
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+    }
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("scroll", handleScroll);
+      }
     };
   }, []);
 
@@ -278,10 +280,14 @@ const Select: React.FC<SelectProps> = ({
 
   useEffect(() => {
     updatePopoverPosition();
-    window.addEventListener('resize', updatePopoverPosition);
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", updatePopoverPosition);
+    }
 
     return () => {
-      window.removeEventListener('resize', updatePopoverPosition);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", updatePopoverPosition);
+      }
     };
   }, [updatePopoverPosition]);
 
@@ -296,8 +302,8 @@ const Select: React.FC<SelectProps> = ({
         <LabelText
           color={
             disabled
-              ? 'components-inputs-text-disabled'
-              : 'components-inputs-text-default'
+              ? "components-inputs-text-disabled"
+              : "components-inputs-text-default"
           }
         >
           <LabelTextContainer>
@@ -310,7 +316,7 @@ const Select: React.FC<SelectProps> = ({
 
       <StyledCombobox
         ref={comboboxRef}
-        aria-labelledby='select'
+        aria-labelledby="select"
         openOnFocus
         onSelect={(value: string) => {
           onSelect?.(value);
@@ -337,7 +343,7 @@ const Select: React.FC<SelectProps> = ({
               value={selectedOption?.label}
             />
           </StyledInputContainer>
-          <CaretDown size={20} color='icon-tertiary' />
+          <CaretDown size={20} color="icon-tertiary" />
         </StyledBox>
 
         {viewPopover && (
@@ -345,7 +351,7 @@ const Select: React.FC<SelectProps> = ({
             style={{
               width: popoverWidth,
               left: popoverLeft,
-              boxSizing: 'border-box',
+              boxSizing: "border-box",
             }}
           >
             <StyledList>
@@ -366,17 +372,17 @@ const Select: React.FC<SelectProps> = ({
         <Description
           color={
             success || error
-              ? 'components-inputs-text-default'
+              ? "components-inputs-text-default"
               : disabled
-                ? 'components-inputs-text-disabled'
-                : 'components-inputs-text-placeholder'
+                ? "components-inputs-text-disabled"
+                : "components-inputs-text-placeholder"
           }
         >
           {description}
         </Description>
       )}
       {errorMessage && (
-        <Description color='components-inputs-text-danger'>
+        <Description color="components-inputs-text-danger">
           {errorMessage}
         </Description>
       )}
@@ -384,6 +390,6 @@ const Select: React.FC<SelectProps> = ({
   );
 };
 
-Select.displayName = 'Select';
+Select.displayName = "Select";
 
 export { Select };

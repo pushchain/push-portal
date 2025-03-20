@@ -1,8 +1,20 @@
+"use client";
+
 import Head from "next/head";
 import styled from "styled-components";
 
-import Rewards from "../components/Rewards/Rewards";
-import RewardsHeader from "../components/Rewards/RewardsHeader";
+import dynamic from "next/dynamic";
+
+const Rewards = dynamic(() => import("../components/Rewards/Rewards"), {
+  ssr: false,
+});
+
+const RewardsHeader = dynamic(
+  () => import("../components/Rewards/RewardsHeader"),
+  {
+    ssr: false,
+  },
+);
 
 const RewardsPage: React.FC = () => {
   return (

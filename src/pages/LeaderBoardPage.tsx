@@ -1,16 +1,26 @@
+import dynamic from "next/dynamic";
 import styled from "styled-components";
 
-import RewardsHeader from "../components/Rewards/RewardsHeader";
-import Leaderboard from "../components/Leaderboard/Leaderboard";
+const RewardsHeader = dynamic(
+  () => import("../components/Rewards/RewardsHeader"),
+  {
+    ssr: false,
+  },
+);
+
+const Leaderboard = dynamic(
+  () => import("../components/Leaderboard/Leaderboard"),
+  {
+    ssr: false,
+  },
+);
 
 const LeaderBoardPage: React.FC = () => {
   return (
-    <>
-      <LeaderBoardWrapper>
-        <RewardsHeader />
-        <Leaderboard />
-      </LeaderBoardWrapper>
-    </>
+    <LeaderBoardWrapper>
+      <RewardsHeader />
+      <Leaderboard />
+    </LeaderBoardWrapper>
   );
 };
 

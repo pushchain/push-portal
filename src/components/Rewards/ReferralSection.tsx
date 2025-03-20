@@ -21,7 +21,10 @@ export type ReferralSectionProps = Record<string, never>;
 
 const ReferralSection: FC<ReferralSectionProps> = () => {
   const previewBasePath = getPreviewBasePath() || "";
-  const baseUrl = window.location.origin + previewBasePath;
+  const baseUrl =
+    typeof window !== "undefined"
+      ? window.location.origin + previewBasePath
+      : "";
 
   const { universalAddress } = usePushWalletContext();
   const account = universalAddress?.address;

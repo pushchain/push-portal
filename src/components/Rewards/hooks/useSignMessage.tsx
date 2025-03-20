@@ -26,9 +26,11 @@ export const useSignMessageWithEthereum = () => {
           throw new Error("Push Wallet is not connected");
         }
 
-        const domain = window.location.hostname;
+        const domain =
+          typeof window !== "undefined" ? window.location.hostname : "";
         const nonce = generateNonce();
-        const origin = window.location.origin;
+        const origin =
+          typeof window !== "undefined" ? window.location.origin : "";
         const address = universalAddress.address;
         const chainId = parseInt(universalAddress.chainId);
 

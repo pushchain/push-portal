@@ -1,13 +1,20 @@
 import styled from "styled-components";
-import { DiscordVerification } from "../../src/components/discordVerification/DiscordVerification";
+import dynamic from "next/dynamic";
 
-export const DiscordVerificationPage = () => {
+const DiscordVerification = dynamic(
+  () => import("../components/discordVerification/DiscordVerification"),
+  { ssr: false },
+);
+
+const DiscordVerificationPage = () => {
   return (
     <Wrapper>
       <DiscordVerification />
     </Wrapper>
   );
 };
+
+export default DiscordVerificationPage;
 
 const Wrapper = styled.div`
   width: 100%;
