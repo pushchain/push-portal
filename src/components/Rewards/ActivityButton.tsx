@@ -5,7 +5,6 @@ import React, { FC } from "react";
 import { ActvityType, UsersActivity } from "../../queries";
 import { Button } from "../../blocks";
 import { ActivityVerificationButton } from "./ActivityVerificationButton";
-// import { useRewardsContext } from "../../context/rewardsContext";
 // import { useDateExpiry } from '../hooks/useDateExpiry';
 
 type ActivityButtonProps = {
@@ -21,6 +20,7 @@ type ActivityButtonProps = {
   currentLevel?: string;
   setCurrentLevel?: (currentLevel: string) => void;
   onStartClaim?: () => void;
+  hasTweeted?: boolean;
 };
 
 const ActivityButton: FC<ActivityButtonProps> = ({
@@ -36,14 +36,34 @@ const ActivityButton: FC<ActivityButtonProps> = ({
   currentLevel,
   setCurrentLevel,
   onStartClaim,
+  hasTweeted,
 }) => {
   // const hasRewardsExpired = useDateExpiry('2025-02-28T23:59:59');
   const hasRewardsExpired = false;
+  const handleTweetAboutPush = () => {
+    const tweetText = encodeURIComponent(
+      "🚀 Just jumped into Push Chain Devnet Drop S2 and it’s massive! Stack airdrops by exploring universal apps from any chain and level up by banging out multipliers. Join here: https://portal.push.org/rewards",
+    );
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+    window.open(twitterUrl, "_blank");
+  };
 
   if (hasRewardsExpired) {
     return (
       <Button variant="tertiary" size="small" disabled>
         Ended
+      </Button>
+    );
+  }
+
+  if (
+    label == "Tweet" &&
+    activityType == "tweet_about_push_chain" &&
+    !hasTweeted
+  ) {
+    return (
+      <Button variant="tertiary" size="small" onClick={handleTweetAboutPush}>
+        Tweet
       </Button>
     );
   }

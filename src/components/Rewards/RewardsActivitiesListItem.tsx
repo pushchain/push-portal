@@ -23,6 +23,7 @@ import { ActivityButton } from "./ActivityButton";
 import { RewardsActivityIcon } from "./RewardsActivityIcon";
 import { RewardsActivityTitle } from "./RewardsActivityTitle";
 import useLockedStatus from "./hooks/useLockedStatus";
+import { walletToFullCAIP10 } from "../../helpers/web3helper";
 
 export type RewardActivitiesListItemProps = {
   userId: string;
@@ -32,6 +33,7 @@ export type RewardActivitiesListItemProps = {
   allUsersActivity: any;
   isAllActivitiesLoading: boolean;
   refetchActivity: () => void;
+  tweetStatus?: any;
 };
 
 const getUpdatedExpiryTime = (timestamp: number) => {
@@ -54,6 +56,7 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
   allUsersActivity,
   isAllActivitiesLoading,
   refetchActivity,
+  tweetStatus,
 }) => {
   const { universalAddress, connectionStatus } = usePushWalletContext();
   const isWalletConnected = Boolean(universalAddress?.address);
@@ -76,6 +79,8 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
   const isNotDiscordOrTwitter =
     activity.activityType !== "follow_push_on_discord" &&
     activity.activityType !== "follow_push_on_twitter";
+
+  const isTweetAboutChain = activity.activityType === "tweet_about_push_chain";
 
   const updateActivities = () => {
     refetchActivity();
@@ -246,7 +251,8 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
                 </Button>
               )}
 
-              {!isRewardsLocked && (
+              {/* //for twitter and discord */}
+              {!isRewardsLocked && !isTweetAboutChain && (
                 <ActivityButton
                   userId={userId}
                   activityTypeId={activity.id}
@@ -262,6 +268,21 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
                         ? "Claim"
                         : "Unlock Rewards"
                   }
+                />
+              )}
+
+              {/* for tweet about push chain */}
+              {!isRewardsLocked && isTweetAboutChain && (
+                <ActivityButton
+                  userId={userId}
+                  activityTypeId={activity.id}
+                  activityType={activity.activityType}
+                  refetchActivity={() => updateActivities()}
+                  setErrorMessage={setErrorMessage}
+                  usersSingleActivity={usersSingleActivity}
+                  isLoadingActivity={isLoading}
+                  label={tweetStatus?.hasTweeted ? "Claim" : "Tweet"}
+                  hasTweeted={tweetStatus?.hasTweeted}
                 />
               )}
             </Box>

@@ -6,11 +6,12 @@ import { css } from "styled-components";
 
 import { Box, Lock, Text } from "../../blocks";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
-import { StakeActivityResponse } from "../../queries";
+import { StakeActivityResponse, useGetTweetStatus } from "../../queries";
 import { useRewardsContext } from "../../context/rewardsContext";
 
 import { RewardsActivitiesListItem } from "./RewardsActivitiesListItem";
 import { useFilteredActivities } from "./hooks/useFilteredActivities";
+import { walletToFullCAIP10 } from "../../helpers/web3helper";
 
 export type RewardActivitiesProps = Record<string, never>;
 
@@ -32,12 +33,16 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
     "social-activity-2",
   ]);
 
-  // const {
-  //   filteredActivities: otherLevelActivities,
-  //   isUserActivityLoading: isOtherUserActivityLoading,
-  //   userActivity: otherUserActivity,
-  //   refetch: othersRefetch,
-  // } = useFilteredActivities(account, ["social-activity-3"]);
+  const {
+    filteredActivities: otherLevelActivities,
+    isUserActivityLoading: isOtherUserActivityLoading,
+    userActivity: otherUserActivity,
+    refetch: othersRefetch,
+  } = useFilteredActivities(account, ["social-activity-3"]);
+
+  const { data: tweetStatus } = useGetTweetStatus({
+    userId: userDetails?.userId as string,
+  });
 
   return (
     <Box display="flex" flexDirection="column" gap="spacing-md">
@@ -87,7 +92,7 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
           </Box>
         )}
 
-        {/* {otherLevelActivities?.map((activity: any) => (
+        {otherLevelActivities?.map((activity: any) => (
           <RewardsActivitiesListItem
             key={activity.activityType}
             userId={userDetails?.userId || ""}
@@ -97,8 +102,9 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
             allUsersActivity={otherUserActivity as StakeActivityResponse}
             isAllActivitiesLoading={isOtherUserActivityLoading}
             refetchActivity={othersRefetch}
+            tweetStatus={tweetStatus}
           />
-        ))} */}
+        ))}
       </Box>
     </Box>
   );

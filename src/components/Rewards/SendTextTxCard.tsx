@@ -1,7 +1,14 @@
 import React, { FC } from "react";
 import { css } from "styled-components";
 
-import { Box, Button, RewardsBell, Skeleton, Text } from "../../../src/blocks";
+import {
+  Box,
+  Button,
+  Link,
+  RewardsBell,
+  Skeleton,
+  Text,
+} from "../../../src/blocks";
 
 import SimulateImg from "../../../static/assets/website/rewards/simulate-app.webp";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
@@ -79,9 +86,19 @@ const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
         </Box>
 
         <Box>
-          <Text variant="h4-semibold" color="text-primary">
-            Send Test Tx on Push Chain
-          </Text>
+          <Link to="https://simulate.push.org" target="_blank">
+            <Text
+              variant="h4-semibold"
+              color="text-primary"
+              css={css`
+                &:hover {
+                  color: var(--text-brand-medium) !important;
+                }
+              `}
+            >
+              Send Test Tx on Push Chain
+            </Text>
+          </Link>
           <RewardsActivityTitle
             activityTitle="Visit [simulate.push.org](https://simulate.push.org) and send test transactions to level up."
             isLoading={false}
