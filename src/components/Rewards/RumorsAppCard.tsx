@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
 import { css } from "styled-components";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import Image from "next/image";
 
 import { useFilteredActivities } from "./hooks/useFilteredActivities";
 import { useRewardsContext } from "../../context/rewardsContext";
@@ -266,9 +267,10 @@ const RumorsAppCard: FC<RumorsCardProps> = ({ setErrorMessage }) => {
                 }
               `}
             >
-              <img
+              <Image
                 src={RumorsImg}
                 style={{ width: "auto", height: "188px", objectFit: "contain" }}
+                alt="Rumours App Image"
               />
             </Box>
           </Box>

@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 
 import {
   Box,
@@ -265,9 +266,10 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
                 }
               `}
             >
-              <img
+              <Image
                 src={EmailImg}
                 style={{ width: "auto", height: "188px", objectFit: "contain" }}
+                alt="Email App Image"
               />
             </Box>
           </Box>

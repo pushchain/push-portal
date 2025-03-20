@@ -1,7 +1,7 @@
 // environmental configurations for the dapp for different environments
 const infuraAPIKey =
   window.location.hostname != "localhost"
-    ? import.meta.env.VITE_APP_INFURA_PROJECT_ID
+    ? process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
     : "be75cf427a5c41f9badb591994019d22";
 
 export const config = {
@@ -42,5 +42,5 @@ export const config = {
     appId: "1:974364469170:web:47fd6304c6cf36b5bfe6ab",
     measurementId: "G-5YR8N35DY4",
   },
-  discord_client_id: import.meta.env.VITE_APP_DISCORD_CLIENT_ID,
+  discord_client_id: process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID,
 };

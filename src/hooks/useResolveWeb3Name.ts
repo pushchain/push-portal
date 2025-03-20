@@ -66,7 +66,15 @@ export function useResolveWeb3Name(address?: string) {
                 .toLowerCase(),
             )
           : pCAIP10ToWallet(address.split(",")[0].toString())?.toLowerCase();
+
+        // Validate if the address is already correct before checksumming
+        if (!ethers.utils.isAddress(walletLowercase)) {
+          console.error("Invalid address detected:", walletLowercase);
+          return;
+        }
+
         const checksumWallet = ethers.utils.getAddress(walletLowercase);
+
         if (ethers.utils.isAddress(checksumWallet)) {
           try {
             if (web3NameList?.hasOwnProperty(checksumWallet)) {

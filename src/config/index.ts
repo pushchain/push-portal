@@ -6,7 +6,7 @@ import { config as devConfig } from "./config-dev";
 import { config as stageConfig } from "./config-staging";
 import { config as prodConfig } from "./config-prod";
 
-const env = import.meta.env.VITE_APP_ENV;
+const env = process.env.NEXT_PUBLIC_ENV;
 
 export enum ENV {
   PROD = "prod",

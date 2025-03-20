@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { css } from "styled-components";
+import Image from "next/image";
 
 import { Box, Button, RewardsBell, Skeleton, Text } from "../../../src/blocks";
 
@@ -72,9 +73,10 @@ const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
             }
           `}
         >
-          <img
+          <Image
             src={SimulateImg}
             style={{ width: "100%", height: "auto", objectFit: "contain" }}
+            alt="Simulate App Image"
           />
         </Box>
 

@@ -7,12 +7,12 @@ import process from "node:process";
 // Define environment presets
 const envPresets = {
   prod: {
-    VITE_APP_DEPLOY_ENV: "PROD",
-    VITE_APP_PUBLIC_URL: "https://portal.push.org/",
+    NEXT_PUBLIC_DEPLOY_ENV: "PROD",
+    NEXT_PUBLIC_URL: "https://portal.push.org/",
   },
   preview: {
-    VITE_APP_DEPLOY_ENV: "PREVIEW",
-    VITE_APP_PUBLIC_URL: `https://push-protocol.github.io${getPreviewBasePath()}`,
+    NEXT_PUBLIC_DEPLOY_ENV: "PREVIEW",
+    NEXT_PUBLIC_URL: `https://push-protocol.github.io${getPreviewBasePath()}`,
   },
 };
 

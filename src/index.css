@@ -471,7 +471,7 @@ template {
     font-family: "FK Grotesk Neu";
     src:
         url("../static/fonts/FKGroteskNeue-Medium.woff2") format("woff2"),
-        url("../static/fonts/FKGroteskNeu-Medium.woff") format("woff");
+        url("../static/fonts/FKGroteskNeue-Medium.woff") format("woff");
 
     font-weight: 500 600;
     font-style: normal;

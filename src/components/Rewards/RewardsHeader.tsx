@@ -9,8 +9,8 @@ import {
 
 import { useTheme } from "../../context/themeContext";
 import { Box, LightFilled, MoonFilled } from "../../../src/blocks";
-import ChainLogo from "../../../static/assets/website/chain/ChainLogo.svg";
-import ChainLogoDark from "/static/assets/website/chain/ChainLogoDark.svg";
+import ChainLogo from "../../../public/assets/chain/ChainLogo.svg";
+import ChainLogoDark from "../../../public/assets/chain/ChainLogoDark.svg";
 import { AiOutlineClose } from "react-icons/ai";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { device } from "../../config/globals";
@@ -45,7 +45,7 @@ const RewardsHeader: FC = () => {
       `}
     >
       <Box cursor="pointer" onClick={GoToHome}>
-        {darkMode ? <img src={ChainLogoDark} /> : <img src={ChainLogo} />}
+        {darkMode ? <ChainLogoDark /> : <ChainLogo />}
       </Box>
 
       <Box
@@ -117,11 +117,7 @@ const RewardsHeader: FC = () => {
             `}
           >
             <Box cursor="pointer" onClick={GoToHome}>
-              {darkMode ? (
-                <img src={ChainLogoDark} width={150} />
-              ) : (
-                <img src={ChainLogo} width={150} />
-              )}
+              {darkMode ? <ChainLogoDark /> : <ChainLogo />}
             </Box>
             <AiOutlineClose size={32} color={darkMode ? "#fff" : "#000"} />
           </Box>

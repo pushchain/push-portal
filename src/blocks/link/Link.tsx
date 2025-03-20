@@ -1,12 +1,12 @@
-import { FC } from 'react';
+import { FC } from "react";
 import {
   Link as RouterLink,
   LinkProps as RouterLinkProps,
-} from 'react-router-dom';
-import styled, { FlattenSimpleInterpolation } from 'styled-components';
+} from "react-router-dom";
+import styled, { FlattenSimpleInterpolation } from "styled-components";
 
-import { TransformedHTMLAttributes } from '../Blocks.types';
-import { Text, TextProps } from '../text';
+import { TransformedHTMLAttributes } from "../Blocks.types";
+import { Text, TextProps } from "../text";
 
 export type LinkProps = RouterLinkProps & {
   css?: FlattenSimpleInterpolation;
@@ -20,11 +20,11 @@ const StyledLink = styled(RouterLink)<LinkProps>`
   text-decoration: none;
 
   &:hover > * {
-    color: ${({ isText }) => (isText ? 'var(--text-brand-medium)' : '')};
+    color: ${({ isText }) => (isText ? "var(--text-brand-medium)" : "")};
   }
 
   /* Extra CSS props */
-  ${(props) => props.css || ''}
+  ${(props) => props.css || ""}
 `;
 
 const Link: FC<LinkProps> = ({ textProps, isText = true, ...props }) => {
@@ -35,6 +35,6 @@ const Link: FC<LinkProps> = ({ textProps, isText = true, ...props }) => {
   );
 };
 
-Link.displayName = 'Link';
+Link.displayName = "Link";
 
 export { Link };

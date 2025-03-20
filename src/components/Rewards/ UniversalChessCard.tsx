@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { css } from "styled-components";
+import Image from "next/image";
 
 import { RewardsActivityTitle } from "./RewardsActivityTitle";
 
@@ -154,9 +155,10 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
           overflow="hidden"
           borderRadius="radius-md radius-md radius-none radius-none"
         >
-          <img
+          <Image
             src={ChessImg}
             style={{ width: "100%", height: "auto", objectFit: "contain" }}
+            alt="Chess App Image"
           />
         </Box>
 
