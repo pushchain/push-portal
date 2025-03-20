@@ -45,7 +45,11 @@ const RewardsHeader: FC = () => {
       `}
     >
       <Box cursor="pointer" onClick={GoToHome}>
-        {darkMode ? <img src={ChainLogoDark} /> : <img src={ChainLogo} />}
+        {darkMode ? (
+          <img src={ChainLogoDark} width={150} />
+        ) : (
+          <img src={ChainLogo} width={150} />
+        )}
       </Box>
 
       <Box
