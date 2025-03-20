@@ -4,6 +4,58 @@
         <meta charset="utf-8" />
         <title>Single Page Apps for GitHub Pages</title>
         <script type="text/javascript">
+            if (window.location.pathname === "/rewards") {
+                document.title = "Push Chain Rewards S2";
+                var ogMetaTags = [
+                    {
+                        name: "description",
+                        content:
+                            "Explore Push Chain Devnet, complete quests, bang out multipliers, and earn airdrops.",
+                    },
+                    {
+                        property: "og:url",
+                        content: "https://portal.push.org/rewards",
+                    },
+                    { property: "og:type", content: "website" },
+                    { property: "og:title", content: "Push Chain Rewards S2" },
+                    {
+                        property: "og:description",
+                        content:
+                            "Explore Push Chain Devnet, complete quests, bang out multipliers, and earn airdrops.",
+                    },
+                    {
+                        property: "og:image",
+                        content:
+                            "https://opengraph.b-cdn.net/production/images/1e44c2ab-7347-4dca-836e-2d966e61b2a7.png?token=i5CdVQvFqBvXUEZmwRd4zFVSWAO4TjyuIalB6f0FYdQ&height=630&width=1200&expires=33278338970",
+                    },
+                    { name: "twitter:card", content: "summary_large_image" },
+                    { property: "twitter:domain", content: "portal.push.org" },
+                    {
+                        property: "twitter:url",
+                        content: "https://portal.push.org/rewards",
+                    },
+                    { name: "twitter:title", content: "Push Chain Rewards S2" },
+                    {
+                        name: "twitter:description",
+                        content:
+                            "Explore Push Chain Devnet, complete quests, bang out multipliers, and earn airdrops.",
+                    },
+                    {
+                        name: "twitter:image",
+                        content:
+                            "https://opengraph.b-cdn.net/production/images/1e44c2ab-7347-4dca-836e-2d966e61b2a7.png?token=i5CdVQvFqBvXUEZmwRd4zFVSWAO4TjyuIalB6f0FYdQ&height=630&width=1200&expires=33278338970",
+                    },
+                ];
+                ogMetaTags.forEach((tag) => {
+                    var meta = document.createElement("meta");
+                    meta.setAttribute(
+                        tag.property ? "property" : "name",
+                        tag.property || tag.name,
+                    );
+                    meta.setAttribute("content", tag.content);
+                    document.head.appendChild(meta);
+                });
+            }
             // Single Page Apps for GitHub Pages
             // MIT License
             // https://github.com/rafgraph/spa-github-pages
