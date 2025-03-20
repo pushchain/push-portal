@@ -38,7 +38,7 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, "index.html"),
         rewards: path.resolve(__dirname, "rewards.html"),
-        verification: path.resolve(__dirname, "verification.html"),
+        "discord/verification": path.resolve(__dirname, "verification.html"),
       },
     },
   },
