@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 // Third-party libraries
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
-// hooks;
+// hooks
 import appConfig from "../../../config";
 import {
   useClaimRewardsActivity,
