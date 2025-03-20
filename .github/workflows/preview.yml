@@ -27,7 +27,9 @@ jobs:
         if: github.event.action != 'closed' # You might want to skip the build if the PR has been closed
         env:
           VITE_APP_DISCORD_CLIENT_ID: ${{ secrets.VITE_APP_DISCORD_CLIENT_ID }}
+
         run: |
+          echo "VITE_APP_DISCORD_CLIENT_ID=${{ secrets.VITE_APP_DISCORD_CLIENT_ID }}" >> $GITHUB_ENV
           yarn install
           yarn build:pr:preview
 

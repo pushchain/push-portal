@@ -23,6 +23,7 @@ export default defineConfig({
   ],
   define: {
     global: "globalThis",
+    historyApiFallback: true,
   },
   server: {
     port: 3000,
@@ -38,7 +39,6 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, "index.html"),
         rewards: path.resolve(__dirname, "rewards.html"),
-        verification: path.resolve(__dirname, "verification.html"),
       },
     },
   },
