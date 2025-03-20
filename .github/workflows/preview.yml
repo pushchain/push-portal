@@ -34,10 +34,10 @@ jobs:
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1.4.7
         with:
-          source-dir: ./dist/
+          source-dir: ./out/
 
       - uses: rossjrw/pr-preview-action@v1.4.7
         if: github.event.action == 'closed' && !github.event.pull_request.merged
         with:
-          source-dir: ./dist/
+          source-dir: ./out/
           action: remove
