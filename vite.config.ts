@@ -23,6 +23,7 @@ export default defineConfig({
   ],
   define: {
     global: "globalThis",
+    // "process.env.CLIENT_ID": JSON.stringify(process.env.CLIENT_ID || ""),
   },
   server: {
     port: 3000,
