@@ -33,5 +33,11 @@ export default defineConfig({
     commonjsOptions: {
       transformMixedEsModules: true,
     },
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, "index.html"),
+        rewards: resolve(__dirname, "rewards.html"),
+      },
+    },
   },
 });
