@@ -6,13 +6,14 @@ import { RewardsActivityTitle } from "./RewardsActivityTitle";
 import {
   Box,
   Button,
+  Link,
   ProgressBar,
   RewardsBell,
   RewardsStar,
   RewardsStarGradient,
   Skeleton,
   Text,
-} from "../../../src/blocks";
+} from "../../blocks";
 import ChessImg from "../../../static/assets/website/rewards/chess-app.webp";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import { useGetUserXP, UsersActivity } from "../../queries";
@@ -161,9 +162,19 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
         </Box>
 
         <Box padding="spacing-sm spacing-md">
-          <Text variant="h3-semibold" color="text-primary">
-            Universal Chess
-          </Text>
+          <Link to="https://chess.push.org" target="_blank">
+            <Text
+              variant="h3-semibold"
+              color="text-primary"
+              css={css`
+                &:hover {
+                  color: var(--text-brand-medium) !important;
+                }
+              `}
+            >
+              Universal Chess
+            </Text>
+          </Link>
           <RewardsActivityTitle
             activityTitle="Visit [chess.push.org](https://chess.push.org) and play games of chess with other degens or bots on any chain and level up to claim points."
             isLoading={false}

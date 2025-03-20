@@ -10,6 +10,7 @@ import { useRefreshUserXP } from "./hooks/useRefreshUserXP";
 import {
   Box,
   Button,
+  Link,
   Multiplier,
   ProgressBar,
   RewardsBell,
@@ -195,9 +196,19 @@ const RumorsAppCard: FC<RumorsCardProps> = ({ setErrorMessage }) => {
             width="100%"
           >
             <Box>
-              <Text variant="h4-semibold" color="text-primary">
-                Rumors App
-              </Text>
+              <Link to="https://rumors.push.org" target="_blank">
+                <Text
+                  variant="h4-semibold"
+                  color="text-primary"
+                  css={css`
+                    &:hover {
+                      color: var(--text-brand-medium) !important;
+                    }
+                  `}
+                >
+                  Rumors App
+                </Text>
+              </Link>
               <RewardsActivityTitle
                 activityTitle="Visit [rumors.push.org](https://rumors.push.org) and create or react to rumors to level up."
                 isLoading={false}

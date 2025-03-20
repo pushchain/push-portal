@@ -3,6 +3,7 @@ import React, { FC, useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
+  Link,
   Multiplier,
   ProgressBar,
   RewardsBell,
@@ -194,9 +195,19 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
             width="100%"
           >
             <Box>
-              <Text variant="h4-semibold" color="text-primary">
-                Any Chain Email
-              </Text>
+              <Link to="https://email.push.org" target="_blank">
+                <Text
+                  variant="h4-semibold"
+                  color="text-primary"
+                  css={css`
+                    &:hover {
+                      color: var(--text-brand-medium) !important;
+                    }
+                  `}
+                >
+                  Any Chain Email
+                </Text>
+              </Link>
               <RewardsActivityTitle
                 activityTitle="Visit [email.push.org](https://email.push.org) and send or receive emails to level up."
                 isLoading={false}
