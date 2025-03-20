@@ -23,6 +23,7 @@ export default defineConfig({
   ],
   define: {
     global: "globalThis",
+    historyApiFallback: true,
   },
   server: {
     port: 3000,
@@ -37,8 +38,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, "index.html"),
-        // rewards: path.resolve(__dirname, "rewards.html"),
-        // "discord/verification": path.resolve(__dirname, "verification.html"),
+        rewards: path.resolve(__dirname, "rewards.html"),
       },
     },
   },
