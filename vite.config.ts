@@ -5,6 +5,7 @@ import vitePluginRequire from "vite-plugin-require";
 import svgr from "vite-plugin-svgr";
 import topLevelAwait from "vite-plugin-top-level-await";
 import viteTsconfigPaths from "vite-tsconfig-paths";
+import path from "path";
 
 import { getPreviewBasePath } from "./basePath";
 
@@ -35,8 +36,8 @@ export default defineConfig({
     },
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "index.html"),
-        rewards: resolve(__dirname, "rewards.html"),
+        main: path.resolve(__dirname, "index.html"),
+        rewards: path.resolve(__dirname, "rewards.html"),
       },
     },
   },
