@@ -23,7 +23,6 @@ export default defineConfig({
   ],
   define: {
     global: "globalThis",
-    // "process.env.CLIENT_ID": JSON.stringify(process.env.CLIENT_ID || ""),
   },
   server: {
     port: 3000,
@@ -38,8 +37,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, "index.html"),
-        rewards: path.resolve(__dirname, "rewards.html"),
-        "discord/verification": path.resolve(__dirname, "verification.html"),
+        // rewards: path.resolve(__dirname, "rewards.html"),
+        // "discord/verification": path.resolve(__dirname, "verification.html"),
       },
     },
   },
