@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import { RedirectFix } from "../components/RedirectFix";
 
 export const metadata: Metadata = {
   title: "Push Portal",
@@ -30,31 +30,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <Script
-          id="redirect-fix"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-                      if (typeof window !== "undefined") {
-                          if (window.location.search[1] === "/") {
-                              const decoded = window.location.search
-                                  .slice(1)
-                                  .split("&")
-                                  .map((s) => s.replace(/~and~/g, "&"))
-                                  .join("?");
-                              window.history.replaceState(
-                                  null,
-                                  null,
-                                  window.location.pathname.slice(0, -1) + decoded + window.location.hash
-                              );
-                          }
-                      }
-                      `,
-          }}
-        />
-      </head>
       <body>
+        <RedirectFix />
         <div id="root">{children}</div>
       </body>
     </html>
