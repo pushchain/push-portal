@@ -34,6 +34,7 @@ export type RewardActivitiesListItemProps = {
   isAllActivitiesLoading: boolean;
   refetchActivity: () => void;
   tweetStatus?: any;
+  refetchTweetStatus?: () => void;
 };
 
 const getUpdatedExpiryTime = (timestamp: number) => {
@@ -57,6 +58,7 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
   isAllActivitiesLoading,
   refetchActivity,
   tweetStatus,
+  refetchTweetStatus,
 }) => {
   const { universalAddress, connectionStatus } = usePushWalletContext();
   const isWalletConnected = Boolean(universalAddress?.address);
@@ -283,6 +285,7 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
                   isLoadingActivity={isLoading}
                   label={tweetStatus?.hasTweeted ? "Claim" : "Tweet"}
                   hasTweeted={tweetStatus?.hasTweeted}
+                  refetchTweetStatus={refetchTweetStatus}
                 />
               )}
             </Box>

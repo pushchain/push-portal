@@ -1,10 +1,11 @@
 // React and other libraries
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 //Queries
 import { ActvityType, UsersActivity } from "../../queries";
 import { Button } from "../../blocks";
 import { ActivityVerificationButton } from "./ActivityVerificationButton";
+import { useTweetVerification } from "./hooks/useTweetVerification";
 // import { useDateExpiry } from '../hooks/useDateExpiry';
 
 type ActivityButtonProps = {
@@ -21,6 +22,7 @@ type ActivityButtonProps = {
   setCurrentLevel?: (currentLevel: string) => void;
   onStartClaim?: () => void;
   hasTweeted?: boolean;
+  refetchTweetStatus?: () => void;
 };
 
 const ActivityButton: FC<ActivityButtonProps> = ({
@@ -37,16 +39,15 @@ const ActivityButton: FC<ActivityButtonProps> = ({
   setCurrentLevel,
   onStartClaim,
   hasTweeted,
+  refetchTweetStatus,
 }) => {
-  // const hasRewardsExpired = useDateExpiry('2025-02-28T23:59:59');
   const hasRewardsExpired = false;
-  const handleTweetAboutPush = () => {
-    const tweetText = encodeURIComponent(
-      "🚀 Just jumped into Push Chain Devnet Drop S2 and it’s massive! Stack airdrops by exploring universal apps from any chain and level up by banging out multipliers. Join here: https://portal.push.org/rewards",
-    );
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
-    window.open(twitterUrl, "_blank");
-  };
+  const { isTweeting, tweetConfirmed, handleTweetAboutPush } =
+    useTweetVerification({
+      userId,
+      hasTweeted,
+      refetchTweetStatus,
+    });
 
   if (hasRewardsExpired) {
     return (
@@ -62,8 +63,13 @@ const ActivityButton: FC<ActivityButtonProps> = ({
     !hasTweeted
   ) {
     return (
-      <Button variant="tertiary" size="small" onClick={handleTweetAboutPush}>
-        Tweet
+      <Button
+        variant="tertiary"
+        size="small"
+        onClick={handleTweetAboutPush}
+        disabled={isTweeting || tweetConfirmed}
+      >
+        {isTweeting ? "Verifying Tweet..." : "Tweet"}
       </Button>
     );
   }
