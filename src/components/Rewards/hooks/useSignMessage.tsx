@@ -12,8 +12,7 @@ interface SignMessageResult {
 }
 
 export const useSignMessageWithEthereum = () => {
-  const { universalAddress, handleSignMessage } =
-    usePushWalletContext();
+  const { universalAddress, handleSignMessage } = usePushWalletContext();
   const { setSignature } = useRewardsContext();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,9 +25,9 @@ export const useSignMessageWithEthereum = () => {
           throw new Error("Push Wallet is not connected");
         }
 
-        const domain = "wallet.push.org";
+        const domain = window.location.hostname;
         const nonce = generateNonce();
-        const origin = "https://wallet.push.org";
+        const origin = window.location.origin;
         const address = universalAddress.address;
         const chainId = parseInt(universalAddress.chainId);
 
@@ -49,8 +48,7 @@ export const useSignMessageWithEthereum = () => {
         const encoder = new TextEncoder();
         const messageBytes = encoder.encode(messageToSign);
 
-        const signedMessageBytes =
-          await handleSignMessage(messageBytes);
+        const signedMessageBytes = await handleSignMessage(messageBytes);
         const signature = ethers.utils.hexlify(signedMessageBytes);
 
         setSignature(signature);
