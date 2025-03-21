@@ -40,7 +40,7 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
     refetch: othersRefetch,
   } = useFilteredActivities(account, ["social-activity-3"]);
 
-  const { data: tweetStatus } = useGetTweetStatus({
+  const { data: tweetStatus, refetch: refetchTweetStatus } = useGetTweetStatus({
     userId: userDetails?.userId as string,
   });
 
@@ -103,6 +103,7 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
             isAllActivitiesLoading={isOtherUserActivityLoading}
             refetchActivity={othersRefetch}
             tweetStatus={tweetStatus}
+            refetchTweetStatus={refetchTweetStatus}
           />
         ))}
       </Box>
