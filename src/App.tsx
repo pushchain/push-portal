@@ -5,7 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import { PushWalletProvider, CONSTANTS } from "@pushprotocol/pushchain-ui-kit";
+import { PushWalletProvider, CONSTANTS, PushWalletIFrame } from "@pushprotocol/pushchain-ui-kit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
@@ -95,8 +95,9 @@ function App() {
     <ThemeProviderWrapper>
       {/* Global style */}
       <GlobalStyle />
-      <PushWalletProvider env={CONSTANTS.ENV.PROD}>
+      <PushWalletProvider env={CONSTANTS.ENV.DEV}>
         <AccountProvider>
+          <PushWalletIFrame />
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>

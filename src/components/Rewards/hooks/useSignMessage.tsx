@@ -12,7 +12,7 @@ interface SignMessageResult {
 }
 
 export const useSignMessageWithEthereum = () => {
-  const { universalAddress, handleSendSignRequestToPushWallet } =
+  const { universalAddress, handleSignMessage } =
     usePushWalletContext();
   const { setSignature } = useRewardsContext();
   const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +50,7 @@ export const useSignMessageWithEthereum = () => {
         const messageBytes = encoder.encode(messageToSign);
 
         const signedMessageBytes =
-          await handleSendSignRequestToPushWallet(messageBytes);
+          await handleSignMessage(messageBytes);
         const signature = ethers.utils.hexlify(signedMessageBytes);
 
         setSignature(signature);
@@ -67,7 +67,7 @@ export const useSignMessageWithEthereum = () => {
         setIsLoading(false);
       }
     },
-    [universalAddress, handleSendSignRequestToPushWallet, setSignature],
+    [universalAddress, handleSignMessage, setSignature],
   );
 
   return { signMessage };

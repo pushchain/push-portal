@@ -25,7 +25,7 @@ import appConfig from "../config/index";
 type AccountContextType = {
   account: string | null;
   pushNetwork: PushNetwork | null;
-  handleSendSignRequestToPushWallet: (data: Uint8Array) => Promise<Uint8Array>;
+  handleSignMessage: (data: Uint8Array) => Promise<Uint8Array>;
   removePGPKeyForUser: any;
   handleConnectWalletAndEnableProfile: (
     props: handleConnectWalletAndEnableProfileProps,
@@ -99,7 +99,7 @@ const AccountContext = createContext<AccountContextType | undefined>(undefined);
 export const AccountProvider = ({ children }: { children: ReactNode }) => {
   // To ensure intialize via [account] is not run on certain logic points
   const shouldInitializeRef = useRef(true); // Using a ref to control useEffect execution
-  const { universalAddress, handleSendSignRequestToPushWallet } =
+  const { universalAddress, handleSignMessage } =
     usePushWalletContext();
   const [pushNetwork, setPushNetwork] = useState<PushNetwork | null>(null);
   // const [pgpPvtKey, setPgpPvtKey] = useState(null);
@@ -510,7 +510,7 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
       value={{
         account: universalAddress ? universalAddress.address : null,
         pushNetwork,
-        handleSendSignRequestToPushWallet,
+        handleSignMessage,
         removePGPKeyForUser,
         handleConnectWalletAndEnableProfile,
         isUserProfileUnlocked,
