@@ -54,18 +54,20 @@ const useCreateRewardsUser = () => {
   }: {
     onSuccessCallback?: (user: UserRewardsDetailResponse) => void;
   }) => {
+    console.log(hasRun, "has has");
     if (hasRun.current || userDetails) return;
     hasRun.current = true;
 
-    const isMainnet =
-      !isLocalhost && MAINNET_CHAINIDS.includes(universalAddress?.chainId);
+    // TODO: is mainnet fix
+    // const isMainnet =
+    //   !isLocalhost && MAINNET_CHAINIDS.includes(universalAddress?.chainId);
 
-    if (!isMainnet) {
-      setErrorMessage(
-        "Please switch your network to mainnet on your wallet to continue.",
-      );
-      return;
-    }
+    // if (!isMainnet) {
+    //   setErrorMessage(
+    //     "Please switch your network to mainnet on your wallet to continue.",
+    //   );
+    //   return;
+    // }
 
     // Check if the chain is Sepolia or Ethereum
     const isSupportedChain =
