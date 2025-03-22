@@ -8,7 +8,17 @@ import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import { UserRewardsDetailResponse } from "../../../queries";
 import { useRewardsContext } from "../../../context/rewardsContext";
 import { useSignMessageWithEthereum } from "./useSignMessage";
-import { WalletChainType } from "../utils/wallet";
+import { MAINNET_CHAINIDS, WalletChainType } from "../utils/wallet";
+
+const isLocalhost = Boolean(
+  window.location.hostname === "localhost" ||
+    // [::1] is the IPv6 localhost address.
+    window.location.hostname === "[::1]" ||
+    // 127.0.0.1/8 is considered localhost for IPv4.
+    window.location.hostname.match(
+      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/,
+    ),
+);
 
 const useCreateRewardsUser = () => {
   const hasRun = useRef(false);
@@ -24,7 +34,10 @@ const useCreateRewardsUser = () => {
   const fullCaip10WalletAddress = walletToFullCAIP10(
     account,
     universalAddress?.chainId,
+    universalAddress?.chain,
   );
+
+  console.log(universalAddress, "uni uni");
 
   const {
     data: userDetails,
@@ -41,8 +54,20 @@ const useCreateRewardsUser = () => {
   }: {
     onSuccessCallback?: (user: UserRewardsDetailResponse) => void;
   }) => {
+    console.log(hasRun, "has has");
     if (hasRun.current || userDetails) return;
     hasRun.current = true;
+
+    // TODO: is mainnet fix
+    // const isMainnet =
+    //   !isLocalhost && MAINNET_CHAINIDS.includes(universalAddress?.chainId);
+
+    // if (!isMainnet) {
+    //   setErrorMessage(
+    //     "Please switch your network to mainnet on your wallet to continue.",
+    //   );
+    //   return;
+    // }
 
     // Check if the chain is Sepolia or Ethereum
     const isSupportedChain =
@@ -113,6 +138,7 @@ const useCreateRewardsUser = () => {
     shouldRun: !hasRun.current && isWalletConnected && status === "error",
     autoCreateUser,
     userDetails,
+    resetState,
   };
 };
 

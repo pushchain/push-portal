@@ -16,6 +16,7 @@ const RewardsDashboard: FC = () => {
   const caip10WalletAddress = walletToFullCAIP10(
     universalAddress?.address as string,
     universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   const {

@@ -16,6 +16,7 @@ export const useRefreshUserXP = () => {
   const caip10WalletAddress = walletToFullCAIP10(
     account,
     universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   const { data: userDetails } = useGetUserRewardsDetails({
