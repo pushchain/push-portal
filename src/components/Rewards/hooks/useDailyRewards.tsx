@@ -37,6 +37,7 @@ const useDailyRewards = () => {
   const caip10WalletAddress = walletToFullCAIP10(
     universalAddress?.address as string,
     universalAddress?.chainId,
+    universalAddress?.chain,
   );
   const { data: userDetails } = useGetUserRewardsDetails({
     caip10WalletAddress,

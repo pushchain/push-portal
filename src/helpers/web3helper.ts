@@ -112,6 +112,7 @@ export const walletToPCAIP10 = (account: string): string => {
 export const walletToFullCAIP10 = (
   account: string,
   chainId: string,
+  chain: string,
 ): string => {
   if (account?.includes(":")) {
     return account;
@@ -119,7 +120,7 @@ export const walletToFullCAIP10 = (
 
   let prefix = "eip155";
 
-  if (chainId === "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp") {
+  if (chain == "solana" || chainId === "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp") {
     prefix = "solana";
   }
 

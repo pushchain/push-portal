@@ -15,6 +15,7 @@ export const useFilteredActivities = (
   const caip10WalletAddress = walletToFullCAIP10(
     account,
     universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   const {

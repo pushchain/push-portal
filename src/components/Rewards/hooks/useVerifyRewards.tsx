@@ -43,6 +43,7 @@ const useVerifyRewards = ({
   const caip10WalletAddress = walletToFullCAIP10(
     universalAddress?.address as string,
     universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   useEffect(() => {

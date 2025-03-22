@@ -20,8 +20,13 @@ const Rewards: FC = () => {
   const ref = searchParams.get("ref");
   if (ref) sessionStorage.setItem("ref", ref);
 
-  const { errorMessage, autoCreateUser, shouldRun, handleCreateUser } =
-    useCreateRewardsUser();
+  const {
+    errorMessage,
+    autoCreateUser,
+    shouldRun,
+    handleCreateUser,
+    resetState,
+  } = useCreateRewardsUser();
   const { isVerifyClicked } = useRewardsContext();
 
   useEffect(() => {
@@ -36,7 +41,10 @@ const Rewards: FC = () => {
           heading={errorMessage}
           variant="error"
           actionText="Please Try Again"
-          onAction={() => handleCreateUser({})}
+          onAction={() => {
+            resetState();
+            handleCreateUser({});
+          }}
         />
       )}
       <RewardsDashboard />

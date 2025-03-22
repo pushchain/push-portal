@@ -48,6 +48,7 @@ const useVerifyTwitter = ({
   const caip10WalletAddress = walletToFullCAIP10(
     universalAddress?.address as string,
     universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   const { refetch: refetchUserDetails } = useGetUserRewardsDetails({
