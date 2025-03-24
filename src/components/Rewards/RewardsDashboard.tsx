@@ -45,7 +45,7 @@ const RewardsDashboard: FC = () => {
           </div>
         </HeaderText>
 
-        <Box width={{ ml: "100%" }}>
+        <Box width={{ tb: "100%" }}>
           <Box
             css={css`
               button {
