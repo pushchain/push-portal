@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-// import { GuestModeWalletAddress } from 'common';
 import { UserRewardsDetailParams } from "../../types";
 import { userRewardsDetails } from "../../queryKeys";
 import { getUserRewardsDetail } from "../../services";

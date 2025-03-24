@@ -3,11 +3,19 @@
 import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { css } from "styled-components";
+import {
+  PushWalletButton,
+  usePushWalletContext,
+} from "@pushprotocol/pushchain-ui-kit";
+
+import { device } from "../../config/globals";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 import { Box, Button, Points, Text, CaretLeft } from "../../blocks";
-import { device } from "../../config/globals";
 
 const LeaderboardHeader: FC = () => {
+  const isTablet = useMediaQuery(device.tablet);
+  const { universalAddress } = usePushWalletContext();
   const navigate = useNavigate();
   const handleGoBack = () => {
     navigate("/rewards");
@@ -57,6 +65,16 @@ const LeaderboardHeader: FC = () => {
           </Text>
         </Box>
       </Box>
+
+      {isTablet && (
+        <PushWalletButton
+          universalAddress={universalAddress}
+          title="Connect Push Wallet"
+          styling={{
+            fontFamily: "inherit",
+          }}
+        />
+      )}
 
       <Box display={{ initial: "flex", tb: "none" }}>
         <Button
