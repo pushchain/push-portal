@@ -64,21 +64,21 @@ const RewardsDashboard: FC = () => {
                 }}
               />
             )}
-          </Box>
 
-          <Link to="/rewards/leaderboard" title="Terms of Service">
-            <Button
-              variant="secondary"
-              leadingIcon={<Leaderboard />}
-              css={css`
-                @media ${device.mobileL} {
-                  width: 100%;
-                }
-              `}
-            >
-              Leaderboard
-            </Button>
-          </Link>
+            <Link to="/rewards/leaderboard" title="Terms of Service">
+              <Button
+                variant="secondary"
+                leadingIcon={<Leaderboard />}
+                css={css`
+                  @media ${device.mobileL} {
+                    width: 100%;
+                  }
+                `}
+              >
+                Leaderboard
+              </Button>
+            </Link>
+          </Box>
         </Box>
       </HeaderSection>
 
