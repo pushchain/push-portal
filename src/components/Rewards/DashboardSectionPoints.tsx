@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // React and other libraries
-import React, { FC } from 'react';
+import React, { FC } from "react";
 
 //Hooks, Types
-import { UserRewardsDetailResponse } from '../../queries';
+import { UserRewardsDetailResponse } from "../../queries";
 
 //components
 import {
@@ -14,8 +14,8 @@ import {
   RewardsBell,
   Skeleton,
   Text,
-} from '../../blocks';
-import { usePushWalletContext } from '@pushprotocol/pushchain-ui-kit';
+} from "../../blocks";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 export type DashboardSectionPointsProps = {
   title: string;
@@ -45,44 +45,44 @@ const DashboardSectionPoints: FC<DashboardSectionPointsProps> = ({
 
   return (
     <Box
-      width='-webkit-fill-available'
-      display='flex'
-      flexDirection='column'
-      padding='spacing-md'
-      borderRadius='radius-md'
-      gap='spacing-xs'
-      border='border-sm solid stroke-secondary'
-      minHeight={{ tb: '115px', initial: '125px' }}
-      justifyContent='space-between'
-      backgroundColor='surface-glass-subtle'
+      width="-webkit-fill-available"
+      display="flex"
+      flexDirection="column"
+      padding="spacing-md"
+      borderRadius="radius-md"
+      gap="spacing-xs"
+      border="border-sm solid stroke-secondary"
+      minHeight={{ tb: "115px", initial: "125px" }}
+      justifyContent="space-between"
+      backgroundColor="surface-glass-subtle"
     >
       <Box
-        width='-webkit-fill-available'
-        display='flex'
-        justifyContent='space-between'
-        alignItems='center'
+        width="-webkit-fill-available"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
       >
-        <Text variant='h5-bold' textTransform='uppercase' color='text-primary'>
+        <Text variant="h5-bold" textTransform="uppercase" color="text-primary">
           {title}
         </Text>
 
         {data && refetch && isWalletConnected && (
           <Box
-            display='flex'
-            alignItems='center'
-            cursor='pointer'
+            display="flex"
+            alignItems="center"
+            cursor="pointer"
             onClick={refetch}
           >
             <HoverableSVG
-              defaultBackground='surface-brand-subtle'
-              hoverBackground='surface-brand-subtle'
-              padding='spacing-xxxs'
-              borderRadius='radius-sm'
-              icon={<Refresh color='icon-brand-medium' />}
+              defaultBackground="surface-brand-subtle"
+              hoverBackground="surface-brand-subtle"
+              padding="spacing-xxxs"
+              borderRadius="radius-sm"
+              icon={<Refresh color="icon-brand-medium" />}
             ></HoverableSVG>
-            <Box margin='spacing-none spacing-none spacing-none spacing-xxxs'>
-              <Text variant='bs-semibold' color='text-tertiary'>
-                {isFetching ? 'Updating...' : 'Update'}
+            <Box margin="spacing-none spacing-none spacing-none spacing-xxxs">
+              <Text variant="bs-semibold" color="text-tertiary">
+                {isFetching ? "Updating..." : "Update"}
               </Text>
             </Box>
           </Box>
@@ -93,8 +93,8 @@ const DashboardSectionPoints: FC<DashboardSectionPointsProps> = ({
         {/* total points */}
         <Skeleton isLoading={isLoading}>
           {isWalletConnected && !multiplier && (
-            <Text variant='h1-bold' color='text-primary'>
-              {points !== undefined ? points?.toLocaleString() : '0'}
+            <Text variant="h1-bold" color="text-primary">
+              {points !== undefined ? points?.toLocaleString() : "0"}
             </Text>
           )}
         </Skeleton>
@@ -102,14 +102,14 @@ const DashboardSectionPoints: FC<DashboardSectionPointsProps> = ({
         {/* other section placeholder */}
         {!isWalletConnected && !multiplier && (
           <Box
-            display='flex'
-            flexDirection='row'
-            alignItems='center'
-            gap='spacing-xxxs'
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            gap="spacing-xxxs"
           >
-            {title == 'Total Points' && <RewardsBell width={42} height={38} />}
-            <Text variant='h1-bold' color='text-primary'>
-              0
+            {title == "Total Points" && <RewardsBell width={42} height={38} />}
+            <Text variant="h1-bold" color="text-primary">
+              -
             </Text>
           </Box>
         )}
@@ -119,13 +119,13 @@ const DashboardSectionPoints: FC<DashboardSectionPointsProps> = ({
           (isWalletConnected && multiplier && !data)) && (
           <Skeleton isLoading={isLoading}>
             <Box
-              display='flex'
-              flexDirection='row'
-              alignItems='center'
-              gap='spacing-xxxs'
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              gap="spacing-xxxs"
             >
               <Multiplier width={42} height={38} />
-              <Text variant='h1-bold' color='text-primary'>
+              <Text variant="h1-bold" color="text-primary">
                 1x
               </Text>
             </Box>
@@ -136,18 +136,18 @@ const DashboardSectionPoints: FC<DashboardSectionPointsProps> = ({
         {isWalletConnected && multiplier && data && (
           <Skeleton isLoading={isLoading}>
             <Box
-              display='flex'
-              flexDirection='row'
-              alignItems='center'
-              gap='spacing-xxxs'
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              gap="spacing-xxxs"
             >
               <Multiplier width={42} height={38} />
-              <Text variant='h1-bold' color='text-primary'>
+              <Text variant="h1-bold" color="text-primary">
                 {`${data?.multiplier}x`}
               </Text>
             </Box>
 
-            <Text variant='h5-bold' color='text-tertiary'>
+            <Text variant="h5-bold" color="text-tertiary">
               Complete activities to increase
             </Text>
           </Skeleton>
@@ -156,7 +156,7 @@ const DashboardSectionPoints: FC<DashboardSectionPointsProps> = ({
         {/* show rank only when user has points more than 0 */}
         <Skeleton isLoading={isLoading}>
           {points && points > 0 && rank != null ? (
-            <Text variant='h5-bold' color='text-tertiary'>
+            <Text variant="h5-bold" color="text-tertiary">
               {rank > 0 && `Rank #${rank}`}
             </Text>
           ) : null}
@@ -165,7 +165,7 @@ const DashboardSectionPoints: FC<DashboardSectionPointsProps> = ({
         {/* show users invited only when user has a1or more users invited */}
         <Skeleton isLoading={isLoading}>
           {usersInvited && usersInvited > 0 ? (
-            <Text variant='h5-bold' color='text-tertiary'>
+            <Text variant="h5-bold" color="text-tertiary">
               {usersInvited > 1
                 ? `${usersInvited} Users Invited`
                 : `${usersInvited} User Invited`}

@@ -37,8 +37,6 @@ const useCreateRewardsUser = () => {
     universalAddress?.chain,
   );
 
-  console.log(universalAddress, "uni uni");
-
   const {
     data: userDetails,
     status,
