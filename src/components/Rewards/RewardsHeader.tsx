@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -11,10 +11,8 @@ import { useTheme } from "../../context/themeContext";
 import { Box, LightFilled, MoonFilled } from "../../../src/blocks";
 import ChainLogo from "../../../static/assets/website/chain/ChainLogo.svg";
 import ChainLogoDark from "/static/assets/website/chain/ChainLogoDark.svg";
-import { AiOutlineClose } from "react-icons/ai";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { device } from "../../config/globals";
-import { BsList } from "react-icons/bs";
 
 // Dummy
 
@@ -23,12 +21,10 @@ const RewardsHeader: FC = () => {
   const navigate = useNavigate();
   const { darkMode, toggleTheme } = useTheme();
   const { universalAddress } = usePushWalletContext();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isTablet = useMediaQuery(device.tablet);
 
   const GoToHome = () => {
     navigate(baseURL);
-    setIsMenuOpen(false);
   };
 
   return (
@@ -68,18 +64,7 @@ const RewardsHeader: FC = () => {
         )}
       </Box>
 
-      {isTablet ? (
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          width="fit-content"
-          cursor="pointer"
-          onClick={() => setIsMenuOpen(true)}
-        >
-          <BsList size={28} color={darkMode ? "#fff" : "#000"} />
-        </Box>
-      ) : (
+      {!isTablet && (
         <PushWalletButton
           universalAddress={universalAddress}
           title="Connect Push Wallet"
@@ -90,7 +75,7 @@ const RewardsHeader: FC = () => {
         />
       )}
 
-      {isMenuOpen && isTablet && (
+      {/* {isMenuOpen && isTablet && (
         <Box
           position="fixed"
           backgroundColor="surface-primary"
@@ -140,7 +125,7 @@ const RewardsHeader: FC = () => {
             }}
           />
         </Box>
-      )}
+      )} */}
     </Box>
   );
 };

@@ -2,7 +2,10 @@
 // @ts-nocheck
 import React, { FC } from "react";
 import styled, { css } from "styled-components";
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import {
+  PushWalletButton,
+  usePushWalletContext,
+} from "@pushprotocol/pushchain-ui-kit";
 
 import { useGetUserRewardsDetails } from "../../queries";
 
@@ -10,8 +13,10 @@ import { device } from "../../config/globals";
 import { Box, Button, Leaderboard, Points, Link } from "../../blocks";
 import { DashboardSectionPoints } from "./DashboardSectionPoints";
 import { walletToFullCAIP10 } from "../../helpers/web3helper";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 const RewardsDashboard: FC = () => {
+  const isTablet = useMediaQuery(device.tablet);
   const { universalAddress } = usePushWalletContext();
   const caip10WalletAddress = walletToFullCAIP10(
     universalAddress?.address as string,
@@ -41,6 +46,26 @@ const RewardsDashboard: FC = () => {
         </HeaderText>
 
         <Box width={{ ml: "100%" }}>
+          <Box
+            css={css`
+              button {
+                flex: 1;
+                width: 100% !important;
+                margin: 16px 0;
+              }
+            `}
+          >
+            {isTablet && (
+              <PushWalletButton
+                universalAddress={universalAddress}
+                title="Connect Push Wallet"
+                styling={{
+                  fontFamily: "inherit",
+                }}
+              />
+            )}
+          </Box>
+
           <Link to="/rewards/leaderboard" title="Terms of Service">
             <Button
               variant="secondary"
