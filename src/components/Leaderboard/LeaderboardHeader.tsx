@@ -27,7 +27,7 @@ const LeaderboardHeader: FC = () => {
       alignItems="center"
       width="100%"
       flexDirection={{ initial: "row", tb: "column" }}
-      gap="spacing-sm"
+      gap={{ initial: "spacing-sm", tb: "spacing-xs" }}
     >
       <Box
         display="flex"
@@ -66,35 +66,47 @@ const LeaderboardHeader: FC = () => {
         </Box>
       </Box>
 
-      {isTablet && (
-        <PushWalletButton
-          universalAddress={universalAddress}
-          title="Connect Push Wallet"
-          styling={{
-            fontFamily: "inherit",
-          }}
-        />
-      )}
-
-      <Box display={{ initial: "flex", tb: "none" }}>
-        <Button
-          variant="outline"
-          leadingIcon={<CaretLeft />}
-          onClick={handleGoBack}
+      <Box width={{ ml: "100%" }} display="flex" flexDirection="column">
+        <Box
+          css={css`
+            button {
+              flex: 1;
+              width: 100% !important;
+              margin: 0 0 16px 0;
+            }
+          `}
         >
-          Back to Home
-        </Button>
-      </Box>
+          {isTablet && (
+            <PushWalletButton
+              universalAddress={universalAddress}
+              title="Connect Push Wallet"
+              styling={{
+                fontFamily: "inherit",
+              }}
+            />
+          )}
 
-      <Box display={{ initial: "none", tb: "flex" }} width="100%">
-        <Button
-          variant="outline"
-          leadingIcon={<CaretLeft />}
-          block={true}
-          onClick={handleGoBack}
-        >
-          Back to Home
-        </Button>
+          <Box display={{ initial: "flex", tb: "none" }}>
+            <Button
+              variant="outline"
+              leadingIcon={<CaretLeft />}
+              onClick={handleGoBack}
+            >
+              Back to Home
+            </Button>
+          </Box>
+
+          <Box display={{ initial: "none", tb: "flex" }} width="100%">
+            <Button
+              variant="outline"
+              leadingIcon={<CaretLeft />}
+              block={true}
+              onClick={handleGoBack}
+            >
+              Back to Home
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
