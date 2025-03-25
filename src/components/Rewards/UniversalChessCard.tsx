@@ -92,7 +92,7 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
     refetch();
   };
 
-  const { timeLeft, isExpired } = useCountdown("2025-03-27T15:00:00");
+  const { timeLeft, isExpired } = useCountdown("2025-03-27T01:00:00");
 
   return (
     <Skeleton
