@@ -143,7 +143,7 @@ const DashboardSectionPoints: FC<DashboardSectionPointsProps> = ({
             >
               <Multiplier width={42} height={38} />
               <Text variant="h1-bold" color="text-primary">
-                {`${data?.multiplier}x`}
+                {`${data.multiplier?.toFixed(1)}x`}
               </Text>
             </Box>
 
