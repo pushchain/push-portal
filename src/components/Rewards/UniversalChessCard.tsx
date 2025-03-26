@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { css } from "styled-components";
 
 import { RewardsActivityTitle } from "./RewardsActivityTitle";
@@ -19,11 +19,11 @@ import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import { useGetUserXP, UsersActivity } from "../../queries";
 import { ActivityButton } from "./ActivityButton";
 import { useFilteredActivities } from "./hooks/useFilteredActivities";
-import { calculateLevelFromXP } from "./utils/calculateLevelfromXp";
 import { useRewardsContext } from "../../context/rewardsContext";
 import { useCountdown } from "./hooks/useCountdown";
+import { useRefreshUserXP } from "./hooks/useRefreshUserXP";
 
-const totalCount = 127000;
+const numberOfLevels = 50;
 
 export type UniversalChessCardProps = {
   errorMessage: string;
@@ -33,66 +33,138 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
   setErrorMessage,
 }) => {
   const { universalAddress } = usePushWalletContext();
-
   const account = universalAddress?.address as string;
-  const { isLocked, isXPRefreshCompleted } = useRewardsContext();
+  const { isLocked } = useRewardsContext();
+  const [currentLevel, setCurrentLevel] = useState(null);
+  const [processingClaim, setProcessingClaim] = useState(false);
+  const [claimedLevelInfo, setClaimedLevelInfo] = useState({
+    level: null,
+    activityType: null,
+    isProcessing: false,
+  });
 
   // Get user activities and XP data
   const {
     filteredActivities: chessActivities,
+    refetchFilteredActivities,
     userDetails,
     isLoadingActivities,
     isUserActivityLoading,
+    hasUserActivityLoading,
     userActivity,
     refetch,
   } = useFilteredActivities(account, ["chess:xp"], "startsWith");
 
-  const { data: allXPData } = useGetUserXP({
+  const { data: allXPData, refetch: refetchXPData } = useGetUserXP({
     userId: userDetails?.userId as string,
   });
 
   // Get XP details
   const chessXP = allXPData?.xpData.chess ?? 0;
-  const xpForNextLevel = allXPData?.xpForNextLevelMap || {};
+  const xpLevels = allXPData?.xpForNextLevelMap || {};
 
-  // Calculate level, next XP level, and progress
-  const {
-    currentLevel: chessXPLevel,
-    currentLevelXP: chessCurrentLevelXPCumulative,
-    nextLevelXP: chessNextXPCumulative,
-    progressToMaxLevel: chessProgress,
-  } = calculateLevelFromXP(chessXP, xpForNextLevel);
+  const nextUnclaimedLevel = useMemo(() => {
+    if (!userActivity || hasUserActivityLoading !== "success") {
+      return null;
+    }
 
-  // Find unclaimed levels from userActivity
-  const unclaimedLevels = userActivity
-    ? Object.keys(userActivity)
-        .filter((key) => userActivity[key]?.error === "Not Found")
-        .map((key) => Number(key.replace("chess:xp_level_", "")))
-        .filter((level) => level <= chessXPLevel)
-        .sort((a, b) => a - b)
-    : [];
+    // If we're processing a claim, return the level we're currently claiming
+    if (processingClaim && claimedLevelInfo) {
+      return claimedLevelInfo.level;
+    }
 
-  // Determine the next claimable level
-  const nextClaimableLevel = unclaimedLevels[0] ?? null;
+    for (let i = 1; i <= 50; i++) {
+      const key = `chess:xp_level_${i}`;
+      if (!userActivity[key] || userActivity[key].error === "Not Found") {
+        return i;
+      }
+    }
+    return 51; //if all 1 - 50 is claimed
+  }, [userActivity, processingClaim, claimedLevelInfo, currentLevel]);
 
-  // Get the corresponding activity for this level
+  const xpNeededForCurrentLevel = nextUnclaimedLevel
+    ? xpLevels[nextUnclaimedLevel]
+    : null;
+
   const levelToPick = chessActivities?.find(
-    (item) => item?.index === `chess:xp-level-${nextClaimableLevel}`,
+    (item) => item?.index === `chess:xp-level-${nextUnclaimedLevel}`,
   );
 
   const usersSingleActivity =
     (userActivity?.[levelToPick?.activityType] as UsersActivity) ?? null;
 
-  const isReadyToClaim = chessXP > chessCurrentLevelXPCumulative;
-  const isEnded = chessXP > totalCount;
-  const isLoading =
-    isLoadingActivities || (!isXPRefreshCompleted && Boolean(universalAddress));
+  const { isPending } = useRefreshUserXP();
 
-  const updateActivities = () => {
-    refetch();
+  const isReadyToClaim = chessXP >= xpNeededForCurrentLevel;
+  const isEnded = nextUnclaimedLevel > numberOfLevels;
+  const isLoading =
+    isLoadingActivities || (isPending && Boolean(universalAddress));
+
+  const startClaimProcess = (level, activityType) => {
+    setClaimedLevelInfo((prevInfo) => ({
+      ...prevInfo,
+      level,
+      activityType,
+      isProcessing: true,
+    }));
+    setProcessingClaim(true);
   };
 
-  const { timeLeft, isExpired } = useCountdown("2025-03-28T23:59:59");
+  useEffect(() => {
+    if (processingClaim && claimedLevelInfo && currentLevel) {
+      handleVerification();
+    }
+  }, [claimedLevelInfo, currentLevel]);
+
+  const resetAndRefetch = async () => {
+    // Reset all state
+    setProcessingClaim(false);
+    setCurrentLevel(null);
+    setClaimedLevelInfo({
+      level: null,
+      activityType: null,
+      isProcessing: false,
+    });
+
+    // Trigger all refetches in parallel
+    await Promise.all([
+      refetch(),
+      refetchXPData(),
+      refetchFilteredActivities(),
+    ]);
+
+    console.log("Reset and refresh completed");
+  };
+
+  const handleVerification = async () => {
+    if (!claimedLevelInfo || !claimedLevelInfo.activityType) {
+      setProcessingClaim(false);
+      return;
+    }
+
+    try {
+      const activityKey = claimedLevelInfo.activityType;
+
+      console.log("Verification status:", {
+        activityKey,
+        claimedInfo: claimedLevelInfo,
+      });
+
+      setTimeout(async () => {
+        await resetAndRefetch();
+      }, 2000);
+    } catch (error) {
+      console.error("Verification error:", error);
+      setProcessingClaim(false);
+      setClaimedLevelInfo({
+        level: null,
+        activityType: null,
+        isProcessing: false,
+      });
+    }
+  };
+
+  const { timeLeft, isExpired } = useCountdown("2025-03-27T01:00:00Z");
 
   return (
     <Skeleton
@@ -212,11 +284,20 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
                   userId={userDetails?.userId}
                   activityTypeId={levelToPick?.id}
                   activityType={levelToPick?.activityType}
-                  refetchActivity={updateActivities}
+                  refetchActivity={refetch}
                   setErrorMessage={setErrorMessage}
                   usersSingleActivity={usersSingleActivity}
                   isLoadingActivity={isUserActivityLoading}
+                  currentLevel={currentLevel}
+                  setCurrentLevel={setCurrentLevel}
                   label={"Claim"}
+                  onStartClaim={() => {
+                    const level = nextUnclaimedLevel;
+                    const activityType = levelToPick?.activityType;
+                    if (level && activityType) {
+                      startClaimProcess(level, activityType);
+                    }
+                  }}
                 />
               )}
             </Box>
@@ -255,8 +336,8 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
             </Box>
 
             <ProgressBar
-              progress={chessProgress}
-              max={100}
+              progress={(chessXP as number) || null}
+              max={xpNeededForCurrentLevel}
               size="large"
               progressIcon={<RewardsStarGradient size={35} />}
               progressIconText={`${chessXP}XP`}
