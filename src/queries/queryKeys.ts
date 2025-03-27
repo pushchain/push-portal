@@ -10,6 +10,6 @@ export const pushStakeEpoch = "pushStakeEpoch";
 export const rewardActivityStatus = "rewardActivityStatus";
 export const rewardsActivity = "rewardsActivity";
 export const rewardsLeaderboardS1 = "rewardsLeaderboardS1";
-export const rewardsLeaderboardS2 = "rewardsLeaderboardS1";
+export const rewardsLeaderboardS2 = "rewardsLeaderboardS2";
 export const tweetStatus = "tweetStatus";
 export const userRewardsDetails = "userRewardsDetails";
