@@ -43,7 +43,7 @@ const LeaderboardListItem: FC<LeaderboardListItemProps> = ({
         border-bottom: var(--border-sm) solid var(--stroke-secondary);
       `}
     >
-      <Skeleton isLoading={isLoading}>
+      <Skeleton isLoading={isLoading} width={{ initial: "250px", tb: "auto" }}>
         <Box display="flex" gap="spacing-xs" alignItems="center">
           <Box width="34px" justifyContent="center" display="flex">
             <Text variant="bm-bold" color="text-primary">
