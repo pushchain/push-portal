@@ -132,6 +132,7 @@ export const ActivityVerificationButton = ({
     verifyingRewards,
     verifyingTwitter,
     verifyingDiscord,
+    universalAddress,
   ]);
 
   const { isAuthenticated, authButton } = useAuthWithButton({
