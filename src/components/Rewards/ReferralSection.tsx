@@ -67,7 +67,7 @@ const ReferralSection: FC<ReferralSectionProps> = () => {
           </Text>
           <Box>
             <Text variant="bm-regular" color="text-on-light-bg">
-              Earn +12% of any Points your invites earn, and +2% of any Points
+              Earn +20% of any Points your invites earn, and +5% of any Points
               your invite’s invites earn.
             </Text>
           </Box>
