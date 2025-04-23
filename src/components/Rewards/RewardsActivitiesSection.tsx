@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 
 import { css } from "styled-components";
 
 import { Box, Lock, Text } from "../../blocks";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
-import { StakeActivityResponse, useGetTweetStatus } from "../../queries";
+import {
+  StakeActivityResponse,
+  useGetTweetStatus,
+  useGetTweetPointsStatus,
+} from "../../queries";
 import { useRewardsContext } from "../../context/rewardsContext";
 
 import { RewardsActivitiesListItem } from "./RewardsActivitiesListItem";
@@ -38,11 +42,19 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
     isUserActivityLoading: isOtherUserActivityLoading,
     userActivity: otherUserActivity,
     refetch: othersRefetch,
-  } = useFilteredActivities(account, ["social-activity-3"]);
+  } = useFilteredActivities(account, [
+    "social-activity-3",
+    "social-activity-4",
+  ]);
 
   const { data: tweetStatus, refetch: refetchTweetStatus } = useGetTweetStatus({
     userId: userDetails?.userId as string,
   });
+
+  const { data: tweetPointsStatus, refetch: refetchTweetPointsStatus } =
+    useGetTweetPointsStatus({
+      userId: userDetails?.userId as string,
+    });
 
   return (
     <Box display="flex" flexDirection="column" gap="spacing-md">
@@ -96,6 +108,7 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
           <RewardsActivitiesListItem
             key={activity.activityType}
             userId={userDetails?.userId || ""}
+            userDetails={userDetails || ""}
             activity={activity}
             isLoadingItem={isLoadingActivities}
             isLocked={isLocked}
@@ -104,6 +117,8 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
             refetchActivity={othersRefetch}
             tweetStatus={tweetStatus}
             refetchTweetStatus={refetchTweetStatus}
+            tweetPointsStatus={tweetPointsStatus}
+            refetchTweetPointsStatus={refetchTweetPointsStatus}
           />
         ))}
       </Box>

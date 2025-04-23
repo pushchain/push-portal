@@ -9,6 +9,7 @@ export type ActvityType =
   | "follow_push_on_discord"
   | "follow_push_on_twitter"
   | "tweet_about_push_chain"
+  | "tweet_about_200k_points"
   | "test_transaction_on_push_chain"
   | "daily_check_in_7_days_day1"
   | "daily_check_in_7_days_day2"

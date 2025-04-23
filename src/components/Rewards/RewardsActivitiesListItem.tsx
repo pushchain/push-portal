@@ -3,7 +3,12 @@
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import React, { FC, useState, useMemo, useEffect } from "react";
 
-import { Activity, StakeActivityResponse, UsersActivity } from "../../queries";
+import {
+  Activity,
+  StakeActivityResponse,
+  UserRewardsDetailResponse,
+  UsersActivity,
+} from "../../queries";
 
 import {
   Box,
@@ -28,6 +33,7 @@ import { walletToFullCAIP10 } from "../../helpers/web3helper";
 export type RewardActivitiesListItemProps = {
   userId: string;
   activity: any;
+  userDetails?: UserRewardsDetailResponse;
   isLoadingItem: boolean;
   isLocked: boolean;
   allUsersActivity: any;
@@ -35,6 +41,8 @@ export type RewardActivitiesListItemProps = {
   refetchActivity: () => void;
   tweetStatus?: any;
   refetchTweetStatus?: () => void;
+  tweetPointsStatus?: any;
+  refetchTweetPointsStatus?: () => void;
 };
 
 const getUpdatedExpiryTime = (timestamp: number) => {
@@ -52,6 +60,7 @@ const getUpdatedExpiryTime = (timestamp: number) => {
 const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
   userId,
   activity,
+  userDetails,
   isLoadingItem,
   isLocked,
   allUsersActivity,
@@ -59,6 +68,8 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
   refetchActivity,
   tweetStatus,
   refetchTweetStatus,
+  tweetPointsStatus,
+  refetchTweetPointsStatus,
 }) => {
   const { universalAddress, connectionStatus } = usePushWalletContext();
   const isWalletConnected = Boolean(universalAddress?.address);
@@ -83,6 +94,12 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
     activity.activityType !== "follow_push_on_twitter";
 
   const isTweetAboutChain = activity.activityType === "tweet_about_push_chain";
+  const isTweetAboutPointsChain =
+    activity.activityType == "tweet_about_200k_points";
+
+  const doesUserHaveMoreThan200kPoints = useMemo(() => {
+    return isTweetAboutPointsChain && userDetails?.totalPoints >= 200000;
+  }, [isTweetAboutPointsChain, userDetails]);
 
   const updateActivities = () => {
     refetchActivity();
@@ -123,7 +140,8 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
           alignItems={{ ml: "flex-start", initial: "center" }}
           gap="spacing-sm"
         >
-          {isRewardsLocked ? (
+          {isRewardsLocked ||
+          (isTweetAboutPointsChain && !doesUserHaveMoreThan200kPoints) ? (
             <Box
               width="48px"
               height="48px"
@@ -247,31 +265,35 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
 
             {/* Buttons Logic */}
             <Box display="flex">
-              {isRewardsLocked && (
+              {(isRewardsLocked ||
+                (isTweetAboutPointsChain &&
+                  !doesUserHaveMoreThan200kPoints)) && (
                 <Button size="small" variant="tertiary" disabled>
                   Locked
                 </Button>
               )}
 
               {/* //for twitter and discord */}
-              {!isRewardsLocked && !isTweetAboutChain && (
-                <ActivityButton
-                  userId={userId}
-                  activityTypeId={activity.id}
-                  activityType={activity.activityType}
-                  refetchActivity={() => updateActivities()}
-                  setErrorMessage={setErrorMessage}
-                  usersSingleActivity={usersSingleActivity}
-                  isLoadingActivity={isLoading}
-                  label={
-                    isNotDiscordOrTwitter
-                      ? "Claim"
-                      : connectionStatus === "connected"
+              {!isRewardsLocked &&
+                !isTweetAboutChain &&
+                !isTweetAboutPointsChain && (
+                  <ActivityButton
+                    userId={userId}
+                    activityTypeId={activity.id}
+                    activityType={activity.activityType}
+                    refetchActivity={() => updateActivities()}
+                    setErrorMessage={setErrorMessage}
+                    usersSingleActivity={usersSingleActivity}
+                    isLoadingActivity={isLoading}
+                    label={
+                      isNotDiscordOrTwitter
                         ? "Claim"
-                        : "Unlock Rewards"
-                  }
-                />
-              )}
+                        : connectionStatus === "connected"
+                          ? "Claim"
+                          : "Unlock Rewards"
+                    }
+                  />
+                )}
 
               {/* for tweet about push chain */}
               {!isRewardsLocked && isTweetAboutChain && (
@@ -288,6 +310,24 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
                   refetchTweetStatus={refetchTweetStatus}
                 />
               )}
+
+              {/* for tweet about push chain points */}
+              {!isRewardsLocked &&
+                isTweetAboutPointsChain &&
+                doesUserHaveMoreThan200kPoints && (
+                  <ActivityButton
+                    userId={userId}
+                    activityTypeId={activity.id}
+                    activityType={activity.activityType}
+                    refetchActivity={() => updateActivities()}
+                    setErrorMessage={setErrorMessage}
+                    usersSingleActivity={usersSingleActivity}
+                    isLoadingActivity={isLoading}
+                    label={tweetPointsStatus?.hasTweeted ? "Claim" : "Tweet"}
+                    hasTweetedAboutPoints={tweetPointsStatus?.hasTweeted}
+                    refetchTweetStatus={refetchTweetPointsStatus}
+                  />
+                )}
             </Box>
           </Box>
         </Box>

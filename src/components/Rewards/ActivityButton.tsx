@@ -1,5 +1,5 @@
 // React and other libraries
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 
 //Queries
 import { ActvityType, UsersActivity } from "../../queries";
@@ -23,6 +23,8 @@ type ActivityButtonProps = {
   onStartClaim?: () => void;
   hasTweeted?: boolean;
   refetchTweetStatus?: () => void;
+  hasTweetedAboutPoints?: boolean;
+  refetchTweetPointsStatus?: () => void;
 };
 
 const ActivityButton: FC<ActivityButtonProps> = ({
@@ -40,14 +42,23 @@ const ActivityButton: FC<ActivityButtonProps> = ({
   onStartClaim,
   hasTweeted,
   refetchTweetStatus,
+  hasTweetedAboutPoints,
+  refetchTweetPointsStatus,
 }) => {
   const hasRewardsExpired = false;
-  const { isTweeting, tweetConfirmed, handleTweetAboutPush } =
-    useTweetVerification({
-      userId,
-      hasTweeted,
-      refetchTweetStatus,
-    });
+
+  const { isTweeting, tweetConfirmed, handleTweet } = useTweetVerification({
+    userId,
+    activityType,
+    tweetStatusMap: {
+      tweet_about_push_chain: hasTweeted,
+      tweet_about_200k_points: hasTweetedAboutPoints,
+    },
+    refetchStatusMap: {
+      tweet_about_push_chain: refetchTweetStatus,
+      tweet_about_200k_points: refetchTweetPointsStatus,
+    },
+  });
 
   if (hasRewardsExpired) {
     return (
@@ -58,15 +69,15 @@ const ActivityButton: FC<ActivityButtonProps> = ({
   }
 
   if (
-    label == "Tweet" &&
-    activityType == "tweet_about_push_chain" &&
-    !hasTweeted
+    label === "Tweet" &&
+    !hasTweeted &&
+    ["tweet_about_push_chain", "tweet_about_200k_points"].includes(activityType)
   ) {
     return (
       <Button
         variant="tertiary"
         size="small"
-        onClick={handleTweetAboutPush}
+        onClick={handleTweet}
         disabled={isTweeting || tweetConfirmed}
       >
         {isTweeting ? "Verifying Tweet..." : "Tweet"}

@@ -31,8 +31,6 @@ import {
   FiveSubscribedDefiChannel,
 } from "../../blocks";
 
-// import { ActvityType } from 'queries';
-
 type RewardsActivityIconProp = {
   type: any;
 };
@@ -46,7 +44,7 @@ const RewardsActivityIcon: FC<RewardsActivityIconProp> = ({ type }) => {
     return <Twitter width={36} height={36} />;
   }
 
-  if (type === "tweet_about_push_chain") {
+  if (type === "tweet_about_push_chain" || type === "tweet_about_200k_points") {
     return <Twitter width={36} height={36} />;
   }
 

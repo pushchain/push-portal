@@ -3,6 +3,7 @@ import { ActvityType } from "../../../queries";
 export const otherRewardActivities: ActvityType[] = [
   "tweet_about_push_chain",
   "test_transaction_on_push_chain",
+  "tweet_about_200k_points",
 ];
 
 export const dailyRewardActivities: ActvityType[] = [
