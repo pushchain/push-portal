@@ -47,6 +47,13 @@ const ActivityButton: FC<ActivityButtonProps> = ({
 }) => {
   const hasRewardsExpired = false;
 
+  const shouldRunTweetFlow =
+    label === "Tweet" &&
+    hasTweeted === true &&
+    ["tweet_about_push_chain", "tweet_about_200k_points"].includes(
+      activityType,
+    );
+
   const { isTweeting, tweetConfirmed, handleTweet } = useTweetVerification({
     userId,
     activityType,
@@ -68,23 +75,6 @@ const ActivityButton: FC<ActivityButtonProps> = ({
     );
   }
 
-  if (
-    label === "Tweet" &&
-    !hasTweeted &&
-    ["tweet_about_push_chain", "tweet_about_200k_points"].includes(activityType)
-  ) {
-    return (
-      <Button
-        variant="tertiary"
-        size="small"
-        onClick={handleTweet}
-        disabled={isTweeting || tweetConfirmed}
-      >
-        {isTweeting ? "Verifying Tweet..." : "Tweet"}
-      </Button>
-    );
-  }
-
   if (usersSingleActivity?.status === "COMPLETED") {
     return (
       <Button variant="tertiary" size="small" disabled>
@@ -97,6 +87,19 @@ const ActivityButton: FC<ActivityButtonProps> = ({
     return (
       <Button variant="tertiary" size="small" disabled>
         Pending
+      </Button>
+    );
+  }
+
+  if (shouldRunTweetFlow) {
+    return (
+      <Button
+        variant="tertiary"
+        size="small"
+        onClick={handleTweet}
+        disabled={isTweeting || tweetConfirmed}
+      >
+        {isTweeting ? "Verifying Tweet..." : "Tweet"}
       </Button>
     );
   }

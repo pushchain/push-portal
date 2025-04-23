@@ -47,14 +47,29 @@ const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
     "social-activity-4",
   ]);
 
-  const { data: tweetStatus, refetch: refetchTweetStatus } = useGetTweetStatus({
-    userId: userDetails?.userId as string,
-  });
+  const { data: tweetStatus, refetch: refetchTweetStatus } = useGetTweetStatus(
+    {
+      userId: userDetails?.userId as string,
+    },
+    {
+      enabled:
+        !!userDetails?.userId &&
+        otherUserActivity?.["tweet_about_push_chain"]?.status !== "COMPLETED",
+    },
+  );
 
   const { data: tweetPointsStatus, refetch: refetchTweetPointsStatus } =
-    useGetTweetPointsStatus({
-      userId: userDetails?.userId as string,
-    });
+    useGetTweetPointsStatus(
+      {
+        userId: userDetails?.userId as string,
+      },
+      {
+        enabled:
+          !!userDetails?.userId &&
+          otherUserActivity?.["tweet_about_200k_points"]?.status !==
+            "COMPLETED",
+      },
+    );
 
   return (
     <Box display="flex" flexDirection="column" gap="spacing-md">

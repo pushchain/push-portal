@@ -33,7 +33,7 @@ import { walletToFullCAIP10 } from "../../helpers/web3helper";
 export type RewardActivitiesListItemProps = {
   userId: string;
   activity: any;
-  userDetails?: UserRewardsDetailResponse;
+  userDetails?: any;
   isLoadingItem: boolean;
   isLocked: boolean;
   allUsersActivity: any;

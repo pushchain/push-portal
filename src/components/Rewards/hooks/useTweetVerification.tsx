@@ -46,14 +46,14 @@ export const useTweetVerification = ({
 
     let attempts = 0;
     const interval = setInterval(() => {
-      if (attempts >= 12 || tweetConfirmed) {
+      if (attempts >= 3 || tweetConfirmed) {
         clearInterval(interval);
         return;
       }
 
       refetch?.();
       attempts++;
-    }, 5000);
+    }, 7000);
 
     return () => clearInterval(interval);
   }, [isTweeting, tweetConfirmed, refetch]);
