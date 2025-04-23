@@ -214,14 +214,7 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
                 {/* We don't need to show the Description when the title is discord and twitter according to the design */}
                 {activity.activityType !== "follow_push_on_discord" &&
                   activity.activityType !== "follow_push_on_twitter" && (
-                    <Skeleton isLoading={isLoading}>
-                      {/* <RewardsActivityTitle
-                        activityTitle={activity.activityDesc}
-                        isLoading={isLoading}
-                        color='text-tertiary'
-                        variant='bs-regular'
-                      /> */}
-                    </Skeleton>
+                    <Skeleton isLoading={isLoading}></Skeleton>
                   )}
               </Box>
 
