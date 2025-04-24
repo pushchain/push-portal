@@ -13,5 +13,3 @@ export * from "./getRewardsLeaderboardS1";
 export * from "./getRewardsleaderboardS2";
 export * from "./getUserXP";
 export * from "./updateUserXP";
-export * from "./getTweetStatus";
-export * from "./getTweetPointsStatus";
