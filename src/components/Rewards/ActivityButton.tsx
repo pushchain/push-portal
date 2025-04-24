@@ -5,8 +5,6 @@ import React, { FC } from "react";
 import { ActvityType, UsersActivity } from "../../queries";
 import { Button } from "../../blocks";
 import { ActivityVerificationButton } from "./ActivityVerificationButton";
-import { useTweetVerification } from "./hooks/useTweetVerification";
-// import { useDateExpiry } from '../hooks/useDateExpiry';
 
 type ActivityButtonProps = {
   userId: string;
@@ -21,10 +19,6 @@ type ActivityButtonProps = {
   currentLevel?: string;
   setCurrentLevel?: (currentLevel: string) => void;
   onStartClaim?: () => void;
-  hasTweeted?: boolean;
-  refetchTweetStatus?: () => void;
-  hasTweetedAboutPoints?: boolean;
-  refetchTweetPointsStatus?: () => void;
 };
 
 const ActivityButton: FC<ActivityButtonProps> = ({
@@ -40,32 +34,8 @@ const ActivityButton: FC<ActivityButtonProps> = ({
   currentLevel,
   setCurrentLevel,
   onStartClaim,
-  hasTweeted,
-  refetchTweetStatus,
-  hasTweetedAboutPoints,
-  refetchTweetPointsStatus,
 }) => {
   const hasRewardsExpired = false;
-
-  const shouldRunTweetFlow =
-    label === "Tweet" &&
-    hasTweeted === true &&
-    ["tweet_about_push_chain", "tweet_about_200k_points"].includes(
-      activityType,
-    );
-
-  const { isTweeting, tweetConfirmed, handleTweet } = useTweetVerification({
-    userId,
-    activityType,
-    tweetStatusMap: {
-      tweet_about_push_chain: hasTweeted,
-      tweet_about_200k_points: hasTweetedAboutPoints,
-    },
-    refetchStatusMap: {
-      tweet_about_push_chain: refetchTweetStatus,
-      tweet_about_200k_points: refetchTweetPointsStatus,
-    },
-  });
 
   if (hasRewardsExpired) {
     return (
@@ -87,19 +57,6 @@ const ActivityButton: FC<ActivityButtonProps> = ({
     return (
       <Button variant="tertiary" size="small" disabled>
         Pending
-      </Button>
-    );
-  }
-
-  if (shouldRunTweetFlow) {
-    return (
-      <Button
-        variant="tertiary"
-        size="small"
-        onClick={handleTweet}
-        disabled={isTweeting || tweetConfirmed}
-      >
-        {isTweeting ? "Verifying Tweet..." : "Tweet"}
       </Button>
     );
   }
