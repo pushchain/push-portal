@@ -320,7 +320,9 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
                 padding="spacing-xxxs"
               >
                 <Text>
-                  {levelToPick?.activityTitle ?? "No activity available"}
+                  {isEnded
+                    ? "Max Level Reached"
+                    : (levelToPick?.activityTitle ?? "No activity available")}
                 </Text>
                 <RewardsStar color="icon-brand-medium" />
               </Box>
