@@ -1,23 +1,33 @@
+// React + Web3 Essentials
+import React from "react";
+
+// External Packages
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
-import { PushWalletProvider, CONSTANTS, PushWalletIFrame } from "@pushprotocol/pushchain-ui-kit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { createGlobalStyle } from "styled-components";
+import {
+  PushWalletProvider,
+  CONSTANTS,
+  PushWalletIFrame,
+} from "@pushprotocol/pushchain-ui-kit";
 
+import { getPreviewBasePath } from "../basePath";
 import { ThemeProviderWrapper } from "./context/themeContext";
 import { AccountProvider } from "./context/accountContext";
 import { RewardsContextProvider } from "./context/rewardsContext";
 
-import RewardsPage from "./pages/RewardsPage";
 import { blocksColors, getBlocksCSSVariables } from "../src/blocks";
+import NotFound from "./components/NotFound";
+import RewardsHeader from "./components/Rewards/RewardsHeader";
+import RewardsPage from "./pages/RewardsPage";
 import LeaderBoardPage from "./pages/LeaderBoardPage";
 import { DiscordVerificationPage } from "./pages/DiscordVerificationPage";
-import { getPreviewBasePath } from "../basePath";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -101,6 +111,7 @@ function App() {
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>
+                <RewardsHeader />
                 <Routes>
                   <Route
                     path="/"
@@ -119,6 +130,7 @@ function App() {
                     path="/discord/verification"
                     element={<DiscordVerificationPage />}
                   />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Router>
               <ReactQueryDevtools initialIsOpen={false} />

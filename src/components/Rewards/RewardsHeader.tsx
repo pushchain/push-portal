@@ -74,58 +74,6 @@ const RewardsHeader: FC = () => {
           }}
         />
       )}
-
-      {/* {isMenuOpen && isTablet && (
-        <Box
-          position="fixed"
-          backgroundColor="surface-primary"
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          css={css`
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            padding: 24px;
-            box-sizing: border-box;
-          `}
-        >
-          <Box
-            cursor="pointer"
-            width="100%"
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            onClick={() => setIsMenuOpen(false)}
-            css={css`
-              box-sizing: border-box;
-            `}
-          >
-            <Box cursor="pointer" onClick={GoToHome}>
-              {darkMode ? (
-                <img src={ChainLogoDark} width={150} />
-              ) : (
-                <img src={ChainLogo} width={150} />
-              )}
-            </Box>
-            <AiOutlineClose size={32} color={darkMode ? "#fff" : "#000"} />
-          </Box>
-
-          <PushWalletButton
-            universalAddress={universalAddress}
-            title="Connect Push Wallet"
-            styling={{
-              width: "100%",
-              margin: "48px 0",
-              fontFamily: "inherit",
-            }}
-          />
-        </Box>
-      )} */}
     </Box>
   );
 };

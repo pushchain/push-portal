@@ -2,10 +2,6 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 
 import Rewards from "../components/Rewards/Rewards";
-import RewardsHeader from "../components/Rewards/RewardsHeader";
-
-import OGPreviewImg from "../../static/assets/website/preview/og-preview.webp";
-import TwitterImg from "../../static/assets/website/preview/twitter-preview.webp";
 
 const RewardsPage: React.FC = () => {
   return (
@@ -35,7 +31,6 @@ const RewardsPage: React.FC = () => {
         />
       </Helmet>
       <RewardsWrapper>
-        <RewardsHeader />
         <Rewards />
       </RewardsWrapper>
     </>
