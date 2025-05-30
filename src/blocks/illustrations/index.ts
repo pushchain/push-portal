@@ -39,6 +39,8 @@ export { default as EmailProfile } from "./components/EmailProfile";
 
 export { default as Ethereum } from "./components/Ethereum";
 
+export { default as ErrorGraphic } from "./components/ErrorGraphic";
+
 export { default as FiveSubscribedDefiChannel } from "./components/FiveSubscribedDefiChannel";
 
 export { default as GatedGroupPoints } from "./components/GatedGroupPoints";

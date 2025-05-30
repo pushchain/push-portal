@@ -4,23 +4,24 @@ import { useNavigate } from "react-router-dom";
 
 // External Packages
 import styled from "styled-components";
-import ErrorGraphic from "../../assets/404Graphic.svg";
 
 // Internal Configs
 import GLOBALS from "../../config/globals";
-import { Button } from "../../blocks";
+import { Button, ErrorGraphic, Text } from "../../blocks";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
   return (
     <NotFoundContainer>
       <PageNotFoundWrapper>
-        <PageNotFoundImg src={ErrorGraphic} alt="Page not found" />
+        <ErrorGraphic alt="Page not found" />
         <PageNotFoundSubContainer>
-          <OopsTitle>Oops...</OopsTitle>
-          <PageNotFoundText>
+          <Text variant="h1-bold" color="text-primary" textAlign="center">
+            Oops...
+          </Text>
+          <Text variant="h3-semibold" color="text-primary" textAlign="center">
             The page you're trying to reach doesn't exist.
-          </PageNotFoundText>
+          </Text>
         </PageNotFoundSubContainer>
         <Button
           variant="primary"
@@ -53,7 +54,6 @@ const OopsTitle = styled.p`
   font-weight: 500;
   margin: 0;
   text-align: center;
-  color: black;
 `;
 
 const PageNotFoundWrapper = styled.div`
