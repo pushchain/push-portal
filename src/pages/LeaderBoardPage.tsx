@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 
-import RewardsHeader from "../components/Rewards/RewardsHeader";
 import Leaderboard from "../components/Leaderboard/Leaderboard";
 
 const LeaderBoardPage: React.FC = () => {
@@ -36,7 +35,6 @@ const LeaderBoardPage: React.FC = () => {
       </Helmet>
 
       <LeaderBoardWrapper>
-        <RewardsHeader />
         <Leaderboard />
       </LeaderBoardWrapper>
     </>

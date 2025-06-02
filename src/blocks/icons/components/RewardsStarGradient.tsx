@@ -41,8 +41,8 @@ const RewardsStarGradient: FC<IconProps> = (allProps) => {
               y2="32"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#C947D9" />
-              <stop offset="0.945" stop-color="#FFC37E" />
+              <stop stopColor="#C947D9" />
+              <stop offset="0.945" stopColor="#FFC37E" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_17364_9860"
@@ -52,8 +52,8 @@ const RewardsStarGradient: FC<IconProps> = (allProps) => {
               y2="29.4827"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#C742DD" />
-              <stop offset="1" stop-color="#FFC47F" />
+              <stop stopColor="#C742DD" />
+              <stop offset="1" stopColor="#FFC47F" />
             </linearGradient>
           </defs>
         </svg>
