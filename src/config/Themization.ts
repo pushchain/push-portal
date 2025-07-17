@@ -501,9 +501,9 @@ const themeDark = {
   modalbackgroundColor: '#282A2E',
   modalImageBgColor: 'rgba(255, 255, 255, 0.1);',
 
-  modalTextColor: '#B6BCD6',
-  modalbackgroundColor: '#282A2E',
-  modalImageBgColor: 'rgba(255, 255, 255, 0.1);',
+  // modalTextColor: '#B6BCD6',
+  // modalbackgroundColor: '#282A2E',
+  // modalImageBgColor: 'rgba(255, 255, 255, 0.1);',
 
   // Toast Notifications
   toastTextColor: '#B6BCD6',
