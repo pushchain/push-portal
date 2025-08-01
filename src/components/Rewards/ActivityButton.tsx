@@ -5,6 +5,7 @@ import React, { FC } from "react";
 import { ActvityType, UsersActivity } from "../../queries";
 import { Button } from "../../blocks";
 import { ActivityVerificationButton } from "./ActivityVerificationButton";
+import { useCountdown } from "./hooks/useCountdown";
 
 type ActivityButtonProps = {
   userId: string;
@@ -35,7 +36,11 @@ const ActivityButton: FC<ActivityButtonProps> = ({
   setCurrentLevel,
   onStartClaim,
 }) => {
-  const hasRewardsExpired = false;
+  // current finish date
+  const targetDate = "2025-07-31T23:59:59";
+  const { isExpired } = useCountdown(targetDate);
+
+  const hasRewardsExpired = isExpired;
 
   if (hasRewardsExpired) {
     return (
