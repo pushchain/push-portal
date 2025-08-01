@@ -47,21 +47,19 @@ const LeaderboardHeader: FC = () => {
 
         <Box flexDirection="column" display={{ initial: "flex", tb: "none" }}>
           <Text variant="h3-semibold">
-            Welcome to Push Chain Devnet Drop S2!
+            Devnet Drop S2 has ended! Stay tuned for updates.
           </Text>
           <Text variant="bm-regular">
-            Explore Push Chain Devnet, complete quests, bang out multipliers,
-            and earn airdrops.
+            Thanks for participating in devnet drop. S3 coming soon!
           </Text>
         </Box>
 
         <Box flexDirection="column" display={{ initial: "none", tb: "flex" }}>
           <Text variant="h3-semibold" textAlign="center">
-            Welcome to Push Chain Devnet Drop S2!
+            Devnet Drop S2 has ended! Stay tuned for updates.
           </Text>
           <Text variant="bm-regular" textAlign="center">
-            Explore Push Chain Devnet, complete quests, bang out multipliers,
-            and earn airdrops.
+            Thanks for participating in devnet drop. S3 coming soon!
           </Text>
         </Box>
       </Box>

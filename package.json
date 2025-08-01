@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "build:pr:preview": "node build.mjs preview && NODE_OPTIONS=--max-old-space-size=8192 vite build",
-    "deploy": "node build.mjs prod && yarn build && echo 'portal.push.org' > ./build/CNAME && gh-pages -d build -r https://github.com/push-protocol/push-portal-prod-deployment"
+    "deploy": "node build.mjs prod && yarn build && echo 'portal.push.org' > ./build/CNAME && gh-pages -d build -r https://github.com/pushchain/push-portal-prod-deployment.git"
   },
   "dependencies": {
     "@babel/runtime": "^7.26.9",
