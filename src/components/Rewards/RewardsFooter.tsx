@@ -28,7 +28,7 @@ const RewardsFooter = () => {
         </Link>
 
         <Link
-          to='https://discord.gg/pushprotocol'
+          to='https://discord.com/invite/pushchain'
           title='Push Discord'
           target='_blank'
         >
