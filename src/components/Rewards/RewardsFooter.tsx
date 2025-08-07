@@ -37,11 +37,11 @@ const RewardsFooter = () => {
       </Box>
 
       <Box display='flex' flexDirection='row' gap='spacing-lg'>
-        <Link to='/tos' title='Terms of Service' target='_blank'>
+        <Link to='https://push.org/tos' title='Terms of Service' target='_blank'>
           Terms of Service
         </Link>
 
-        <Link to='/privacy' title='Privacy Policy' target='_blank'>
+        <Link to='https://push.org/privacy' title='Privacy Policy' target='_blank'>
           Privacy Policy
         </Link>
       </Box>
