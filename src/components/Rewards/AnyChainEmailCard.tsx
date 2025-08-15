@@ -23,6 +23,7 @@ import { useGetUserXP, UsersActivity } from "../../queries";
 import { ActivityButton } from "./ActivityButton";
 import { useRefreshUserXP } from "./hooks/useRefreshUserXP";
 import { device } from "../../config/globals";
+import { useCountdown } from "./hooks/useCountdown";
 
 const numberOfLevels = 50;
 
@@ -96,7 +97,12 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
   const { isPending } = useRefreshUserXP();
 
   const isReadyToClaim = emailXP >= xpNeededForCurrentLevel;
-  const isEnded = nextUnclaimedLevel > numberOfLevels;
+
+  // current finish date
+  const targetDate = "2025-07-31T23:59:59";
+  const { isExpired } = useCountdown(targetDate);
+
+  const isEnded = isExpired ? isExpired : nextUnclaimedLevel > numberOfLevels;
   const isLoading =
     isLoadingActivities || (isPending && Boolean(universalAddress));
 

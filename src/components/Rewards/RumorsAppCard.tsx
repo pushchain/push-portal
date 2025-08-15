@@ -24,6 +24,7 @@ import RumorsImg from "../../../static/assets/website/rewards/rumors-app.webp";
 import { RewardsActivityTitle } from "./RewardsActivityTitle";
 import { ActivityButton } from "./ActivityButton";
 import { device } from "../../config/globals";
+import { useCountdown } from "./hooks/useCountdown";
 
 const numberOfLevels = 50;
 
@@ -97,7 +98,12 @@ const RumorsAppCard: FC<RumorsCardProps> = ({ setErrorMessage }) => {
   const { isPending } = useRefreshUserXP();
 
   const isReadyToClaim = rumorsXP >= xpNeededForCurrentLevel;
-  const isEnded = nextUnclaimedLevel > numberOfLevels;
+
+  // current finish date
+  const targetDate = "2025-07-31T23:59:59";
+  const { isExpired } = useCountdown(targetDate);
+
+  const isEnded = isExpired ? isExpired : nextUnclaimedLevel > numberOfLevels;
   const isLoading =
     isLoadingActivities || (isPending && Boolean(universalAddress));
 

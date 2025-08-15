@@ -96,7 +96,12 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
   const { isPending } = useRefreshUserXP();
 
   const isReadyToClaim = chessXP >= xpNeededForCurrentLevel;
-  const isEnded = nextUnclaimedLevel > numberOfLevels;
+
+  // current finish date
+  const targetDate = "2025-07-31T23:59:59";
+  const { isExpired } = useCountdown(targetDate);
+
+  const isEnded = isExpired ? isExpired : nextUnclaimedLevel > numberOfLevels;
   const isLoading =
     isLoadingActivities || (isPending && Boolean(universalAddress));
 
@@ -164,7 +169,6 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
     }
   };
 
-  const { timeLeft, isExpired } = useCountdown("2025-03-27T01:00:00Z");
 
   return (
     <Skeleton
@@ -187,40 +191,6 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
           position: relative;
         `}
       >
-        {!isExpired && (
-          <Box
-            position="absolute"
-            width="100%"
-            height="100%"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            borderRadius="radius-md"
-            css={css`
-              top: 0;
-              left: 0;
-              z-index: 9;
-              backdrop-filter: blur(4px);
-              background: var(--surface-glass-bold);
-              backdrop-filter: blur(5.6px);
-            `}
-          >
-            <Text
-              variant="bes-semibold"
-              color="text-secondary"
-              textAlign="center"
-              css={css`
-                border-radius: 16px;
-                border: 1px solid var(--stroke-secondary);
-                background: var(--surface-primary);
-                padding: var(--spacing-xxs) var(--spacing-md);
-              `}
-            >
-              Quest Unlocks in <br /> {timeLeft?.days}D : {timeLeft?.hours}H :{" "}
-              {timeLeft?.minutes}M : {timeLeft?.seconds}S
-            </Text>
-          </Box>
-        )}
         <Box
           width="100%"
           display="flex"

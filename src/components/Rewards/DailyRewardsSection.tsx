@@ -14,6 +14,7 @@ import { ActvityType } from "../../queries";
 import { Alert, Box, Button, Text } from "../../blocks";
 import { DailyRewardsItem } from "./DailyRewardsItem";
 import { ActivityVerificationButton } from "./ActivityVerificationButton";
+import { useCountdown } from "./hooks/useCountdown";
 
 export type DailyRewardsSectionProps = Record<string, never>;
 
@@ -31,7 +32,13 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
   } = useDailyRewards();
 
   const { isLocked } = useRewardsContext();
-  const hasRewardsExpired = false;
+
+  // current finish date
+  const targetDate = "2025-07-31T23:59:59";
+  const { isExpired } = useCountdown(targetDate);
+
+
+  const hasRewardsExpired = isExpired;
 
   const isDailyRewardClaimed =
     isActivityDisabled && activeDay > 1 && userDetails;

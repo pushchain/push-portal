@@ -38,10 +38,9 @@ const RewardsDashboard: FC = () => {
       <HeaderSection>
         <Points />
         <HeaderText>
-          <h2>Welcome to Push Chain Devnet Drop S2!</h2>
+          <h2>Devnet Drop S2 has ended! Stay tuned for updates.</h2>
           <div>
-            Explore Push Chain Devnet, complete quests, bang out multipliers,
-            and earn airdrops.
+            Thanks for participating in devnet drop. S3 coming soon!
           </div>
         </HeaderText>
 
