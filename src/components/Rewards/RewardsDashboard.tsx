@@ -38,9 +38,9 @@ const RewardsDashboard: FC = () => {
       <HeaderSection>
         <Points />
         <HeaderText>
-          <h2>Devnet Drop S2 has ended! Stay tuned for updates.</h2>
+          <h2>Devnet S2 has ended. Testnet S3 Announcement Soon!</h2>
           <div>
-            Thanks for participating in devnet drop. S3 coming soon!
+           Push Chain Testnet Season 3 will be announced soon. Stay tuned!
           </div>
         </HeaderText>
 

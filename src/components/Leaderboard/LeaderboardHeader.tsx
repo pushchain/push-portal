@@ -47,19 +47,19 @@ const LeaderboardHeader: FC = () => {
 
         <Box flexDirection="column" display={{ initial: "flex", tb: "none" }}>
           <Text variant="h3-semibold">
-            Devnet Drop S2 has ended! Stay tuned for updates.
+            Devnet S2 has ended. Testnet S3 Announcement Soon!
           </Text>
           <Text variant="bm-regular">
-            Thanks for participating in devnet drop. S3 coming soon!
+            Push Chain Testnet Season 3 will be announced soon. Stay tuned!
           </Text>
         </Box>
 
         <Box flexDirection="column" display={{ initial: "none", tb: "flex" }}>
           <Text variant="h3-semibold" textAlign="center">
-            Devnet Drop S2 has ended! Stay tuned for updates.
+           Devnet S2 has ended. Testnet S3 Announcement Soon!
           </Text>
           <Text variant="bm-regular" textAlign="center">
-            Thanks for participating in devnet drop. S3 coming soon!
+            Push Chain Testnet Season 3 will be announced soon. Stay tuned!
           </Text>
         </Box>
       </Box>
