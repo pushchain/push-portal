@@ -202,21 +202,21 @@ const RumorsAppCard: FC<RumorsCardProps> = ({ setErrorMessage }) => {
             width="100%"
           >
             <Box>
-              <Link to="https://rumors.push.org" target="_blank">
+              {/* <Link to="https://rumors.push.org" target="_blank"> */}
                 <Text
                   variant="h4-semibold"
                   color="text-primary"
-                  css={css`
-                    &:hover {
-                      color: var(--text-brand-medium) !important;
-                    }
-                  `}
+                  // css={css`
+                  //   &:hover {
+                  //     color: var(--text-brand-medium) !important;
+                  //   }
+                  // `}
                 >
                   Rumors App
                 </Text>
-              </Link>
+              {/* </Link> */}
               <RewardsActivityTitle
-                activityTitle="Visit [rumors.push.org](https://rumors.push.org) and create or react to rumors to level up."
+                activityTitle="Create or react to rumors to level up."
                 isLoading={false}
                 variant="bm-regular"
                 color="text-tertiary"

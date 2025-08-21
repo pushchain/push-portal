@@ -204,21 +204,21 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
         </Box>
 
         <Box padding="spacing-sm spacing-md">
-          <Link to="https://chess.push.org" target="_blank">
+          {/* <Link to="https://chess.push.org" target="_blank"> */}
             <Text
               variant="h3-semibold"
               color="text-primary"
-              css={css`
-                &:hover {
-                  color: var(--text-brand-medium) !important;
-                }
-              `}
+              // css={css`
+              //   &:hover {
+              //     color: var(--text-brand-medium) !important;
+              //   }
+              // `}
             >
               Universal Chess
             </Text>
-          </Link>
+          {/* </Link> */}
           <RewardsActivityTitle
-            activityTitle="Visit [chess.push.org](https://chess.push.org) and play games of chess with other degens or bots on any chain and level up to claim points."
+            activityTitle="Play games of chess with other degens or bots on any chain and level up to claim points."
             isLoading={false}
             variant="bm-regular"
             color="text-tertiary"

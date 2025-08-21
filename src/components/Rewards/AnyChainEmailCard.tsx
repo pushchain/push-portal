@@ -201,21 +201,21 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
             width="100%"
           >
             <Box>
-              <Link to="https://email.push.org" target="_blank">
+              {/* <Link to="https://email.push.org" target="_blank"> */}
                 <Text
                   variant="h4-semibold"
                   color="text-primary"
-                  css={css`
-                    &:hover {
-                      color: var(--text-brand-medium) !important;
-                    }
-                  `}
+                  // css={css`
+                  //   &:hover {
+                  //     color: var(--text-brand-medium) !important;
+                  //   }
+                  // `}
                 >
                   Any Chain Email
                 </Text>
-              </Link>
+              {/* </Link> */}
               <RewardsActivityTitle
-                activityTitle="Visit [email.push.org](https://email.push.org) and send or receive emails to level up."
+                activityTitle="Send or receive emails to level up."
                 isLoading={false}
                 variant="bm-regular"
                 color="text-tertiary"

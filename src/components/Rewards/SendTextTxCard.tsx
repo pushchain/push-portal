@@ -86,21 +86,21 @@ const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
         </Box>
 
         <Box>
-          <Link to="https://simulate.push.org" target="_blank">
+          {/* <Link to="https://simulate.push.org" target="_blank"> */}
             <Text
               variant="h4-semibold"
               color="text-primary"
-              css={css`
-                &:hover {
-                  color: var(--text-brand-medium) !important;
-                }
-              `}
+              // css={css`
+              //   &:hover {
+              //     color: var(--text-brand-medium) !important;
+              //   }
+              // `}
             >
               Send Test Tx on Push Chain
             </Text>
-          </Link>
+          {/* </Link> */}
           <RewardsActivityTitle
-            activityTitle="Visit [simulate.push.org](https://simulate.push.org) and send test transactions to level up."
+            activityTitle="Send test transactions to level up."
             isLoading={false}
             variant="bm-regular"
             color="text-tertiary"

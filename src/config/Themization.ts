@@ -182,9 +182,9 @@ const themeLight = {
   modalbackgroundColor: '#F5F5FA',
   modalImageBgColor: 'rgba(0, 0, 0, 0.5)',
 
-  modalTextColor: '#657795',
-  modalbackgroundColor: '#F5F5FA',
-  modalImageBgColor: 'rgba(0, 0, 0, 0.5)',
+  // modalTextColor: '#657795',
+  // modalbackgroundColor: '#F5F5FA',
+  // modalImageBgColor: 'rgba(0, 0, 0, 0.5)',
 
   // Toast Notifications
   toastTextColor: '#000',
