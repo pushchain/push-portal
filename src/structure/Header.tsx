@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { FaBars } from 'react-icons/fa';
 
 import {
   PushWalletButton,
@@ -20,6 +21,7 @@ const Header: FC = () => {
   const { darkMode, toggleTheme } = useTheme();
   const { universalAddress } = usePushWalletContext();
   const isTablet = useMediaQuery(device.tablet);
+  const isLaptop = useMediaQuery(device.laptopL);
 
   const GoToHome = () => {
     navigate(baseURL);
@@ -73,6 +75,10 @@ const Header: FC = () => {
           }}
         />
       )}
+
+      {isLaptop && (<Box margin="spacing-none spacing-none spacing-none spacing-sm">
+        <FaBars color="#fff"/>
+      </Box>)}
     </Box>
   );
 };

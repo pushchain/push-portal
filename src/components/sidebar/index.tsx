@@ -15,6 +15,7 @@ import {
   CaretLeftCircle,
 } from '../../blocks';
 import type { IconProps } from '../../blocks/icons/Icons.types';
+import { device } from '../../config/globals';
 
 type MenuItem = {
   id: string; // Added unique id
@@ -98,6 +99,11 @@ export const Sidebar = () => {
       gap="spacing-xxs"
       width="284px"
       padding="spacing-sm"
+      css={css`
+          @media ${device.laptopL}{
+              display: none;
+          }`
+      }
     >
       <Box display="flex" flexDirection="column" gap="spacing-xxs">
         {topMenuItems.map((item) => (

@@ -63,19 +63,19 @@ const Rewards: FC = () => {
 export default Rewards;
 
 const RewardsWrapper = styled.div`
-  width: 1200px;
+  width: 100%;
   margin: 24px auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
   box-sizing: border-box;
 
-  @media ${device.laptopM} {
+  /*@media ${device.laptop} {
     width: calc(100% - 32px);
-  }
+  }*/
 
-  @media ${device.mobileL} {
+  /*@media ${device.mobileL} {
     width: calc(100% - 32px);
     overflow-x: hidden;
-  }
+  }*/
 `;

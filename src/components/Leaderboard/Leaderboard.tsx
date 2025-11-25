@@ -23,7 +23,8 @@ const Leaderboard: FC = () => {
   return (
     <Box
       display="flex"
-      width={{ initial: "1200px", ll: "calc(100% - 32px)", ml: "100%" }}
+      width="100%"
+      // width={{ initial: "1200px", ll: "calc(100% - 32px)", ml: "100%" }}
       flexDirection="column"
       gap="spacing-md"
       height={{ initial: "calc(100vh - 130px)", ml: "calc(100vh - 80px)" }}

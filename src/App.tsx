@@ -125,10 +125,13 @@ function App() {
                       >
                         <Sidebar />
                         <Box
+                          width="100%"
+                          maxWidth="1200px"
+                          padding="spacing-none spacing-md"
                           css={css`
-                            flex: 1;
                             overflow-y: auto;
                             overflow-x: hidden;
+                            margin: 0 auto;
                           `}
                         >
                           <Routes>
