@@ -7,7 +7,7 @@ import { Box, Tabs } from "../../blocks";
 import { LeaderBoardSection } from "./LeaderBoardSection";
 import { LeaderboardHeader } from "./LeaderboardHeader";
 import { useLocation, useNavigate } from "react-router-dom";
-import RewardsFooter from "../Rewards/RewardsFooter";
+import Footer from "../../structure/Footer";
 
 const Leaderboard: FC = () => {
   const location = useLocation();
@@ -62,7 +62,7 @@ const Leaderboard: FC = () => {
         />
       </Box>
 
-      <RewardsFooter />
+      <Footer />
     </Box>
   );
 };

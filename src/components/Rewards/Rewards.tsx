@@ -8,7 +8,7 @@ import RewardsDashboard from "./RewardsDashboard";
 import RewardsContent from "./RewardsContent";
 import ReferralSection from "./ReferralSection";
 import RewardsActivities from "./RewardsActivities";
-import RewardsFooter from "./RewardsFooter";
+import Footer from "../../structure/Footer";
 import { useCreateRewardsUser } from "./hooks/useCreateRewardsUser";
 import { Alert } from "../../blocks";
 import { useRewardsContext } from "../../context/rewardsContext";
@@ -55,7 +55,7 @@ const Rewards: FC = () => {
 
       <ReferralSection />
 
-      <RewardsFooter />
+      <Footer />
     </RewardsWrapper>
   );
 };

@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from "styled-components";
 import {
   PushWalletProvider,
   CONSTANTS,
@@ -22,12 +22,13 @@ import { ThemeProviderWrapper } from "./context/themeContext";
 import { AccountProvider } from "./context/accountContext";
 import { RewardsContextProvider } from "./context/rewardsContext";
 
-import { blocksColors, getBlocksCSSVariables } from "../src/blocks";
+import { blocksColors, Box, getBlocksCSSVariables } from "../src/blocks";
 import NotFound from "./components/NotFound";
-import RewardsHeader from "./components/Rewards/RewardsHeader";
 import RewardsPage from "./pages/RewardsPage";
 import LeaderBoardPage from "./pages/LeaderBoardPage";
 import { DiscordVerificationPage } from "./pages/DiscordVerificationPage";
+import { Sidebar } from "./components/sidebar";
+import Header from "./structure/Header";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -111,27 +112,48 @@ function App() {
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>
-                <RewardsHeader />
-                <Routes>
-                  <Route
-                    path="/"
-                    element={<Navigate to="/rewards" replace />}
-                  />
-                  <Route path="/rewards" element={<RewardsPage />} />
-                  <Route
-                    path="/rewards/leaderboard"
-                    element={<LeaderBoardPage />}
-                  />
-                  <Route
-                    path="/rewards/leaderboard-s1"
-                    element={<LeaderBoardPage />}
-                  />
-                  <Route
-                    path="/discord/verification"
-                    element={<DiscordVerificationPage />}
-                  />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
+                <Box display="flex"
+                     flexDirection="column"
+                     height="100vh">
+                      <Header />
+                      <Box
+                        display="flex"
+                        overflow="hidden"
+                        css={css`
+                          flex: 1;
+                        `}
+                      >
+                        <Sidebar />
+                        <Box
+                          css={css`
+                            flex: 1;
+                            overflow-y: auto;
+                            overflow-x: hidden;
+                          `}
+                        >
+                          <Routes>
+                            <Route
+                              path="/"
+                              element={<Navigate to="/rewards" replace />}
+                            />
+                            <Route path="/rewards" element={<RewardsPage />} />
+                            <Route
+                              path="/rewards/leaderboard"
+                              element={<LeaderBoardPage />}
+                            />
+                            <Route
+                              path="/rewards/leaderboard-s1"
+                              element={<LeaderBoardPage />}
+                            />
+                            <Route
+                              path="/discord/verification"
+                              element={<DiscordVerificationPage />}
+                            />
+                            <Route path="*" element={<NotFound />} />
+                          </Routes>
+                        </Box>
+                      </Box>
+                    </Box>
               </Router>
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>

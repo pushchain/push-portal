@@ -2,9 +2,9 @@ import React from 'react';
 
 import { BsDiscord, BsGithub, BsTwitterX } from 'react-icons/bs';
 
-import { Box, Link } from '../../blocks';
+import { Box, Link } from '../blocks';
 
-const RewardsFooter = () => {
+const Footer = () => {
   return (
     <Box
       display='flex'
@@ -49,4 +49,4 @@ const RewardsFooter = () => {
   );
 };
 
-export default RewardsFooter;
+export default Footer;

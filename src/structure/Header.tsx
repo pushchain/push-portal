@@ -7,16 +7,14 @@ import {
   usePushWalletContext,
 } from "@pushprotocol/pushchain-ui-kit";
 
-import { useTheme } from "../../context/themeContext";
-import { Box, LightFilled, MoonFilled } from "../../../src/blocks";
-import ChainLogo from "../../../static/assets/website/chain/ChainLogo.svg";
+import { useTheme } from "../context/themeContext";
+import { Box, LightFilled, MoonFilled } from "../../src/blocks";
+import ChainLogo from "../../static/assets/website/chain/ChainLogo.svg";
 import ChainLogoDark from "/static/assets/website/chain/ChainLogoDark.svg";
-import useMediaQuery from "../../hooks/useMediaQuery";
-import { device } from "../../config/globals";
+import useMediaQuery from "../hooks/useMediaQuery";
+import { device } from "../config/globals";
 
-// Dummy
-
-const RewardsHeader: FC = () => {
+const Header: FC = () => {
   const baseURL = "/";
   const navigate = useNavigate();
   const { darkMode, toggleTheme } = useTheme();
@@ -40,12 +38,13 @@ const RewardsHeader: FC = () => {
         box-sizing: border-box;
       `}
     >
-      <Box cursor="pointer" onClick={GoToHome}>
+      <Box cursor="pointer" onClick={GoToHome} display="flex" flexDirection="row" alignItems="center">
         {darkMode ? (
           <img src={ChainLogoDark} width={150} />
         ) : (
           <img src={ChainLogo} width={150} />
         )}
+        🍩
       </Box>
 
       <Box
@@ -78,4 +77,4 @@ const RewardsHeader: FC = () => {
   );
 };
 
-export default RewardsHeader;
+export default Header;
