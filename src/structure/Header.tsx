@@ -15,7 +15,11 @@ import ChainLogoDark from "/static/assets/website/chain/ChainLogoDark.svg";
 import useMediaQuery from "../hooks/useMediaQuery";
 import { device } from "../config/globals";
 
-const Header: FC = () => {
+interface HeaderProps {
+  toggleSidebar: () => void;
+}
+
+const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
   const baseURL = "/";
   const navigate = useNavigate();
   const { darkMode, toggleTheme } = useTheme();
@@ -76,7 +80,8 @@ const Header: FC = () => {
         />
       )}
 
-      {isLaptop && (<Box margin="spacing-none spacing-none spacing-none spacing-sm">
+      {isLaptop &&
+        (<Box margin="spacing-none spacing-none spacing-none spacing-sm" onClick={toggleSidebar}>
         <FaBars color="#fff"/>
       </Box>)}
     </Box>

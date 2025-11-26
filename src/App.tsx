@@ -1,5 +1,5 @@
 // React + Web3 Essentials
-import React from "react";
+import React, { useState } from "react";
 
 // External Packages
 import {
@@ -101,7 +101,15 @@ const basename = getPreviewBasePath() || "/";
 
 const queryClient = new QueryClient({});
 
+
 function App() {
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <ThemeProviderWrapper>
       {/* Global style */}
@@ -115,7 +123,7 @@ function App() {
                 <Box display="flex"
                      flexDirection="column"
                      height="100vh">
-                      <Header />
+                      <Header toggleSidebar={toggleSidebar} />
                       <Box
                         display="flex"
                         overflow="hidden"
@@ -123,7 +131,10 @@ function App() {
                           flex: 1;
                         `}
                       >
-                        <Sidebar />
+                        <Sidebar
+                          isOpen={isSidebarOpen}
+                          onClose={() => setIsSidebarOpen(false)}
+                        />
                         <Box
                           width="100%"
                           maxWidth="1200px"
