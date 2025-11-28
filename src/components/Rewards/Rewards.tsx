@@ -12,6 +12,7 @@ import Footer from "../../structure/Footer";
 import { useCreateRewardsUser } from "./hooks/useCreateRewardsUser";
 import { Alert } from "../../blocks";
 import { useRewardsContext } from "../../context/rewardsContext";
+import { RewardsUpdatedDashboard } from "./RewardsUpdatedDashboard";
 
 const Rewards: FC = () => {
   // //fetch ref from url
@@ -47,7 +48,10 @@ const Rewards: FC = () => {
           }}
         />
       )}
-      <RewardsDashboard />
+
+      <RewardsUpdatedDashboard />
+
+      {/*<RewardsDashboard />*/}
 
       <RewardsActivities />
 

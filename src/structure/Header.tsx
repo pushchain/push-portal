@@ -53,7 +53,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
         🍩
       </Box>
 
-      <Box
+      {/*<Box
         display="flex"
         alignItems="center"
         css={css`
@@ -67,15 +67,17 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
         ) : (
           <MoonFilled size={24} />
         )}
-      </Box>
+      </Box>*/}
 
       {!isTablet && (
         <PushWalletButton
           universalAddress={universalAddress}
-          title="Connect Push Wallet"
+          title="Connect Account"
           styling={{
             width: "fit-content",
             fontFamily: "inherit",
+            margin: "0 0 0 auto",
+            borderRadius: "12px"
           }}
         />
       )}

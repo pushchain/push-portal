@@ -154,7 +154,7 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
             top: 0;
             left: 0;
             height: 100vh;
-            background-color: ${props => props.theme.surface?.secondary || '#1a1a1a'};
+            background-color: #1a1a1a;
             transform: translateX(${isOpen ? '0' : '-100%'});
             transition: transform 0.3s ease-in-out;
             z-index: 1000;
@@ -203,7 +203,6 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
                     background-color: #f7cbff;
                     border-radius: 4px;
                     padding: 2px 6px;
-                    margin-left: auto;
                   `}
                 >
                   <Text

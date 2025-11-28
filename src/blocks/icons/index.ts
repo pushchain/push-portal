@@ -9,6 +9,8 @@ export { default as ArbitrumMonotone } from "./components/ArbitrumMonotone";
 
 export { default as ArrowUpRight } from "./components/ArrowUpRight";
 
+export { default as ArrowDown } from "./components/ArrowDown";
+
 export { default as Asterisk } from "./components/Asterisk";
 
 export { default as Back } from "./components/Back";
