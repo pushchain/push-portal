@@ -45,11 +45,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
       `}
     >
       <Box cursor="pointer" onClick={GoToHome} display="flex" flexDirection="row" alignItems="center">
-        {darkMode ? (
           <img src={ChainLogoDark} width={150} />
-        ) : (
-          <img src={ChainLogo} width={150} />
-        )}
         🍩
       </Box>
 

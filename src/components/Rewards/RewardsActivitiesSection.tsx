@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FC, useMemo } from "react";
+import { FC } from "react";
 
 import { css } from "styled-components";
 
