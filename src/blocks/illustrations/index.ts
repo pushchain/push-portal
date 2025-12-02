@@ -1,4 +1,5 @@
 export * from "./IllustrationWrapper";
+export * from "./IllustrationWrapper";
 export * from "./Illustrations.types";
 
 export { default as ActivePushPoints } from "./components/ActivePushPoints";
@@ -128,5 +129,7 @@ export { default as PushLogoWithNameDark } from "./components/PushLogoWithNameDa
 export { default as Polygon } from "./components/Polygon";
 
 export { default as PolygonZK } from "./components/PolygonZK";
+
+export { default as XP } from "./components/XP";
 
 export { default as YellowBonusActivitySubscribers } from "./components/YellowBonusActivitySubscribers";

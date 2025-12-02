@@ -19,9 +19,11 @@ const RewardsActivities = () => {
         </Box>
       </Box>
 
+       />*/}
+
       <ActivityStatsCards />
 
-      <BossQuestsSection />*/}
+      <BossQuestsSection />
     </Box>
   );
 };

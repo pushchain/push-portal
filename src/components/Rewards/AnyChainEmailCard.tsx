@@ -3,7 +3,6 @@ import React, { FC, useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
-  Link,
   Multiplier,
   ProgressBar,
   RewardsBell,

@@ -1,87 +1,115 @@
-import { css } from 'styled-components';
-import { Box, Text } from '../../blocks';
+import { Box } from '../../blocks';
+import AppQuestCard from './AppQuestCard';
 
 const ActivityStatsCards = () => {
-  const activities = [
+  const degenChessQuests = [
     {
-      title: 'Power Donut 🍩',
-      description: 'Complete daily tasks to earn bonus points',
-      gradient: 'linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%)',
-      stats: [
-        { label: 'Day 1 progress', value: 'EXP +5K' },
-        { label: 'Day 2 progress', value: 'EXP +5K' },
-        { label: 'Day 3 Completed', value: 'EXP +5K' },
-        { label: 'Check out every 24 hrs', value: 'EXP +5K' },
-        { label: 'Create your 1st profile quest', value: 'EXP +5K' },
-      ],
+      title: 'Play 1 live game',
+      xp: 150,
+      isCompleted: false,
+      isDisabled: true,
     },
     {
-      title: 'XP Mastery 🏆',
-      description: 'Master challenges and boost your experience',
-      gradient: 'linear-gradient(135deg, #34D399 0%, #10B981 100%)',
-      stats: [
-        { label: 'Day 1 momentum run', value: 'EXP +5K' },
-        { label: 'Day 2 momentum run', value: 'EXP +5K' },
-        { label: 'Level up once boost', value: 'EXP +5K' },
-        { label: 'Have a transaction', value: 'EXP +5K' },
-        { label: 'Set up 1st direct account', value: 'EXP +5K' },
-      ],
+      title: 'Watch 1 live game (7+ mins)',
+      xp: 200,
+      progress: 0,
+      maxProgress: 1,
+      isCompleted: false,
+      isDisabled: false,
+    },
+    {
+      title: 'Play 3 matches',
+      xp: 150,
+      progress: 0,
+      maxProgress: 3,
+      isCompleted: false,
+      isDisabled: false,
+    },
+    {
+      title: 'Achieve ELO rating of 100',
+      xp: 250,
+      progress: 0,
+      maxProgress: 100,
+      isCompleted: false,
+      isDisabled: false,
+    },
+    {
+      title: 'Create or join a public match',
+      xp: 150,
+      progress: 0,
+      maxProgress: 1,
+      isCompleted: false,
+      isDisabled: false,
+    },
+  ];
+
+  const uniMarketQuests = [
+    {
+      title: 'Place 1 prediction bet',
+      xp: 150,
+      isCompleted: false,
+      isDisabled: true,
+    },
+    {
+      title: 'Win 1 prediction bet',
+      xp: 200,
+      progress: 0,
+      maxProgress: 1,
+      isCompleted: false,
+      isDisabled: false,
+    },
+    {
+      title: 'Lose 1 prediction bet',
+      xp: 100,
+      progress: 0,
+      maxProgress: 1,
+      isCompleted: false,
+      isDisabled: false,
+    },
+    {
+      title: 'Place 5 bets total',
+      xp: 300,
+      progress: 0,
+      maxProgress: 5,
+      isCompleted: false,
+      isDisabled: false,
+    },
+    {
+      title: 'Bet on 3 different markets',
+      xp: 250,
+      progress: 0,
+      maxProgress: 3,
+      isCompleted: false,
+      isDisabled: false,
     },
   ];
 
   return (
-    <Box gap="spacing-md">
-      {activities.map((activity, index) => (
-        <Box
-          key={index}
-          minWidth="320px"
-          borderRadius='radius-md'
-          overflow="hidden"
-        >
-          <Box padding="spacing-lg"
-            css={css`
-                background: {activity.background};
-              `}>
-            <Text variant='h5-regular' color="white">
-              {activity.title}
-            </Text>
-            <Text variant='h5-regular' color="rgba(255, 255, 255, 0.9)">
-              {activity.description}
-            </Text>
-          </Box>
+    <Box
+      display="flex"
+      gap="spacing-md"
+      width="100%"
+      flexDirection={{ initial: 'row', tb: 'column' }}
+    >
+      <AppQuestCard
+        appName="Degen Chess"
+        appUrl="degenchess.fun"
+        description="Complete quests on degenchess.fun and claim to level up and earn rewards"
+        resetTime="New Quests in 6D 23H"
+        quests={degenChessQuests}
+      />
 
-          <Box
-            padding="spacing-md"
-            css={css`
-              border: 1px solid rgba(255, 255, 255, 0.1);
-              background: linear-gradient(135deg, #1F2937 0%, #111827 100%)
-              border-top: none
-              `
-            }
-          >
-            {activity.stats.map((stat, statIndex) => (
-              <Box
-                key={statIndex}
-                justifyContent="space-between"
-                alignItems="center"
-                padding="spacing-sm"
-                borderBottom={
-                  statIndex < activity.stats.length - 1
-                    ? '1px solid rgba(255, 255, 255, 0.05)'
-                    : 'none'
-                }
-              >
-                <Text variant='h5-regular' color="rgba(255, 255, 255, 0.8)">
-                  {stat.label}
-                </Text>
-                <Text variant='h5-regular' color="white">
-                  {stat.value}
-                </Text>
-              </Box>
-            ))}
-          </Box>
-        </Box>
-      ))}
+      <AppQuestCard
+        appName="Uni Market"
+        appUrl="unimarket.xyz"
+        description="Complete quests on unimarket.xyz and claim to level up and earn rewards"
+        resetTime="New Quests in 6D 23H"
+        quests={uniMarketQuests}
+        gradient="linear-gradient(241deg, rgba(221, 245, 255, 1) 0%, rgba(127, 231, 169, 1) 100%)"
+        titleGradient="linear-gradient(180deg, rgba(0, 0, 0, 1) 8%, rgba(34, 132, 68, 1) 100%)"
+        linkColor="#0d663b"
+        blurColor="#40ee8b"
+      />
     </Box>
   );
 };
