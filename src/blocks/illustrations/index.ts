@@ -62,6 +62,8 @@ export { default as PushDev } from "./components/PushDev";
 
 export { default as Points } from "./components/Points";
 
+export { default as Quests } from "./components/Quests";
+
 export { default as Metamask } from "./components/Metamask";
 
 export { default as Multiplier } from "./components/Multiplier";
@@ -71,6 +73,8 @@ export { default as MultipleRewardsCoin } from "./components/MultipleRewardsCoin
 export { default as NotificationImg } from "./components/NotificationImg";
 
 export { default as NotificationDark } from "./components/NotificationDark";
+
+export { default as RarePass } from "./components/RarePass";
 
 export { default as RewardsBell } from "./components/RewardsBell";
 

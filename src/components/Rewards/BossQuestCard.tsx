@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { css } from 'styled-components';
-import { Box, Button, Text, Lock } from '../../blocks';
+import { Box, Button, Text, Lock, ProgressBar, RewardsStarGradient, RarePass, XP } from '../../blocks';
 
 type BossQuestCardProps = {
   title: string;
@@ -38,18 +38,15 @@ const BossQuestCard: FC<BossQuestCardProps> = ({
       flexDirection="column"
       minWidth="280px"
       borderRadius="radius-md"
-      border="border-xs solid stroke-tertiary"
       padding="spacing-md"
       gap="spacing-sm"
       justifyContent="flex-end"
       position="relative"
       overflow="hidden"
+      height="-webkit-fill-available"
       css={css`
-        background: radial-gradient(
-          50% 50% at 73% 50%,
-          rgba(19, 18, 32, 1) 75%,
-          rgba(41, 29, 57, 1) 100%
-        );
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        background: radial-gradient(109.87% 94.08% at 50% 5.92%, #131220 75.21%, #291D39 100%);
         flex: 1;
       `}
     >
@@ -68,13 +65,13 @@ const BossQuestCard: FC<BossQuestCardProps> = ({
           alignSelf="flex-end"
           padding="spacing-xxs spacing-xs"
           borderRadius="radius-lg"
-          border="border-xs solid stroke-tertiary"
           css={css`
-            background-color: rgba(66, 66, 102, 0.2);
+            background: rgba(66, 67, 103, 0.20);
+            border: 1px solid rgba(255, 255, 255, 0.10);
           `}
         >
           <Text
-            variant="h5-regular"
+            variant="bes-bold"
             css={css`
               color: #e5c4ef;
               text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
@@ -156,9 +153,12 @@ const BossQuestCard: FC<BossQuestCardProps> = ({
             </Box>
 
             {icon && (
-              <Box width="48px" height="48px">
-                <img src={icon} alt="Quest icon" width="48" height="48" />
-              </Box>
+              <ProgressBar
+                progress={(0) || null}
+                max={100}
+                size="large"
+                progressIcon={<RewardsStarGradient size={35} />}
+              />
             )}
 
             <Box
@@ -200,27 +200,8 @@ const BossQuestCard: FC<BossQuestCardProps> = ({
                       alignItems="center"
                       gap="spacing-xxs"
                     >
-                      <Text
-                        css={css`
-                          background: linear-gradient(
-                            180deg,
-                            rgba(239, 132, 255, 1) 1%,
-                            rgba(251, 202, 255, 1) 27%,
-                            rgba(237, 102, 247, 1) 50%
-                          );
-                          -webkit-background-clip: text;
-                          background-clip: text;
-                          -webkit-text-fill-color: transparent;
-                          -webkit-text-stroke: 1.81px #ffffff;
-                          font-family: "Boba Mono-Regular", Helvetica;
-                          font-size: 26.6px;
-                          font-weight: 400;
-                          text-overflow: ellipsis;
-                          white-space: nowrap;
-                        `}
-                      >
-                        RARE PASS
-                      </Text>
+
+                      <RarePass />
                     </Box>
                   </Box>
                 )}
@@ -232,6 +213,8 @@ const BossQuestCard: FC<BossQuestCardProps> = ({
                     gap="spacing-xxs"
                     height="14px"
                   >
+                    <XP />
+
                     <Text variant="bm-bold" color="text-primary">
                       {unlocks.xp}
                     </Text>
@@ -250,15 +233,22 @@ const BossQuestCard: FC<BossQuestCardProps> = ({
               <Button
                 size="small"
                 variant="tertiary"
-                disabled
                 css={css`
                   width: 100%;
                   border: 1px solid var(--stroke-tertiary);
+                  background: none;
                 `}
               >
                 <Box display="inline-flex" alignItems="center" justifyContent="center" gap="spacing-xxxs">
-                  <Lock size={24} />
-                  <Text variant="h5-regular" color="text-tertiary">
+                  <Lock size={24} color="icon-tertiary" />
+                  <Text color="text-tertiary"
+                    css={css`
+                        font-family: "FK Grotesk Neue-Medium", Helvetica;
+                        font-size: 14px;
+                        font-weight: 500;
+                        line-height: 16px;
+                        white-space: nowrap;
+                    `}>
                     Locked
                   </Text>
                 </Box>
@@ -271,6 +261,7 @@ const BossQuestCard: FC<BossQuestCardProps> = ({
                 css={css`
                   width: 100%;
                   border: 1px solid #774d84;
+                  background: none;
                 `}
               >
                 <Text
@@ -294,10 +285,13 @@ const BossQuestCard: FC<BossQuestCardProps> = ({
       {showProgress && (
         <Box
           position="absolute"
-          left="0"
-          top="148px"
           width="300px"
           height="8px"
+          css={css`
+              left: 0;
+              top: 148px;
+            `
+          }
         >
           <Box width="1px" height="1px" />
         </Box>

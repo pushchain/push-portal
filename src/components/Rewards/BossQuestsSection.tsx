@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { Box, Text } from '../../blocks';
+import { Box, Quests, Text } from '../../blocks';
 import BossQuestCard from './BossQuestCard';
 
 const BossQuestsSection = () => {
@@ -10,17 +10,22 @@ const BossQuestsSection = () => {
       alignItems="flex-start"
       gap="spacing-xs"
       padding="spacing-md"
-      borderRadius="radius-xl"
-      border="none"
       position="relative"
+      borderRadius="radius-lg"
       css={css`
-        background-color: rgba(0, 0, 0, 0.1);
+        box-shadow:
+          inset 1.86px 1.73px 6px rgba(255, 255, 255, 0.15),
+          inset 2.79px -8px 12px rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        flex: 1;
+
         &::before {
           content: "";
           position: absolute;
           inset: 0;
-          border-radius: 32px;
           padding: 1px;
+          border-radius: 32px 32px;
           background: conic-gradient(
             from 90deg at 100% 100%,
             rgba(171, 70, 248, 0.4) 12%,
@@ -31,8 +36,8 @@ const BossQuestsSection = () => {
           -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
           mask-composite: exclude;
-          pointer-events: none;
           z-index: 1;
+          pointer-events: none;
         }
       `}
     >
@@ -48,7 +53,7 @@ const BossQuestsSection = () => {
           gap="spacing-xs"
         >
           <Box width="48px" height="48px">
-            <img src="" alt="Boss Quest" width="48" height="48" />
+            <Quests />
           </Box>
 
           <Box
