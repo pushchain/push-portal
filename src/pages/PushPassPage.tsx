@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
+import PushPass from "../components/PushPass/PushPass";
 
-import Rewards from "../components/Rewards/Rewards";
 
-const RewardsPage: React.FC = () => {
+const PushPassPage: React.FC = () => {
   return (
     <>
       <Helmet>
@@ -17,29 +17,33 @@ const RewardsPage: React.FC = () => {
           property="og:image"
           content="https://portal.push.org/static/assets/previews/og-preview.webp"
         />
-        <meta property="og:url" content="https://portal.push.org/rewards" />
+        <meta
+          property="og:url"
+          content="https://portal.push.com/rewards/pushplan/"
+        />
         <meta name="twitter:card" content="summary_large_image" />
 
         <meta
           name="twitter:image"
           content="https://portal.push.org/static/assets/previews/twitter-preview.webp"
         />
-        <meta name="twitter:title" content="Push Rewards" />
+        <meta name="twitter:title" />
         <meta
           name="twitter:description"
           content="Earn rewards on Push Protocol"
         />
       </Helmet>
-      <RewardsWrapper>
-        <Rewards />
-      </RewardsWrapper>
+
+      <PushPassWrapper>
+        <PushPass />
+      </PushPassWrapper>
     </>
   );
 };
 
-export default RewardsPage;
+export default PushPassPage;
 
-const RewardsWrapper = styled.div`
+const PushPassWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;

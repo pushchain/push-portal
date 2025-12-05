@@ -29,6 +29,7 @@ import LeaderBoardPage from "./pages/LeaderBoardPage";
 import { DiscordVerificationPage } from "./pages/DiscordVerificationPage";
 import { Sidebar } from "./components/sidebar";
 import Header from "./structure/Header";
+import PushPassPage from "./pages/PushPassPage";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -89,7 +90,7 @@ const GlobalStyle = createGlobalStyle`
       .join("")}
 
     /* Font Family */
-      --font-family: "FK Grotesk Neu";
+      --font-family: "DM Sans", sans-serif;
 
     /* New blocks theme css variables*/
     ${(props) => getBlocksCSSVariables(props.theme.blocksTheme)}
@@ -151,6 +152,10 @@ function App() {
                               element={<Navigate to="/rewards" replace />}
                             />
                             <Route path="/rewards" element={<RewardsPage />} />
+                            <Route
+                              path="/rewards/pushpass"
+                              element={<PushPassPage />}
+                            />
                             <Route
                               path="/rewards/leaderboard"
                               element={<LeaderBoardPage />}

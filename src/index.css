@@ -68,9 +68,8 @@ hr {
 
 pre {
     font-family:
-        FK Grotesk Neu,
-        monospace,
-        monospace;
+        DM Sans, sans-serif,
+
     /* 1 */
     font-size: 1em;
     /* 2 */
@@ -119,10 +118,7 @@ code,
 kbd,
 samp {
     font-family:
-        FK Grotesk Neu,
-        monospace,
-        monospace;
-    /* 1 */
+        "DM Sans", sans-serif;
     font-size: 1em;
     /* 2 */
 }
@@ -455,50 +451,18 @@ template {
     background: #e1087f !important;
 }
 
-/**
- * Custom CSS
- */
-@font-face {
-    font-family: "FK Grotesk Neu";
-    src:
-        url("../static/fonts/FKGroteskNeue-Regular.woff2") format("woff2"),
-        url("../static/fonts/FKGroteskNeue-Regular.woff") format("woff");
-    font-weight: 100 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "FK Grotesk Neu";
-    src:
-        url("../static/fonts/FKGroteskNeue-Medium.woff2") format("woff2"),
-        url("../static/fonts/FKGroteskNeu-Medium.woff") format("woff");
-
-    font-weight: 500 600;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "FK Grotesk Neu";
-    src:
-        url("../static/fonts/FKGroteskNeue-Bold.woff2") format("woff2"),
-        url("../static/fonts/FKGroteskNeue-Bold.woff") format("woff");
-    font-weight: 700 800;
-    font-style: normal;
-    font-display: swap;
-}
-
 span,
 p,
 label,
 div {
-    font-family: "FK Grotesk Neu";
+    font-family: DM Sans, sans-serif;
 }
 
 button,
 a,
 a:before,
 a:after {
-    font-family: "FK Grotesk Neu";
+    font-family: DM Sans, sans-serif;
     border: 0;
     outline: 0;
 
@@ -509,7 +473,7 @@ a:after {
 }
 
 h1 {
-    font-family: "FK Grotesk Neu";
+    font-family: DM Sans, sans-serif;
     font-weight: 700;
     line-height: 1.25em;
     color: #fff;
@@ -524,7 +488,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "FK Grotesk Neu";
+    font-family: DM Sans, sans-serif;
     font-weight: 500;
     font-size: 32px;
     line-height: 1.25em;

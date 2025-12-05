@@ -92,7 +92,7 @@ const Content = styled.div`
   // padding: 0.5rem 1rem;
   color: #fff;
   background: #131313;
-  font-family: 'FK Grotesk Neu';
+  font-family: DM Sans, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 0.9rem;

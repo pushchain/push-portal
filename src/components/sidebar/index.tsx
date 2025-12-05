@@ -18,6 +18,7 @@ import {
 import type { IconProps } from '../../blocks/icons/Icons.types';
 import { device } from '../../config/globals';
 import useMediaQuery from '../../hooks/useMediaQuery';
+import { useNavigate } from 'react-router-dom';
 
 type MenuItem = {
   id: string;
@@ -28,6 +29,7 @@ type MenuItem = {
     icon?: React.ComponentType<IconProps>;
   };
   onClick?: () => void;
+  route?: string;
 };
 
 interface SidebarProps {
@@ -38,6 +40,7 @@ interface SidebarProps {
 export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
   const [activeItemId, setActiveItemId] = useState<string>('discover');
   const isLaptop = useMediaQuery(device.laptopL);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isOpen && isLaptop) {
@@ -58,6 +61,7 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
       id: 'discover',
       icon: CompassRose,
       label: 'Discover',
+      route: '/rewards'
     },
     {
       id: 'quests',
@@ -72,6 +76,7 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
       id: 'push-pass',
       icon: PushPass,
       label: 'Push Pass',
+      route: '/rewards/pushpass'
     },
     {
       id: 'leaderboards',
@@ -113,8 +118,9 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
         `}
   `;
 
-  const handleItemClick = (itemId: string, onClick?: () => void) => {
+  const handleItemClick = (itemId: string, onClick?: () => void, route?: string) => {
     setActiveItemId(itemId);
+    navigate(route);
     onClick?.();
     if (isLaptop) {
       onClose?.();
@@ -184,7 +190,7 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
               padding="spacing-xxs spacing-sm"
               borderRadius="radius-xs"
               css={getItemStyles(activeItemId === item.id)}
-              onClick={() => handleItemClick(item.id, item.onClick)}
+              onClick={() => handleItemClick(item.id, item.onClick, item.route)}
             >
               <item.icon size={32} color="icon-brand-medium" />
               <Text
