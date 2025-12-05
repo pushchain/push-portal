@@ -3,8 +3,8 @@ import { css } from 'styled-components';
 import { Box } from '../../blocks';
 import PushPassHeroBanner from './PushPassHeroBanner';
 import PushPassTabs from './PushPassTabs';
-import RarePassInfo from './RarePassInfo';
-import PassCard from './PassCard';
+import UnopenedPassesContent from './UnopenedPassesContent';
+import MyCollectionContent from './MyCollectionContent';
 
 type TabType = 'unopened' | 'collection';
 
@@ -12,14 +12,14 @@ const PushPass = () => {
   const [activeTab, setActiveTab] = useState<TabType>('unopened');
 
   const passes = [
-    { id: 1, isLocked: false, backgroundImage: '/frame-37562.png' },
-    { id: 2, isLocked: true, lockMessage: 'Spin to Unlock', backgroundImage: '/frame-37563.png' },
-    { id: 3, isLocked: true, lockMessage: 'Unlocks at Lv. 15', backgroundImage: '/frame-37564.png' },
-    { id: 4, isLocked: true, lockMessage: 'Unlocks at Lv. 25', backgroundImage: '/frame-37565.png' },
-    { id: 5, isLocked: true, lockMessage: 'Unlocks at Lv. 40', backgroundImage: '/image.png' },
-    { id: 6, isLocked: true, lockMessage: 'Unlocks at Lv. 50', backgroundImage: '/frame-37564-2.png' },
-    { id: 7, isLocked: true, lockMessage: 'Complete Boss Quest', backgroundImage: '/frame-37565-2.png' },
-    { id: 8, isLocked: true, lockMessage: 'Complete Boss Quest', backgroundImage: '/frame-37566.png' },
+    { id: 1, isLocked: false },
+    { id: 2, isLocked: true, lockMessage: 'Spin to Unlock' },
+    { id: 3, isLocked: true, lockMessage: 'Unlocks at Lv. 15' },
+    { id: 4, isLocked: true, lockMessage: 'Unlocks at Lv. 25' },
+    { id: 5, isLocked: true, lockMessage: 'Unlocks at Lv. 40' },
+    { id: 6, isLocked: true, lockMessage: 'Unlocks at Lv. 50' },
+    { id: 7, isLocked: true, lockMessage: 'Complete Boss Quest' },
+    { id: 8, isLocked: true, lockMessage: 'Complete Boss Quest' },
   ];
 
   return (
@@ -33,12 +33,14 @@ const PushPass = () => {
       `}
     >
       <Box
+        alignSelf="stretch"
         width="100%"
         css={css`
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           position: relative;
+          gap: 100px;
           z-index: 1;
         `}
       >
@@ -108,55 +110,8 @@ const PushPass = () => {
           >
             <PushPassTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-            <Box
-              width="1058px"
-              gap="spacing-md"
-              css={css`
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-              `}
-            >
-              <RarePassInfo />
-
-              <Box
-                gap="spacing-lg"
-                alignSelf="stretch"
-                css={css`
-                  display: flex;
-                  align-items: flex-start;
-                  position: relative;
-                `}
-              >
-                {passes.slice(0, 4).map((pass) => (
-                  <PassCard
-                    key={pass.id}
-                    isLocked={pass.isLocked}
-                    lockMessage={pass.lockMessage}
-                    backgroundImage={pass.backgroundImage}
-                  />
-                ))}
-              </Box>
-
-              <Box
-                gap="spacing-lg"
-                alignSelf="stretch"
-                css={css`
-                  display: flex;
-                  align-items: flex-start;
-                  position: relative;
-                `}
-              >
-                {passes.slice(4, 8).map((pass) => (
-                  <PassCard
-                    key={pass.id}
-                    isLocked={pass.isLocked}
-                    lockMessage={pass.lockMessage}
-                    backgroundImage={pass.backgroundImage}
-                  />
-                ))}
-              </Box>
-            </Box>
+            {activeTab === 'unopened' && <UnopenedPassesContent passes={passes} />}
+            {activeTab === 'collection' && <MyCollectionContent />}
           </Box>
         </Box>
       </Box>

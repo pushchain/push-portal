@@ -12,7 +12,6 @@ type PassCardProps = {
 const PassCard: FC<PassCardProps> = ({
   isLocked,
   lockMessage = 'Locked',
-  backgroundImage,
   onOpen,
 }) => {
   return (
@@ -27,7 +26,10 @@ const PassCard: FC<PassCardProps> = ({
         justify-content: flex-end;
         position: relative;
         flex: 1;
-        background: url(${backgroundImage || '/placeholder-pass.png'}) center/cover;
+        background: ${isLocked
+                  ? `url(${'/static/assets/website/pushpass/openpasslocked.webp'}) center/cover`
+                  : `url(${'/static/assets/website/pushpass/openpass.webp'}) center/cover`
+                };
       `}
     >
       <Box
