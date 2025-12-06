@@ -2,7 +2,6 @@
 // @ts-nocheck
 import React, { FC } from "react";
 import { css } from "styled-components";
-
 import { Box, Tabs } from "../../blocks";
 import { LeaderBoardSection } from "./LeaderBoardSection";
 import { LeaderboardHeader } from "./LeaderboardHeader";
@@ -12,41 +11,66 @@ import Footer from "../../structure/Footer";
 const Leaderboard: FC = () => {
   const location = useLocation();
 
-  const season = location?.pathname?.includes("s1") ? "S1" : "S2";
+  const getSeason = () => {
+    if (location?.pathname?.includes("s1")) return "S1";
+    if (location?.pathname?.includes("s2")) return "S2";
+    return "S3";
+  };
 
+  const season = getSeason();
   const navigate = useNavigate();
 
   const handleSetActiveTab = (season) => {
-    navigate(`/rewards/leaderboard${season === "S1" ? "-s1" : ""}`);
+    if (season === "S3") {
+      navigate("/rewards/leaderboard");
+    } else if (season === "S2") {
+      navigate("/rewards/leaderboard-s2");
+    } else {
+      navigate("/rewards/leaderboard-s1");
+    }
   };
 
   return (
     <Box
       display="flex"
       width="100%"
-      // width={{ initial: "1200px", ll: "calc(100% - 32px)", ml: "100%" }}
       flexDirection="column"
-      gap="spacing-md"
       height={{ initial: "calc(100vh - 130px)", ml: "calc(100vh - 80px)" }}
       padding={{ ml: "spacing-sm" }}
       css={css`
         margin: var(--spacing-md) auto;
         box-sizing: border-box;
+        position: relative;
       `}
     >
-      <LeaderboardHeader />
+      <Box css={css`position: relative; z-index: 2;`}>
+        <LeaderboardHeader />
+      </Box>
       <Box
-        backgroundColor="surface-primary"
         padding="spacing-md"
-        borderRadius="radius-md"
         overflow="hidden"
         width={{ ml: "100%" }}
         css={css`
           box-sizing: border-box;
+          margin-top: -20px;
+          position: relative;
+          z-index: 1;
+
+          border-radius: var(--radius-none, 0) var(--radius-none, 0) var(--radius-lg, 32px) var(--radius-lg, 32px);
+          border: 1px solid rgba(171, 70, 248, 0.40);
+          background: rgba(0, 0, 0, 0.10);
+          background-blend-mode: plus-lighter;
+          box-shadow: 2.788px -8px 12px 0 rgba(255, 255, 255, 0.15) inset, 1.858px 1.732px 6px 0 rgba(255, 255, 255, 0.15) inset;
+          backdrop-filter: blur(10px);
         `}
       >
         <Tabs
           items={[
+            {
+              key: "S3",
+              label: "Season 3",
+              children: <LeaderBoardSection />,
+            },
             {
               key: "S2",
               label: "Season 2",
@@ -62,7 +86,6 @@ const Leaderboard: FC = () => {
           onChange={(activeKey) => handleSetActiveTab(activeKey)}
         />
       </Box>
-
       <Footer />
     </Box>
   );

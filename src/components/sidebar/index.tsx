@@ -82,6 +82,7 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
       id: 'leaderboards',
       icon: Ranking,
       label: 'Leaderboards',
+      route: '/rewards/leaderboard'
     },
   ];
 

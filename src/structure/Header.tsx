@@ -8,9 +8,7 @@ import {
   usePushWalletContext,
 } from "@pushprotocol/pushchain-ui-kit";
 
-import { useTheme } from "../context/themeContext";
-import { Box, LightFilled, MoonFilled } from "../../src/blocks";
-import ChainLogo from "../../static/assets/website/chain/ChainLogo.svg";
+import { Box } from "../../src/blocks";
 import ChainLogoDark from "/static/assets/website/chain/ChainLogoDark.svg";
 import useMediaQuery from "../hooks/useMediaQuery";
 import { device } from "../config/globals";
@@ -22,7 +20,6 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
   const baseURL = "/";
   const navigate = useNavigate();
-  const { darkMode, toggleTheme } = useTheme();
   const { universalAddress } = usePushWalletContext();
   const isTablet = useMediaQuery(device.tablet);
   const isLaptop = useMediaQuery(device.laptopL);
@@ -48,22 +45,6 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
           <img src={ChainLogoDark} width={150} />
         🍩
       </Box>
-
-      {/*<Box
-        display="flex"
-        alignItems="center"
-        css={css`
-          margin: 0 16px 0 auto;
-        `}
-        onClick={toggleTheme}
-        cursor="pointer"
-      >
-        {darkMode ? (
-          <LightFilled size={24} color="icon-primary" />
-        ) : (
-          <MoonFilled size={24} />
-        )}
-      </Box>*/}
 
       {!isTablet && (
         <PushWalletButton

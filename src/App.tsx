@@ -161,6 +161,10 @@ function App() {
                               element={<LeaderBoardPage />}
                             />
                             <Route
+                              path="/rewards/leaderboard-s2"
+                              element={<LeaderBoardPage />}
+                            />
+                            <Route
                               path="/rewards/leaderboard-s1"
                               element={<LeaderBoardPage />}
                             />
