@@ -1,5 +1,5 @@
 import { css } from "styled-components"
-import { Box, Text } from "../../blocks"
+import { Box, Text } from "../../../blocks"
 
 export const StreakDays = () => {
   return(

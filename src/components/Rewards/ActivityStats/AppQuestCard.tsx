@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { css } from 'styled-components';
-import { ArrowUpRight, Box, Button, ProgressBar, RewardsStarGradient, Text, XP } from '../../blocks';
+import { ArrowUpRight, Box, Button, ProgressBar, RewardsStarGradient, Text, XP } from '../../../blocks';
 
 type Quest = {
   title: string;

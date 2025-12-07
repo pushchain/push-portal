@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { Box, Button, Text } from '../../blocks';
+import { Box, Button, Text } from '../../../blocks';
 
 const SpinToWinCard = () => {
   return (

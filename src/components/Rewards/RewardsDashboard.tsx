@@ -11,7 +11,7 @@ import { useGetUserRewardsDetails } from "../../queries";
 
 import { device } from "../../config/globals";
 import { Box, Button, Leaderboard, Points, Link } from "../../blocks";
-import { DashboardSectionPoints } from "./DashboardSectionPoints";
+import { DashboardSectionPoints } from "./Dashboard/DashboardSectionPoints";
 import { walletToFullCAIP10 } from "../../helpers/web3helper";
 import useMediaQuery from "../../hooks/useMediaQuery";
 

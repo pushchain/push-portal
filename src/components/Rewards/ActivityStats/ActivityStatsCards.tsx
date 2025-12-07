@@ -1,4 +1,4 @@
-import { Box } from '../../blocks';
+import { Box } from '../../../blocks';
 import AppQuestCard from './AppQuestCard';
 
 const ActivityStatsCards = () => {

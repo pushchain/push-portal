@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { css } from 'styled-components';
-import { Box, Button, Text, Lock, ProgressBar, RewardsStarGradient, RarePass, XP } from '../../blocks';
+import { Box, Button, Text, Lock, ProgressBar, RewardsStarGradient, RarePass, XP } from '../../../blocks';
 
 type BossQuestCardProps = {
   title: string;

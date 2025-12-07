@@ -8,7 +8,7 @@ import {
   StakeActivityResponse,
   UserRewardsDetailResponse,
   UsersActivity,
-} from "../../queries";
+} from "../../../queries";
 
 import {
   Box,
@@ -22,7 +22,7 @@ import {
   Lock,
   Multiplier,
   Star,
-} from "../../blocks";
+} from "../../../blocks";
 import { css } from "styled-components";
 import { ActivityButton } from "./ActivityButton";
 import { RewardsActivityIcon } from "./RewardsActivityIcon";

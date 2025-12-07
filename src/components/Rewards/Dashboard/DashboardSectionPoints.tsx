@@ -3,7 +3,7 @@
 import React, { FC } from "react";
 
 //Hooks, Types
-import { UserRewardsDetailResponse } from "../../queries";
+import { UserRewardsDetailResponse } from "../../../queries";
 
 //components
 import {
@@ -14,7 +14,7 @@ import {
   RewardsBell,
   Skeleton,
   Text,
-} from "../../blocks";
+} from "../../../blocks";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 export type DashboardSectionPointsProps = {

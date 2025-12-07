@@ -3,7 +3,7 @@
 import React, { FC, useMemo } from 'react';
 
 // types
-import { Activity } from '../../queries';
+import { Activity } from '../../../queries';
 
 // components
 import {
@@ -14,7 +14,7 @@ import {
   RewardsCoin,
   TripleRewardsCoin,
   MultipleRewardsCoin,
-} from '../../blocks';
+} from '../../../blocks';
 import { css } from 'styled-components';
 
 export type DailyRewardsItemProps = {

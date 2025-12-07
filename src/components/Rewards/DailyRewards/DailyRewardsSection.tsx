@@ -3,18 +3,18 @@ import React, { FC, useMemo, useState } from "react";
 import { css } from "styled-components";
 
 // hooks
-import { useDailyRewards } from "./hooks/useDailyRewards";
-import { useRewardsContext } from "../../context/rewardsContext";
-// import { useDateExpiry } from '../hooks/useDateExpiry';
+import { useDailyRewards } from "../hooks/useDailyRewards";
+import { useRewardsContext } from "../../../context/rewardsContext";
+import { useCountdown } from "../hooks/useCountdown";
 
 // type
-import { ActvityType } from "../../queries";
+import { ActvityType } from "../../../queries";
 
 // components
-import { Alert, Box, Button, Text } from "../../blocks";
+import { Alert, Box, Button, Text } from "../../../blocks";
 import { DailyRewardsItem } from "./DailyRewardsItem";
-import { ActivityVerificationButton } from "./ActivityVerificationButton";
-import { useCountdown } from "./hooks/useCountdown";
+
+import { ActivityVerificationButton } from "../RewardsActivity/ActivityVerificationButton";
 
 export type DailyRewardsSectionProps = Record<string, never>;
 

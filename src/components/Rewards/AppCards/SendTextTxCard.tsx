@@ -8,15 +8,15 @@ import {
   RewardsBell,
   Skeleton,
   Text,
-} from "../../../src/blocks";
+} from "../../../blocks";
 
 import SimulateImg from "../../../static/assets/website/rewards/simulate-app.webp";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import { useRewardsContext } from "../../context/rewardsContext";
-import { RewardsActivityTitle } from "./RewardsActivityTitle";
-import { ActivityButton } from "./ActivityButton";
-import { useFilteredActivities } from "./hooks/useFilteredActivities";
-import { UsersActivity } from "../../queries";
+import { RewardsActivityTitle } from "../RewardsActivity/RewardsActivityTitle";
+import { ActivityButton } from "../RewardsActivity/ActivityButton";
+import { useFilteredActivities } from "../hooks/useFilteredActivities";
+import { UsersActivity } from "../../../queries";
 import { device } from "../../config/globals";
 
 export type SendTestTxCardProps = {

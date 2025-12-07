@@ -29,7 +29,7 @@ import {
   YellowBonusActivitySubscribers,
   PushAlpha,
   FiveSubscribedDefiChannel,
-} from "../../blocks";
+} from "../../../blocks";
 
 type RewardsActivityIconProp = {
   type: any;

@@ -1,4 +1,4 @@
-import { Box, Text } from '../../../src/blocks';
+import { Box, Text } from '../../../blocks';
 
 const DailyCheckInCard = () => {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];

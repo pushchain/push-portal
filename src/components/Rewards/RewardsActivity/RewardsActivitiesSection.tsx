@@ -2,13 +2,13 @@ import { FC } from "react";
 
 import { css } from "styled-components";
 
-import { Box, Lock, Text } from "../../blocks";
+import { Box, Lock, Text } from "../../../blocks";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import {
   StakeActivityResponse,
   useGetTweetStatus,
   useGetTweetPointsStatus,
-} from "../../queries";
+} from "../../../queries";
 import { useRewardsContext } from "../../context/rewardsContext";
 
 import { RewardsActivitiesListItem } from "./RewardsActivitiesListItem";

@@ -2,10 +2,10 @@
 import React, { useMemo } from "react";
 
 // hooks
-import { useAuthWithButton } from "./hooks/useWithAuthButton";
-import { useVerifyTwitter } from "./hooks/useVerifyTwitter";
-import { useVerifyDiscord } from "./hooks/useVerifyDiscord";
-import { useVerifyRewards } from "./hooks/useVerifyRewards";
+import { useAuthWithButton } from "../hooks/useWithAuthButton";
+import { useVerifyTwitter } from "../hooks/useVerifyTwitter";
+import { useVerifyDiscord } from "../hooks/useVerifyDiscord";
+import { useVerifyRewards } from "../hooks/useVerifyRewards";
 
 // helpers
 import {
@@ -15,13 +15,13 @@ import {
   otherRewardActivities,
   rumorsRewardsActivities,
   simulateRewardsActivities,
-} from "./utils/activityTypeArray";
+} from "../utils/activityTypeArray";
 
 // types
-import { ActvityType } from "../../queries/types";
+import { ActvityType } from "../../../queries/types";
 
 // components
-import { Button } from "../../blocks";
+import { Button } from "../../../blocks";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 type ActivityVerificationButtonProps = {

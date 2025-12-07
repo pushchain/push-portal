@@ -2,8 +2,8 @@
 import React, { FC } from "react";
 
 //Queries
-import { ActvityType, UsersActivity } from "../../queries";
-import { Button } from "../../blocks";
+import { ActvityType, UsersActivity } from "../../../queries";
+import { Button } from "../../../blocks";
 import { ActivityVerificationButton } from "./ActivityVerificationButton";
 import { useCountdown } from "./hooks/useCountdown";
 

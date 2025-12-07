@@ -1,4 +1,4 @@
-import { Box } from '../../blocks';
+import { Box } from '../../../blocks';
 import QuestBannerCard from './QuestBannerCard';
 import SpinToWinCard from './SpinToWinCard';
 import CollectRaresCard from './CollectRaresCard';

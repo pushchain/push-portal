@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { Box, Quests, Text } from '../../blocks';
+import { Box, Quests, Text } from '../../../blocks';
 import BossQuestCard from './BossQuestCard';
 
 const BossQuestsSection = () => {

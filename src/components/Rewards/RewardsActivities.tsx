@@ -1,9 +1,9 @@
-import HeroBannerCards from './HeroBannerCards';
-import ActivityStatsCards from './ActivityStatsCards';
-import BossQuestsSection from './BossQuestsSection';
-import { Box } from '../../../src/blocks';
-import { DailyRewardsSection } from './DailyRewardsSection';
-import { StreakDays } from './StreakDays';
+import HeroBannerCards from './HeroBanner/HeroBannerCards';
+import ActivityStatsCards from './ActivityStats/ActivityStatsCards';
+import BossQuestsSection from './BossQuests/BossQuestsSection';
+import { Box } from '../../blocks';
+import { DailyRewardsSection } from './DailyRewards/DailyRewardsSection';
+import { StreakDays } from './DailyRewards/StreakDays';
 import { css } from 'styled-components';
 import { LevelUp } from './LevelUp';
 

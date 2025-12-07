@@ -2,10 +2,10 @@ import React, { FC, useEffect, useMemo, useState } from "react";
 import { css } from "styled-components";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
-import { useFilteredActivities } from "./hooks/useFilteredActivities";
+import { useFilteredActivities } from "../hooks/useFilteredActivities";
 import { useRewardsContext } from "../../context/rewardsContext";
-import { useGetUserXP, UsersActivity } from "../../queries";
-import { useRefreshUserXP } from "./hooks/useRefreshUserXP";
+import { useGetUserXP, UsersActivity } from "../../../queries";
+import { useRefreshUserXP } from "../hooks/useRefreshUserXP";
 
 import {
   Box,
@@ -18,13 +18,13 @@ import {
   RewardsStarGradient,
   Skeleton,
   Text,
-} from "../../../src/blocks";
+} from "../../../blocks";
 
 import RumorsImg from "../../../static/assets/website/rewards/rumors-app.webp";
-import { RewardsActivityTitle } from "./RewardsActivityTitle";
-import { ActivityButton } from "./ActivityButton";
+import { RewardsActivityTitle } from "../RewardsActivity/RewardsActivityTitle";
+import { ActivityButton } from "../RewardsActivity/ActivityButton";
 import { device } from "../../config/globals";
-import { useCountdown } from "./hooks/useCountdown";
+import { useCountdown } from "../hooks/useCountdown";
 
 const numberOfLevels = 50;
 

@@ -6,7 +6,7 @@ import { css } from "styled-components";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 //hooks
-import { useGetUserRewardsDetails } from "../../queries";
+import { useGetUserRewardsDetails } from "../../../queries";
 
 //helpers
 import { getPreviewBasePath } from "../../../basePath";
@@ -14,7 +14,7 @@ import { walletToFullCAIP10 } from "../../helpers/web3helper";
 import { useCopy } from "../../hooks/useCopy";
 
 // components
-import { Box, Button, Copy, Text, Referral } from "../../blocks";
+import { Box, Button, Copy, Text, Referral } from "../../../blocks";
 import { device } from "../../config/globals";
 
 export type ReferralSectionProps = Record<string, never>;

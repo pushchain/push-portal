@@ -1,37 +1,37 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
+import { css } from "styled-components";
+
+import { RewardsActivityTitle } from "../RewardsActivity/RewardsActivityTitle";
 
 import {
   Box,
   Button,
-  Multiplier,
+  Link,
   ProgressBar,
   RewardsBell,
   RewardsStar,
   RewardsStarGradient,
   Skeleton,
   Text,
-} from "../../../src/blocks";
-import { css } from "styled-components";
-
-import { RewardsActivityTitle } from "./RewardsActivityTitle";
-import EmailImg from "../../../static/assets/website/rewards/email-app.webp";
+} from "../../../blocks";
+import ChessImg from "../../../static/assets/website/rewards/chess-app.webp";
 import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { useGetUserXP, UsersActivity } from "../../../queries";
+import { ActivityButton } from "../RewardsActivity/ActivityButton";
+import { useFilteredActivities } from "../hooks/useFilteredActivities";
 import { useRewardsContext } from "../../context/rewardsContext";
-import { useFilteredActivities } from "./hooks/useFilteredActivities";
-import { useGetUserXP, UsersActivity } from "../../queries";
-import { ActivityButton } from "./ActivityButton";
-import { useRefreshUserXP } from "./hooks/useRefreshUserXP";
-import { device } from "../../config/globals";
-import { useCountdown } from "./hooks/useCountdown";
+import { useCountdown } from "../hooks/useCountdown";
+import { useRefreshUserXP } from "../hooks/useRefreshUserXP";
 
 const numberOfLevels = 50;
 
-export type AnyChainEmailCardProps = {
+export type UniversalChessCardProps = {
   errorMessage: string;
   setErrorMessage: (errorMessage: string) => void;
 };
-
-const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
+const UniversalChessCard: FC<UniversalChessCardProps> = ({
+  setErrorMessage,
+}) => {
   const { universalAddress } = usePushWalletContext();
   const account = universalAddress?.address as string;
   const { isLocked } = useRewardsContext();
@@ -45,7 +45,7 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
 
   // Get user activities and XP data
   const {
-    filteredActivities: emailActivities,
+    filteredActivities: chessActivities,
     refetchFilteredActivities,
     userDetails,
     isLoadingActivities,
@@ -53,14 +53,14 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
     hasUserActivityLoading,
     userActivity,
     refetch,
-  } = useFilteredActivities(account, ["email:xp"], "startsWith");
+  } = useFilteredActivities(account, ["chess:xp"], "startsWith");
 
   const { data: allXPData, refetch: refetchXPData } = useGetUserXP({
     userId: userDetails?.userId as string,
   });
 
   // Get XP details
-  const emailXP = allXPData?.xpData.email ?? 0;
+  const chessXP = allXPData?.xpData.chess ?? 0;
   const xpLevels = allXPData?.xpForNextLevelMap || {};
 
   const nextUnclaimedLevel = useMemo(() => {
@@ -74,7 +74,7 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
     }
 
     for (let i = 1; i <= 50; i++) {
-      const key = `email:xp_level_${i}`;
+      const key = `chess:xp_level_${i}`;
       if (!userActivity[key] || userActivity[key].error === "Not Found") {
         return i;
       }
@@ -86,8 +86,8 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
     ? xpLevels[nextUnclaimedLevel]
     : null;
 
-  const levelToPick = emailActivities?.find(
-    (item) => item?.index === `email:xp-level-${nextUnclaimedLevel}`,
+  const levelToPick = chessActivities?.find(
+    (item) => item?.index === `chess:xp-level-${nextUnclaimedLevel}`,
   );
 
   const usersSingleActivity =
@@ -95,7 +95,7 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
 
   const { isPending } = useRefreshUserXP();
 
-  const isReadyToClaim = emailXP >= xpNeededForCurrentLevel;
+  const isReadyToClaim = chessXP >= xpNeededForCurrentLevel;
 
   // current finish date
   const targetDate = "2025-07-31T23:59:59";
@@ -169,6 +169,7 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
     }
   };
 
+
   return (
     <Skeleton
       isLoading={isLoadingActivities}
@@ -176,124 +177,108 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
       width="100%"
       css={css`
         display: flex;
-        flex: 1;
+        flex: 2;
       `}
     >
       <Box
         backgroundColor="surface-primary"
-        padding="spacing-sm spacing-md"
         borderRadius="radius-md"
         display="flex"
         flexDirection="column"
-        justifyContent="space-between"
+        width="100%"
         css={css`
-          flex: 1;
+          flex: 2;
+          position: relative;
         `}
       >
-        <Box>
-          <Box
-            display="flex"
-            flexDirection={{ initial: "row", ml: "column-reverse" }}
-            alignItems={{ initial: "center", ml: "flex-start" }}
-            gap="spacing-md"
-            justifyContent="space-between"
-            width="100%"
-          >
-            <Box>
-              {/* <Link to="https://email.push.org" target="_blank"> */}
-                <Text
-                  variant="h4-semibold"
-                  color="text-primary"
-                  // css={css`
-                  //   &:hover {
-                  //     color: var(--text-brand-medium) !important;
-                  //   }
-                  // `}
-                >
-                  Any Chain Email
-                </Text>
-              {/* </Link> */}
-              <RewardsActivityTitle
-                activityTitle="Send or receive emails to level up."
-                isLoading={false}
-                variant="bm-regular"
-                color="text-tertiary"
-              />
+        <Box
+          width="100%"
+          display="flex"
+          overflow="hidden"
+          borderRadius="radius-md radius-md radius-none radius-none"
+        >
+          <img
+            src={ChessImg}
+            style={{ width: "100%", height: "auto", objectFit: "contain" }}
+          />
+        </Box>
 
-              <Skeleton isLoading={isLoading} width="fit-content">
-                <Box
-                  display="flex"
-                  flexDirection="row"
-                  justifyContent="space-between"
-                  margin="spacing-md spacing-none spacing-none spacing-none"
-                >
-                  {isLocked && (
-                    <Button size="small" variant="tertiary" disabled>
-                      Locked
-                    </Button>
-                  )}
-
-                  {!isLocked && isEnded && (
-                    <Button variant="tertiary" size="small" disabled>
-                      Ended
-                    </Button>
-                  )}
-
-                  {!isLocked && !isReadyToClaim && !isEnded && (
-                    <Button variant="tertiary" size="small" disabled>
-                      Level Up to Claim
-                    </Button>
-                  )}
-
-                  {!isLocked && isReadyToClaim && !isEnded && (
-                    <ActivityButton
-                      userId={userDetails?.userId}
-                      activityTypeId={levelToPick?.id}
-                      activityType={levelToPick?.activityType}
-                      refetchActivity={refetch}
-                      setErrorMessage={setErrorMessage}
-                      usersSingleActivity={usersSingleActivity}
-                      isLoadingActivity={isUserActivityLoading}
-                      currentLevel={currentLevel}
-                      setCurrentLevel={setCurrentLevel}
-                      label={"Claim"}
-                      onStartClaim={() => {
-                        const level = nextUnclaimedLevel;
-                        const activityType = levelToPick?.activityType;
-                        if (level && activityType) {
-                          startClaimProcess(level, activityType);
-                        }
-                      }}
-                    />
-                  )}
-                </Box>
-              </Skeleton>
-            </Box>
-
-            <Box
-              width={{ initial: "fit-content", ml: "200px" }}
-              display="flex"
-              css={css`
-                margin: var(--spacing-sm) var(--spacing-none)
-                  var(--spacing-none) var(--spacing-none);
-                @media ${device.mobileL} {
-                  margin: var(--spacing-sm) auto;
-                }
-              `}
+        <Box padding="spacing-sm spacing-md">
+          {/* <Link to="https://chess.push.org" target="_blank"> */}
+            <Text
+              variant="h3-semibold"
+              color="text-primary"
+              // css={css`
+              //   &:hover {
+              //     color: var(--text-brand-medium) !important;
+              //   }
+              // `}
             >
-              <img
-                src={EmailImg}
-                style={{ width: "auto", height: "188px", objectFit: "contain" }}
-              />
+              Universal Chess
+            </Text>
+          {/* </Link> */}
+          <RewardsActivityTitle
+            activityTitle="Play games of chess with other degens or bots on any chain and level up to claim points."
+            isLoading={false}
+            variant="bm-regular"
+            color="text-tertiary"
+          />
+
+          <Skeleton isLoading={isLoading} width="fit-content">
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+              margin="spacing-md spacing-none"
+            >
+              {isLocked && (
+                <Button size="small" variant="tertiary" disabled>
+                  Locked
+                </Button>
+              )}
+
+              {!isLocked && isEnded && (
+                <Button variant="tertiary" size="small" disabled>
+                  Ended
+                </Button>
+              )}
+
+              {!isLocked && !isReadyToClaim && !isEnded && (
+                <Button variant="tertiary" size="small" disabled>
+                  Level Up to Claim
+                </Button>
+              )}
+
+              {!isLocked && isReadyToClaim && !isEnded && (
+                <ActivityButton
+                  userId={userDetails?.userId}
+                  activityTypeId={levelToPick?.id}
+                  activityType={levelToPick?.activityType}
+                  refetchActivity={refetch}
+                  setErrorMessage={setErrorMessage}
+                  usersSingleActivity={usersSingleActivity}
+                  isLoadingActivity={isUserActivityLoading}
+                  currentLevel={currentLevel}
+                  setCurrentLevel={setCurrentLevel}
+                  label={"Claim"}
+                  onStartClaim={() => {
+                    const level = nextUnclaimedLevel;
+                    const activityType = levelToPick?.activityType;
+                    if (level && activityType) {
+                      startClaimProcess(level, activityType);
+                    }
+                  }}
+                />
+              )}
             </Box>
-          </Box>
+          </Skeleton>
 
           <Box display="flex" flexDirection="column" gap="spacing-xs">
             <Box
               display="flex"
               flexDirection="row"
               justifyContent="space-between"
-              margin="spacing-md spacing-none spacing-none spacing-none"
+              margin="spacing-md spacing-none spacing-xs spacing-none"
             >
               <Box
                 display="flex"
@@ -317,28 +302,17 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
                 gap="spacing-xxs"
                 alignItems="center"
               >
-                {levelToPick?.multiplier > 1 && (
-                  <>
-                    <Multiplier width={23} height={25} />
-                    <Text variant="bm-semibold" color="text-state-success-bold">
-                      {levelToPick?.multiplier}x
-                    </Text>
-                  </>
-                )}
-
-                <br />
-
                 <RewardsBell width={23} height={25} />
                 <Text variant="bm-semibold">{levelToPick?.points ?? "0"}</Text>
               </Box>
             </Box>
 
             <ProgressBar
-              progress={(emailXP as number) || null}
+              progress={(chessXP as number) || null}
               max={xpNeededForCurrentLevel}
               size="large"
               progressIcon={<RewardsStarGradient size={35} />}
-              progressIconText={`${emailXP}XP`}
+              progressIconText={`${chessXP}XP`}
             />
           </Box>
         </Box>
@@ -347,4 +321,4 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
   );
 };
 
-export default AnyChainEmailCard;
+export default UniversalChessCard;

@@ -1,4 +1,4 @@
-import { Box, Text } from '../../../src/blocks';
+import { Box, Text } from '../../../blocks';
 
 const UserLevelCard = () => {
   return (
