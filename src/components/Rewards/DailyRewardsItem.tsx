@@ -15,6 +15,7 @@ import {
   TripleRewardsCoin,
   MultipleRewardsCoin,
 } from '../../blocks';
+import { css } from 'styled-components';
 
 export type DailyRewardsItemProps = {
   activity: Activity;
@@ -34,45 +35,48 @@ const DailyRewardsItem: FC<DailyRewardsItemProps> = ({
   const isCompleted = activeDay <= day;
 
   // style variables
-  const backgroundColor = useMemo(() => {
+  const borderColor = useMemo(() => {
     return isActive
-      ? 'surface-brand-medium'
-      : day === 7 && isCompleted
-        ? 'surface-brand-subtle'
-        : 'surface-secondary';
-  }, [isActive, day, isCompleted]);
+      ? '1px solid #D548EC' : 'none';
+  }, [isActive]);
 
   const textColor = useMemo(() => {
     return isActive
-      ? 'text-on-dark-bg'
+      ? '#FFFFFF'
       : activeDay > day
-        ? 'text-tertiary'
+        ? 'rgba(255, 255, 255, 0.5)'
         : day === 7 && isCompleted
-          ? 'text-on-light-bg'
-          : 'text-secondary';
+          ? 'rgba(255, 255, 255, 0.75)'
+          : 'rgba(255, 255, 255, 0.75)';
   }, [isActive, activeDay, day, isCompleted]);
 
   const getIconComponent = (day: number) => {
-    if (day < 5) return <RewardsCoin />;
-    if (day >= 5 && day < 7) return <TripleRewardsCoin />;
+    if (day < 3) return <RewardsCoin />;
+    if (day >= 3 && day < 6) return <TripleRewardsCoin />;
     return <MultipleRewardsCoin />;
   };
 
   return (
     <Skeleton isLoading={isLoading} borderRadius='radius-md'>
       <Box
-        padding='spacing-md'
-        backgroundColor={backgroundColor}
-        borderRadius='radius-md'
+        padding='spacing-sm spacing-md'
+        borderRadius='radius-sm'
         display='flex'
         flexDirection='column'
         alignItems='center'
-        minHeight='100px'
-        justifyContent='space-between'
-        border={activeDay > day ? 'border-xs solid stroke-secondary' : 'none'}
         className='item'
+        css={css`
+          gap: 11px;
+          border: ${borderColor}
+        `}
       >
-        <Text variant='bm-semibold' color={textColor} className='day-text'>
+        <Text
+          variant='bm-regular'
+          className='day-text'
+          css={css`
+              white-space: nowrap;
+              color: ${textColor}
+            `} >
           {activity?.activityTitle?.split('-')[1]}
         </Text>
 
@@ -81,10 +85,6 @@ const DailyRewardsItem: FC<DailyRewardsItemProps> = ({
         ) : (
           <CheckCircle />
         )}
-
-        <Text variant='bm-semibold' color={textColor} className='count-text'>
-          +{activity.points?.toLocaleString()}
-        </Text>
       </Box>
     </Skeleton>
   );

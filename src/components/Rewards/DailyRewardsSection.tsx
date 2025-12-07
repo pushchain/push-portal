@@ -52,9 +52,17 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
       display="flex"
       flexDirection="column"
       gap="spacing-md"
-      backgroundColor="surface-primary"
       padding="spacing-md"
       borderRadius="radius-md"
+      height="100%"
+      css={css`
+        border: 1px solid rgba(171, 70, 248, 0.40);
+        background: rgba(0, 0, 0, 0.10);
+        background-blend-mode: plus-lighter;
+        box-shadow: 2.788px -8px 12px 0 rgba(255, 255, 255, 0.15) inset, 1.858px 1.732px 6px 0 rgba(255, 255, 255, 0.15) inset;
+        backdrop-filter: blur(10px);
+        box-sizing: border-box;
+      `}
     >
       <Box
         display="flex"
@@ -64,10 +72,10 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
       >
         <Box>
           <Text variant="h4-semibold" color="text-primary">
-            Check-in daily to earn points
+            Daily Check-In
           </Text>
           <Text variant="bm-regular" color="text-tertiary">
-            Check-in for 7 days to unlock maximum points.
+            Stack your streak bonus, check-in daily
           </Text>
         </Box>
 
@@ -117,7 +125,7 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
 
       <Box
         display="grid"
-        gap={{ ml: "spacing-xs", initial: "spacing-sm" }}
+        gap={{ ml: "spacing-xs", initial: "spacing-xxs" }}
         css={css`
           grid-template-columns: repeat(7, minmax(0, 1fr));
 
@@ -155,7 +163,7 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
             grid-template-columns: repeat(2, minmax(0, 1fr));
 
             .item:last-child {
-              grid-column: span 2; /* Adjust to span 2 columns on small screens */
+              grid-column: span 2;
             }
           }
         `}

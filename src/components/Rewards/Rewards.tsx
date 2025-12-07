@@ -55,9 +55,9 @@ const Rewards: FC = () => {
 
       <RewardsActivities />
 
-      <RewardsContent />
+      {/*<RewardsContent />*/}
 
-      <ReferralSection />
+      {/*<ReferralSection />*/}
 
       <Footer />
     </RewardsWrapper>

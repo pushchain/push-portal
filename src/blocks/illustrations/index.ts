@@ -50,6 +50,8 @@ export { default as GradientBonusActivitySubscribers } from "./components/Gradie
 
 export { default as GreyBonusActivitySubscribers } from "./components/GreyBonusActivitySubscribers";
 
+export { default as LevelUpIcon } from "./components/LevelUpIcon";
+
 export { default as Linea } from "./components/Linea";
 
 export { default as OrangeBonusActivitySubscribers } from "./components/OrangeBonusActivitySubscribers";

@@ -13,7 +13,8 @@ const StyledProgressBarContainer = styled.div<{
   height: ${({ size }) => (size == "large" ? "12px" : "4px")};
   border-radius: var(--radius-xxs, 8px);
   position: relative;
-  margin-bottom: ${({ progressIcon }) => progressIcon && "30px"};
+  // margin-bottom: ${({ progressIcon }) => progressIcon && "30px"};
+  box-sixing: border-box;
 `;
 
 const StyledProgressBar = styled.div<{ width: string; isComplete: boolean }>`
