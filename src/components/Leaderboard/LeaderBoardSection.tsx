@@ -2,9 +2,9 @@
 // @ts-nocheck
 import { FC, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { LeaderboardListS1 } from "./LeaderboardListS1";
-import { LeaderboardListS2 } from "./LeaderboardListS2";
-import { LeaderboardListS3 } from "./LeaderboardListS3";
+import { LeaderboardListS1 } from "./Seasons/LeaderboardListS1";
+import { LeaderboardListS2 } from "./Seasons/LeaderboardListS2";
+import { LeaderboardListS3 } from "./Seasons/LeaderboardListS3";
 import { Box, Text } from "../../blocks";
 import { useQueryClient } from "@tanstack/react-query";
 import {

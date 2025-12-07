@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { css } from 'styled-components';
 import { Box } from '../../blocks';
-import PushPassHeroBanner from './PushPassHeroBanner';
-import PushPassTabs from './PushPassTabs';
-import UnopenedPassesContent from './UnopenedPassesContent';
-import MyCollectionContent from './MyCollectionContent';
+import PushPassHeroBanner from './HeroBanner/PushPassHeroBanner';
+import PushPassTabs from './Tabs/PushPassTabs';
+import UnopenedPassesContent from './Passes/UnopenedPassesContent';
+import MyCollectionContent from './Passes/MyCollectionContent';
 
 type TabType = 'unopened' | 'collection';
 

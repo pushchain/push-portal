@@ -3,7 +3,7 @@
 import React, { FC } from "react";
 import { css } from "styled-components";
 
-import { Box, Text } from "../../blocks";
+import { Box, Text } from "../../../blocks";
 
 const LeaderboardHeader: FC = () => {
 

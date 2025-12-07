@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { css } from "styled-components";
 import { Box, Tabs } from "../../blocks";
 import { LeaderBoardSection } from "./LeaderBoardSection";
-import { LeaderboardHeader } from "./LeaderboardHeader";
+import { LeaderboardHeader } from "./Header/LeaderboardHeader";
 import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../structure/Footer";
 

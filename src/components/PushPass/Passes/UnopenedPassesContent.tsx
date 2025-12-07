@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { css } from 'styled-components';
-import { Box, RarePassIcon, Text } from '../../blocks';
+import { Box, RarePassIcon, Text } from '../../../blocks';
 import PassCard from './PassCard';
 
 type Pass = {

@@ -6,10 +6,10 @@ import { FC } from "react";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 
 //Hooks
-import { LeaderboardModelledResponse } from "queries";
+import { LeaderboardModelledResponse } from "../../../queries";
 
 //Components
-import { Box, Button, Refresh, Text, UserSwitch } from "../../blocks";
+import { Box, Button, Refresh, Text, UserSwitch } from "../../../blocks";
 
 export type LeaderboardNullStateProps = {
   heading?: string;

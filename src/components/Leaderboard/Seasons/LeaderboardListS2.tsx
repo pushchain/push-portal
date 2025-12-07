@@ -7,14 +7,14 @@ import { css } from "styled-components";
 import {
   useGetRewardsLeaderboardS2,
   ModelledLeaderBoardUser,
-} from "../../queries";
-import { Box, Spinner } from "../../blocks";
+} from "../../../queries";
+import { Box, Spinner } from "../../../blocks";
 
-import { LeaderboardListItem } from "./LeaderboardListItem";
+import { LeaderboardListItem } from "../List/LeaderboardListItem";
 
-import { fullCAIP10ToWallet } from "../../helpers/web3helper";
-import { LeaderBoardNullState } from "./LeaderboardNullState";
-import { LeaderboardListColumns } from "./LeaderboardListColumns";
+import { fullCAIP10ToWallet } from "../../../helpers/web3helper";
+import { LeaderBoardNullState } from "../List/LeaderboardNullState";
+import { LeaderboardListColumns } from "../List/LeaderboardListColumns";
 
 const LeaderboardListS2: FC = () => {
   const {

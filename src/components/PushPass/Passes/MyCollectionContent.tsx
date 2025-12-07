@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { Box, RarePassIcon, Text } from '../../blocks';
+import { Box, RarePassIcon, Text } from '../../../blocks';
 
 const MyCollectionContent = () => {
   return (

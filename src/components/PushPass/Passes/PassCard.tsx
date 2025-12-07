@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { css } from 'styled-components';
-import { Box, Button, Text, Lock } from '../../blocks';
+import { Box, Button, Text, Lock } from '../../../blocks';
 
 type PassCardProps = {
   isLocked: boolean;

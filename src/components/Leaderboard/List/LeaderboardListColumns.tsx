@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { FC } from "react";
-import { Box, Text } from "../../blocks";
+import { Box, Text } from "../../../blocks";
 
 const LeaderboardListColumns: FC = () => {
   return (

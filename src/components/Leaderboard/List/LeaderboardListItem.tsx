@@ -5,12 +5,12 @@ import { FC } from "react";
 import { css } from "styled-components";
 import BlockiesSvg from "blockies-react-svg";
 
-import { useResolveWeb3Name } from "../../hooks/useResolveWeb3Name";
-import { shortenText } from "../../helpers/web3helper";
-import useMediaQuery from "../../hooks/useMediaQuery";
-import { device } from "../../config/globals";
+import { useResolveWeb3Name } from "../../../hooks/useResolveWeb3Name";
+import { shortenText } from "../../../helpers/web3helper";
+import useMediaQuery from "../../../hooks/useMediaQuery";
+import { device } from "../../../config/globals";
 
-import { Box, Skeleton, Text } from "../../blocks";
+import { Box, Skeleton, Text } from "../../../blocks";
 
 export type LeaderboardListItemProps = {
   rank: number;
