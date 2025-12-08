@@ -27,9 +27,12 @@ import NotFound from "./components/NotFound";
 import RewardsPage from "./pages/RewardsPage";
 import LeaderBoardPage from "./pages/LeaderBoardPage";
 import { DiscordVerificationPage } from "./pages/DiscordVerificationPage";
+import PushPassPage from "./pages/PushPassPage";
+import PushPassItemPage from "./pages/PushPassItemPage";
+
 import { Sidebar } from "./components/sidebar";
 import Header from "./structure/Header";
-import PushPassPage from "./pages/PushPassPage";
+
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -155,6 +158,10 @@ function App() {
                             <Route
                               path="/rewards/pushpass"
                               element={<PushPassPage />}
+                            />
+                            <Route
+                              path="/rewards/pushpass/:id"
+                              element={<PushPassItemPage />}
                             />
                             <Route
                               path="/rewards/leaderboard"

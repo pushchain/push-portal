@@ -1,19 +1,27 @@
 import { FC } from 'react';
 import { css } from 'styled-components';
 import { Box, Button, Text, Lock } from '../../../blocks';
+import { useNavigate } from 'react-router-dom';
+import OpenPassImage from '../../../../static/assets/website/pushpass/openpass.webp';
+import OpenPassLockedImage from '../../../../static/assets/website/pushpass/openpasslocked.webp';
 
 type PassCardProps = {
   isLocked: boolean;
   lockMessage?: string;
   backgroundImage?: string;
-  onOpen?: () => void;
+  id?: number;
 };
 
 const PassCard: FC<PassCardProps> = ({
   isLocked,
   lockMessage = 'Locked',
-  onOpen,
+  id
 }) => {
+  const navigate = useNavigate();
+
+  const handleNavigation = (id: number) => {
+    navigate(`/rewards/pushpass/${id}`)
+  }
   return (
     <Box
       height="379px"
@@ -27,8 +35,8 @@ const PassCard: FC<PassCardProps> = ({
         position: relative;
         flex: 1;
         background: ${isLocked
-                  ? `url(${'/static/assets/website/pushpass/openpasslocked.webp'}) center/cover`
-                  : `url(${'/static/assets/website/pushpass/openpass.webp'}) center/cover`
+                  ? `url(${OpenPassLockedImage}) center/cover`
+                  : `url(${OpenPassImage}) center/cover`
                 };
       `}
     >
@@ -80,7 +88,7 @@ const PassCard: FC<PassCardProps> = ({
               <Button
                 size="medium"
                 variant="primary"
-                onClick={onOpen}
+                onClick={() => handleNavigation(id)}
                 css={css`
                   min-width: 100px;
                   height: 48px;
@@ -102,7 +110,7 @@ const PassCard: FC<PassCardProps> = ({
                       font-weight: 500;
                       line-height: 16px;
                       white-space: nowrap;
-                      color: var(--1-color-semantic-components-button-primary-text-default);
+                      color: #fff;
                     `}
                   >
                     Open Pass

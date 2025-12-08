@@ -97,6 +97,7 @@ const UnopenedPassesContent: FC<UnopenedPassesContentProps> = ({ passes }) => {
             key={pass.id}
             isLocked={pass.isLocked}
             lockMessage={pass.lockMessage}
+            id={pass.id}
           />
         ))}
       </Box>
@@ -115,6 +116,7 @@ const UnopenedPassesContent: FC<UnopenedPassesContentProps> = ({ passes }) => {
             key={pass.id}
             isLocked={pass.isLocked}
             lockMessage={pass.lockMessage}
+            id={pass.id}
           />
         ))}
       </Box>
