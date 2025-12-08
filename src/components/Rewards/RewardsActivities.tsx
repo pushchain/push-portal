@@ -3,7 +3,7 @@ import ActivityStatsCards from './ActivityStats/ActivityStatsCards';
 import BossQuestsSection from './BossQuests/BossQuestsSection';
 import { Box } from '../../blocks';
 import { DailyRewardsSection } from './DailyRewards/DailyRewardsSection';
-import { StreakDays } from './DailyRewards/StreakDays';
+import { StreakDays } from './StreakDays';
 import { css } from 'styled-components';
 import { LevelUp } from './LevelUp';
 
