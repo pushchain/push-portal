@@ -2,9 +2,11 @@ import { css } from "styled-components"
 import { Back, Box, Button, Text } from "../../blocks"
 import { Image } from "../../css/SharedStyling"
 import OpenPassImage from "../../../static/assets/website/pushpass/openpass.webp"
+import { useNavigate } from "react-router-dom"
 
 
 export const PushPassItem = () => {
+  const navigate = useNavigate();
   return(
     <Box
       padding="spacing-md"
@@ -24,22 +26,30 @@ export const PushPassItem = () => {
         box-sizing: border-box;
       `}
     >
-      <Box
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-        gap="spacing-xxs"
-      >
-        <Back
-          css={css`
-            color: #C742DD;
-          `} />
-        <Text
-          variant="bm-bold"
-          css={css`
-            color: #C742DD;
-          `}>Back</Text>
-      </Box>
+        <Button variant="outline" onClick={()=> navigate('/rewards/pushpass')} css={css`
+            border: none;
+
+            &:hover:{
+                border: none;
+            }
+          `}>
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          gap="spacing-xxs"
+        >
+          <Back
+            css={css`
+              color: #C742DD;
+            `} />
+          <Text
+            variant="bm-bold"
+            css={css`
+              color: #C742DD;
+            `}>Back</Text>
+        </Box>
+      </Button>
 
 
       <Box
