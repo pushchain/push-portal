@@ -6,8 +6,10 @@ const QuestBannerCard = () => {
     <Box
       display="flex"
       flexDirection="column"
-      minWidth={{ initial: '280px', ml: '100%' }}
-      height="374px"
+      width={{ initial: 'auto', tb: '100%' }}
+      minWidth={{ initial: '280px', tb: 'auto' }}
+      height={{ initial: '374px', tb: 'auto' }}
+      minHeight={{ tb: '300px' }}
       padding="spacing-md"
       borderRadius="radius-xl"
       border="border-xs solid stroke-tertiary"
@@ -16,6 +18,7 @@ const QuestBannerCard = () => {
       css={css`
         background: linear-gradient(241deg, rgba(221, 222, 255, 1) 0%, rgba(181, 184, 255, 1) 100%);
         flex: 1;
+        box-sizing: border-box;
       `}
     >
       <Box

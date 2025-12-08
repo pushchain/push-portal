@@ -36,18 +36,21 @@ const BossQuestCard: FC<BossQuestCardProps> = ({
     <Box
       display="flex"
       flexDirection="column"
-      minWidth="280px"
+      width={{ initial: 'auto', tb: '100%' }}
+      minWidth={{ initial: '280px', tb: 'auto' }}
       borderRadius="radius-md"
       padding="spacing-md"
       gap="spacing-sm"
       justifyContent="flex-end"
       position="relative"
       overflow="hidden"
-      height="-webkit-fill-available"
+      height={{ initial: '-webkit-fill-available', tb: 'auto' }}
+      minHeight={{ initial: '473px', tb: '400px' }}
       css={css`
         border: 1px solid rgba(255, 255, 255, 0.10);
         background: radial-gradient(109.87% 94.08% at 50% 5.92%, #131220 75.21%, #291D39 100%);
         flex: 1;
+        box-sizing: border-box;
       `}
     >
       <Box

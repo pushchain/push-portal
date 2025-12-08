@@ -66,7 +66,7 @@ const AppQuestCard: FC<AppQuestCardProps> = ({
           <Box
             display="flex"
             flexDirection="column"
-            height="24px"
+            height={{initial: "24px", tb: "100%"}}
             alignItems="center"
             justifyContent="center"
             gap="spacing-xs"
@@ -74,7 +74,9 @@ const AppQuestCard: FC<AppQuestCardProps> = ({
           >
             <Box
               display="flex"
-              alignItems="center"
+              flexDirection={{ initial: 'row', tb:'column'}}
+              gap={{ tb: "spacing-xs", initial: 'spacing-none'}}
+              alignItems={{initial: "center", tb: "flex-start"}}
               justifyContent="space-between"
               alignSelf="stretch"
               css={css`
@@ -96,11 +98,14 @@ const AppQuestCard: FC<AppQuestCardProps> = ({
                 display="inline-flex"
                 alignItems="center"
                 gap="spacing-lg"
+                width={{tb: '100%'}}
+                justifyContent={{ tb: 'space-between' }}
+
               >
                 {showProgress ? (
                   <Box width="112px" height="8px">
                     <ProgressBar
-                      progress={(0) || null}
+                      progress={(20) || null}
                       max={100}
                       size="large"
                       progressIcon={<RewardsStarGradient size={35} />}
@@ -125,12 +130,10 @@ const AppQuestCard: FC<AppQuestCardProps> = ({
                         >
                           <Text
                             css={css`
-                              font-family: "FK Grotesk Neue-Medium", Helvetica;
                               font-size: 12px;
                               font-weight: 500;
                               line-height: 16px;
                               white-space: nowrap;
-                              color: ${quest.isDisabled ? '#534e5f' : 'var(--text-primary)'};
                             `}
                           >
                             Claim

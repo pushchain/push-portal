@@ -93,10 +93,13 @@ const BossQuestsSection = () => {
 
         <Box
           display="flex"
+          flexDirection={{ initial: 'row', tb: 'column' }}
           alignItems="flex-start"
           alignSelf="stretch"
           gap="spacing-sm"
-          height="473px"
+          css={css`
+            height: auto;
+          `}
         >
           <BossQuestCard
             title="Create content and tag @PushChain on X"

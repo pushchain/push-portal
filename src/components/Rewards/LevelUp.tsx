@@ -6,10 +6,12 @@ export const LevelUp = () => {
     <Box
       borderRadius="radius-md"
       padding="spacing-md"
-      height="100%"
+      height={{ initial: '100%', tb: 'auto' }}
+      minHeight={{ tb: '200px' }}
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
+      width={{ initial: 'auto', tb: '100%' }}
       css={css`
             border: 1px solid rgba(171, 70, 248, 0.40);
             background: rgba(0, 0, 0, 0.10);
@@ -19,6 +21,11 @@ export const LevelUp = () => {
             min-width: 296px;
             max-width: 296px;
             box-sizing: border-box;
+
+            @media (max-width: 768px) {
+              min-width: 100%;
+              max-width: 100%;
+            }
         `}>
 
           <Box display="flex" flexDirection="row" justifyContent="center" gap="spacing-xs" alignItems="center">

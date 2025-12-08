@@ -6,8 +6,9 @@ const CollectRaresCard = () => {
     <Box
       display="flex"
       flexDirection="column"
-      width={{ initial: '280px', ml: '100%' }}
-      height="374px"
+      width={{ initial: '280px', tb: '100%' }}
+      height={{ initial: '374px', tb: 'auto' }}
+      minHeight={{ tb: '300px' }}
       padding="spacing-md"
       borderRadius="radius-xl"
       border="border-xs solid stroke-tertiary"
@@ -15,6 +16,7 @@ const CollectRaresCard = () => {
       overflow="hidden"
       css={css`
         background: linear-gradient(241deg, rgba(253, 253, 218, 1) 0%, rgba(254, 223, 170, 1) 100%);
+        box-sizing: border-box;
       `}
     >
       <Box

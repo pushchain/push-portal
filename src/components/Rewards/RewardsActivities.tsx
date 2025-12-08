@@ -17,11 +17,12 @@ const RewardsActivities = () => {
 
       <Box
         display="flex"
-        flexDirection="row"
-        alignItems="center"
+        flexDirection={{ initial: 'row', tb: 'column' }}
+        alignItems="stretch"
         gap="spacing-md"
+        width="100%"
+        height={{ initial: '230px', tb: 'auto' }}
         css={css`
-        height: 230px;
         box-sizing: border-box;
         `}>
         <LevelUp />
