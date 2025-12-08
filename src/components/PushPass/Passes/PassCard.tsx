@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { css } from 'styled-components';
 import { Box, Button, Text, Lock } from '../../../blocks';
 import { useNavigate } from 'react-router-dom';
-import OpenPassImage from '../../../../static/assets/website/pushpass/openpass.webp';
-import OpenPassLockedImage from '../../../../static/assets/website/pushpass/openpasslocked.webp';
+import OpenPassImage from '../../../../static/assets/website/pushpass/OpenPass.webp';
+import OpenPassLockedImage from '../../../../static/assets/website/pushpass/OpenPassLocked.webp';
 
 type PassCardProps = {
   isLocked: boolean;

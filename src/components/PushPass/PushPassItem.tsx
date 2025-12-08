@@ -1,7 +1,7 @@
 import { css } from "styled-components"
 import { Back, Box, Button, Text } from "../../blocks"
 import { Image } from "../../css/SharedStyling"
-import OpenPassImage from "../../../static/assets/website/pushpass/openpass.webp"
+import OpenPassImage from "../../../static/assets/website/pushpass/OpenPass.webp"
 import { useNavigate } from "react-router-dom"
 
 
