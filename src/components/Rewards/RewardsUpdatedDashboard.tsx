@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { css } from "styled-components";
 
 import {
@@ -9,14 +8,9 @@ import {
 import { Box, Text, ArrowDown } from "../../blocks";
 import { RenderLoggedInVerifiedState } from "./Dashboard/RenderLoggedInVerifiedState";
 
-type DashboardState =
-  | "logged-out"
-  | "logged-in-unverified"
-  | "logged-in-verified";
-
 export const RewardsUpdatedDashboard = () => {
-  const [state] = useState<DashboardState>("logged-in-verified");
   const { universalAddress } = usePushWalletContext();
+  const isWalletConnected = Boolean(universalAddress?.address);
 
   const renderLoggedOutState = () => (
     <Box
@@ -108,29 +102,15 @@ export const RewardsUpdatedDashboard = () => {
     </Box>
   );
 
-  const renderLoggedInUnverifiedState = () => (
-    <Box>
-      {/* Placeholder for logged in unverified state */}
-      <Text>Logged In Unverified State - Coming Soon</Text>
-    </Box>
-  );
+  // const renderLoggedInUnverifiedState = () => (
+  //   <Box>
+  //     <Text>Logged In Unverified State - Coming Soon</Text>
+  //   </Box>
+  // );
 
   const renderLoggedInVerifiedState = () => (
     <RenderLoggedInVerifiedState />
   );
 
-  const renderState = () => {
-    switch (state) {
-      case "logged-out":
-        return renderLoggedOutState();
-      case "logged-in-unverified":
-        return renderLoggedInUnverifiedState();
-      case "logged-in-verified":
-        return renderLoggedInVerifiedState();
-      default:
-        return renderLoggedOutState();
-    }
-  };
-
-  return renderState();
+  return isWalletConnected ? renderLoggedInVerifiedState() : renderLoggedOutState();
 };

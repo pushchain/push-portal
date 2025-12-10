@@ -36,9 +36,9 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
       justifyContent="space-between"
       padding="spacing-sm"
       alignItems="center"
-      backgroundColor="surface-secondary"
       css={css`
         box-sizing: border-box;
+        z-index: 99;
       `}
     >
       <Box cursor="pointer" onClick={GoToHome} display="flex" flexDirection="row" alignItems="center">

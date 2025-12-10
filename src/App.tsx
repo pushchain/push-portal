@@ -124,9 +124,30 @@ function App() {
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>
-                <Box display="flex"
-                     flexDirection="column"
-                     height="100vh">
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  height="100vh"
+                  css={css`
+                  `}
+                >
+                  <Box
+                    css={css`
+                      position: fixed;
+                      left: 0;
+                      top: 0;
+                      bottom: 0;
+                      right: 0;
+                      width: 100%;
+                      height: 100%;
+                      background: url('/static/assets/website/shared/season-bg.webp') no-repeat center center fixed;
+                      background-size: cover;
+                      background-color: ${(props) => props.theme.header.bg};
+                      pointer-events: none;
+                      z-index: 0;
+                    `}
+                  />
+
                       <Header toggleSidebar={toggleSidebar} />
                       <Box
                         display="flex"
