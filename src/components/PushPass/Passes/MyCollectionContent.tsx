@@ -15,10 +15,9 @@ const MyCollectionContent = () => {
 
       <Box
         gap="spacing-xs"
-        alignSelf="stretch"
+        alignItems={{initial: "center", tb: "flex-start"}}
         css={css`
           display: flex;
-          align-items: center;
           position: relative;
         `}
       >
@@ -37,10 +36,9 @@ const MyCollectionContent = () => {
         >
           <Box
             gap="spacing-xxxs"
-            alignSelf="stretch"
             css={css`
               display: flex;
-              align-items: center;
+              align-items: flex-start;
               position: relative;
             `}
           >
@@ -62,9 +60,6 @@ const MyCollectionContent = () => {
           <Text
             variant="bm-regular"
             color="text-secondary"
-            css={css`
-              align-self: stretch;
-            `}
           >
             Collect and open as many passes as possible before the burn event. More Rare Pass = Higher Chance to score a Shiny
           </Text>

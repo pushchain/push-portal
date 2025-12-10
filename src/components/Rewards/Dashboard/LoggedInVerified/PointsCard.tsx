@@ -30,23 +30,38 @@ export const PointsCard: FC = () => {
       width="auto"
       css={css`
         flex: 1;
-        border: 1px solid rgba(255, 255, 255, 0.10);
+        border: none;
         background: radial-gradient(109.87% 94.08% at 50% 5.92%, #131220 51.7%, #44350D 100%);
         box-sizing: border-box;
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          padding: 1px;
+          background: rgba(255, 255, 255, 0.10);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+        }
       `}
     >
       <Box
         css={css`
           position: absolute;
-          width: 76.18%;
-          height: 85.2%;
-          top: 35.71%;
-          right: -13.91%;
-          bottom: -20.92%;
-          left: 37.73%;
+          bottom: 0;
+          right: 0;
+          width: 65%;
+          height: 65%;
+          background: url('/static/assets/website/rewards/total-points-bg.webp') no-repeat bottom right;
+          background-size: contain;
+          pointer-events: none;
+          z-index: 0;
         `}
-      >
-      </Box>
+      />
 
       <Box display="flex" flexDirection="column" alignItems="flex-start" position="relative" css={css`z-index: 1;`}>
         <Text variant="h1-bold" color="text-primary">

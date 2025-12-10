@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { css } from 'styled-components';
 import { Box, RarePassIcon, Text } from '../../../blocks';
 import PassCard from './PassCard';
+import { device } from '../../../config/globals';
 
 type Pass = {
   id: number;
@@ -16,7 +17,7 @@ type UnopenedPassesContentProps = {
 const UnopenedPassesContent: FC<UnopenedPassesContentProps> = ({ passes }) => {
   return (
     <Box
-      width="1058px"
+      width="100%"
       gap="spacing-md"
       css={css`
         display: flex;
@@ -27,10 +28,9 @@ const UnopenedPassesContent: FC<UnopenedPassesContentProps> = ({ passes }) => {
 
     <Box
       gap="spacing-xs"
-      alignSelf="stretch"
+      alignItems={{initial: "center", tb: "flex-start"}}
       css={css`
         display: flex;
-        align-items: center;
         position: relative;
       `}
     >
@@ -38,22 +38,21 @@ const UnopenedPassesContent: FC<UnopenedPassesContentProps> = ({ passes }) => {
 
       <Box
         gap="spacing-none"
+        width="100%"
+        alignItems="flex-start"
         css={css`
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
           position: relative;
           flex: 1;
+          box-sizing: border-box;
         `}
       >
         <Box
           gap="spacing-xxxs"
-          alignSelf="stretch"
-          css={css`
-            display: flex;
-            align-items: center;
-            position: relative;
-          `}
+          alignItems="center"
+          display="flex"
+          position='relative'
         >
           <Text
             variant="h3-semibold"
@@ -73,9 +72,6 @@ const UnopenedPassesContent: FC<UnopenedPassesContentProps> = ({ passes }) => {
         <Text
           variant="bm-regular"
           color="text-secondary"
-          css={css`
-            align-self: stretch;
-          `}
         >
           Collect and open as many passes as possible before the burn event. More Rare Pass = Higher Chance to score a Shiny
         </Text>
@@ -83,34 +79,24 @@ const UnopenedPassesContent: FC<UnopenedPassesContentProps> = ({ passes }) => {
     </Box>
 
       <Box
-        gap="spacing-lg"
-        alignSelf="stretch"
+        gap="spacing-md"
+        width="100%"
         css={css`
-          display: flex;
-          align-items: flex-start;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: var(--spacing-lg);
           position: relative;
-        `}
-      >
-        {passes.slice(0, 4).map((pass) => (
-          <PassCard
-            key={pass.id}
-            isLocked={pass.isLocked}
-            lockMessage={pass.lockMessage}
-            id={pass.id}
-          />
-        ))}
-      </Box>
 
-      <Box
-        gap="spacing-lg"
-        alignSelf="stretch"
-        css={css`
-          display: flex;
-          align-items: flex-start;
-          position: relative;
+          @media ${device.tablet} {
+              grid-template-columns: repeat(2, 1fr);
+          }
+
+          @media ${device.mobileL} {
+              grid-template-columns: repeat(1, 1fr);
+          }
         `}
       >
-        {passes.slice(4, 8).map((pass) => (
+        {passes.map((pass) => (
           <PassCard
             key={pass.id}
             isLocked={pass.isLocked}

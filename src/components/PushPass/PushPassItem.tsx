@@ -37,7 +37,8 @@ export const PushPassItem = () => {
             }
 
             @media ${device.tablet} {
-                padding: none !important;
+                padding: 0px;
+                min-width: auto;
             }
           `}>
         <Box

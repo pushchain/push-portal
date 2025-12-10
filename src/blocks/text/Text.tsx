@@ -46,7 +46,11 @@ const StyledText = styled.p.withConfig({
   /* Variant CSS */
   ${({ variant }) => getVariantStyles(variant)}
 
-  color: ${({ color }) => `var(--${color})`};
+  color: ${({ color }) =>
+    color.startsWith('#') || color.startsWith('rgb')
+      ? color
+      : `var(--${color})`
+  };
   font-family: var(--font-family);
   margin: 0px;
   text-align: ${({ textAlign }) => textAlign};

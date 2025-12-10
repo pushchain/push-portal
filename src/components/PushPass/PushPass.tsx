@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { css } from 'styled-components';
-import { Box } from '../../blocks';
+import { Box, Text } from '../../blocks';
 import PushPassHeroBanner from './HeroBanner/PushPassHeroBanner';
 import PushPassTabs from './Tabs/PushPassTabs';
 import UnopenedPassesContent from './Passes/UnopenedPassesContent';
@@ -114,6 +114,20 @@ const PushPass = () => {
             {activeTab === 'collection' && <MyCollectionContent />}
           </Box>
         </Box>
+      </Box>
+
+
+      <Box
+        width="100%"
+        padding="spacing-md spacing-none"
+      >
+        <Text
+          variant='h5-regular'
+          textAlign='center'>Keep an eye on
+            <Text
+              as='span'
+              variant='h5-semibold' color='#C742DD'>{' '}@PushChain{' '}</Text>
+            for more ways to score more Rare Passes</Text>
       </Box>
     </Box>
   );

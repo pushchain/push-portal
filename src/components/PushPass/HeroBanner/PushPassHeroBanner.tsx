@@ -6,7 +6,7 @@ const PushPassHeroBanner = () => {
   return (
     <Box
       width="100%"
-      height="260px"
+      height={{ initial: '260px', tb: 'auto' }}
       gap="spacing-xs"
       padding="spacing-md"
       borderRadius="radius-md"
