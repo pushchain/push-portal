@@ -7,6 +7,7 @@ import {
 } from "@pushprotocol/pushchain-ui-kit";
 
 import { Box, Text, ArrowDown } from "../../blocks";
+import { RenderLoggedInVerifiedState } from "./Dashboard/RenderLoggedInVerifiedState";
 
 type DashboardState =
   | "logged-out"
@@ -14,7 +15,7 @@ type DashboardState =
   | "logged-in-verified";
 
 export const RewardsUpdatedDashboard = () => {
-  const [state] = useState<DashboardState>("logged-out");
+  const [state] = useState<DashboardState>("logged-in-verified");
   const { universalAddress } = usePushWalletContext();
 
   const renderLoggedOutState = () => (
@@ -115,10 +116,7 @@ export const RewardsUpdatedDashboard = () => {
   );
 
   const renderLoggedInVerifiedState = () => (
-    <Box>
-      {/* Placeholder for logged in verified state */}
-      <Text>Logged In Verified State - Coming Soon</Text>
-    </Box>
+    <RenderLoggedInVerifiedState />
   );
 
   const renderState = () => {

@@ -3,6 +3,7 @@ import { Back, Box, Button, Text } from "../../blocks"
 import { Image } from "../../css/SharedStyling"
 import OpenPassImage from "../../../static/assets/website/pushpass/OpenPass.webp"
 import { useNavigate } from "react-router-dom"
+import { device } from "../../config/globals"
 
 
 export const PushPassItem = () => {
@@ -26,11 +27,17 @@ export const PushPassItem = () => {
         box-sizing: border-box;
       `}
     >
-        <Button variant="outline" onClick={()=> navigate('/rewards/pushpass')} css={css`
+        <Button
+          variant="outline"
+          onClick={()=> navigate('/rewards/pushpass')}
+          css={css`
             border: none;
-
             &:hover:{
                 border: none;
+            }
+
+            @media ${device.tablet} {
+                padding: none !important;
             }
           `}>
         <Box

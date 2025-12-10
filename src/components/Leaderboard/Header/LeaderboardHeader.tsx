@@ -4,6 +4,7 @@ import React, { FC } from "react";
 import { css } from "styled-components";
 
 import { Box, Text } from "../../../blocks";
+import { device } from "../../../config/globals";
 
 const LeaderboardHeader: FC = () => {
 
@@ -40,6 +41,10 @@ const LeaderboardHeader: FC = () => {
       <Text variant="h4-regular" textAlign="center" css={css`
             width: 660px;
             color: #000;
+
+            @media ${device.tablet} {
+                width: 100%;
+            }
         `}>
         Rise up the leaderboards to be a part of Exclusive Rewards Staking Pool at TGE with special rewards.
       </Text>

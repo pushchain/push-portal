@@ -18,9 +18,9 @@ export type HoverableSVGProps = {
   /* Sets the hover color for SVG */
   hoverColor?: IconColors;
   /* Sets the initial background color for SVG */
-  defaultBackground?: SurfaceColors;
+  defaultBackground?: SurfaceColors | string;
   /* Sets the initial background color for SVG */
-  hoverBackground?: SurfaceColors;
+  hoverBackground?: SurfaceColors | string;
   /* Sets the padding for SVG button container */
   padding?: BlocksSpaceType;
   /* Sets the margin for SVG button container */

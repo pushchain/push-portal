@@ -36,7 +36,6 @@ const UnopenedPassesContent: FC<UnopenedPassesContentProps> = ({ passes }) => {
     >
       <RarePassIcon />
 
-
       <Box
         gap="spacing-none"
         css={css`

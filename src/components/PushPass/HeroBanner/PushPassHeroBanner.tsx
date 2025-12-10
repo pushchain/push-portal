@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
 import { Box, Text } from '../../../blocks';
+import { device } from '../../../config/globals';
 
 const PushPassHeroBanner = () => {
   return (
@@ -63,6 +64,10 @@ const PushPassHeroBanner = () => {
               text-align: center;
               font-size: 40px;
               line-height: 48px;
+
+              @media ${device.tablet}{
+                  width: 100%;
+              }
             `}
           >
             Claim &amp; Burn Passes to score a Legendary Shiny
@@ -76,6 +81,10 @@ const PushPassHeroBanner = () => {
               text-align: center;
               font-size: 20px;
               line-height: 30px;
+
+              @media ${device.tablet}{
+                  width: 100%;
+              }
             `}
           >
             Be one of the lucky few to get Eternal Rewards* with a Legendary Shiny Pass

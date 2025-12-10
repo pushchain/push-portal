@@ -2,11 +2,14 @@
 // @ts-nocheck
 import React, { FC } from "react";
 import { css } from "styled-components";
+
 import { Box, Tabs } from "../../blocks";
 import { LeaderBoardSection } from "./LeaderBoardSection";
 import { LeaderboardHeader } from "./Header/LeaderboardHeader";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import Footer from "../../structure/Footer";
+import { device } from "../../config/globals";
 
 const Leaderboard: FC = () => {
   const location = useLocation();
@@ -36,14 +39,20 @@ const Leaderboard: FC = () => {
       width="100%"
       flexDirection="column"
       height={{ initial: "calc(100vh - 130px)", ml: "calc(100vh - 80px)" }}
-      padding={{ ml: "spacing-sm" }}
       css={css`
         margin: var(--spacing-md) auto;
         box-sizing: border-box;
         position: relative;
+
+        @media ${device.tablet} {
+            margin: var(--spacing-none) auto;
+        }
       `}
     >
-      <Box css={css`position: relative; z-index: 2;`}>
+      <Box css={css`
+          position: relative;
+          z-index: 2;
+        `}>
         <LeaderboardHeader />
       </Box>
       <Box
@@ -56,7 +65,7 @@ const Leaderboard: FC = () => {
           position: relative;
           z-index: 1;
 
-          border-radius: var(--radius-none, 0) var(--radius-none, 0) var(--radius-lg, 32px) var(--radius-lg, 32px);
+          border-radius: 0 0 32px 32px;
           border: 1px solid rgba(171, 70, 248, 0.40);
           background: rgba(0, 0, 0, 0.10);
           background-blend-mode: plus-lighter;

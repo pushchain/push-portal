@@ -52,6 +52,8 @@ export { default as GreyBonusActivitySubscribers } from "./components/GreyBonusA
 
 export { default as LevelUpIcon } from "./components/LevelUpIcon";
 
+export { default as LevelBadge } from "./components/LevelBadge";
+
 export { default as Linea } from "./components/Linea";
 
 export { default as OrangeBonusActivitySubscribers } from "./components/OrangeBonusActivitySubscribers";

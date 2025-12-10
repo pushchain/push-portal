@@ -142,7 +142,7 @@ function App() {
                         <Box
                           width="100%"
                           maxWidth="1200px"
-                          padding="spacing-none spacing-md"
+                          padding={{initial: "spacing-none spacing-md", tb: "spacing-none spacing-xs"}}
                           css={css`
                             overflow-y: auto;
                             overflow-x: hidden;

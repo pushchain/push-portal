@@ -9,6 +9,8 @@ export { default as ArbitrumMonotone } from "./components/ArbitrumMonotone";
 
 export { default as ArrowUpRight } from "./components/ArrowUpRight";
 
+export { default as ArrowRight } from "./components/ArrowRight";
+
 export { default as ArrowDown } from "./components/ArrowDown";
 
 export { default as Asterisk } from "./components/Asterisk";
@@ -16,7 +18,9 @@ export { default as Asterisk } from "./components/Asterisk";
 export { default as Back } from "./components/Back";
 
 export { default as BellRingFilled } from "./components/BellRingFilled";
+
 export { default as BellSimple } from "./components/BellSimple";
+
 export { default as BellSimpleSlash } from "./components/BellSimpleSlash";
 
 export { default as BnbMonotone } from "./components/BnbMonotone";
@@ -26,6 +30,7 @@ export { default as CalendarBlank } from "./components/CalendarBlank";
 export { default as CaretDown } from "./components/CaretDown";
 
 export { default as CaretLeft } from "./components/CaretLeft";
+
 export { default as CaretLeftCircle } from "./components/CaretLeftCircle";
 
 export { default as CaretRight } from "./components/CaretRight";
@@ -39,21 +44,27 @@ export { default as CaretUp } from "./components/CaretUp";
 export { default as CameraFilled } from "./components/CameraFilled";
 
 export { default as Channel } from "./components/Channel";
+
 export { default as ChannelFilled } from "./components/ChannelFilled";
 
 export { default as ChannelHome } from "./components/ChannelHome";
+
 export { default as ChannelHomeFilled } from "./components/ChannelHomeFilled";
 
 export { default as Chat } from "./components/Chat";
+
 export { default as ChatFilled } from "./components/ChatFilled";
 
 export { default as Clockwise } from "./components/Clockwise";
+
 export { default as CircleFilled } from "./components/CircleFilled";
+
 export { default as CloudUpload } from "./components/CloudUpload";
 
 export { default as Copy } from "./components/Copy";
 
 export { default as Cross } from "./components/Cross";
+
 export { default as CrossFilled } from "./components/CrossFilled";
 
 export { default as CrownSimple } from "./components/CrownSimple";
