@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { css } from 'styled-components';
 import { Box, Lock, Text } from '../../../../blocks';
 import { device } from '../../../../config/globals';
-import OpenPassLocked from '../../../../../static/assets/website/pushpass/openpasslocked.webp';
+import OpenPassLocked from '../../../../../static/assets/website/pushpass/OpenPassLocked.webp';
 
 type LockedPassCardProps = {
   message: string;
