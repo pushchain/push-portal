@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { css } from 'styled-components';
 import { Box, Lock, Text } from '../../../../blocks';
 import { device } from '../../../../config/globals';
+import OpenPassLocked from '../../../../../static/assets/website/pushpass/openpasslocked.webp';
 
 type LockedPassCardProps = {
   message: string;
@@ -20,7 +21,7 @@ export const LockedPassCard: FC<LockedPassCardProps> = ({ message }) => {
         flex: 1;
         width: 100%;
         height: 276px;
-        background: url('/static/assets/website/pushpass/openpasslocked.webp') center center/cover no-repeat;
+        background: url(${OpenPassLocked}) center center/cover no-repeat;
         background-position: center;
         background-size: 80%;
         box-sizing: border-box;

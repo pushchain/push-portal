@@ -4,6 +4,7 @@ import { Box, Text } from '../../../../blocks';
 import { useGetUserRewardsDetails } from '../../../../queries';
 import { walletToFullCAIP10 } from '../../../../helpers/web3helper';
 import { usePushWalletContext } from '@pushprotocol/pushchain-ui-kit';
+import TotalPointsBg from '../../../../../static/assets/website/rewards/total-points-bg.webp';
 
 export const PointsCard: FC = () => {
   const { universalAddress } = usePushWalletContext();
@@ -56,7 +57,7 @@ export const PointsCard: FC = () => {
           right: 0;
           width: 65%;
           height: 65%;
-          background: url('/static/assets/website/rewards/total-points-bg.webp') no-repeat bottom right;
+          background: url(${TotalPointsBg}) no-repeat bottom right;
           background-size: contain;
           pointer-events: none;
           z-index: 0;

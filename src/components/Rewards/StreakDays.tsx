@@ -1,5 +1,6 @@
 import { css } from "styled-components"
 import { Box, Text } from "../../blocks"
+import StreakBg from "../../../static/assets/website/rewards/streak-bg.webp"
 
 export const StreakDays = () => {
   return(
@@ -26,7 +27,7 @@ export const StreakDays = () => {
             right: 0;
             width: 65%;
             height: 65%;
-            background: url('/static/assets/website/rewards/streak-bg.webp') no-repeat bottom right;
+            background: url(${StreakBg}) no-repeat bottom right;
             background-size: contain;
             pointer-events: none;
             z-index: 0;

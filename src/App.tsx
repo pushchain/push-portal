@@ -32,6 +32,7 @@ import PushPassItemPage from "./pages/PushPassItemPage";
 
 import { Sidebar } from "./components/sidebar";
 import Header from "./structure/Header";
+import SeasonBg from "../static/assets/website/shared/season-bg.webp";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -140,9 +141,8 @@ function App() {
                       right: 0;
                       width: 100%;
                       height: 100%;
-                      background: url('/static/assets/website/shared/season-bg.webp') no-repeat center center fixed;
+                      background: url(${SeasonBg}) no-repeat center center fixed;
                       background-size: cover;
-                      background-color: ${(props) => props.theme.header.bg};
                       pointer-events: none;
                       z-index: 0;
                     `}
