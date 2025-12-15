@@ -10194,6 +10194,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gsap@npm:^3.14.1":
+  version: 3.14.1
+  resolution: "gsap@npm:3.14.1"
+  checksum: 10c0/c8f5e15773350a812847d83e44f0e696f5600a1a4e8f25d4c264d80cdb6ab4b0d2d887174fe592a1a3bf03a65b4a6e3337f4d646f31763effdce6209e3d3e576
+  languageName: node
+  linkType: hard
+
 "h3@npm:^1.15.0":
   version: 1.15.1
   resolution: "h3@npm:1.15.1"
@@ -13370,6 +13377,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     firebase: "npm:^10.12.2"
     globals: "npm:^15.15.0"
+    gsap: "npm:^3.14.1"
     openpgp: "npm:^5.5.0"
     rc-pagination: "npm:^5.1.0"
     react: "npm:^19.0.0"
