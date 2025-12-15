@@ -35,7 +35,7 @@ const SpinToWinCard = () => {
     setSpinCount((prev) => prev + 1);
     setWonPrize(prizes[prizeIndex]);
     setShowResult(true);
-    
+
     console.log('🎉 Prize Result:', {
       index: prizeIndex,
       prize: prizes[prizeIndex],
@@ -86,6 +86,7 @@ const SpinToWinCard = () => {
         alignItems="center"
         gap="spacing-xs"
         position="relative"
+        height="100%"
         css={css`
           flex: 1;
           z-index: 1;
@@ -96,6 +97,7 @@ const SpinToWinCard = () => {
           flexDirection="column"
           alignItems="flex-start"
           gap="spacing-xs"
+          height="100%"
           width="100%"
           css={css`
             flex: 1;
@@ -172,13 +174,26 @@ const SpinToWinCard = () => {
           css={css`
             display: ${showResult ? 'none' : 'flex'};
             width: 100%;
+            overflow: ${spinCount === 0 && !isSpinning ? 'visible' : 'visible'};
+            position: relative;
+            min-height: ${spinCount === 0 && !isSpinning ? '120px' : 'auto'};
           `}
         >
-          <Spinboard
-            ref={spinboardRef}
-            onSpinComplete={handleSpinComplete}
-            disabled={isSpinning}
-          />
+          <Box
+            css={css`
+              transform: ${spinCount === 0 && !isSpinning ? 'scale(2) translateY(30%)' : 'scale(1) translateY(0)'};
+              opacity: ${spinCount === 0 && !isSpinning ? 0.8 : 1};
+              transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+              z-index: ${spinCount === 0 && !isSpinning ? 0 : 1};
+              width: 100%;
+            `}
+          >
+            <Spinboard
+              ref={spinboardRef}
+              onSpinComplete={handleSpinComplete}
+              disabled={isSpinning}
+            />
+          </Box>
         </Box>
 
         <Button
@@ -190,6 +205,8 @@ const SpinToWinCard = () => {
             width: 100%;
             opacity: ${isSpinning ? 0.6 : 1};
             cursor: ${isSpinning ? 'not-allowed' : 'pointer'};
+            z-index: ${spinCount === 0 && !isSpinning ? 2 : 1};
+            position: relative;
           `}
         >
           {isSpinning ? 'Spinning...' : showResult ? 'Spin Again' : 'Spin Now'}
