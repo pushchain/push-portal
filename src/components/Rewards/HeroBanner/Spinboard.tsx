@@ -18,7 +18,6 @@ const Spinboard = forwardRef<SpinboardHandle, SpinboardProps>(({ onSpinComplete,
   const wheelRef = useRef<HTMLDivElement>(null);
   const [isSpinning, setIsSpinning] = useState(false);
 
-  // Expose spin method to parent via ref
   useImperativeHandle(ref, () => ({
     spin: handleSpin,
   }));

@@ -126,7 +126,7 @@ const SpinToWinCard = () => {
               Spin to Win
             </Text>
 
-            {!showResult && (isSpinning || spinCount === 0) && (
+            {!showResult || (isSpinning || spinCount === 0) && (
               <Box
                 display="inline-flex"
                 alignItems="center"
