@@ -5,7 +5,7 @@ import {
   usePushWalletContext,
 } from "@pushprotocol/pushchain-ui-kit";
 
-import { Box, Text, ArrowDown } from "../../blocks";
+import { Box, Text, ArrowDown, GlowStreaks } from "../../blocks";
 import { RenderLoggedInVerifiedState } from "./Dashboard/RenderLoggedInVerifiedState";
 
 export const RewardsUpdatedDashboard = () => {
@@ -46,7 +46,67 @@ export const RewardsUpdatedDashboard = () => {
         box-sizing: border-box;
       `}
     >
+
       <Box
+          css={css`
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 230px;
+            height: 230px;
+            pointer-events: none;
+            z-index: 0;
+
+            background: #E58CF6;
+            filter: blur(50px);
+          `}
+        >
+        </Box>
+
+      <Box
+          css={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+          `}
+        >
+          <GlowStreaks />
+        </Box>
+
+        <Box
+            css={css`
+              position: absolute;
+              top: 0px;
+              left: 150px;
+              width: 100%;
+              height: 100%;
+              pointer-events: none;
+              z-index: 0;
+            `}
+          >
+            <GlowStreaks />
+          </Box>
+
+          <Box
+              css={css`
+                position: absolute;
+                top: 0px;
+                left: 300px;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 0;
+              `}
+            >
+              <GlowStreaks />
+         </Box>
+
+
+        <Box
         display="flex"
         flexDirection="column"
         alignItems="center"

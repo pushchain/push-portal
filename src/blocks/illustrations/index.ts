@@ -50,6 +50,8 @@ export { default as GradientBonusActivitySubscribers } from "./components/Gradie
 
 export { default as GreyBonusActivitySubscribers } from "./components/GreyBonusActivitySubscribers";
 
+export { default as GlowStreaks } from "./components/GlowStreaks";
+
 export { default as LevelUpIcon } from "./components/LevelUpIcon";
 
 export { default as LevelBadge } from "./components/LevelBadge";
