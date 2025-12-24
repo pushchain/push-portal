@@ -120,6 +120,9 @@ export { default as LightFilled } from "./components/LightFilled";
 
 export { default as Lock } from "./components/Lock";
 
+export { default as LockFilled } from "./components/LockFilled";
+
+
 export { default as Logout } from "./components/Logout";
 
 export { default as MaximizeRight } from "./components/MaximizeRight";

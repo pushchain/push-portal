@@ -33,6 +33,7 @@ import PushPassItemPage from "./pages/PushPassItemPage";
 import { Sidebar } from "./components/sidebar";
 import Header from "./structure/Header";
 import SeasonBg from "../static/assets/website/shared/season-bg.webp";
+import PreLaunchPage from "./pages/PreLaunchPage";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -179,6 +180,10 @@ function App() {
                             <Route
                               path="/rewards/pushpass"
                               element={<PushPassPage />}
+                            />
+                            <Route
+                              path="/rewards/pre-launch"
+                              element={<PreLaunchPage />}
                             />
                             <Route
                               path="/rewards/pushpass/:id"

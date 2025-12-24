@@ -58,32 +58,39 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
 
   const topMenuItems: MenuItem[] = [
     {
-      id: 'discover',
+      id: 'pre-launch',
       icon: CompassRose,
-      label: 'Discover',
-      route: '/rewards'
+      label: 'Pre-Launch Access',
+      route: '/rewards/pre-launch'
     },
-    {
-      id: 'quests',
-      icon: CastleTurret,
-      label: 'Quests',
-      badge: {
-        text: 'NEW',
-        icon: StarFilled,
-      },
-    },
-    {
-      id: 'push-pass',
-      icon: PushPass,
-      label: 'Push Pass',
-      route: '/rewards/pushpass'
-    },
-    {
-      id: 'leaderboards',
-      icon: Ranking,
-      label: 'Leaderboards',
-      route: '/rewards/leaderboard'
-    },
+    // TODO: comment out till launch
+    // {
+    //   id: 'discover',
+    //   icon: CompassRose,
+    //   label: 'Discover',
+    //   route: '/rewards'
+    // },
+    // {
+    //   id: 'quests',
+    //   icon: CastleTurret,
+    //   label: 'Quests',
+    //   badge: {
+    //     text: 'NEW',
+    //     icon: StarFilled,
+    //   },
+    // },
+    // {
+    //   id: 'push-pass',
+    //   icon: PushPass,
+    //   label: 'Push Pass',
+    //   route: '/rewards/pushpass'
+    // },
+    // {
+    //   id: 'leaderboards',
+    //   icon: Ranking,
+    //   label: 'Leaderboards',
+    //   route: '/rewards/leaderboard'
+    // },
   ];
 
   const bottomMenuItems: MenuItem[] = [
@@ -91,11 +98,14 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
       id: 'faucet',
       icon: Faucet,
       label: 'PC Token Faucet',
+      route: 'https://faucet.push.org'
     },
     {
       id: 'ecosystem',
       icon: SquaresFour,
       label: 'Ecosystem Apps',
+      route: 'https://push.org/ecosystem'
+
     },
   ];
 
@@ -240,7 +250,7 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
               padding="spacing-xxs spacing-sm"
               borderRadius="radius-xs"
               css={getItemStyles(activeItemId === item.id)}
-              onClick={() => handleItemClick(item.id, item.onClick)}
+              onClick={() => handleItemClick(item.id, item.onClick, item.route)}
             >
               <item.icon size={32} color="icon-brand-medium" />
               <Text
@@ -254,7 +264,7 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
             </Box>
           ))}
 
-          <Box
+          {/*<Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
@@ -286,7 +296,7 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
             >
               <CaretLeftCircle size={21} color="text-primary" />
             </Box>
-          </Box>
+          </Box>*/}
         </Box>
       </Box>
     </>
