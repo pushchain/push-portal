@@ -18,7 +18,7 @@
     "@emotion/react": "^11.14.0",
     "@metamask/eth-sig-util": "^4.0.0",
     "@pushprotocol/push-chain": "^0.1.7",
-    "@pushprotocol/pushchain-ui-kit": "^4.0.1",
+    "@pushprotocol/pushchain-ui-kit": "^1.0.8",
     "@pushprotocol/restapi": "^1.7.31",
     "@pushprotocol/uiweb": "1.7.1",
     "@radix-ui/react-dialog": "^1.1.6",
