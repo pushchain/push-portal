@@ -24,9 +24,10 @@ export const PreLaunch = () => {
     caip10WalletAddress: caip10WalletAddress,
   });
 
-  const { 
-    verifyingSeasonThree, 
-    handleSeasonThreeVerification 
+  const {
+    verifyingSeasonThree,
+    handleSeasonThreeVerification,
+    verificationSuccess,
   } = useVerifySeasonThree({
     activityTypeId: "season-3-prelaunch",
     refetchActivity: () => {},
@@ -42,13 +43,16 @@ export const PreLaunch = () => {
         z-index: 9;
       `}
     >
-      <PreLaunchHeader 
+      <PreLaunchHeader
         universalAddress={universalAddress}
         userRewardsDetails={userRewardsDetails}
         verifyingSeasonThree={verifyingSeasonThree}
         handleSeasonThreeVerification={handleSeasonThreeVerification}
+        verificationSuccess={verificationSuccess}
       />
-      <PreLaunchBenefits />
+      <PreLaunchBenefits
+        verificationSuccess={verificationSuccess}
+      />
       <PreLaunchDivider />
     </Box>
   )

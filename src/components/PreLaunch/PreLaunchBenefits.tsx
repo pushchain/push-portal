@@ -1,7 +1,13 @@
 import { css } from "styled-components"
 import { Box, Text } from "../../blocks"
 
-export const PreLaunchBenefits = () => {
+type PreLaunchBenefitProps = {
+  verificationSuccess: boolean;
+}
+
+export const PreLaunchBenefits = ({
+  verificationSuccess
+}: PreLaunchBenefitProps) => {
   return (
     <Box
       display="flex"
@@ -11,7 +17,7 @@ export const PreLaunchBenefits = () => {
       css={css`
         border-radius: 24px;
         border: 1px solid rgba(255, 255, 255, 0.40);
-        background: linear-gradient(242deg, #FDFDDA 5.27%, #FEDFAA 90.2%);
+        background: ${verificationSuccess ? `linear-gradient(241deg, #DDDEFF 4.77%, #B5B8FF 72.79%)` : `linear-gradient(242deg, #FDFDDA 5.27%, #FEDFAA 90.2%)`};
         box-sizing: border-box;
         margin-top: 40px;
       `}
@@ -25,10 +31,12 @@ export const PreLaunchBenefits = () => {
           -webkit-text-fill-color: transparent;
         `}
       >
-        Starting your Season 3 journey early matters!
+        {verificationSuccess ? "Keep an eye on your Inbox for next steps." : "Starting your Season 3 journey early matters!"}
       </Text>
       <Text variant="bm-regular" color="rgba(0, 0, 0, 0.75)">
-        Season 3 begins invite-only. Earn points, multipliers, and perpetual rewards before everyone else.
+        {verificationSuccess ? "We will be sending out instructions on how to participate in the next few weeks." : "Season 3 begins invite-only. Earn points, multipliers, and perpetual rewards before everyone else."}
+
+
       </Text>
     </Box>
   )

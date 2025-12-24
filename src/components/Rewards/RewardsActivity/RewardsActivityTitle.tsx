@@ -2,14 +2,14 @@
 import React, { FC } from 'react';
 
 // hooks
-import { getRewardsActivityTitle } from './utils/getRewardsActivityTitle';
+import { getRewardsActivityTitle } from '../utils/getRewardsActivityTitle';
 
 // types
-import { TextVariants } from '../../blocks/text';
-import { TextColors } from '../../blocks/theme/Theme.types';
+import { TextVariants } from '../../../blocks/text';
+import { TextColors } from '../../../blocks/theme/Theme.types';
 
 // components
-import { Box, Link, Skeleton, Text } from '../../blocks';
+import { Box, Link, Skeleton, Text } from '../../../blocks';
 
 type RewardsActivityTitleProps = {
   activityTitle: string;

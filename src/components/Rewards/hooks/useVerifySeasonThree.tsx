@@ -36,6 +36,7 @@ const useVerifySeasonThree = ({
     token ? true : false,
   );
   const [updatedId, setUpdatedId] = useState<string | null>(null);
+  const [verificationSuccess, setVerificationSuccess] = useState(false);
 
   const { universalAddress } = usePushWalletContext();
   const { signMessage } = useSignMessageWithEthereum();
@@ -135,9 +136,6 @@ const useVerifySeasonThree = ({
         localStorage.removeItem("discord_email");
         localStorage.removeItem("expires_in");
 
-        console.log("📤 Message to send:", messageToSend, verificationProof);
-
-
         claimSeasonThree(
           {
             userWallet: caip10WalletAddress,
@@ -148,18 +146,23 @@ const useVerifySeasonThree = ({
           },
           {
             onSuccess: (response) => {
-              console.log(response, response)
-              if (response.status === "COMPLETED") {
+              console.log("✅ Season 3 Verification Success:", response);
+
+              if (response.status === "COMPLETED" || response.success) {
                 setSeasonThreeActivityStatus("Claimed");
+                setVerificationSuccess(true);
                 refetchActivity();
                 refetchUserDetails();
                 setVerifyingSeasonThree(false);
                 setErrorMessage("");
+              } else {
+                setVerifyingSeasonThree(false);
               }
             },
             onError: (error: any) => {
               console.log("Error in creating activity", error);
               setVerifyingSeasonThree(false);
+              setVerificationSuccess(false);
               if (error.name) {
                 setErrorMessage(error.response.data.error);
               }
@@ -175,6 +178,7 @@ const useVerifySeasonThree = ({
     verifyingSeasonThree,
     seasonThreeActivityStatus,
     handleSeasonThreeVerification,
+    verificationSuccess,
   };
 };
 

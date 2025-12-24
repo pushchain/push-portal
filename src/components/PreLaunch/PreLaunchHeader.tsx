@@ -3,20 +3,24 @@ import { PushWalletButton } from "@pushprotocol/pushchain-ui-kit"
 import { Box, Button, GlowStreaks, SealCheckFilled, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
 import { UserRewardsDetailResponse } from "../../queries/types"
+import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
 
 type PreLaunchHeaderProps = {
   universalAddress: any;
   userRewardsDetails?: UserRewardsDetailResponse;
   verifyingSeasonThree: boolean;
   handleSeasonThreeVerification: (userId: string) => void;
+  verificationSuccess: boolean;
 }
 
 export const PreLaunchHeader = ({
   universalAddress,
   userRewardsDetails,
   verifyingSeasonThree,
-  handleSeasonThreeVerification
+  handleSeasonThreeVerification,
+  verificationSuccess,
 }: PreLaunchHeaderProps) => {
+
 
   return (
     <Box
@@ -108,12 +112,30 @@ export const PreLaunchHeader = ({
               Apply for Season 3 <br />
               Pre-Launch Access
             </Text>
-            <Text variant="h5-regular" color="#000000">
+
+            {!verificationSuccess &&
+              <Text variant="h5-regular" color="#000000">
               Current entries open to Season 1 or 2 participants only
-            </Text>
+            </Text>}
           </Box>
 
-          <Box display="flex" flexDirection="row" width="100%" gap="spacing-md">
+          {verificationSuccess &&
+            <Box
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="center"
+              gap="spacing-xxs"
+              css={css`
+                margin-top: 32px;
+                `}
+            >
+              <SealCheckFilled />
+              <Text variant="h4-semibold" color="#000000">Entry verified. Limited seats available.</Text>
+            </Box>}
+
+          {!verificationSuccess &&
+            (<Box display="flex" flexDirection="row" width="100%" gap="spacing-md">
             <Box
               display="flex"
               flexDirection="row"
@@ -177,9 +199,7 @@ export const PreLaunchHeader = ({
               `}
             >
               <RewardsActivityIcon type="follow_push_on_discord" />
-              <Text variant="h4-semibold" color="#17181B">
-                Join <Text as="span" variant="h4-semibold" color="#C742DD">Push Chain Discord</Text> to apply for eligibility
-              </Text>
+              <RewardsActivityTitle activityTitle="Join [Push Chain Discord](https://discord.com/invite/pushchain) to apply for eligibility" variant="h4-semibold" isLoading={false} color="#17181B"  />
               <Button
                 variant="tertiary"
                 size="small"
@@ -193,11 +213,11 @@ export const PreLaunchHeader = ({
                 {verifyingSeasonThree ? "Verifying..." : "Verify Discord"}
               </Button>
             </Box>
-          </Box>
+          </Box>)}
         </Box>
       </Box>
 
-      <Box
+      {!verificationSuccess && (<Box
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -210,7 +230,7 @@ export const PreLaunchHeader = ({
         <Text variant="h5-regular">
           Connect your account and Verify Discord to have a chance to participate
         </Text>
-      </Box>
+      </Box>)}
     </Box>
   )
 }
