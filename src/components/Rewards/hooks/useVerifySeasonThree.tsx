@@ -7,7 +7,7 @@ import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 // hooks
 import appConfig from "../../../config";
 import {
-  useClaimRewardsActivity,
+  useClaimSeasonThree,
   useGetUserRewardsDetails,
 } from "../../../queries";
 
@@ -55,7 +55,7 @@ const useVerifySeasonThree = ({
     caip10WalletAddress: caip10WalletAddress,
   });
 
-  const { mutate: claimRewardsActivity } = useClaimRewardsActivity();
+  const { mutate: claimSeasonThree } = useClaimSeasonThree();
 
   const handleSeasonThreeVerification = (userId: string) => {
     setUpdatedId(userId);
@@ -138,32 +138,34 @@ const useVerifySeasonThree = ({
         console.log("📤 Message to send:", messageToSend, verificationProof);
 
 
-        // claimRewardsActivity(
-        //   {
-        //     userId: updatedId || (userId as string),
-        //     activityTypeId,
-        //     data: messageToSend,
-        //     verificationProof,
-        //   },
-        //   {
-        //     onSuccess: (response) => {
-        //       if (response.status === "COMPLETED") {
-        //         setDiscordActivityStatus("Claimed");
-        //         refetchActivity();
-        //         refetchUserDetails();
-        //         setVerifyingDiscord(false);
-        //         setErrorMessage("");
-        //       }
-        //     },
-        //     onError: (error: any) => {
-        //       console.log("Error in creating activity", error);
-        //       setVerifyingDiscord(false);
-        //       if (error.name) {
-        //         setErrorMessage(error.response.data.error);
-        //       }
-        //     },
-        //   },
-        // );
+        claimSeasonThree(
+          {
+            userWallet: caip10WalletAddress,
+            discordEmail: email,
+            discordUsername: username,
+            data: messageToSend,
+            verificationProof,
+          },
+          {
+            onSuccess: (response) => {
+              console.log(response, response)
+              if (response.status === "COMPLETED") {
+                setSeasonThreeActivityStatus("Claimed");
+                refetchActivity();
+                refetchUserDetails();
+                setVerifyingSeasonThree(false);
+                setErrorMessage("");
+              }
+            },
+            onError: (error: any) => {
+              console.log("Error in creating activity", error);
+              setVerifyingSeasonThree(false);
+              if (error.name) {
+                setErrorMessage(error.response.data.error);
+              }
+            },
+          },
+        );
       }
     },
     [account],

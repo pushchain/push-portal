@@ -7,6 +7,9 @@ export const claimSeasonThree = (payload: any) =>
     method: "POST",
     url: `${getRewardsBaseURL()}/v2/users/discord-reverify`,
     data: {
+      userWallet: payload.userWallet,
+      discordEmail: payload.discordEmail,
+      discordUsername: payload.discordUsername,
       data: payload.data,
       verificationProof: payload.verificationProof,
     },
