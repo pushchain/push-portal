@@ -34,6 +34,8 @@ export const PreLaunch = () => {
     setErrorMessage,
   });
 
+  const isUserVerified  = verificationSuccess || userRewardsDetails?.discordReverified
+
   return (
     <Box
       display="flex"
@@ -48,10 +50,10 @@ export const PreLaunch = () => {
         userRewardsDetails={userRewardsDetails}
         verifyingSeasonThree={verifyingSeasonThree}
         handleSeasonThreeVerification={handleSeasonThreeVerification}
-        verificationSuccess={verificationSuccess}
+        verificationSuccess={isUserVerified}
       />
       <PreLaunchBenefits
-        verificationSuccess={verificationSuccess}
+        verificationSuccess={isUserVerified}
       />
       <PreLaunchDivider />
     </Box>
