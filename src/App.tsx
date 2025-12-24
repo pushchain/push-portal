@@ -7,6 +7,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -107,15 +108,100 @@ const basename = getPreviewBasePath() || "/";
 
 const queryClient = new QueryClient({});
 
-
-function App() {
-
+const AppContent = () => {
+  const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const isDiscordVerification = location.pathname === "/discord/verification";
+
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      height="100vh"
+      css={css``}
+    >
+      <Box
+        css={css`
+          position: fixed;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          background: url(${SeasonBg}) no-repeat center center fixed;
+          background-size: cover;
+          pointer-events: none;
+          z-index: 0;
+        `}
+      />
+
+      <Header toggleSidebar={toggleSidebar} />
+      <Box
+        display="flex"
+        overflow="hidden"
+        css={css`
+          flex: 1;
+        `}
+      >
+        {!isDiscordVerification && (
+          <Sidebar
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
+          />
+        )}
+        <Box
+          width="100%"
+          maxWidth={isDiscordVerification ? "100%" : "1200px"}
+          padding={{
+            initial: "spacing-none spacing-md",
+            tb: "spacing-none spacing-xs",
+          }}
+          css={css`
+            overflow-y: auto;
+            overflow-x: hidden;
+            margin: ${isDiscordVerification ? "0" : "0 auto"};
+          `}
+        >
+          <Routes>
+            <Route path="/" element={<Navigate to="/rewards" replace />} />
+            <Route path="/rewards" element={<RewardsPage />} />
+            <Route path="/rewards/pushpass" element={<PushPassPage />} />
+            <Route path="/rewards/pre-launch" element={<PreLaunchPage />} />
+            <Route
+              path="/rewards/pushpass/:id"
+              element={<PushPassItemPage />}
+            />
+            <Route
+              path="/rewards/leaderboard"
+              element={<LeaderBoardPage />}
+            />
+            <Route
+              path="/rewards/leaderboard-s2"
+              element={<LeaderBoardPage />}
+            />
+            <Route
+              path="/rewards/leaderboard-s1"
+              element={<LeaderBoardPage />}
+            />
+            <Route
+              path="/discord/verification"
+              element={<DiscordVerificationPage />}
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+function App() {
   return (
     <ThemeProviderWrapper>
       {/* Global style */}
@@ -126,90 +212,7 @@ function App() {
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  height="100vh"
-                  css={css`
-                  `}
-                >
-                  <Box
-                    css={css`
-                      position: fixed;
-                      left: 0;
-                      top: 0;
-                      bottom: 0;
-                      right: 0;
-                      width: 100%;
-                      height: 100%;
-                      background: url(${SeasonBg}) no-repeat center center fixed;
-                      background-size: cover;
-                      pointer-events: none;
-                      z-index: 0;
-                    `}
-                  />
-
-                      <Header toggleSidebar={toggleSidebar} />
-                      <Box
-                        display="flex"
-                        overflow="hidden"
-                        css={css`
-                          flex: 1;
-                        `}
-                      >
-                        <Sidebar
-                          isOpen={isSidebarOpen}
-                          onClose={() => setIsSidebarOpen(false)}
-                        />
-                        <Box
-                          width="100%"
-                          maxWidth="1200px"
-                          padding={{initial: "spacing-none spacing-md", tb: "spacing-none spacing-xs"}}
-                          css={css`
-                            overflow-y: auto;
-                            overflow-x: hidden;
-                            margin: 0 auto;
-                          `}
-                        >
-                          <Routes>
-                            <Route
-                              path="/"
-                              element={<Navigate to="/rewards" replace />}
-                            />
-                            <Route path="/rewards" element={<RewardsPage />} />
-                            <Route
-                              path="/rewards/pushpass"
-                              element={<PushPassPage />}
-                            />
-                            <Route
-                              path="/rewards/pre-launch"
-                              element={<PreLaunchPage />}
-                            />
-                            <Route
-                              path="/rewards/pushpass/:id"
-                              element={<PushPassItemPage />}
-                            />
-                            <Route
-                              path="/rewards/leaderboard"
-                              element={<LeaderBoardPage />}
-                            />
-                            <Route
-                              path="/rewards/leaderboard-s2"
-                              element={<LeaderBoardPage />}
-                            />
-                            <Route
-                              path="/rewards/leaderboard-s1"
-                              element={<LeaderBoardPage />}
-                            />
-                            <Route
-                              path="/discord/verification"
-                              element={<DiscordVerificationPage />}
-                            />
-                            <Route path="*" element={<NotFound />} />
-                          </Routes>
-                        </Box>
-                      </Box>
-                    </Box>
+                <AppContent />
               </Router>
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>

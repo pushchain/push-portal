@@ -52,7 +52,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
           title="Connect Account"
           styling={{
             width: "fit-content",
-            fontFamily: "inherit",
+            fontFamily: "DM Sans !important",
             margin: "0 0 0 auto",
             borderRadius: "12px"
           }}

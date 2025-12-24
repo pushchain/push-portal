@@ -105,7 +105,6 @@ const useVerifySeasonThree = ({
           discord_token: token,
         };
 
-        console.log("📤 Message to send:", messageToSend);
 
         const isSupportedChain =
           universalAddress?.chainId == WalletChainType.SEPOLIA ||
@@ -135,6 +134,9 @@ const useVerifySeasonThree = ({
         localStorage.removeItem("username");
         localStorage.removeItem("discord_email");
         localStorage.removeItem("expires_in");
+
+        console.log("📤 Message to send:", messageToSend, verificationProof);
+
 
         // claimRewardsActivity(
         //   {

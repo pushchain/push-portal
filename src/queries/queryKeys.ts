@@ -1,5 +1,6 @@
 export const allActivities = "allActivities";
 export const claimRewards = "claimRewards";
+export const seasonThree = "seasonThree";
 export const createUserRewardsDetails = "createUserRewardsDetails";
 export const discordDetails = "discordDetails";
 export const uniV2StakeEpoch = "uniV2StakeEpoch";

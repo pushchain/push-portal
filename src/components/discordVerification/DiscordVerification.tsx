@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Button, Discord, Text } from "../../blocks";
 import { useGetUserDiscordDetails } from "../../queries";
 import { useDiscordSession } from "../Rewards/hooks/useDiscordSession";
+import { css } from "styled-components";
 
 const DiscordVerification = () => {
   const params = new URLSearchParams(location.hash.substring(1));
@@ -20,7 +21,11 @@ const DiscordVerification = () => {
 
   const handleContinueVerification = () => {
     if (userDiscordDetails) {
+      console.log("✅ Discord User Details:", userDiscordDetails);
       localStorage.setItem("username", userDiscordDetails.username);
+      if (userDiscordDetails.email) {
+        localStorage.setItem("discord_email", userDiscordDetails.email);
+      }
       window.close();
     }
   };
@@ -36,6 +41,9 @@ const DiscordVerification = () => {
       alignItems="center"
       height="100vh"
       justifyContent="center"
+      css={css`
+        z-index: 99;
+        `}
     >
       <Box
         display="flex"
