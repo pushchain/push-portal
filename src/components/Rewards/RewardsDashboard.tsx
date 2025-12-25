@@ -11,7 +11,7 @@ import { useGetUserRewardsDetails } from "../../queries";
 
 import { device } from "../../config/globals";
 import { Box, Button, Leaderboard, Points, Link } from "../../blocks";
-import { DashboardSectionPoints } from "./DashboardSectionPoints";
+import { DashboardSectionPoints } from "./Dashboard/DashboardSectionPoints";
 import { walletToFullCAIP10 } from "../../helpers/web3helper";
 import useMediaQuery from "../../hooks/useMediaQuery";
 
@@ -135,7 +135,7 @@ const RewardsDashboardWrapper = styled.div`
     #d6adff 70%,
     #c0fff7 100%
   );
-  font-family: "FK Grotesk Neu";
+  font-family: DM Sans, sans-serif;
 
   @media ${device.mobileL} {
     background: radial-gradient(
@@ -167,7 +167,7 @@ const HeaderText = styled.div`
 
   h2 {
     color: #000;
-    font-family: "FK Grotesk Neu";
+    font-family: DM Sans, sans-serif;
     font-size: 26px;
     font-style: normal;
     font-weight: 500;
@@ -177,7 +177,7 @@ const HeaderText = styled.div`
 
   div {
     color: #000;
-    font-family: "FK Grotesk Neu";
+    font-family: DM Sans, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

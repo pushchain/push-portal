@@ -2,6 +2,7 @@ export * from "./getRewardsActivities";
 export * from "./getRewardsActivity";
 export * from "./getUserDiscordDetails";
 export * from "./claimRewardsActivity";
+export * from './claimSeasonThree';
 export * from "./getUserRewardsDetail";
 export * from "./createUserRewardsDetail";
 export * from "./getRewardsLeaderboard";

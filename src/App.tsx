@@ -1,5 +1,5 @@
 // React + Web3 Essentials
-import React from "react";
+import React, { useState } from "react";
 
 // External Packages
 import {
@@ -7,10 +7,11 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from "styled-components";
 import {
   PushWalletProvider,
   CONSTANTS,
@@ -22,12 +23,19 @@ import { ThemeProviderWrapper } from "./context/themeContext";
 import { AccountProvider } from "./context/accountContext";
 import { RewardsContextProvider } from "./context/rewardsContext";
 
-import { blocksColors, getBlocksCSSVariables } from "../src/blocks";
+import { blocksColors, Box, getBlocksCSSVariables } from "../src/blocks";
 import NotFound from "./components/NotFound";
-import RewardsHeader from "./components/Rewards/RewardsHeader";
 import RewardsPage from "./pages/RewardsPage";
 import LeaderBoardPage from "./pages/LeaderBoardPage";
 import { DiscordVerificationPage } from "./pages/DiscordVerificationPage";
+import PushPassPage from "./pages/PushPassPage";
+import PushPassItemPage from "./pages/PushPassItemPage";
+
+import { Sidebar } from "./components/sidebar";
+import Header from "./structure/Header";
+import SeasonBg from "../static/assets/website/shared/season-bg.webp";
+import PreLaunchPage from "./pages/PreLaunchPage";
+
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -88,7 +96,7 @@ const GlobalStyle = createGlobalStyle`
       .join("")}
 
     /* Font Family */
-      --font-family: "FK Grotesk Neu";
+      --font-family: "DM Sans", sans-serif;
 
     /* New blocks theme css variables*/
     ${(props) => getBlocksCSSVariables(props.theme.blocksTheme)}
@@ -99,6 +107,100 @@ const GlobalStyle = createGlobalStyle`
 const basename = getPreviewBasePath() || "/";
 
 const queryClient = new QueryClient({});
+
+const AppContent = () => {
+  const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const isDiscordVerification = location.pathname === "/discord/verification";
+
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      height="100vh"
+      css={css``}
+    >
+      <Box
+        css={css`
+          position: fixed;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          background: url(${SeasonBg}) no-repeat center center fixed;
+          background-size: cover;
+          pointer-events: none;
+          z-index: 0;
+        `}
+      />
+
+      <Header toggleSidebar={toggleSidebar} />
+      <Box
+        display="flex"
+        overflow="hidden"
+        css={css`
+          flex: 1;
+        `}
+      >
+        {!isDiscordVerification && (
+          <Sidebar
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
+          />
+        )}
+        <Box
+          width="100%"
+          maxWidth={isDiscordVerification ? "100%" : "1200px"}
+          padding={{
+            initial: "spacing-none spacing-md",
+            tb: "spacing-none spacing-xs",
+          }}
+          css={css`
+            overflow-y: auto;
+            overflow-x: hidden;
+            margin: ${isDiscordVerification ? "0" : "0 auto"};
+          `}
+        >
+          <Routes>
+            <Route path="/" element={<Navigate to="/rewards/pre-launch" replace />} />
+            <Route path="/rewards" element={<Navigate to="/rewards/pre-launch" replace />} />
+            {/*<Route path="/rewards" element={<RewardsPage />} />
+            <Route path="/rewards/pushpass" element={<PushPassPage />} />*/}
+            <Route path="/rewards/pre-launch" element={<PreLaunchPage />} />
+            <Route
+              path="/rewards/pushpass/:id"
+              element={<PushPassItemPage />}
+            />
+            <Route
+              path="/rewards/leaderboard"
+              element={<LeaderBoardPage />}
+            />
+            <Route
+              path="/rewards/leaderboard-s2"
+              element={<LeaderBoardPage />}
+            />
+            <Route
+              path="/rewards/leaderboard-s1"
+              element={<LeaderBoardPage />}
+            />
+            <Route
+              path="/discord/verification"
+              element={<DiscordVerificationPage />}
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
 function App() {
   return (
@@ -111,27 +213,7 @@ function App() {
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>
-                <RewardsHeader />
-                <Routes>
-                  <Route
-                    path="/"
-                    element={<Navigate to="/rewards" replace />}
-                  />
-                  <Route path="/rewards" element={<RewardsPage />} />
-                  <Route
-                    path="/rewards/leaderboard"
-                    element={<LeaderBoardPage />}
-                  />
-                  <Route
-                    path="/rewards/leaderboard-s1"
-                    element={<LeaderBoardPage />}
-                  />
-                  <Route
-                    path="/discord/verification"
-                    element={<DiscordVerificationPage />}
-                  />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
+                <AppContent />
               </Router>
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>

@@ -40,7 +40,8 @@ export const ThemeProviderWrapper: React.FC<ThemeProviderProps> = ({
 
   const toggleTheme = () => setDarkMode((prev) => !prev);
 
-  const theme: DefaultTheme = darkMode ? themeDark : themeLight;
+  const theme: DefaultTheme = themeDark;
+  // const theme: DefaultTheme = darkMode ? themeDark : themeLight;
 
   return (
     <ThemeContext.Provider value={{ darkMode, toggleTheme }}>

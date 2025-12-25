@@ -2,16 +2,17 @@ import React, { FC, useEffect } from "react";
 import styled from "styled-components";
 import { useSearchParams } from "react-router-dom";
 
-import { device } from "../../config/globals";
+// import { device } from "../../config/globals";
 
-import RewardsDashboard from "./RewardsDashboard";
-import RewardsContent from "./RewardsContent";
-import ReferralSection from "./ReferralSection";
+// import RewardsDashboard from "./RewardsDashboard";
+// import RewardsContent from "./RewardsContent";
+// import ReferralSection from "./ReferralSection";
 import RewardsActivities from "./RewardsActivities";
-import RewardsFooter from "./RewardsFooter";
+import Footer from "../../structure/Footer";
 import { useCreateRewardsUser } from "./hooks/useCreateRewardsUser";
 import { Alert } from "../../blocks";
 import { useRewardsContext } from "../../context/rewardsContext";
+import { RewardsUpdatedDashboard } from "./RewardsUpdatedDashboard";
 
 const Rewards: FC = () => {
   // //fetch ref from url
@@ -47,15 +48,18 @@ const Rewards: FC = () => {
           }}
         />
       )}
-      <RewardsDashboard />
+
+      <RewardsUpdatedDashboard />
+
+      {/*<RewardsDashboard />*/}
 
       <RewardsActivities />
 
-      <RewardsContent />
+      {/*<RewardsContent />*/}
 
-      <ReferralSection />
+      {/*<ReferralSection />*/}
 
-      <RewardsFooter />
+      <Footer />
     </RewardsWrapper>
   );
 };
@@ -63,19 +67,10 @@ const Rewards: FC = () => {
 export default Rewards;
 
 const RewardsWrapper = styled.div`
-  width: 1200px;
-  margin: 24px auto;
+  width: 100%;
+  margin: 0px auto 24px auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
   box-sizing: border-box;
-
-  @media ${device.laptopM} {
-    width: calc(100% - 32px);
-  }
-
-  @media ${device.mobileL} {
-    width: calc(100% - 32px);
-    overflow-x: hidden;
-  }
 `;

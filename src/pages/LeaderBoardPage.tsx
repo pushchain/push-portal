@@ -47,5 +47,5 @@ const LeaderBoardWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  font-family: "FK Grotesk Neu";
+  font-family: DM Sans, sans-serif;
 `;

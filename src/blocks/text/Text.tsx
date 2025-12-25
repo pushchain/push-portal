@@ -19,7 +19,7 @@ export type TextProps = {
   /* Children pass to the Text component */
   children?: ReactNode;
   /* Sets the css property for text color */
-  color?: TextColors;
+  color?: TextColors | string;
   /* Extra css prop from styled components to apply custom css not supported by Text component */
   css?: FlattenSimpleInterpolation;
   /* For truncating the contents with ... when there's container overflow */
@@ -46,7 +46,11 @@ const StyledText = styled.p.withConfig({
   /* Variant CSS */
   ${({ variant }) => getVariantStyles(variant)}
 
-  color: ${({ color }) => `var(--${color})`};
+  color: ${({ color }) =>
+    color.startsWith('#') || color.startsWith('rgb')
+      ? color
+      : `var(--${color})`
+  };
   font-family: var(--font-family);
   margin: 0px;
   text-align: ${({ textAlign }) => textAlign};

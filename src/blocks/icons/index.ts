@@ -9,12 +9,18 @@ export { default as ArbitrumMonotone } from "./components/ArbitrumMonotone";
 
 export { default as ArrowUpRight } from "./components/ArrowUpRight";
 
+export { default as ArrowRight } from "./components/ArrowRight";
+
+export { default as ArrowDown } from "./components/ArrowDown";
+
 export { default as Asterisk } from "./components/Asterisk";
 
 export { default as Back } from "./components/Back";
 
 export { default as BellRingFilled } from "./components/BellRingFilled";
+
 export { default as BellSimple } from "./components/BellSimple";
+
 export { default as BellSimpleSlash } from "./components/BellSimpleSlash";
 
 export { default as BnbMonotone } from "./components/BnbMonotone";
@@ -25,28 +31,40 @@ export { default as CaretDown } from "./components/CaretDown";
 
 export { default as CaretLeft } from "./components/CaretLeft";
 
+export { default as CaretLeftCircle } from "./components/CaretLeftCircle";
+
 export { default as CaretRight } from "./components/CaretRight";
+
+export { default as CastleTurret } from "./components/CastleTurret";
+
+export { default as CompassRose } from "./components/CompassRose";
 
 export { default as CaretUp } from "./components/CaretUp";
 
 export { default as CameraFilled } from "./components/CameraFilled";
 
 export { default as Channel } from "./components/Channel";
+
 export { default as ChannelFilled } from "./components/ChannelFilled";
 
 export { default as ChannelHome } from "./components/ChannelHome";
+
 export { default as ChannelHomeFilled } from "./components/ChannelHomeFilled";
 
 export { default as Chat } from "./components/Chat";
+
 export { default as ChatFilled } from "./components/ChatFilled";
 
 export { default as Clockwise } from "./components/Clockwise";
+
 export { default as CircleFilled } from "./components/CircleFilled";
+
 export { default as CloudUpload } from "./components/CloudUpload";
 
 export { default as Copy } from "./components/Copy";
 
 export { default as Cross } from "./components/Cross";
+
 export { default as CrossFilled } from "./components/CrossFilled";
 
 export { default as CrownSimple } from "./components/CrownSimple";
@@ -56,6 +74,8 @@ export { default as Cube } from "./components/Cube";
 export { default as Dash } from "./components/Dash";
 
 export { default as Dashboard } from "./components/Dashboard";
+
+export { default as DotsThree } from "./components/DotsThree";
 
 export { default as EditProfile } from "./components/EditProfile";
 
@@ -68,6 +88,8 @@ export { default as Envelope } from "./components/Envelope";
 export { default as ErrorFilled } from "./components/ErrorFilled";
 
 export { default as ExternalLink } from "./components/ExternalLink";
+
+export { default as Faucet } from "./components/Faucet";
 
 export { default as Front } from "./components/Front";
 export { default as FillCircle } from "./components/FillCircle";
@@ -97,6 +119,9 @@ export { default as Leaderboard } from "./components/Leaderboard";
 export { default as LightFilled } from "./components/LightFilled";
 
 export { default as Lock } from "./components/Lock";
+
+export { default as LockFilled } from "./components/LockFilled";
+
 
 export { default as Logout } from "./components/Logout";
 
@@ -130,6 +155,8 @@ export { default as PlusCircleFilled } from "./components/PlusCircleFilled";
 export { default as PlusSquare } from "./components/PlusSquare";
 export { default as PlusSquareFilled } from "./components/PlusSquareFilled";
 
+export { default as PushPass } from "./components/PushPass";
+
 export { default as PrevIconSlider } from "./components/PrevIconSlider";
 
 export { default as Pin } from "./components/Pin";
@@ -142,6 +169,8 @@ export { default as PublicChat } from "./components/PublicChat";
 export { default as PrivateChat } from "./components/PrivateChat";
 
 export { default as QRCode } from "./components/QRCode";
+
+export { default as Ranking } from "./components/Ranking";
 
 export { default as ReceiveNotification } from "./components/ReceiveNotification";
 export { default as ReceiveNotificationFilled } from "./components/ReceiveNotificationFilled";
@@ -167,7 +196,10 @@ export { default as SendNotificationFilled } from "./components/SendNotification
 
 export { default as Smiley } from "./components/Smiley";
 
+export { default as SquaresFour } from "./components/SquaresFour";
+
 export { default as Star } from "./components/Star";
+export { default as StarFilled } from "./components/StarFilled";
 
 export { default as Settings } from "./components/Settings";
 

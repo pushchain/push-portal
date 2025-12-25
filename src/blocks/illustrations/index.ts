@@ -1,4 +1,5 @@
 export * from "./IllustrationWrapper";
+export * from "./IllustrationWrapper";
 export * from "./Illustrations.types";
 
 export { default as ActivePushPoints } from "./components/ActivePushPoints";
@@ -49,6 +50,12 @@ export { default as GradientBonusActivitySubscribers } from "./components/Gradie
 
 export { default as GreyBonusActivitySubscribers } from "./components/GreyBonusActivitySubscribers";
 
+export { default as GlowStreaks } from "./components/GlowStreaks";
+
+export { default as LevelUpIcon } from "./components/LevelUpIcon";
+
+export { default as LevelBadge } from "./components/LevelBadge";
+
 export { default as Linea } from "./components/Linea";
 
 export { default as OrangeBonusActivitySubscribers } from "./components/OrangeBonusActivitySubscribers";
@@ -61,6 +68,8 @@ export { default as PushDev } from "./components/PushDev";
 
 export { default as Points } from "./components/Points";
 
+export { default as Quests } from "./components/Quests";
+
 export { default as Metamask } from "./components/Metamask";
 
 export { default as Multiplier } from "./components/Multiplier";
@@ -70,6 +79,10 @@ export { default as MultipleRewardsCoin } from "./components/MultipleRewardsCoin
 export { default as NotificationImg } from "./components/NotificationImg";
 
 export { default as NotificationDark } from "./components/NotificationDark";
+
+export { default as RarePass } from "./components/RarePass";
+
+export { default as RarePassIcon } from "./components/RarePassIcon";
 
 export { default as RewardsBell } from "./components/RewardsBell";
 
@@ -128,5 +141,7 @@ export { default as PushLogoWithNameDark } from "./components/PushLogoWithNameDa
 export { default as Polygon } from "./components/Polygon";
 
 export { default as PolygonZK } from "./components/PolygonZK";
+
+export { default as XP } from "./components/XP";
 
 export { default as YellowBonusActivitySubscribers } from "./components/YellowBonusActivitySubscribers";
