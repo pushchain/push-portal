@@ -227,7 +227,7 @@ export const PreLaunchHeader = ({
                 }}
                 disabled={!userRewardsDetails?.userId || verifyingSeasonThree}
                 css={css`
-                  color: #fff;
+                  color: #fff !important;
                   `}
               >
                 {verifyingSeasonThree ? "Verifying..." : "Verify Discord"}

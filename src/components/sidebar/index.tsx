@@ -94,19 +94,18 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
   ];
 
   const bottomMenuItems: MenuItem[] = [
-    {
-      id: 'faucet',
-      icon: Faucet,
-      label: 'PC Token Faucet',
-      route: 'https://faucet.push.org'
-    },
-    {
-      id: 'ecosystem',
-      icon: SquaresFour,
-      label: 'Ecosystem Apps',
-      route: 'https://push.org/ecosystem'
-
-    },
+    // {
+    //   id: 'faucet',
+    //   icon: Faucet,
+    //   label: 'PC Token Faucet',
+    //   route: 'https://faucet.push.org'
+    // },
+    // {
+    //   id: 'ecosystem',
+    //   icon: SquaresFour,
+    //   label: 'Ecosystem Apps',
+    //   route: 'https://push.org/ecosystem'
+    // },
   ];
 
   const getItemStyles = (isActive: boolean) => css`
