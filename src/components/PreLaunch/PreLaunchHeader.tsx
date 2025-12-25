@@ -4,6 +4,8 @@ import { Box, Button, GlowStreaks, SealCheckFilled, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
 import { UserRewardsDetailResponse } from "../../queries/types"
 import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
+import useMediaQuery from "../../hooks/useMediaQuery"
+import { device } from "../../config/globals"
 
 type PreLaunchHeaderProps = {
   universalAddress: any;
@@ -21,6 +23,8 @@ export const PreLaunchHeader = ({
   verificationSuccess,
 }: PreLaunchHeaderProps) => {
 
+
+  const isMobile = useMediaQuery(device.mobileL);
 
   return (
     <Box
@@ -68,6 +72,7 @@ export const PreLaunchHeader = ({
           `}
         />
 
+        {!isMobile && (<>
         <Box css={css`position: absolute; bottom: -50px; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;`}>
           <GlowStreaks />
         </Box>
@@ -79,6 +84,7 @@ export const PreLaunchHeader = ({
         <Box css={css`position: absolute; bottom: -50px; left: 0px; width: 100%; height: 100%; pointer-events: none; z-index: 0;`}>
           <GlowStreaks />
         </Box>
+        </>)}
 
         <Box
           display="flex"
@@ -107,9 +113,14 @@ export const PreLaunchHeader = ({
                 background-clip: text;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
+
+                @media ${device.mobileL} {
+                    font-size: 40px;
+                    line-height: 45px;
+                }
               `}
             >
-              Apply for Season 3 <br />
+              Apply for Season 3 {!isMobile && (<br />)}
               Pre-Launch Access
             </Text>
 
@@ -135,17 +146,23 @@ export const PreLaunchHeader = ({
             </Box>}
 
           {!verificationSuccess &&
-            (<Box display="flex" flexDirection="row" width="100%" gap="spacing-md">
+            (<Box
+              display="flex"
+              flexDirection={{initial: "row", ml: "column"}}
+              width="100%"
+              gap="spacing-md">
             <Box
               display="flex"
-              flexDirection="row"
+              flexDirection={{initial: "row", ml: "column"}}
               alignItems="center"
               width="100%"
               padding="spacing-sm spacing-md"
+              gap="spacing-xs"
               css={css`
                 border-radius: var(--radius-md, 24px);
                 border: 1px solid #FFF;
                 background: rgba(255, 255, 255, 0.40);
+                box-sizing: border-box;
               `}
             >
               <Text variant="h4-semibold" color="#17181B">
@@ -179,7 +196,6 @@ export const PreLaunchHeader = ({
                 styling={{
                   width: "fit-content",
                   fontFamily: "DM Sans !important",
-                  margin: "0 0 0 auto",
                   borderRadius: "12px"
                 }}
               />)}
@@ -187,7 +203,7 @@ export const PreLaunchHeader = ({
 
             <Box
               display="flex"
-              flexDirection="row"
+              flexDirection={{initial: "row", ml: "column"}}
               alignItems="center"
               width="100%"
               padding="spacing-sm spacing-md"
@@ -196,6 +212,7 @@ export const PreLaunchHeader = ({
                 border-radius: var(--radius-md, 24px);
                 border: 1px solid #FFF;
                 background: rgba(255, 255, 255, 0.40);
+                box-sizing: border-box;
               `}
             >
               <RewardsActivityIcon type="follow_push_on_discord" />
@@ -209,6 +226,9 @@ export const PreLaunchHeader = ({
                   }
                 }}
                 disabled={!userRewardsDetails?.userId || verifyingSeasonThree}
+                css={css`
+                  color: #fff;
+                  `}
               >
                 {verifyingSeasonThree ? "Verifying..." : "Verify Discord"}
               </Button>
