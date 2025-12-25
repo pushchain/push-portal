@@ -148,12 +148,12 @@ export const PreLaunchHeader = ({
           {!verificationSuccess &&
             (<Box
               display="flex"
-              flexDirection={{initial: "row", ml: "column"}}
+              flexDirection={{initial: "row", tb: "column"}}
               width="100%"
               gap="spacing-md">
             <Box
               display="flex"
-              flexDirection={{initial: "row", ml: "column"}}
+              flexDirection={{initial: "row", tb: "column"}}
               alignItems="center"
               width="100%"
               padding="spacing-sm spacing-md"
@@ -203,7 +203,7 @@ export const PreLaunchHeader = ({
 
             <Box
               display="flex"
-              flexDirection={{initial: "row", ml: "column"}}
+              flexDirection={{initial: "row", tb: "column"}}
               alignItems="center"
               width="100%"
               padding="spacing-sm spacing-md"
