@@ -225,7 +225,7 @@ export const PreLaunchHeader = ({
                     handleSeasonThreeVerification(userRewardsDetails.userId);
                   }
                 }}
-                disabled={!userRewardsDetails?.userId || verifyingSeasonThree}
+                disabled={verifyingSeasonThree}
                 css={css`
                   color: #fff !important;
                   `}
