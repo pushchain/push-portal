@@ -163,8 +163,10 @@ const useVerifySeasonThree = ({
               console.log("Error in creating activity", error);
               setVerifyingSeasonThree(false);
               setVerificationSuccess(false);
-              if (error.name) {
+              if (error.response?.data?.error) {
                 setErrorMessage(error.response.data.error);
+              } else {
+                setErrorMessage('An error occurred. Please try again');
               }
             },
           },

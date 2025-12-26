@@ -1,6 +1,6 @@
 import { css } from "styled-components"
 import { PushWalletButton } from "@pushprotocol/pushchain-ui-kit"
-import { Box, Button, GlowStreaks, SealCheckFilled, Text } from "../../blocks"
+import { Alert, Box, Button, GlowStreaks, SealCheckFilled, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
 import { UserRewardsDetailResponse } from "../../queries/types"
 import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
@@ -13,6 +13,7 @@ type PreLaunchHeaderProps = {
   verifyingSeasonThree: boolean;
   handleSeasonThreeVerification: (userId: string) => void;
   verificationSuccess: boolean;
+  errorMessage?: string;
 }
 
 export const PreLaunchHeader = ({
@@ -21,6 +22,7 @@ export const PreLaunchHeader = ({
   verifyingSeasonThree,
   handleSeasonThreeVerification,
   verificationSuccess,
+  errorMessage
 }: PreLaunchHeaderProps) => {
 
 
@@ -144,6 +146,13 @@ export const PreLaunchHeader = ({
               <SealCheckFilled />
               <Text variant="h4-semibold" color="#000000">Entry verified. Limited seats available.</Text>
             </Box>}
+
+          {errorMessage && (<Box
+            css={css`
+            margin-bottom: 24px;
+            `}>
+            <Alert variant="error" heading={errorMessage} />
+          </Box>)}
 
           {!verificationSuccess &&
             (<Box

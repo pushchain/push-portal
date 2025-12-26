@@ -51,6 +51,7 @@ export const PreLaunch = () => {
         verifyingSeasonThree={verifyingSeasonThree}
         handleSeasonThreeVerification={handleSeasonThreeVerification}
         verificationSuccess={isUserVerified}
+        errorMessage={errorMessage}
       />
       <PreLaunchBenefits
         verificationSuccess={isUserVerified}
