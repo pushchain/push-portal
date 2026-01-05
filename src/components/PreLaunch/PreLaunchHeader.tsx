@@ -1,6 +1,6 @@
 import { css } from "styled-components"
 import { PushWalletButton } from "@pushprotocol/pushchain-ui-kit"
-import { Alert, Box, Button, GlowStreaks, SealCheckFilled, Text } from "../../blocks"
+import { Alert, Box, Button, Cross, CrossFilled, GlowStreaks, InfoFilled, SealCheckFilled, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
 import { UserRewardsDetailResponse } from "../../queries/types"
 import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
@@ -13,6 +13,7 @@ type PreLaunchHeaderProps = {
   verifyingSeasonThree: boolean;
   handleSeasonThreeVerification: (userId: string) => void;
   verificationSuccess: boolean;
+  isUserEligible?: boolean;
   errorMessage?: string;
 }
 
@@ -22,6 +23,7 @@ export const PreLaunchHeader = ({
   verifyingSeasonThree,
   handleSeasonThreeVerification,
   verificationSuccess,
+  isUserEligible,
   errorMessage
 }: PreLaunchHeaderProps) => {
 
@@ -179,35 +181,64 @@ export const PreLaunchHeader = ({
               </Text>
 
               {universalAddress ? (
-                <Box
-                  display="flex"
-                  flexDirection="row"
-                  alignItems="center"
-                  gap="spacing-xxs"
-                  padding="spacing-xs spacing-md"
-                >
-                  <SealCheckFilled color='#00A47F'/>
-                  <Text
-                    color="#00A47F"
-                    css={css`
+                isUserEligible ? (
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    alignItems="center"
+                    gap="spacing-xxs"
+                    padding="spacing-xs spacing-md"
+                  >
+                    <SealCheckFilled color='#00A47F' size={16} />
+                    <Text
+                      color="#00A47F"
+                      css={css`
                         white-space: nowrap;
                         leading-trim: both;
                         font-size: 14px;
                         font-style: normal;
                         font-weight: 600;
                         line-height: 16px;
-                    `}>Account Verified</Text>
-                </Box>
+                      `}
+                    >
+                      Account Verified
+                    </Text>
+                  </Box>
+                ) : (
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    alignItems="center"
+                    gap="spacing-xxs"
+                    padding="spacing-xs spacing-md"
+                  >
+                    <CrossFilled color="#E53935" size={16} />
+                    <Text
+                      color="#E53935"
+                      css={css`
+                        white-space: nowrap;
+                        leading-trim: both;
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 16px;
+                      `}
+                    >
+                      Not Eligible
+                    </Text>
+                  </Box>
+                )
               ) : (
                 <PushWalletButton
-                universalAddress={universalAddress}
-                title="Connect Account"
-                styling={{
-                  width: "fit-content",
-                  fontFamily: "DM Sans !important",
-                  borderRadius: "12px"
-                }}
-              />)}
+                  universalAddress={universalAddress}
+                  title="Connect Account"
+                  styling={{
+                    width: "fit-content",
+                    fontFamily: "DM Sans !important",
+                    borderRadius: "12px"
+                  }}
+                />
+              )}
             </Box>
 
             <Box
@@ -230,11 +261,11 @@ export const PreLaunchHeader = ({
                 variant="tertiary"
                 size="small"
                 onClick={() => {
-                  if (userRewardsDetails?.userId) {
+                  if (userRewardsDetails?.userId && isUserEligible) {
                     handleSeasonThreeVerification(userRewardsDetails.userId);
                   }
                 }}
-                disabled={verifyingSeasonThree}
+                disabled={verifyingSeasonThree || !isUserEligible}
                 css={css`
                   color: #fff !important;
                   `}

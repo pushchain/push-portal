@@ -35,6 +35,7 @@ export const PreLaunch = () => {
   });
 
   const isUserVerified  = verificationSuccess || userRewardsDetails?.discordReverified
+  const isUserEligible = userRewardsDetails && userRewardsDetails?.isSeasonOneUser
 
   return (
     <Box
@@ -51,6 +52,7 @@ export const PreLaunch = () => {
         verifyingSeasonThree={verifyingSeasonThree}
         handleSeasonThreeVerification={handleSeasonThreeVerification}
         verificationSuccess={isUserVerified}
+        isUserEligible={isUserEligible}
         errorMessage={errorMessage}
       />
       <PreLaunchBenefits
