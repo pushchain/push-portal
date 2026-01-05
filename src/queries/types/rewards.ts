@@ -293,10 +293,16 @@ export type UserRewardsDetailResponse = {
   referralPoints: number;
   totalPoints: number;
   multiplier: number;
+  previousMultiplier: number;
   rank: number;
   lastUpdated: string;
-  pgpPublicKey: string;
+  createdAt: string;
   usersInvited: number;
+  discordEmail: string;
+  discordReverified: boolean;
+  secondaryDiscordUserName: string;
+  isSeasonOneUser: boolean;
+  pgpPublicKey?: string;
 };
 
 export type createUserRewardsDetailsProps = {
