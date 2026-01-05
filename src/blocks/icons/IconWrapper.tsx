@@ -43,7 +43,9 @@ const IconWrapper: FC<IconWrapperProps> = ({
   size: sizeProp,
   ...restProps
 }) => {
-  const color = colorProp ? `var(--${colorProp})` : 'currentColor';
+  // If color starts with # or rgb/hsl, use it directly; otherwise treat as design system token
+  const isDirectColor = colorProp && (colorProp.startsWith('#') || colorProp.startsWith('rgb') || colorProp.startsWith('hsl'));
+  const color = colorProp ? (isDirectColor ? colorProp : `var(--${colorProp})`) : 'currentColor';
   const size = sizeProp ? `${sizeProp}px` : autoSize ? '1em' : '16px';
   return (
     <StyledIconWrapper
