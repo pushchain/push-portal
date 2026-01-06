@@ -1,8 +1,8 @@
 import { css } from "styled-components"
 import { PushWalletButton } from "@pushprotocol/pushchain-ui-kit"
-import { Alert, Box, Button, Cross, CrossFilled, GlowStreaks, InfoFilled, SealCheckFilled, Text } from "../../blocks"
+import { Alert, Box, Button,  CrossFilled, GlowStreaks, SealCheckFilled, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
-import { UserRewardsDetailResponse } from "../../queries/types"
+import { UserRewardsDetailResponse, UserSeasonOneResponse } from "../../queries/types"
 import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
 import useMediaQuery from "../../hooks/useMediaQuery"
 import { device } from "../../config/globals"
@@ -10,6 +10,7 @@ import { device } from "../../config/globals"
 type PreLaunchHeaderProps = {
   universalAddress: any;
   userRewardsDetails?: UserRewardsDetailResponse;
+  userSeasonOneRewardsDetails?: UserSeasonOneResponse;
   verifyingSeasonThree: boolean;
   handleSeasonThreeVerification: (userId: string) => void;
   verificationSuccess: boolean;
@@ -20,15 +21,17 @@ type PreLaunchHeaderProps = {
 export const PreLaunchHeader = ({
   universalAddress,
   userRewardsDetails,
+  userSeasonOneRewardsDetails,
   verifyingSeasonThree,
   handleSeasonThreeVerification,
   verificationSuccess,
   isUserEligible,
   errorMessage
 }: PreLaunchHeaderProps) => {
-
-
   const isMobile = useMediaQuery(device.mobileL);
+
+  // Use userId from userRewardsDetails, or fall back to userSeasonOneRewardsDetails
+  const userId = userRewardsDetails?.userId || userSeasonOneRewardsDetails?.userId;
 
   return (
     <Box
@@ -261,8 +264,8 @@ export const PreLaunchHeader = ({
                 variant="tertiary"
                 size="small"
                 onClick={() => {
-                  if (userRewardsDetails?.userId && isUserEligible) {
-                    handleSeasonThreeVerification(userRewardsDetails.userId);
+                  if (userId && isUserEligible) {
+                    handleSeasonThreeVerification(userId);
                   }
                 }}
                 disabled={verifyingSeasonThree || !isUserEligible}

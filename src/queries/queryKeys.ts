@@ -13,3 +13,4 @@ export const rewardsActivity = "rewardsActivity";
 export const rewardsLeaderboardS1 = "rewardsLeaderboardS1";
 export const rewardsLeaderboardS2 = "rewardsLeaderboardS2";
 export const userRewardsDetails = "userRewardsDetails";
+export const seasonOneUserDetails = "seasonOneUserDetails";

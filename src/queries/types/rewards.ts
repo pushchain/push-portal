@@ -283,6 +283,27 @@ export type UserRewardsDetailParams = {
   caip10WalletAddress: string;
 };
 
+export type UserSeasonOneResponse = {
+  userId: string;
+  userWallet: string;
+  refPrimary: string;
+  refSecondary: string | null;
+  verificationProof: string;
+  activityPoints: number;
+  referralPoints: number;
+  totalPoints: number;
+  multiplier: number;
+  previousMultiplier: number;
+  lastUpdated: string;
+  pgpPublicKey: string;
+  rank: number;
+  createdAt: string | null;
+  discordEmail: string | null;
+  secondaryDiscordUserName: string | null;
+  discordReverified: boolean;
+  usersInvited: number;
+};
+
 export type UserRewardsDetailResponse = {
   userId: string;
   userWallet: string;

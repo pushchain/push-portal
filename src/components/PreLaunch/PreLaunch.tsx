@@ -7,8 +7,8 @@ import { PreLaunchHeader } from "./PreLaunchHeader"
 import { PreLaunchBenefits } from "./PreLaunchBenefits"
 import { PreLaunchDivider } from "./PreLaunchDivider"
 import { useVerifySeasonThree } from "../Rewards/hooks/useVerifySeasonThree"
-import { useGetUserRewardsDetails } from "../../queries"
-import { walletToFullCAIP10 } from "../../helpers/web3helper"
+import { useGetSeasonOneUserDetails, useGetUserRewardsDetails } from "../../queries"
+import { walletToFullCAIP10, walletToPCAIP10 } from "../../helpers/web3helper"
 
 export const PreLaunch = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -20,9 +20,18 @@ export const PreLaunch = () => {
     universalAddress?.chain,
   );
 
+  const p10WalletAddress = walletToPCAIP10(
+    universalAddress?.address as string,
+  );
+
   const { data: userRewardsDetails } = useGetUserRewardsDetails({
     caip10WalletAddress: caip10WalletAddress,
   });
+
+  const { data: userSeasonOneRewardsDetails } = useGetSeasonOneUserDetails({
+    caip10WalletAddress: p10WalletAddress,
+  });
+
 
   const {
     verifyingSeasonThree,
@@ -34,8 +43,8 @@ export const PreLaunch = () => {
     setErrorMessage,
   });
 
-  const isUserVerified  = verificationSuccess || userRewardsDetails?.discordReverified
-  const isUserEligible = userRewardsDetails && userRewardsDetails?.isSeasonOneUser
+  const isUserVerified = verificationSuccess || userRewardsDetails?.discordReverified;
+  const isUserEligible = !!userRewardsDetails || userRewardsDetails?.isSeasonOneUser || !!userSeasonOneRewardsDetails;
 
   return (
     <Box
@@ -49,6 +58,7 @@ export const PreLaunch = () => {
       <PreLaunchHeader
         universalAddress={universalAddress}
         userRewardsDetails={userRewardsDetails}
+        userSeasonOneRewardsDetails={userSeasonOneRewardsDetails}
         verifyingSeasonThree={verifyingSeasonThree}
         handleSeasonThreeVerification={handleSeasonThreeVerification}
         verificationSuccess={isUserVerified}
