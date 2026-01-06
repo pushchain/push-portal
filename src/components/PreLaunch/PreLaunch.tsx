@@ -43,10 +43,8 @@ export const PreLaunch = () => {
     setErrorMessage,
   });
 
-  console.log(userSeasonOneRewardsDetails, 'new new')
-
   const isUserVerified = verificationSuccess || userRewardsDetails?.discordReverified;
-  const isUserEligible = userRewardsDetails || userRewardsDetails?.isSeasonOneUser || userSeasonOneRewardsDetails;
+  const isUserEligible = !!userRewardsDetails || userRewardsDetails?.isSeasonOneUser || !!userSeasonOneRewardsDetails;
 
   return (
     <Box
@@ -60,6 +58,7 @@ export const PreLaunch = () => {
       <PreLaunchHeader
         universalAddress={universalAddress}
         userRewardsDetails={userRewardsDetails}
+        userSeasonOneRewardsDetails={userSeasonOneRewardsDetails}
         verifyingSeasonThree={verifyingSeasonThree}
         handleSeasonThreeVerification={handleSeasonThreeVerification}
         verificationSuccess={isUserVerified}
