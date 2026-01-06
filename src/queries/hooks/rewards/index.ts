@@ -13,3 +13,4 @@ export * from "./useGetRewardsLeaderboardS1";
 export * from "./useGetRewardsLeaderboardS2";
 export * from "./useGetUserXP";
 export * from "./useUpdateUserXP";
+export * from "./useGetSeasonOneUserDetails";
