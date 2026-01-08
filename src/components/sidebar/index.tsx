@@ -57,55 +57,54 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
   }, [isOpen, isLaptop, onClose]);
 
   const topMenuItems: MenuItem[] = [
-    {
-      id: 'pre-launch',
-      icon: CompassRose,
-      label: 'Pre-Launch Access',
-      route: '/rewards/pre-launch'
-    },
-    // TODO: comment out till launch
     // {
-    //   id: 'discover',
+    //   id: 'pre-launch',
     //   icon: CompassRose,
-    //   label: 'Discover',
-    //   route: '/rewards'
+    //   label: 'Pre-Launch Access',
+    //   route: '/rewards/pre-launch'
     // },
-    // {
-    //   id: 'quests',
-    //   icon: CastleTurret,
-    //   label: 'Quests',
-    //   badge: {
-    //     text: 'NEW',
-    //     icon: StarFilled,
-    //   },
-    // },
-    // {
-    //   id: 'push-pass',
-    //   icon: PushPass,
-    //   label: 'Push Pass',
-    //   route: '/rewards/pushpass'
-    // },
-    // {
-    //   id: 'leaderboards',
-    //   icon: Ranking,
-    //   label: 'Leaderboards',
-    //   route: '/rewards/leaderboard'
-    // },
+    {
+      id: 'discover',
+      icon: CompassRose,
+      label: 'Discover',
+      route: '/rewards'
+    },
+    {
+      id: 'quests',
+      icon: CastleTurret,
+      label: 'Quests',
+      badge: {
+        text: 'NEW',
+        icon: StarFilled,
+      },
+    },
+    {
+      id: 'push-pass',
+      icon: PushPass,
+      label: 'Push Pass',
+      route: '/rewards/pushpass'
+    },
+    {
+      id: 'leaderboards',
+      icon: Ranking,
+      label: 'Leaderboards',
+      route: '/rewards/leaderboard'
+    },
   ];
 
   const bottomMenuItems: MenuItem[] = [
-    // {
-    //   id: 'faucet',
-    //   icon: Faucet,
-    //   label: 'PC Token Faucet',
-    //   route: 'https://faucet.push.org'
-    // },
-    // {
-    //   id: 'ecosystem',
-    //   icon: SquaresFour,
-    //   label: 'Ecosystem Apps',
-    //   route: 'https://push.org/ecosystem'
-    // },
+    {
+      id: 'faucet',
+      icon: Faucet,
+      label: 'PC Token Faucet',
+      route: 'https://faucet.push.org'
+    },
+    {
+      id: 'ecosystem',
+      icon: SquaresFour,
+      label: 'Ecosystem Apps',
+      route: 'https://push.org/ecosystem'
+    },
   ];
 
   const getItemStyles = (isActive: boolean) => css`

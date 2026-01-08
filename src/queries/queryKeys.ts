@@ -14,3 +14,8 @@ export const rewardsLeaderboardS1 = "rewardsLeaderboardS1";
 export const rewardsLeaderboardS2 = "rewardsLeaderboardS2";
 export const userRewardsDetails = "userRewardsDetails";
 export const seasonOneUserDetails = "seasonOneUserDetails";
+
+export const characterInfo = "characterInfo";
+export const characterGenerate = "characterGenerate";
+export const characterMint = "characterMint";
+export const characterReshuffle = "characterReshuffle";
