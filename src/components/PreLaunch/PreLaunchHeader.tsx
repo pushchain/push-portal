@@ -1,15 +1,14 @@
 import { css } from "styled-components"
-import { PushWalletButton } from "@pushprotocol/pushchain-ui-kit"
+import { PushUniversalAccountButton } from "@pushchain/ui-kit"
 import { Alert, Box, Button,  CrossFilled, GlowStreaks, SealCheckFilled, Skeleton, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
 import { UserRewardsDetailResponse, UserSeasonOneResponse } from "../../queries/types"
 import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
 import useMediaQuery from "../../hooks/useMediaQuery"
 import { device } from "../../config/globals"
-import { getSkeletonPulseAnimation } from "../../blocks/skeleton"
 
 type PreLaunchHeaderProps = {
-  universalAddress: any;
+  universalAccount: any;
   userRewardsDetails?: UserRewardsDetailResponse;
   userSeasonOneRewardsDetails?: UserSeasonOneResponse;
   verifyingSeasonThree: boolean;
@@ -21,7 +20,7 @@ type PreLaunchHeaderProps = {
 }
 
 export const PreLaunchHeader = ({
-  universalAddress,
+  universalAccount,
   userRewardsDetails,
   userSeasonOneRewardsDetails,
   verifyingSeasonThree,
@@ -187,7 +186,7 @@ export const PreLaunchHeader = ({
               </Text>
 
 
-              {universalAddress ? (
+              {universalAccount ? (
                 <Skeleton
                   isLoading={isLoading}
                 >
@@ -240,15 +239,9 @@ export const PreLaunchHeader = ({
                   )}
                 </Skeleton>
               ) : (
-                <PushWalletButton
-                  universalAddress={universalAddress}
-                  title="Connect Account"
-                  styling={{
-                    width: "fit-content",
-                    fontFamily: "DM Sans !important",
-                    borderRadius: "12px",
-                  }}
-                />
+                <Box>
+                  <PushUniversalAccountButton />
+                </Box>
               )}
             </Box>
 

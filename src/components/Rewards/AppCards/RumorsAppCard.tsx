@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
 import { css } from "styled-components";
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { usePushWalletContext } from "@pushchain/ui-kit";
 
 import { useFilteredActivities } from "../hooks/useFilteredActivities";
 import { useRewardsContext } from "../../context/rewardsContext";
@@ -34,8 +34,8 @@ export type RumorsCardProps = {
 };
 
 const RumorsAppCard: FC<RumorsCardProps> = ({ setErrorMessage }) => {
-  const { universalAddress } = usePushWalletContext();
-  const account = universalAddress?.address as string;
+  const { universalAccount } = usePushWalletContext();
+  const account = universalAccount?.address as string;
   const { isLocked } = useRewardsContext();
   const [currentLevel, setCurrentLevel] = useState(null);
   const [processingClaim, setProcessingClaim] = useState(false);
@@ -105,7 +105,7 @@ const RumorsAppCard: FC<RumorsCardProps> = ({ setErrorMessage }) => {
 
   const isEnded = isExpired ? isExpired : nextUnclaimedLevel > numberOfLevels;
   const isLoading =
-    isLoadingActivities || (isPending && Boolean(universalAddress));
+    isLoadingActivities || (isPending && Boolean(universalAccount));
 
   const startClaimProcess = (level, activityType) => {
     setClaimedLevelInfo((prevInfo) => ({

@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { FaBars } from 'react-icons/fa';
 
 import {
-  PushWalletButton,
+  PushUniversalAccountButton,
   usePushWalletContext,
-} from "@pushprotocol/pushchain-ui-kit";
+} from "@pushchain/ui-kit";
 
 import { Box } from "../../src/blocks";
 import ChainLogoDark from "/static/assets/website/chain/ChainLogoDark.svg";
@@ -20,7 +20,7 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
   const baseURL = "/";
   const navigate = useNavigate();
-  const { universalAddress } = usePushWalletContext();
+  const { universalAccount } = usePushWalletContext();
   const isTablet = useMediaQuery(device.tablet);
   const isLaptop = useMediaQuery(device.laptopL);
 
@@ -47,16 +47,9 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
       </Box>
 
       {!isTablet && (
-        <PushWalletButton
-          universalAddress={universalAddress}
-          title="Connect Account"
-          styling={{
-            width: "fit-content",
-            fontFamily: "DM Sans !important",
-            margin: "0 0 0 auto",
-            borderRadius: "12px"
-          }}
-        />
+        <Box>
+        <PushUniversalAccountButton />
+        </Box>
       )}
 
       {isLaptop &&

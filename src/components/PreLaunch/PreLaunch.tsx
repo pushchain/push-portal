@@ -1,27 +1,31 @@
 import { useState } from "react"
 import { css } from "styled-components"
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit"
+import { usePushWalletContext } from "@pushchain/ui-kit"
 
-import { Box } from "../../blocks"
 import { PreLaunchHeader } from "./PreLaunchHeader"
 import { PreLaunchBenefits } from "./PreLaunchBenefits"
 import { PreLaunchDivider } from "./PreLaunchDivider"
 import { useVerifySeasonThree } from "../Rewards/hooks/useVerifySeasonThree"
+
 import { useGetSeasonOneUserDetails, useGetUserRewardsDetails } from "../../queries"
 import { walletToFullCAIP10, walletToPCAIP10 } from "../../helpers/web3helper"
 
+import { Box } from "../../blocks"
+
+
 export const PreLaunch = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const { universalAddress } = usePushWalletContext();
+  const { universalAccount } = usePushWalletContext();
+
 
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAddress?.address as string,
-    universalAddress?.chainId,
-    universalAddress?.chain,
+    universalAccount?.address as string,
+    universalAccount?.chain,
   );
 
+
   const p10WalletAddress = walletToPCAIP10(
-    universalAddress?.address as string,
+    universalAccount?.address as string,
   );
 
   const { data: userRewardsDetails, isLoading: isLoadingUserDetails } = useGetUserRewardsDetails({
@@ -56,7 +60,7 @@ export const PreLaunch = () => {
       `}
     >
       <PreLaunchHeader
-        universalAddress={universalAddress}
+        universalAccount={universalAccount}
         userRewardsDetails={userRewardsDetails}
         userSeasonOneRewardsDetails={userSeasonOneRewardsDetails}
         verifyingSeasonThree={verifyingSeasonThree}
