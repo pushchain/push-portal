@@ -326,6 +326,21 @@ export type UserRewardsDetailResponse = {
   pgpPublicKey?: string;
 };
 
+export type UserRewardsStatsResponse = {
+  seasonOne: {
+    totalUsers: number;
+    totalUsersWithEmail: number;
+  };
+  seasonTwo: {
+    totalUsers: number;
+    totalUsersWithEmail: number;
+  };
+  allSeasons: {
+    totalUniqueUsers: number;
+    totalUniqueUsersWithEmail: number;
+  };
+};
+
 export type createUserRewardsDetailsProps = {
   userWallet: string;
   pgpPublicKey: string;

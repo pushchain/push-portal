@@ -13,3 +13,4 @@ export * from "./getRewardsLeaderboardModelCreator";
 export * from "./getUserXPModel";
 export * from "./updateUserXPModel";
 export * from "./getSeasonOneUserDetailsModel";
+export * from './getUserRewardsStatsModel';

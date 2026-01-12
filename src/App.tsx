@@ -35,6 +35,7 @@ import { Sidebar } from "./components/sidebar";
 import Header from "./structure/Header";
 import SeasonBg from "../static/assets/website/shared/season-bg.webp";
 import PreLaunchPage from "./pages/PreLaunchPage";
+import AdminPage from "./pages/AdminPage";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -116,7 +117,8 @@ const AppContent = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const isDiscordVerification = location.pathname === "/discord/verification";
+  const hideSideBar = location.pathname === "/discord/verification" || location.pathname === "/admin/controls";
+  const isAdminPage = location.pathname === "/admin/controls";
 
   return (
     <Box
@@ -125,7 +127,8 @@ const AppContent = () => {
       height="100vh"
       css={css``}
     >
-      <Box
+      {!isAdminPage &&
+        (<Box
         css={css`
           position: fixed;
           left: 0;
@@ -139,7 +142,7 @@ const AppContent = () => {
           pointer-events: none;
           z-index: 0;
         `}
-      />
+      />)}
 
       <Header toggleSidebar={toggleSidebar} />
       <Box
@@ -149,7 +152,7 @@ const AppContent = () => {
           flex: 1;
         `}
       >
-        {!isDiscordVerification && (
+        {!hideSideBar && (
           <Sidebar
             isOpen={isSidebarOpen}
             onClose={() => setIsSidebarOpen(false)}
@@ -157,7 +160,7 @@ const AppContent = () => {
         )}
         <Box
           width="100%"
-          maxWidth={isDiscordVerification ? "100%" : "1200px"}
+          maxWidth={hideSideBar ? "100%" : "1200px"}
           padding={{
             initial: "spacing-none spacing-md",
             tb: "spacing-none spacing-xs",
@@ -165,12 +168,13 @@ const AppContent = () => {
           css={css`
             overflow-y: auto;
             overflow-x: hidden;
-            margin: ${isDiscordVerification ? "0" : "0 auto"};
+            margin: ${hideSideBar ? "0" : "0 auto"};
           `}
         >
           <Routes>
             <Route path="/" element={<Navigate to="/rewards/pre-launch" replace />} />
             <Route path="/rewards" element={<Navigate to="/rewards/pre-launch" replace />} />
+            <Route path="/admin/controls" element={<AdminPage />} />
             {/*<Route path="/rewards" element={<RewardsPage />} />
             <Route path="/rewards/pushpass" element={<PushPassPage />} />*/}
             <Route path="/rewards/pre-launch" element={<PreLaunchPage />} />
