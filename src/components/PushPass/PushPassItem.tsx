@@ -1,13 +1,27 @@
 import { css } from "styled-components"
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit"
+import { useNavigate } from "react-router-dom"
+
+import { device } from "../../config/globals"
+import { useGetCharacterInfo } from "../../queries"
+
+import OpenPassImage from "../../../static/assets/website/pushpass/OpenPass.webp"
 import { Back, Box, Button, Text } from "../../blocks"
 import { Image } from "../../css/SharedStyling"
-import OpenPassImage from "../../../static/assets/website/pushpass/OpenPass.webp"
-import { useNavigate } from "react-router-dom"
-import { device } from "../../config/globals"
+
+
 
 
 export const PushPassItem = () => {
   const navigate = useNavigate();
+  const { universalAddress } = usePushWalletContext();
+
+
+  const { data } = useGetCharacterInfo({
+    walletAddress: universalAddress?.address
+  });
+
+
   return(
     <Box
       padding="spacing-md"
