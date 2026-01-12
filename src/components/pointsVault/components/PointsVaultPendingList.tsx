@@ -1,6 +1,5 @@
-import { Box, Pagination } from '../../../blocks';
+import { Box, Pagination, Spinner } from '../../../blocks';
 import { useQueryClient } from '@tanstack/react-query';
-// import LoaderSpinner, { LOADER_TYPE } from 'components/reusables/loaders/LoaderSpinner';
 import { PointsVaultListColumns } from './PointsVaultListColumns';
 import { PointsVaultListItem } from './PointsVaultListItem';
 import {
@@ -95,10 +94,7 @@ const PointsVaultPendingList = ({ query }: PointsVaultPendingListProps) => {
             display="flex"
             justifyContent="center"
           >
-            {/*<LoaderSpinner
-              spinnerSize={24}
-              type={LOADER_TYPE.SEAMLESS}
-            />*/}
+            <Spinner size="medium" variant="primary" />
           </Box>
         )}
       </Box>

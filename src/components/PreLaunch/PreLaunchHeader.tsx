@@ -6,6 +6,7 @@ import { UserRewardsDetailResponse, UserSeasonOneResponse } from "../../queries/
 import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
 import useMediaQuery from "../../hooks/useMediaQuery"
 import { device } from "../../config/globals"
+import { getSkeletonPulseAnimation } from "../../blocks/skeleton"
 
 type PreLaunchHeaderProps = {
   universalAddress: any;
@@ -187,7 +188,9 @@ export const PreLaunchHeader = ({
 
 
               {universalAddress ? (
-                <Skeleton isLoading={isLoading}>
+                <Skeleton
+                  isLoading={isLoading}
+                >
                   {isUserEligible ? (
                     <Box
                       display="flex"
