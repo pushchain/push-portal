@@ -1,6 +1,6 @@
 import { css } from "styled-components"
 import { PushWalletButton } from "@pushprotocol/pushchain-ui-kit"
-import { Alert, Box, Button,  CrossFilled, GlowStreaks, SealCheckFilled, Text } from "../../blocks"
+import { Alert, Box, Button,  CrossFilled, GlowStreaks, SealCheckFilled, Skeleton, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
 import { UserRewardsDetailResponse, UserSeasonOneResponse } from "../../queries/types"
 import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
@@ -16,6 +16,7 @@ type PreLaunchHeaderProps = {
   verificationSuccess: boolean;
   isUserEligible?: boolean;
   errorMessage?: string;
+  isLoading?: boolean;
 }
 
 export const PreLaunchHeader = ({
@@ -26,7 +27,8 @@ export const PreLaunchHeader = ({
   handleSeasonThreeVerification,
   verificationSuccess,
   isUserEligible,
-  errorMessage
+  errorMessage,
+  isLoading
 }: PreLaunchHeaderProps) => {
   const isMobile = useMediaQuery(device.mobileL);
 
@@ -183,54 +185,57 @@ export const PreLaunchHeader = ({
                 Connect with an account used during Season 1 or 2
               </Text>
 
+
               {universalAddress ? (
-                isUserEligible ? (
-                  <Box
-                    display="flex"
-                    flexDirection="row"
-                    alignItems="center"
-                    gap="spacing-xxs"
-                    padding="spacing-xs spacing-md"
-                  >
-                    <SealCheckFilled color='#00A47F' size={16} />
-                    <Text
-                      color="#00A47F"
-                      css={css`
-                        white-space: nowrap;
-                        leading-trim: both;
-                        font-size: 14px;
-                        font-style: normal;
-                        font-weight: 600;
-                        line-height: 16px;
-                      `}
+                <Skeleton isLoading={isLoading}>
+                  {isUserEligible ? (
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      alignItems="center"
+                      gap="spacing-xxs"
+                      padding="spacing-xs spacing-md"
                     >
-                      Account Verified
-                    </Text>
-                  </Box>
-                ) : (
-                  <Box
-                    display="flex"
-                    flexDirection="row"
-                    alignItems="center"
-                    gap="spacing-xxs"
-                    padding="spacing-xs spacing-md"
-                  >
-                    <CrossFilled color="#E53935" size={16} />
-                    <Text
-                      color="#E53935"
-                      css={css`
-                        white-space: nowrap;
-                        leading-trim: both;
-                        font-size: 14px;
-                        font-style: normal;
-                        font-weight: 600;
-                        line-height: 16px;
-                      `}
+                      <SealCheckFilled color="#00A47F" size={16} />
+                      <Text
+                        color="#00A47F"
+                        css={css`
+                          white-space: nowrap;
+                          leading-trim: both;
+                          font-size: 14px;
+                          font-style: normal;
+                          font-weight: 600;
+                          line-height: 16px;
+                        `}
+                      >
+                        Account Verified
+                      </Text>
+                    </Box>
+                  ) : (
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      alignItems="center"
+                      gap="spacing-xxs"
+                      padding="spacing-xs spacing-md"
                     >
-                      Not Eligible
-                    </Text>
-                  </Box>
-                )
+                      <CrossFilled color="#E53935" size={16} />
+                      <Text
+                        color="#E53935"
+                        css={css`
+                          white-space: nowrap;
+                          leading-trim: both;
+                          font-size: 14px;
+                          font-style: normal;
+                          font-weight: 600;
+                          line-height: 16px;
+                        `}
+                      >
+                        Not Eligible
+                      </Text>
+                    </Box>
+                  )}
+                </Skeleton>
               ) : (
                 <PushWalletButton
                   universalAddress={universalAddress}
@@ -238,7 +243,7 @@ export const PreLaunchHeader = ({
                   styling={{
                     width: "fit-content",
                     fontFamily: "DM Sans !important",
-                    borderRadius: "12px"
+                    borderRadius: "12px",
                   }}
                 />
               )}
@@ -260,21 +265,23 @@ export const PreLaunchHeader = ({
             >
               <RewardsActivityIcon type="follow_push_on_discord" />
               <RewardsActivityTitle activityTitle="Join [Push Chain Discord](https://discord.com/invite/pushchain) to apply for eligibility" variant="h4-semibold" isLoading={false} color="#17181B"  />
-              <Button
-                variant="tertiary"
-                size="small"
-                onClick={() => {
-                  if (userId && isUserEligible) {
-                    handleSeasonThreeVerification(userId);
-                  }
-                }}
-                disabled={verifyingSeasonThree || !isUserEligible}
-                css={css`
-                  color: #fff !important;
-                  `}
-              >
-                {verifyingSeasonThree ? "Verifying..." : "Verify Discord"}
-              </Button>
+              <Skeleton isLoading={isLoading}>
+                <Button
+                  variant="tertiary"
+                  size="small"
+                  onClick={() => {
+                    if (userId && isUserEligible) {
+                      handleSeasonThreeVerification(userId);
+                    }
+                  }}
+                  disabled={verifyingSeasonThree || !isUserEligible}
+                  css={css`
+                    color: #fff !important;
+                    `}
+                >
+                  {verifyingSeasonThree ? "Verifying..." : "Verify Discord"}
+                </Button>
+              </Skeleton>
             </Box>
           </Box>)}
         </Box>

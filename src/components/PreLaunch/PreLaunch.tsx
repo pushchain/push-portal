@@ -24,7 +24,7 @@ export const PreLaunch = () => {
     universalAddress?.address as string,
   );
 
-  const { data: userRewardsDetails } = useGetUserRewardsDetails({
+  const { data: userRewardsDetails, isLoading: isLoadingUserDetails } = useGetUserRewardsDetails({
     caip10WalletAddress: caip10WalletAddress,
   });
 
@@ -64,6 +64,7 @@ export const PreLaunch = () => {
         verificationSuccess={isUserVerified}
         isUserEligible={isUserEligible}
         errorMessage={errorMessage}
+        isLoading={isLoadingUserDetails}
       />
       <PreLaunchBenefits
         verificationSuccess={isUserVerified}
