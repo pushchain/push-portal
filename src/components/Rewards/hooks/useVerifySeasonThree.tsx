@@ -78,6 +78,12 @@ const useVerifySeasonThree = ({
 
     const newWindow = window.open(authURL, "_blank");
 
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
+      setErrorMessage("Popup blocked. Please allow popups for this site and try again.");
+      setVerifyingSeasonThree(false);
+      return;
+    }
+
     const checkAuth = setInterval(() => {
       if (newWindow?.closed) {
         clearInterval(checkAuth);
