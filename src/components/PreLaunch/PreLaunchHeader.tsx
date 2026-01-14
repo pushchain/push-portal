@@ -1,5 +1,5 @@
 import { css } from "styled-components"
-import { PushUniversalAccountButton } from "@pushchain/ui-kit"
+import { PushUniversalAccountButton, usePushWalletContext } from "@pushchain/ui-kit"
 import { Alert, Box, Button,  CrossFilled, GlowStreaks, SealCheckFilled, Skeleton, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
 import { UserRewardsDetailResponse, UserSeasonOneResponse } from "../../queries/types"
@@ -8,7 +8,6 @@ import useMediaQuery from "../../hooks/useMediaQuery"
 import { device } from "../../config/globals"
 
 type PreLaunchHeaderProps = {
-  universalAccount: any;
   userRewardsDetails?: UserRewardsDetailResponse;
   userSeasonOneRewardsDetails?: UserSeasonOneResponse;
   verifyingSeasonThree: boolean;
@@ -20,7 +19,6 @@ type PreLaunchHeaderProps = {
 }
 
 export const PreLaunchHeader = ({
-  universalAccount,
   userRewardsDetails,
   userSeasonOneRewardsDetails,
   verifyingSeasonThree,
@@ -31,6 +29,8 @@ export const PreLaunchHeader = ({
   isLoading
 }: PreLaunchHeaderProps) => {
   const isMobile = useMediaQuery(device.mobileL);
+  const { universalAccount, connectionStatus } = usePushWalletContext();
+
 
   // Use userId from userRewardsDetails, or fall back to userSeasonOneRewardsDetails
   const userId = userRewardsDetails?.userId || userSeasonOneRewardsDetails?.userId;
@@ -186,7 +186,7 @@ export const PreLaunchHeader = ({
               </Text>
 
 
-              {universalAccount ? (
+              {universalAccount && connectionStatus == "connected" ? (
                 <Skeleton
                   isLoading={isLoading}
                 >

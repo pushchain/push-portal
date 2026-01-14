@@ -32,7 +32,7 @@ export const PreLaunch = () => {
     caip10WalletAddress: caip10WalletAddress,
   });
 
-  const { data: userSeasonOneRewardsDetails } = useGetSeasonOneUserDetails({
+  const { data: userSeasonOneRewardsDetails, isLoading: isLoadingUserSeasonOneDetails } = useGetSeasonOneUserDetails({
     caip10WalletAddress: p10WalletAddress,
   });
 
@@ -48,7 +48,12 @@ export const PreLaunch = () => {
   });
 
   const isUserVerified = verificationSuccess || userRewardsDetails?.discordReverified;
-  const isUserEligible = !!userRewardsDetails || userRewardsDetails?.isSeasonOneUser || !!userSeasonOneRewardsDetails;
+  const isEligibilityLoading =
+    isLoadingUserDetails || isLoadingUserSeasonOneDetails;
+  const isUserEligible = !isEligibilityLoading &&
+    (!!userRewardsDetails || !!userSeasonOneRewardsDetails);
+
+  console.log(isUserEligible, 'isUserEligible');
 
   return (
     <Box
@@ -60,7 +65,6 @@ export const PreLaunch = () => {
       `}
     >
       <PreLaunchHeader
-        universalAccount={universalAccount}
         userRewardsDetails={userRewardsDetails}
         userSeasonOneRewardsDetails={userSeasonOneRewardsDetails}
         verifyingSeasonThree={verifyingSeasonThree}
@@ -68,7 +72,7 @@ export const PreLaunch = () => {
         verificationSuccess={isUserVerified}
         isUserEligible={isUserEligible}
         errorMessage={errorMessage}
-        isLoading={isLoadingUserDetails}
+        isLoading={isEligibilityLoading}
       />
       <PreLaunchBenefits
         verificationSuccess={isUserVerified}

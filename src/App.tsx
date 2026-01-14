@@ -211,8 +211,8 @@ function App() {
   const walletConfig: ProviderConfigProps = {
     network: PushUI.CONSTANTS.PUSH_NETWORK.TESTNET,
     login: {
-      email: true,
-      google: true,
+      email: false,
+      google: false,
       wallet: {
         enabled: true,
       },
