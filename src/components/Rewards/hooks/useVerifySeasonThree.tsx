@@ -8,11 +8,12 @@ import { usePushWalletContext } from "@pushchain/ui-kit";
 import appConfig from "../../../config";
 import {
   useClaimSeasonThree,
+  useGetSeasonOneUserDetails,
   useGetUserRewardsDetails,
 } from "../../../queries";
 
 // helpers
-import { parseCAIP, walletToFullCAIP10 } from "../../../helpers/web3helper";
+import { parseCAIP, walletToFullCAIP10, walletToPCAIP10 } from "../../../helpers/web3helper";
 import { useSignMessageWithEthereum } from "./useSignMessage";
 import { WalletChainType } from "../utils/wallet";
 
@@ -48,12 +49,20 @@ const useVerifySeasonThree = ({
     universalAccount?.chain,
   );
 
+  const p10WalletAddress = walletToPCAIP10(
+    universalAccount?.address as string,
+  );
+
   useEffect(() => {
     setErrorMessage("");
   }, [setErrorMessage]);
 
   const { refetch: refetchUserDetails } = useGetUserRewardsDetails({
     caip10WalletAddress: caip10WalletAddress,
+  });
+
+  const { refetch: refetchUserSeasonOneDetails} = useGetSeasonOneUserDetails({
+    caip10WalletAddress: p10WalletAddress,
   });
 
   const { mutate: claimSeasonThree } = useClaimSeasonThree();
@@ -159,6 +168,7 @@ const useVerifySeasonThree = ({
                 setVerificationSuccess(true);
                 refetchActivity();
                 refetchUserDetails();
+                refetchUserSeasonOneDetails()
                 setVerifyingSeasonThree(false);
                 setErrorMessage("");
               } else {

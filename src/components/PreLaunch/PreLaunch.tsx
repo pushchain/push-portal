@@ -47,13 +47,12 @@ export const PreLaunch = () => {
     setErrorMessage,
   });
 
-  const isUserVerified = verificationSuccess || userRewardsDetails?.discordReverified;
   const isEligibilityLoading =
     isLoadingUserDetails || isLoadingUserSeasonOneDetails;
+  const isUserVerified = !isEligibilityLoading && (
+    verificationSuccess || userRewardsDetails?.discordReverified || userSeasonOneRewardsDetails?.discordReverified);
   const isUserEligible = !isEligibilityLoading &&
     (!!userRewardsDetails || !!userSeasonOneRewardsDetails);
-
-  console.log(isUserEligible, 'isUserEligible');
 
   return (
     <Box
