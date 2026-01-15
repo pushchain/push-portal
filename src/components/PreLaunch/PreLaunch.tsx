@@ -10,7 +10,7 @@ import { useVerifySeasonThree } from "../Rewards/hooks/useVerifySeasonThree"
 import { useGetSeasonOneUserDetails, useGetUserRewardsDetails } from "../../queries"
 import { walletToFullCAIP10, walletToPCAIP10 } from "../../helpers/web3helper"
 
-import { Box } from "../../blocks"
+import { Box, Skeleton } from "../../blocks"
 
 
 export const PreLaunch = () => {
@@ -47,11 +47,11 @@ export const PreLaunch = () => {
     setErrorMessage,
   });
 
-  const isEligibilityLoading =
+  const isUserDataLoading =
     isLoadingUserDetails || isLoadingUserSeasonOneDetails;
-  const isUserVerified = !isEligibilityLoading && (
+  const isUserVerified = !isUserDataLoading && (
     verificationSuccess || userRewardsDetails?.discordReverified || userSeasonOneRewardsDetails?.discordReverified);
-  const isUserEligible = !isEligibilityLoading &&
+  const isUserEligible = !isUserDataLoading &&
     (!!userRewardsDetails || !!userSeasonOneRewardsDetails);
 
   return (
@@ -63,20 +63,40 @@ export const PreLaunch = () => {
         z-index: 9;
       `}
     >
-      <PreLaunchHeader
-        userRewardsDetails={userRewardsDetails}
-        userSeasonOneRewardsDetails={userSeasonOneRewardsDetails}
-        verifyingSeasonThree={verifyingSeasonThree}
-        handleSeasonThreeVerification={handleSeasonThreeVerification}
-        verificationSuccess={isUserVerified}
-        isUserEligible={isUserEligible}
-        errorMessage={errorMessage}
-        isLoading={isEligibilityLoading}
-      />
-      <PreLaunchBenefits
-        verificationSuccess={isUserVerified}
-      />
-      <PreLaunchDivider />
+      <Skeleton isLoading={isUserDataLoading}
+        css={css`
+          width: 100%;
+          height: 300px;
+          border-radius: 24px;
+        `}
+      >
+        <PreLaunchHeader
+          userRewardsDetails={userRewardsDetails}
+          userSeasonOneRewardsDetails={userSeasonOneRewardsDetails}
+          verifyingSeasonThree={verifyingSeasonThree}
+          handleSeasonThreeVerification={handleSeasonThreeVerification}
+          verificationSuccess={isUserVerified}
+          isUserEligible={isUserEligible}
+          errorMessage={errorMessage}
+          isLoading={isUserDataLoading}
+        />
+      </Skeleton>
+
+      <Skeleton isLoading={isUserDataLoading}
+        css={css`
+          width: 100%;
+          height: 108px;
+          margin-top: 40px;
+          border-radius: 24px;
+        `}
+      >
+        <PreLaunchBenefits
+          verificationSuccess={isUserVerified}
+          isLoading={isUserDataLoading}
+        />
+      </Skeleton>
+
+     {!isUserDataLoading &&  <PreLaunchDivider />}
     </Box>
   )
 }

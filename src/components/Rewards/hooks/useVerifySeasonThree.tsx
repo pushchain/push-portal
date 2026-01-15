@@ -107,12 +107,6 @@ const useVerifySeasonThree = ({
       const username = localStorage.getItem("username");
       const email = localStorage.getItem("discord_email");
 
-      console.log("🔍 Discord Verification Data:", {
-        username,
-        email,
-        hasToken: !!token,
-      });
-
       if (username && token) {
         let verificationProof = "abcd";
         let messageToSend = {
@@ -161,7 +155,6 @@ const useVerifySeasonThree = ({
           },
           {
             onSuccess: (response) => {
-              console.log("✅ Season 3 Verification Success:", response);
 
               if (response.status === "COMPLETED" || response.success) {
                 setSeasonThreeActivityStatus("Claimed");

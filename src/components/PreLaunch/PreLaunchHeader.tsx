@@ -30,6 +30,7 @@ export const PreLaunchHeader = ({
 }: PreLaunchHeaderProps) => {
   const isMobile = useMediaQuery(device.mobileL);
   const { universalAccount, connectionStatus } = usePushWalletContext();
+  const isWalletConnected = connectionStatus === 'connected';
 
 
   // Use userId from userRewardsDetails, or fall back to userSeasonOneRewardsDetails
@@ -45,11 +46,13 @@ export const PreLaunchHeader = ({
       borderRadius="radius-md"
       css={css`
         flex: 1;
-        border: 1px solid rgba(171, 70, 248, 0.40);
-        background: rgba(0, 0, 0, 0.10);
-        background-blend-mode: plus-lighter;
-        box-shadow: 2.788px -8px 12px 0 rgba(255, 255, 255, 0.15) inset, 1.858px 1.732px 6px 0 rgba(255, 255, 255, 0.15) inset;
-        backdrop-filter: blur(10px);
+        ${!isLoading && `
+              border: 1px solid rgba(171, 70, 248, 0.40);
+              background: rgba(0, 0, 0, 0.10);
+              background-blend-mode: plus-lighter;
+              box-shadow: 2.788px -8px 12px 0 rgba(255, 255, 255, 0.15) inset, 1.858px 1.732px 6px 0 rgba(255, 255, 255, 0.15) inset;
+              backdrop-filter: blur(10px);
+            `}
       `}
     >
       <Box
@@ -167,23 +170,39 @@ export const PreLaunchHeader = ({
               flexDirection={{initial: "row", tb: "column"}}
               width="100%"
               gap="spacing-md">
-            <Box
-              display="flex"
-              flexDirection={{initial: "row", tb: "column"}}
-              alignItems="center"
-              width="100%"
-              padding="spacing-sm spacing-md"
-              gap="spacing-xs"
-              css={css`
-                border-radius: var(--radius-md, 24px);
-                border: 1px solid #FFF;
-                background: rgba(255, 255, 255, 0.40);
-                box-sizing: border-box;
-              `}
-            >
-              <Text variant="h4-semibold" color="#17181B">
-                Connect with an account used during Season 1 or 2
-              </Text>
+                <Box
+                  display="flex"
+                  flexDirection={{initial: "column", tb: "column"}}
+                  alignItems="flex-start"
+                  width="100%"
+                  padding="spacing-sm spacing-md"
+                  css={css`
+                    border-radius: var(--radius-md, 24px);
+                    border: ${isWalletConnected ? '1px solid #FFF' : '2px solid #D548EC;'};
+                    background: rgba(255, 255, 255, 0.40);
+                    box-sizing: border-box;
+                  `}
+                >
+
+                  <Box
+                    display="flex"
+                    flexDirection={{initial: "row", tb: "column"}}
+                    gap="spacing-xs"
+                    alignItems="center"
+                  >
+                    <Box
+                      display="flex"
+                      flexDirection={{initial: "column", tb: "column"}}
+                      alignItems="flex-start"
+                    >
+                      {!isWalletConnected && <Box>
+                        <Text variant="bes-bold" color="#C742DD">STEP 1</Text>
+                      </Box>}
+
+                      <Text variant="h4-semibold" color="#17181B">
+                        Connect with an account used during Season 1 or 2
+                      </Text>
+                    </Box>
 
 
               {universalAccount && connectionStatus == "connected" ? (
@@ -243,6 +262,7 @@ export const PreLaunchHeader = ({
                   <PushUniversalAccountButton />
                 </Box>
               )}
+              </Box>
             </Box>
 
             <Box
@@ -259,25 +279,36 @@ export const PreLaunchHeader = ({
                 box-sizing: border-box;
               `}
             >
-              <RewardsActivityIcon type="follow_push_on_discord" />
-              <RewardsActivityTitle activityTitle="Join [Push Chain Discord](https://discord.com/invite/pushchain) to apply for eligibility" variant="h4-semibold" isLoading={false} color="#17181B"  />
-              <Skeleton isLoading={isLoading}>
-                <Button
-                  variant="tertiary"
-                  size="small"
-                  onClick={() => {
-                    if (userId && isUserEligible) {
-                      handleSeasonThreeVerification(userId);
-                    }
-                  }}
-                  disabled={verifyingSeasonThree || !isUserEligible}
-                  css={css`
-                    color: #fff !important;
-                    `}
+
+
+                <RewardsActivityIcon type="follow_push_on_discord" />
+                <Box
+                  display="flex"
+                  flexDirection={{initial: "column", tb: "column"}}
+                  alignItems="flex-start"
                 >
-                  {verifyingSeasonThree ? "Verifying..." : "Verify Discord"}
-                </Button>
-              </Skeleton>
+                  {!isWalletConnected && <Box>
+                    <Text variant="bes-bold" color="#C742DD">STEP 2</Text>
+                  </Box>}
+                  <RewardsActivityTitle activityTitle="Join [Push Chain Discord](https://discord.com/invite/pushchain) to apply for eligibility" variant="h4-semibold" isLoading={false} color="#17181B"  />
+                  </Box>
+                <Skeleton isLoading={isLoading}>
+                  <Button
+                    variant="tertiary"
+                    size="small"
+                    onClick={() => {
+                      if (userId && isUserEligible) {
+                        handleSeasonThreeVerification(userId);
+                      }
+                    }}
+                    disabled={verifyingSeasonThree || !isUserEligible}
+                    css={css`
+                      color: #fff !important;
+                      `}
+                  >
+                    {verifyingSeasonThree ? "Verifying..." : "Verify Discord"}
+                  </Button>
+                </Skeleton>
             </Box>
           </Box>)}
         </Box>

@@ -3,11 +3,13 @@ import { Box, Text } from "../../blocks"
 
 type PreLaunchBenefitProps = {
   verificationSuccess: boolean;
+  isLoading?: boolean;
 }
 
 export const PreLaunchBenefits = ({
-  verificationSuccess
+  verificationSuccess,
 }: PreLaunchBenefitProps) => {
+
   return (
     <Box
       display="flex"
