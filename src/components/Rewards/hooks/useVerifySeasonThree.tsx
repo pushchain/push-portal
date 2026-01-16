@@ -2,17 +2,18 @@
 import { useEffect, useState, useCallback } from "react";
 
 // Third-party libraries
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { usePushWalletContext } from "@pushchain/ui-kit";
 
 // hooks
 import appConfig from "../../../config";
 import {
   useClaimSeasonThree,
+  useGetSeasonOneUserDetails,
   useGetUserRewardsDetails,
 } from "../../../queries";
 
 // helpers
-import { walletToFullCAIP10 } from "../../../helpers/web3helper";
+import { parseCAIP, walletToFullCAIP10, walletToPCAIP10 } from "../../../helpers/web3helper";
 import { useSignMessageWithEthereum } from "./useSignMessage";
 import { WalletChainType } from "../utils/wallet";
 
@@ -38,14 +39,18 @@ const useVerifySeasonThree = ({
   const [updatedId, setUpdatedId] = useState<string | null>(null);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
 
-  const { universalAddress } = usePushWalletContext();
+  const { universalAccount } = usePushWalletContext();
+  const { chainId } = parseCAIP(universalAccount?.chain);
   const { signMessage } = useSignMessageWithEthereum();
 
-  const account = universalAddress?.address;
+  const account = universalAccount?.address;
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAddress?.address as string,
-    universalAddress?.chainId,
-    universalAddress?.chain,
+    universalAccount?.address as string,
+    universalAccount?.chain,
+  );
+
+  const p10WalletAddress = walletToPCAIP10(
+    universalAccount?.address as string,
   );
 
   useEffect(() => {
@@ -54,6 +59,10 @@ const useVerifySeasonThree = ({
 
   const { refetch: refetchUserDetails } = useGetUserRewardsDetails({
     caip10WalletAddress: caip10WalletAddress,
+  });
+
+  const { refetch: refetchUserSeasonOneDetails} = useGetSeasonOneUserDetails({
+    caip10WalletAddress: p10WalletAddress,
   });
 
   const { mutate: claimSeasonThree } = useClaimSeasonThree();
@@ -78,6 +87,12 @@ const useVerifySeasonThree = ({
 
     const newWindow = window.open(authURL, "_blank");
 
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
+      setErrorMessage("Popup blocked. Please allow popups for this site and try again.");
+      setVerifyingSeasonThree(false);
+      return;
+    }
+
     const checkAuth = setInterval(() => {
       if (newWindow?.closed) {
         clearInterval(checkAuth);
@@ -92,12 +107,6 @@ const useVerifySeasonThree = ({
       const username = localStorage.getItem("username");
       const email = localStorage.getItem("discord_email");
 
-      console.log("🔍 Discord Verification Data:", {
-        username,
-        email,
-        hasToken: !!token,
-      });
-
       if (username && token) {
         let verificationProof = "abcd";
         let messageToSend = {
@@ -108,8 +117,8 @@ const useVerifySeasonThree = ({
 
 
         const isSupportedChain =
-          universalAddress?.chainId == WalletChainType.SEPOLIA ||
-          universalAddress?.chainId == WalletChainType.ETH;
+          chainId == WalletChainType.SEPOLIA ||
+          chainId == WalletChainType.ETH;
 
         if (isSupportedChain) {
           const {
@@ -146,13 +155,13 @@ const useVerifySeasonThree = ({
           },
           {
             onSuccess: (response) => {
-              console.log("✅ Season 3 Verification Success:", response);
 
               if (response.status === "COMPLETED" || response.success) {
                 setSeasonThreeActivityStatus("Claimed");
                 setVerificationSuccess(true);
                 refetchActivity();
                 refetchUserDetails();
+                refetchUserSeasonOneDetails()
                 setVerifyingSeasonThree(false);
                 setErrorMessage("");
               } else {

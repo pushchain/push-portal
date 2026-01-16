@@ -3,14 +3,14 @@ import { css } from "styled-components";
 import {
   PushWalletButton,
   usePushWalletContext,
-} from "@pushprotocol/pushchain-ui-kit";
+} from "@pushchain/ui-kit";
 
 import { Box, Text, ArrowDown, GlowStreaks } from "../../blocks";
 import { RenderLoggedInVerifiedState } from "./Dashboard/RenderLoggedInVerifiedState";
 
 export const RewardsUpdatedDashboard = () => {
-  const { universalAddress } = usePushWalletContext();
-  const isWalletConnected = Boolean(universalAddress?.address);
+  const { universalAccount } = usePushWalletContext();
+  const isWalletConnected = Boolean(universalAccount?.address);
 
   const renderLoggedOutState = () => (
     <Box
@@ -132,7 +132,7 @@ export const RewardsUpdatedDashboard = () => {
         </Box>
 
         <PushWalletButton
-          universalAddress={universalAddress}
+          universalAccount={universalAccount}
           title="Connect Account"
           styling={{
             width: "fit-content",

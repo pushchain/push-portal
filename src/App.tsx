@@ -13,10 +13,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createGlobalStyle, css } from "styled-components";
 import {
-  PushWalletProvider,
-  CONSTANTS,
-  PushWalletIFrame,
-} from "@pushprotocol/pushchain-ui-kit";
+  PushUI,
+  PushUniversalWalletProvider,
+  ProviderConfigProps,
+} from '@pushchain/ui-kit';
 
 import { getPreviewBasePath } from "../basePath";
 import { ThemeProviderWrapper } from "./context/themeContext";
@@ -35,6 +35,7 @@ import { Sidebar } from "./components/sidebar";
 import Header from "./structure/Header";
 import SeasonBg from "../static/assets/website/shared/season-bg.webp";
 import PreLaunchPage from "./pages/PreLaunchPage";
+import AdminPage from "./pages/AdminPage";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -116,7 +117,8 @@ const AppContent = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const isDiscordVerification = location.pathname === "/discord/verification";
+  const hideSideBar = location.pathname === "/discord/verification" || location.pathname === "/admin/controls";
+  const isAdminPage = location.pathname === "/admin/controls";
 
   return (
     <Box
@@ -125,7 +127,8 @@ const AppContent = () => {
       height="100vh"
       css={css``}
     >
-      <Box
+      {!isAdminPage &&
+        (<Box
         css={css`
           position: fixed;
           left: 0;
@@ -139,7 +142,7 @@ const AppContent = () => {
           pointer-events: none;
           z-index: 0;
         `}
-      />
+      />)}
 
       <Header toggleSidebar={toggleSidebar} />
       <Box
@@ -149,7 +152,7 @@ const AppContent = () => {
           flex: 1;
         `}
       >
-        {!isDiscordVerification && (
+        {!hideSideBar && (
           <Sidebar
             isOpen={isSidebarOpen}
             onClose={() => setIsSidebarOpen(false)}
@@ -157,7 +160,7 @@ const AppContent = () => {
         )}
         <Box
           width="100%"
-          maxWidth={isDiscordVerification ? "100%" : "1200px"}
+          maxWidth={hideSideBar ? "100%" : "1200px"}
           padding={{
             initial: "spacing-none spacing-md",
             tb: "spacing-none spacing-xs",
@@ -165,15 +168,16 @@ const AppContent = () => {
           css={css`
             overflow-y: auto;
             overflow-x: hidden;
-            margin: ${isDiscordVerification ? "0" : "0 auto"};
+            margin: ${hideSideBar ? "0" : "0 auto"};
           `}
         >
           <Routes>
-            {/*<Route path="/" element={<Navigate to="/rewards/pre-launch" replace />} />*/}
-            {/*<Route path="/rewards" element={<Navigate to="/rewards/pre-launch" replace />} />*/}
-            <Route path="/rewards" element={<RewardsPage />} />
-            <Route path="/rewards/pushpass" element={<PushPassPage />} />
-            {/*<Route path="/rewards/pre-launch" element={<PreLaunchPage />} />*/}
+            <Route path="/" element={<Navigate to="/rewards/pre-launch" replace />} />
+            <Route path="/rewards" element={<Navigate to="/rewards/pre-launch" replace />} />
+            <Route path="/admin/controls" element={<AdminPage />} />
+            {/*<Route path="/rewards" element={<RewardsPage />} />
+            <Route path="/rewards/pushpass" element={<PushPassPage />} />*/}
+            <Route path="/rewards/pre-launch" element={<PreLaunchPage />} />
             <Route
               path="/rewards/pushpass/:id"
               element={<PushPassItemPage />}
@@ -203,13 +207,42 @@ const AppContent = () => {
 };
 
 function App() {
+
+  const walletConfig: ProviderConfigProps = {
+    network: PushUI.CONSTANTS.PUSH_NETWORK.TESTNET,
+    login: {
+      email: false,
+      google: false,
+      wallet: {
+        enabled: true,
+      },
+      appPreview: true,
+    },
+    modal: {
+      loginLayout: PushUI.CONSTANTS.LOGIN.LAYOUT.SPLIT,
+      connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
+      appPreview: true,
+      connectedInteraction: PushUI.CONSTANTS.CONNECTED.INTERACTION.BLUR,
+    },
+    chainConfig: {
+      rpcUrls: {
+      },
+    },
+  };
+
   return (
     <ThemeProviderWrapper>
       {/* Global style */}
       <GlobalStyle />
-      <PushWalletProvider env={CONSTANTS.ENV.PROD}>
+      <PushUniversalWalletProvider
+        config={walletConfig}
+        themeMode={PushUI.CONSTANTS.THEME.DARK}
+        themeOverrides={{
+          '--pw-core-font-family': "'DM Sans', sans-serif",
+          '--pwauth-btn-connected-bg-color': '#D548EC'
+        }}
+      >
         <AccountProvider>
-          <PushWalletIFrame />
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>
@@ -219,7 +252,7 @@ function App() {
             </QueryClientProvider>
           </RewardsContextProvider>
         </AccountProvider>
-      </PushWalletProvider>
+      </PushUniversalWalletProvider>
     </ThemeProviderWrapper>
   );
 }

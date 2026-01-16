@@ -1,6 +1,6 @@
 import { css } from "styled-components"
-import { PushWalletButton } from "@pushprotocol/pushchain-ui-kit"
-import { Alert, Box, Button,  CrossFilled, GlowStreaks, SealCheckFilled, Text } from "../../blocks"
+import { PushUniversalAccountButton, usePushWalletContext } from "@pushchain/ui-kit"
+import { Alert, Box, Button,  CrossFilled, GlowStreaks, SealCheckFilled, Skeleton, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
 import { UserRewardsDetailResponse, UserSeasonOneResponse } from "../../queries/types"
 import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
@@ -8,7 +8,6 @@ import useMediaQuery from "../../hooks/useMediaQuery"
 import { device } from "../../config/globals"
 
 type PreLaunchHeaderProps = {
-  universalAddress: any;
   userRewardsDetails?: UserRewardsDetailResponse;
   userSeasonOneRewardsDetails?: UserSeasonOneResponse;
   verifyingSeasonThree: boolean;
@@ -16,19 +15,23 @@ type PreLaunchHeaderProps = {
   verificationSuccess: boolean;
   isUserEligible?: boolean;
   errorMessage?: string;
+  isLoading?: boolean;
 }
 
 export const PreLaunchHeader = ({
-  universalAddress,
   userRewardsDetails,
   userSeasonOneRewardsDetails,
   verifyingSeasonThree,
   handleSeasonThreeVerification,
   verificationSuccess,
   isUserEligible,
-  errorMessage
+  errorMessage,
+  isLoading
 }: PreLaunchHeaderProps) => {
   const isMobile = useMediaQuery(device.mobileL);
+  const { universalAccount, connectionStatus } = usePushWalletContext();
+  const isWalletConnected = connectionStatus === 'connected';
+
 
   // Use userId from userRewardsDetails, or fall back to userSeasonOneRewardsDetails
   const userId = userRewardsDetails?.userId || userSeasonOneRewardsDetails?.userId;
@@ -43,11 +46,13 @@ export const PreLaunchHeader = ({
       borderRadius="radius-md"
       css={css`
         flex: 1;
-        border: 1px solid rgba(171, 70, 248, 0.40);
-        background: rgba(0, 0, 0, 0.10);
-        background-blend-mode: plus-lighter;
-        box-shadow: 2.788px -8px 12px 0 rgba(255, 255, 255, 0.15) inset, 1.858px 1.732px 6px 0 rgba(255, 255, 255, 0.15) inset;
-        backdrop-filter: blur(10px);
+        ${!isLoading && `
+              border: 1px solid rgba(171, 70, 248, 0.40);
+              background: rgba(0, 0, 0, 0.10);
+              background-blend-mode: plus-lighter;
+              box-shadow: 2.788px -8px 12px 0 rgba(255, 255, 255, 0.15) inset, 1.858px 1.732px 6px 0 rgba(255, 255, 255, 0.15) inset;
+              backdrop-filter: blur(10px);
+            `}
       `}
     >
       <Box
@@ -165,83 +170,99 @@ export const PreLaunchHeader = ({
               flexDirection={{initial: "row", tb: "column"}}
               width="100%"
               gap="spacing-md">
-            <Box
-              display="flex"
-              flexDirection={{initial: "row", tb: "column"}}
-              alignItems="center"
-              width="100%"
-              padding="spacing-sm spacing-md"
-              gap="spacing-xs"
-              css={css`
-                border-radius: var(--radius-md, 24px);
-                border: 1px solid #FFF;
-                background: rgba(255, 255, 255, 0.40);
-                box-sizing: border-box;
-              `}
-            >
-              <Text variant="h4-semibold" color="#17181B">
-                Connect with an account used during Season 1 or 2
-              </Text>
+                <Box
+                  display="flex"
+                  flexDirection={{initial: "column", tb: "column"}}
+                  alignItems="flex-start"
+                  width="100%"
+                  padding="spacing-sm spacing-md"
+                  css={css`
+                    border-radius: var(--radius-md, 24px);
+                    border: ${isWalletConnected ? '1px solid #FFF' : '2px solid #D548EC;'};
+                    background: rgba(255, 255, 255, 0.40);
+                    box-sizing: border-box;
+                  `}
+                >
 
-              {universalAddress ? (
-                isUserEligible ? (
                   <Box
                     display="flex"
-                    flexDirection="row"
+                    flexDirection={{initial: "row", tb: "column"}}
+                    gap="spacing-xs"
                     alignItems="center"
-                    gap="spacing-xxs"
-                    padding="spacing-xs spacing-md"
                   >
-                    <SealCheckFilled color='#00A47F' size={16} />
-                    <Text
-                      color="#00A47F"
-                      css={css`
-                        white-space: nowrap;
-                        leading-trim: both;
-                        font-size: 14px;
-                        font-style: normal;
-                        font-weight: 600;
-                        line-height: 16px;
-                      `}
+                    <Box
+                      display="flex"
+                      flexDirection={{initial: "column", tb: "column"}}
+                      alignItems="flex-start"
                     >
-                      Account Verified
-                    </Text>
-                  </Box>
-                ) : (
-                  <Box
-                    display="flex"
-                    flexDirection="row"
-                    alignItems="center"
-                    gap="spacing-xxs"
-                    padding="spacing-xs spacing-md"
-                  >
-                    <CrossFilled color="#E53935" size={16} />
-                    <Text
-                      color="#E53935"
-                      css={css`
-                        white-space: nowrap;
-                        leading-trim: both;
-                        font-size: 14px;
-                        font-style: normal;
-                        font-weight: 600;
-                        line-height: 16px;
-                      `}
+                      {!isWalletConnected && <Box>
+                        <Text variant="bes-bold" color="#C742DD">STEP 1</Text>
+                      </Box>}
+
+                      <Text variant="h4-semibold" color="#17181B">
+                        Connect with an account used during Season 1 or 2
+                      </Text>
+                    </Box>
+
+
+              {universalAccount && connectionStatus == "connected" ? (
+                <Skeleton
+                  isLoading={isLoading}
+                >
+                  {isUserEligible ? (
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      alignItems="center"
+                      gap="spacing-xxs"
+                      padding="spacing-xs spacing-md"
                     >
-                      Not Eligible
-                    </Text>
-                  </Box>
-                )
+                      <SealCheckFilled color="#00A47F" size={16} />
+                      <Text
+                        color="#00A47F"
+                        css={css`
+                          white-space: nowrap;
+                          leading-trim: both;
+                          font-size: 14px;
+                          font-style: normal;
+                          font-weight: 600;
+                          line-height: 16px;
+                        `}
+                      >
+                        Account Verified
+                      </Text>
+                    </Box>
+                  ) : (
+                    <Box
+                      display="flex"
+                      flexDirection="row"
+                      alignItems="center"
+                      gap="spacing-xxs"
+                      padding="spacing-xs spacing-md"
+                    >
+                      <CrossFilled color="#E53935" size={16} />
+                      <Text
+                        color="#E53935"
+                        css={css`
+                          white-space: nowrap;
+                          leading-trim: both;
+                          font-size: 14px;
+                          font-style: normal;
+                          font-weight: 600;
+                          line-height: 16px;
+                        `}
+                      >
+                        Not Eligible
+                      </Text>
+                    </Box>
+                  )}
+                </Skeleton>
               ) : (
-                <PushWalletButton
-                  universalAddress={universalAddress}
-                  title="Connect Account"
-                  styling={{
-                    width: "fit-content",
-                    fontFamily: "DM Sans !important",
-                    borderRadius: "12px"
-                  }}
-                />
+                <Box>
+                  <PushUniversalAccountButton />
+                </Box>
               )}
+              </Box>
             </Box>
 
             <Box
@@ -258,23 +279,36 @@ export const PreLaunchHeader = ({
                 box-sizing: border-box;
               `}
             >
-              <RewardsActivityIcon type="follow_push_on_discord" />
-              <RewardsActivityTitle activityTitle="Join [Push Chain Discord](https://discord.com/invite/pushchain) to apply for eligibility" variant="h4-semibold" isLoading={false} color="#17181B"  />
-              <Button
-                variant="tertiary"
-                size="small"
-                onClick={() => {
-                  if (userId && isUserEligible) {
-                    handleSeasonThreeVerification(userId);
-                  }
-                }}
-                disabled={verifyingSeasonThree || !isUserEligible}
-                css={css`
-                  color: #fff !important;
-                  `}
-              >
-                {verifyingSeasonThree ? "Verifying..." : "Verify Discord"}
-              </Button>
+
+
+                <RewardsActivityIcon type="follow_push_on_discord" />
+                <Box
+                  display="flex"
+                  flexDirection={{initial: "column", tb: "column"}}
+                  alignItems="flex-start"
+                >
+                  {!isWalletConnected && <Box>
+                    <Text variant="bes-bold" color="#C742DD">STEP 2</Text>
+                  </Box>}
+                  <RewardsActivityTitle activityTitle="Join [Push Chain Discord](https://discord.com/invite/pushchain) to apply for eligibility" variant="h4-semibold" isLoading={false} color="#17181B"  />
+                  </Box>
+                <Skeleton isLoading={isLoading}>
+                  <Button
+                    variant="tertiary"
+                    size="small"
+                    onClick={() => {
+                      if (userId && isUserEligible) {
+                        handleSeasonThreeVerification(userId);
+                      }
+                    }}
+                    disabled={verifyingSeasonThree || !isUserEligible}
+                    css={css`
+                      color: #fff !important;
+                      `}
+                  >
+                    {verifyingSeasonThree ? "Verifying..." : "Verify Discord"}
+                  </Button>
+                </Skeleton>
             </Box>
           </Box>)}
         </Box>

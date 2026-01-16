@@ -1,4 +1,5 @@
 export const allActivities = "allActivities";
+export const approveVaultUser = 'approveVaultUser';
 export const claimRewards = "claimRewards";
 export const seasonThree = "seasonThree";
 export const createUserRewardsDetails = "createUserRewardsDetails";
@@ -6,13 +7,21 @@ export const discordDetails = "discordDetails";
 export const uniV2StakeEpoch = "uniV2StakeEpoch";
 export const userXP = "userXP";
 export const refreshUserXp = "refreshUserXp";
+export const pointsVaultApprovedUsers = 'pointsVaultApprovedUsers';
+export const pointsVaultPendingUsers = 'pointsVaultPendingUsers';
+export const pointsVaultRejectedUsers = 'pointsVaultRejectedUsers';
+export const pointsVaultSearch = 'pointsVaultSearch';
+export const pointsVaultUserLoginKey = 'pointsVaultUserLogin';
 export const pushPreviousStakeEpoch = "pushPreviousStakeEpoch";
 export const pushStakeEpoch = "pushStakeEpoch";
+export const rejectVaultUser = 'rejectVaultUser';
 export const rewardActivityStatus = "rewardActivityStatus";
 export const rewardsActivity = "rewardsActivity";
 export const rewardsLeaderboardS1 = "rewardsLeaderboardS1";
 export const rewardsLeaderboardS2 = "rewardsLeaderboardS2";
 export const userRewardsDetails = "userRewardsDetails";
+export const userRewardsStats = 'userRewardsStats';
+export const userTwitterDetails = 'userTwitterDetails';
 export const seasonOneUserDetails = "seasonOneUserDetails";
 
 export const characterInfo = "characterInfo";

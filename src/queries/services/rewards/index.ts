@@ -15,3 +15,4 @@ export * from "./getRewardsleaderboardS2";
 export * from "./getUserXP";
 export * from "./updateUserXP";
 export * from "./getSeasonOneUserDetails";
+export * from './getUserRewardsStats';

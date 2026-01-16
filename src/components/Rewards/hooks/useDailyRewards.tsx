@@ -20,12 +20,12 @@ import {
 // types
 import { Activity } from "../../../queries";
 import { walletToFullCAIP10 } from "../../../helpers/web3helper";
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { usePushWalletContext } from "@pushchain/ui-kit";
 
 const useDailyRewards = () => {
-  const { universalAddress } = usePushWalletContext();
-  const isWalletConnected = Boolean(universalAddress?.address);
-  const account = universalAddress?.address;
+  const { universalAccount } = usePushWalletContext();
+  const isWalletConnected = Boolean(universalAccount?.address);
+  const account = universalAccount?.address;
 
   // State variables
   const [activeItem, setActiveItem] = useState<Activity | null>(null);
@@ -35,9 +35,8 @@ const useDailyRewards = () => {
 
   // Getting user ID by wallet address
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAddress?.address as string,
-    universalAddress?.chainId,
-    universalAddress?.chain,
+    universalAccount?.address as string,
+    universalAccount?.chain,
   );
   const { data: userDetails } = useGetUserRewardsDetails({
     caip10WalletAddress,

@@ -17,8 +17,8 @@
     "@babel/runtime": "^7.26.9",
     "@emotion/react": "^11.14.0",
     "@metamask/eth-sig-util": "^4.0.0",
+    "@pushchain/ui-kit": "^4.0.5",
     "@pushprotocol/push-chain": "^0.1.7",
-    "@pushprotocol/pushchain-ui-kit": "^1.0.8",
     "@pushprotocol/restapi": "^1.7.31",
     "@pushprotocol/uiweb": "1.7.1",
     "@radix-ui/react-dialog": "^1.1.6",
@@ -47,6 +47,7 @@
     "eth-sig-util": "^3.0.1",
     "ethers": "^5.7.2",
     "firebase": "^10.12.2",
+    "formik": "^2.4.9",
     "gsap": "^3.14.1",
     "openpgp": "^5.5.0",
     "rc-pagination": "^5.1.0",
@@ -56,10 +57,12 @@
     "react-infinite-scroller": "^1.2.6",
     "react-router-dom": "^6.9.0",
     "react-slider": "^2.0.6",
+    "react-use": "^17.6.0",
     "siwe": "^3.0.0",
     "sonner": "^2.0.1",
     "styled-components": "^5.3.8",
-    "web3": "^1.8.2"
+    "web3": "^1.8.2",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@types/react": "^19.0.10",

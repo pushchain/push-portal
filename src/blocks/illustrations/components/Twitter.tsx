@@ -1,11 +1,9 @@
 import React, { FC } from "react";
 import { IllustrationWrapper } from "../IllustrationWrapper";
 import { IllustrationProps } from "../Illustrations.types";
-import { useTheme } from "../../../../src/context/themeContext";
 
 const Twitter: FC<IllustrationProps> = (allProps) => {
   const { svgProps: props, ...restProps } = allProps;
-  const { darkMode } = useTheme();
   return (
     <IllustrationWrapper
       componentName="Twitter"
@@ -20,7 +18,7 @@ const Twitter: FC<IllustrationProps> = (allProps) => {
         >
           <path
             d="M22.7591 16.1758L36.4904 0.557524H33.2365L21.3137 14.1186L11.7909 0.557524H0.807556L15.2078 21.0643L0.807556 37.4425H4.06161L16.6524 23.1215L26.7092 37.4425H37.6925L22.7591 16.1758ZM18.3022 21.245L16.8432 19.203L5.23409 2.95444H10.2321L19.6008 16.0675L21.0599 18.1096L33.238 35.1546H28.24L18.3022 21.245Z"
-            fill={darkMode ? "#F5F6F8" : "#17181B"}
+            fill="#F5F6F8"
           />
         </svg>
       }

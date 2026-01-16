@@ -1,11 +1,9 @@
 import React, { FC } from "react";
 import { IllustrationWrapper } from "../IllustrationWrapper";
 import { IllustrationProps } from "../Illustrations.types";
-import { useTheme } from "../../../../src/context/themeContext";
 
 const XP: FC<IllustrationProps> = (allProps) => {
   const { svgProps: props, ...restProps } = allProps;
-  const { darkMode } = useTheme();
   return (
     <IllustrationWrapper
       componentName="XP"
