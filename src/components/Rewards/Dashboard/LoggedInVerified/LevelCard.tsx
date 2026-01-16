@@ -3,14 +3,13 @@ import { css } from 'styled-components';
 import { Box, LevelBadge, Text } from '../../../../blocks';
 import { useGetUserRewardsDetails } from '../../../../queries';
 import { walletToFullCAIP10 } from '../../../../helpers/web3helper';
-import { usePushWalletContext } from '@pushprotocol/pushchain-ui-kit';
+import { usePushWalletContext } from '@pushchain/ui-kit';
 
 export const LevelCard: FC = () => {
-  const { universalAddress } = usePushWalletContext();
+  const { universalAccount } = usePushWalletContext();
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAddress?.address as string,
-    universalAddress?.chainId,
-    universalAddress?.chain,
+    universalAccount?.address as string,
+    universalAccount?.chain,
   );
 
   const { data: userDetails } = useGetUserRewardsDetails({
