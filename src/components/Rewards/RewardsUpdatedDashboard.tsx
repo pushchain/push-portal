@@ -1,7 +1,7 @@
 import { css } from "styled-components";
 
 import {
-  PushWalletButton,
+  PushUniversalAccountButton,
   usePushWalletContext,
 } from "@pushchain/ui-kit";
 
@@ -131,16 +131,7 @@ export const RewardsUpdatedDashboard = () => {
           </Text>
         </Box>
 
-        <PushWalletButton
-          universalAccount={universalAccount}
-          title="Connect Account"
-          styling={{
-            width: "fit-content",
-            fontFamily: "inherit",
-            margin: "0 auto",
-            borderRadius: "12px"
-          }}
-        />
+        <PushUniversalAccountButton />
       </Box>
       </Box>
 

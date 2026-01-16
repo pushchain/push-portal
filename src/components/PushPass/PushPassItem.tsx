@@ -1,5 +1,5 @@
 import { css } from "styled-components"
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit"
+import { usePushWalletContext } from "@pushchain/ui-kit"
 import { useNavigate } from "react-router-dom"
 
 import { device } from "../../config/globals"
