@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 
 // Third-party libraries
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 // hooks
 import appConfig from "../../../config";
@@ -12,7 +12,7 @@ import {
 } from "../../../queries";
 
 // helpers
-import { parseCAIP, walletToFullCAIP10 } from "../../../helpers/web3helper";
+import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import { useSignMessageWithEthereum } from "./useSignMessage";
 import { WalletChainType } from "../utils/wallet";
 
@@ -37,14 +37,14 @@ const useVerifyDiscord = ({
   );
   const [updatedId, setUpdatedId] = useState<string | null>(null);
 
-  const { universalAccount } = usePushWalletContext();
-  const { chainId } = parseCAIP(universalAccount?.chain);
+  const { universalAddress } = usePushWalletContext();
   const { signMessage } = useSignMessageWithEthereum();
 
-  const account = universalAccount?.address;
+  const account = universalAddress?.address;
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAccount?.address as string,
-    universalAccount?.chain,
+    universalAddress?.address as string,
+    universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   useEffect(() => {
@@ -98,8 +98,8 @@ const useVerifyDiscord = ({
         };
 
         const isSupportedChain =
-          chainId == WalletChainType.SEPOLIA ||
-          chainId == WalletChainType.ETH;
+            universalAddress?.chainId == WalletChainType.SEPOLIA ||
+            universalAddress?.chainId == WalletChainType.ETH;
 
         if (isSupportedChain) {
           const {

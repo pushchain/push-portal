@@ -3,7 +3,7 @@ import { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FaBars } from 'react-icons/fa';
 
-import { PushUniversalAccountButton } from "@pushchain/ui-kit";
+import { PushWalletButton, usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 import useMediaQuery from "../hooks/useMediaQuery";
 import { device } from "../config/globals";
@@ -19,6 +19,7 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
   const baseURL = "/";
   const navigate = useNavigate();
+  const { universalAddress } = usePushWalletContext();
 
   const isTablet = useMediaQuery(device.tablet);
   const isLaptop = useMediaQuery(device.laptopL);
@@ -57,10 +58,17 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
         alignItems="center"
       >
         {!isTablet && (
-          <Box>
-            <PushUniversalAccountButton />
-          </Box>
-        )}
+               <PushWalletButton
+                 universalAddress={universalAddress}
+                 title="Connect Account"
+                 styling={{
+                   width: "fit-content",
+                   fontFamily: "DM Sans !important",
+                   margin: "0 0 0 auto",
+                   borderRadius: "12px"
+                 }}
+               />
+             )}
 
         {isLaptop &&
           (<Box

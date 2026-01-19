@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 
 // Third-party libraries
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 // hooks
 import appConfig from "../../../config";
@@ -13,7 +13,7 @@ import {
 } from "../../../queries";
 
 // helpers
-import { parseCAIP, walletToFullCAIP10, walletToPCAIP10 } from "../../../helpers/web3helper";
+import { walletToFullCAIP10, walletToPCAIP10 } from "../../../helpers/web3helper";
 import { useSignMessageWithEthereum } from "./useSignMessage";
 import { WalletChainType } from "../utils/wallet";
 
@@ -39,18 +39,18 @@ const useVerifySeasonThree = ({
   const [updatedId, setUpdatedId] = useState<string | null>(null);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
 
-  const { universalAccount } = usePushWalletContext();
-  const { chainId } = parseCAIP(universalAccount?.chain);
+  const { universalAddress } = usePushWalletContext();
   const { signMessage } = useSignMessageWithEthereum();
 
-  const account = universalAccount?.address;
+  const account = universalAddress?.address;
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAccount?.address as string,
-    universalAccount?.chain,
+    universalAddress?.address as string,
+    universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   const p10WalletAddress = walletToPCAIP10(
-    universalAccount?.address as string,
+    universalAddress?.address as string,
   );
 
   useEffect(() => {
@@ -117,8 +117,8 @@ const useVerifySeasonThree = ({
 
 
         const isSupportedChain =
-          chainId == WalletChainType.SEPOLIA ||
-          chainId == WalletChainType.ETH;
+          universalAddress?.chainId == WalletChainType.SEPOLIA ||
+          universalAddress?.chainId == WalletChainType.ETH;
 
         if (isSupportedChain) {
           const {

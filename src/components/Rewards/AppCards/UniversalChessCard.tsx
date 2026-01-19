@@ -15,7 +15,7 @@ import {
   Text,
 } from "../../../blocks";
 import ChessImg from "../../../static/assets/website/rewards/chess-app.webp";
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import { useGetUserXP, UsersActivity } from "../../../queries";
 import { ActivityButton } from "../RewardsActivity/ActivityButton";
 import { useFilteredActivities } from "../hooks/useFilteredActivities";
@@ -32,8 +32,8 @@ export type UniversalChessCardProps = {
 const UniversalChessCard: FC<UniversalChessCardProps> = ({
   setErrorMessage,
 }) => {
-  const { universalAccount } = usePushWalletContext();
-  const account = universalAccount?.address as string;
+  const { universalAddress } = usePushWalletContext();
+  const account = universalAddress?.address as string;
   const { isLocked } = useRewardsContext();
   const [currentLevel, setCurrentLevel] = useState(null);
   const [processingClaim, setProcessingClaim] = useState(false);
@@ -103,7 +103,7 @@ const UniversalChessCard: FC<UniversalChessCardProps> = ({
 
   const isEnded = isExpired ? isExpired : nextUnclaimedLevel > numberOfLevels;
   const isLoading =
-    isLoadingActivities || (isPending && Boolean(universalAccount));
+    isLoadingActivities || (isPending && Boolean(universalAddress));
 
   const startClaimProcess = (level, activityType) => {
     setClaimedLevelInfo((prevInfo) => ({

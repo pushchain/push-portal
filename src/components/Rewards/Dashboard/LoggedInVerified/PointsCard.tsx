@@ -3,14 +3,15 @@ import { css } from 'styled-components';
 import { Box, Text } from '../../../../blocks';
 import { useGetUserRewardsDetails } from '../../../../queries';
 import { walletToFullCAIP10 } from '../../../../helpers/web3helper';
-import { usePushWalletContext } from '@pushchain/ui-kit';
+import { usePushWalletContext } from '@pushprotocol/pushchain-ui-kit';
 import TotalPointsBg from '../../../../../static/assets/website/rewards/total-points-bg.webp';
 
 export const PointsCard: FC = () => {
-  const { universalAccount } = usePushWalletContext();
+  const { universalAddress } = usePushWalletContext();
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAccount?.address as string,
-    universalAccount?.chain,
+    universalAddress?.address as string,
+    universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   const { data: userDetails } = useGetUserRewardsDetails({

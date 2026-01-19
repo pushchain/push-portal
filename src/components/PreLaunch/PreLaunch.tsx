@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { css } from "styled-components"
-import { usePushWalletContext } from "@pushchain/ui-kit"
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit"
 
 import { PreLaunchHeader } from "./PreLaunchHeader"
 import { PreLaunchBenefits } from "./PreLaunchBenefits"
@@ -15,17 +15,18 @@ import { Box, Skeleton } from "../../blocks"
 
 export const PreLaunch = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const { universalAccount } = usePushWalletContext();
+  const { universalAddress } = usePushWalletContext();
 
 
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAccount?.address as string,
-    universalAccount?.chain,
+    universalAddress?.address as string,
+    universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
 
   const p10WalletAddress = walletToPCAIP10(
-    universalAccount?.address as string,
+    universalAddress?.address as string,
   );
 
   const { data: userRewardsDetails, isLoading: isLoadingUserDetails } = useGetUserRewardsDetails({
