@@ -4,18 +4,19 @@ import {
   useGetUserXP,
   useUpdateUserXP,
 } from "../../../queries";
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import { useRewardsContext } from "../../../context/rewardsContext";
 
 export const useRefreshUserXP = () => {
-  const { universalAccount } = usePushWalletContext();
+  const { universalAddress } = usePushWalletContext();
   const { setIsXPRefreshCompleted } = useRewardsContext();
 
-  const account = universalAccount?.address as string;
+  const account = universalAddress?.address as string;
   const caip10WalletAddress = walletToFullCAIP10(
     account,
-    universalAccount?.chain,
+    universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   const { data: userDetails } = useGetUserRewardsDetails({

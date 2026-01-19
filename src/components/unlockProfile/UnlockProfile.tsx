@@ -27,7 +27,7 @@ import { Button, Box, deviceMediaQ, deviceSizes } from "../../blocks";
 import { checkUnlockProfileErrors } from "./UnlockProfile.utils";
 import { colorBrands } from "../../blocks/theme/colors/colors.brands";
 import { useAccountContext } from "../../context/accountContext";
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 // Constants
 export enum UNLOCK_PROFILE_TYPE {
@@ -62,9 +62,9 @@ const UnlockProfile = ({
     // userPushSDKInstance,
   } = useAccountContext();
 
-  const { universalAccount } = usePushWalletContext();
-  const account = universalAccount?.address as string;
-  const wallet = walletToPCAIP10(universalAccount?.address as string);
+  const { universalAddress } = usePushWalletContext();
+  const account = universalAddress?.address as string;
+  const wallet = walletToPCAIP10(universalAddress?.address as string);
 
   // Ensures if profile is stored then true is returned else false
   const [rememberMe, setRememberMe] = useState(false);

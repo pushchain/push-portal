@@ -13,10 +13,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createGlobalStyle, css } from "styled-components";
 import {
-  PushUI,
-  PushUniversalWalletProvider,
-  ProviderConfigProps,
-} from '@pushchain/ui-kit';
+    PushWalletProvider,
+    CONSTANTS,
+    PushWalletIFrame,
+} from '@pushprotocol/pushchain-ui-kit';
 
 import { getPreviewBasePath } from "../basePath";
 import { ThemeProviderWrapper } from "./context/themeContext";
@@ -208,41 +208,36 @@ const AppContent = () => {
 
 function App() {
 
-  const walletConfig: ProviderConfigProps = {
-    network: PushUI.CONSTANTS.PUSH_NETWORK.TESTNET,
-    login: {
-      email: false,
-      google: false,
-      wallet: {
-        enabled: true,
-      },
-      appPreview: true,
-    },
-    modal: {
-      loginLayout: PushUI.CONSTANTS.LOGIN.LAYOUT.SPLIT,
-      connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
-      appPreview: true,
-      connectedInteraction: PushUI.CONSTANTS.CONNECTED.INTERACTION.BLUR,
-    },
-    chainConfig: {
-      rpcUrls: {
-      },
-    },
-  };
+  // TODO: comment config data
+  // const walletConfig: ProviderConfigProps = {
+  //   network: PushUI.CONSTANTS.PUSH_NETWORK.TESTNET,
+  //   login: {
+  //     email: false,
+  //     google: false,
+  //     wallet: {
+  //       enabled: true,
+  //     },
+  //     appPreview: true,
+  //   },
+  //   modal: {
+  //     loginLayout: PushUI.CONSTANTS.LOGIN.LAYOUT.SPLIT,
+  //     connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
+  //     appPreview: true,
+  //     connectedInteraction: PushUI.CONSTANTS.CONNECTED.INTERACTION.BLUR,
+  //   },
+  //   chainConfig: {
+  //     rpcUrls: {
+  //     },
+  //   },
+  // };
 
   return (
     <ThemeProviderWrapper>
       {/* Global style */}
       <GlobalStyle />
-      <PushUniversalWalletProvider
-        config={walletConfig}
-        themeMode={PushUI.CONSTANTS.THEME.DARK}
-        themeOverrides={{
-          '--pw-core-font-family': "'DM Sans', sans-serif",
-          '--pwauth-btn-connected-bg-color': '#D548EC'
-        }}
-      >
+      <PushWalletProvider env={CONSTANTS.ENV.PROD}>
         <AccountProvider>
+          <PushWalletIFrame />
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>
@@ -252,7 +247,7 @@ function App() {
             </QueryClientProvider>
           </RewardsContextProvider>
         </AccountProvider>
-      </PushUniversalWalletProvider>
+      </PushWalletProvider>
     </ThemeProviderWrapper>
   );
 }

@@ -11,7 +11,7 @@ import {
 } from "../../../blocks";
 
 import SimulateImg from "../../../static/assets/website/rewards/simulate-app.webp";
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import { useRewardsContext } from "../../context/rewardsContext";
 import { RewardsActivityTitle } from "../RewardsActivity/RewardsActivityTitle";
 import { ActivityButton } from "../RewardsActivity/ActivityButton";
@@ -25,10 +25,10 @@ export type SendTestTxCardProps = {
 };
 
 const SendTestTxCard: FC<SendTestTxCardProps> = ({ setErrorMessage }) => {
-  const { universalAccount } = usePushWalletContext();
+  const { universalAddress } = usePushWalletContext();
   const { isLocked } = useRewardsContext();
 
-  const account = universalAccount?.address as string;
+  const account = universalAddress?.address as string;
 
   const {
     filteredActivities,

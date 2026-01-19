@@ -1,5 +1,5 @@
 import { css } from "styled-components"
-import { PushUniversalAccountButton, usePushWalletContext } from "@pushchain/ui-kit"
+import { PushWalletButton, usePushWalletContext } from "@pushprotocol/pushchain-ui-kit"
 import { Alert, Box, Button,  CrossFilled, GlowStreaks, SealCheckFilled, Skeleton, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
 import { UserRewardsDetailResponse, UserSeasonOneResponse } from "../../queries/types"
@@ -29,7 +29,7 @@ export const PreLaunchHeader = ({
   isLoading
 }: PreLaunchHeaderProps) => {
   const isMobile = useMediaQuery(device.mobileL);
-  const { universalAccount, connectionStatus } = usePushWalletContext();
+  const { universalAddress, connectionStatus } = usePushWalletContext();
   const isWalletConnected = connectionStatus === 'connected';
 
 
@@ -205,7 +205,7 @@ export const PreLaunchHeader = ({
                     </Box>
 
 
-              {universalAccount && connectionStatus == "connected" ? (
+              {universalAddress && connectionStatus == "connected" ? (
                 <Skeleton
                   isLoading={isLoading}
                 >
@@ -258,9 +258,16 @@ export const PreLaunchHeader = ({
                   )}
                 </Skeleton>
               ) : (
-                <Box>
-                  <PushUniversalAccountButton />
-                </Box>
+                       <PushWalletButton
+                         universalAddress={universalAddress}
+                         title="Connect Account"
+                         styling={{
+                           width: "fit-content",
+                           fontFamily: "DM Sans !important",
+                           margin: "0 0 0 auto",
+                           borderRadius: "12px"
+                         }}
+                       />
               )}
               </Box>
             </Box>

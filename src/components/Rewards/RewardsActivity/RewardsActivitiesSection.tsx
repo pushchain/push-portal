@@ -3,7 +3,7 @@ import { FC } from "react";
 import { css } from "styled-components";
 
 import { Box, Lock, Text } from "../../../blocks";
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import {
   StakeActivityResponse,
   useGetTweetStatus,
@@ -18,8 +18,8 @@ import { walletToFullCAIP10 } from "../../helpers/web3helper";
 export type RewardActivitiesProps = Record<string, never>;
 
 const RewardsActivitiesSection: FC<RewardActivitiesProps> = () => {
-  const { universalAccount } = usePushWalletContext();
-  const account = universalAccount?.address as string;
+  const { universalAddress } = usePushWalletContext();
+  const account = universalAddress?.address as string;
 
   const { isLocked } = useRewardsContext();
 

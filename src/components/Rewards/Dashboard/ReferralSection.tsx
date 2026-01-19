@@ -3,7 +3,7 @@ import React, { FC } from "react";
 
 // third party libraries
 import { css } from "styled-components";
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 //hooks
 import { useGetUserRewardsDetails } from "../../../queries";
@@ -23,12 +23,13 @@ const ReferralSection: FC<ReferralSectionProps> = () => {
   const previewBasePath = getPreviewBasePath() || "";
   const baseUrl = window.location.origin + previewBasePath;
 
-  const { universalAccount } = usePushWalletContext();
-  const account = universalAccount?.address;
-  const isWalletConnected = Boolean(universalAccount?.address);
+  const { universalAddress } = usePushWalletContext();
+  const account = universalAddress?.address;
+  const isWalletConnected = Boolean(universalAddress?.address);
   const caip10WalletAddress = walletToFullCAIP10(
     account,
-    universalAccount?.chain,
+    universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   const { data: userDetails } = useGetUserRewardsDetails({

@@ -3,8 +3,8 @@ import {
   useCreateRewardsUser as useCreateRewardsUserQuery,
   useGetUserRewardsDetails,
 } from "../../../queries/hooks";
-import { usePushWalletContext } from "@pushchain/ui-kit";
-import { parseCAIP, walletToFullCAIP10 } from "../../../helpers/web3helper";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { walletToFullCAIP10 } from "../../../helpers/web3helper";
 import { UserRewardsDetailResponse } from "../../../queries";
 import { useRewardsContext } from "../../../context/rewardsContext";
 import { useSignMessageWithEthereum } from "./useSignMessage";
@@ -24,19 +24,18 @@ const useCreateRewardsUser = () => {
   const hasRun = useRef(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { universalAccount } = usePushWalletContext();
+  const { universalAddress } = usePushWalletContext();
   const { setIsVerifyClicked } = useRewardsContext();
 
   const { signMessage } = useSignMessageWithEthereum();
 
-  const account = universalAccount?.address as string;
-  const isWalletConnected = Boolean(universalAccount?.address);
+  const account = universalAddress?.address as string;
+  const isWalletConnected = Boolean(universalAddress?.address);
   const fullCaip10WalletAddress = walletToFullCAIP10(
     account,
-    universalAccount?.chain,
+    universalAddress?.chainId,
+    universalAddress?.chain,
   );
-  const { chainId } = parseCAIP(universalAccount?.chain);
-
   const {
     data: userDetails,
     status,
@@ -58,7 +57,7 @@ const useCreateRewardsUser = () => {
 
     // TODO: is mainnet fix
     // const isMainnet =
-    //   !isLocalhost && MAINNET_CHAINIDS.includes(universalAccount?.chainId);
+    //   !isLocalhost && MAINNET_CHAINIDS.includes(universalAddress?.chainId);
 
     // if (!isMainnet) {
     //   setErrorMessage(
@@ -69,8 +68,8 @@ const useCreateRewardsUser = () => {
 
     // Check if the chain is Sepolia or Ethereum
     const isSupportedChain =
-      chainId == WalletChainType.SEPOLIA ||
-      chainId == WalletChainType.ETH;
+         universalAddress?.chainId == WalletChainType.SEPOLIA ||
+         universalAddress?.chainId == WalletChainType.ETH;
 
     let verificationProof = "abcd";
     let messageToSend = "";

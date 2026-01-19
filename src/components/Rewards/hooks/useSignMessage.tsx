@@ -1,9 +1,8 @@
 import { useCallback, useState } from "react";
 import { ethers } from "ethers";
 import { SiweMessage, generateNonce } from "siwe";
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 import { useRewardsContext } from "../../../context/rewardsContext";
-import { parseCAIP } from "../../../helpers/web3helper";
 
 interface SignMessageResult {
   signature?: string;
@@ -13,7 +12,7 @@ interface SignMessageResult {
 }
 
 export const useSignMessageWithEthereum = () => {
-  const { universalAccount, handleSignMessage } = usePushWalletContext();
+  const { universalAddress, handleSignMessage } = usePushWalletContext();
   const { setSignature } = useRewardsContext();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,15 +21,15 @@ export const useSignMessageWithEthereum = () => {
       setIsLoading(true);
 
       try {
-        if (!universalAccount) {
+        if (!universalAddress) {
           throw new Error("Push Wallet is not connected");
         }
 
         const domain = window.location.hostname;
         const nonce = generateNonce();
         const origin = window.location.origin;
-        const address = universalAccount.address;
-        const { chainId } = parseCAIP(universalAccount?.chain);
+        const address = universalAddress.address;
+        const chainId = parseInt(universalAddress.chainId);
 
         const messageToSend = {
           domain,
@@ -66,7 +65,7 @@ export const useSignMessageWithEthereum = () => {
         setIsLoading(false);
       }
     },
-    [universalAccount, handleSignMessage, setSignature],
+    [universalAddress, handleSignMessage, setSignature],
   );
 
   return { signMessage };

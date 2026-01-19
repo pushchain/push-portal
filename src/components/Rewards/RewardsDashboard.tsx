@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import {
   PushWalletButton,
   usePushWalletContext,
-} from "@pushchain/ui-kit";
+} from "@pushprotocol/pushchain-ui-kit";
 
 import { useGetUserRewardsDetails } from "../../queries";
 
@@ -17,10 +17,11 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 
 const RewardsDashboard: FC = () => {
   const isTablet = useMediaQuery(device.tablet);
-  const { universalAccount } = usePushWalletContext();
+  const { universalAddress } = usePushWalletContext();
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAccount?.address as string,
-    universalAccount?.chain,
+    universalAddress?.address as string,
+    universalAddress?.chainId,
+    universalAddress?.chain,
   );
 
   const {
@@ -55,7 +56,7 @@ const RewardsDashboard: FC = () => {
           >
             {isTablet && (
               <PushWalletButton
-                universalAccount={universalAccount}
+                universalAddress={universalAddress}
                 title="Connect Push Wallet"
                 styling={{
                   fontFamily: "inherit",

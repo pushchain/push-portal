@@ -3,7 +3,7 @@
 // import { useLocation } from "react-router-dom";
 
 // // third party libraries
-// import { usePushWalletContext } from "@pushchain/ui-kit";
+// import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 // // helpers
 // import { walletToPCAIP10 } from "../../../helpers/web3helper";
@@ -20,11 +20,11 @@
 
 // const useRewardsAuth = () => {
 //   const location = useLocation();
-//   const { universalAccount } = usePushWalletContext();
-//   const account = universalAccount?.address;
-//   const isWalletConnected = Boolean(universalAccount?.address);
+//   const { universalAddress } = usePushWalletContext();
+//   const account = universalAddress?.address;
+//   const isWalletConnected = Boolean(universalAddress?.address);
 //   const caip10WalletAddress = walletToPCAIP10(
-//     universalAccount?.address as string,
+//     universalAddress?.address as string,
 //   );
 
 //   const { userPushSDKInstance } = useAccountContext();

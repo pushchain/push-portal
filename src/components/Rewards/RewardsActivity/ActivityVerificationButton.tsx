@@ -22,7 +22,7 @@ import { ActvityType } from "../../../queries/types";
 
 // components
 import { Button } from "../../../blocks";
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 type ActivityVerificationButtonProps = {
   userId: string;
@@ -50,8 +50,8 @@ export const ActivityVerificationButton = ({
   setCurrentLevel,
   onStartClaim,
 }: ActivityVerificationButtonProps) => {
-  const { universalAccount, connectionStatus } = usePushWalletContext();
-  const isWalletConnected = Boolean(universalAccount?.address);
+  const { universalAddress, connectionStatus } = usePushWalletContext();
+  const isWalletConnected = Boolean(universalAddress?.address);
 
   const { handleTwitterVerification, verifyingTwitter, twitterActivityStatus } =
     useVerifyTwitter({
@@ -132,7 +132,7 @@ export const ActivityVerificationButton = ({
     verifyingRewards,
     verifyingTwitter,
     verifyingDiscord,
-    universalAccount,
+    universalAddress,
   ]);
 
   const { isAuthenticated, authButton } = useAuthWithButton({

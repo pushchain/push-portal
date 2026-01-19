@@ -1,6 +1,6 @@
 // React and other libraries
 import { useEffect } from "react";
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
 
 // hooks
 import {
@@ -18,14 +18,15 @@ import { isUserNotFound } from "../utils/resolveError";
 import { useRewardsContext } from "../../../context/rewardsContext";
 
 const useLockedStatus = () => {
-  const { universalAccount } = usePushWalletContext();
-  const account = universalAccount?.address as string;
-  const isWalletConnected = Boolean(universalAccount?.address);
+  const { universalAddress } = usePushWalletContext();
+  const account = universalAddress?.address as string;
+  const isWalletConnected = Boolean(universalAddress?.address);
   const { setIsLocked } = useRewardsContext();
 
   const caip10WalletAddress = walletToFullCAIP10(
     account,
-    universalAccount?.chain,
+    universalAddress?.chainId,
+    universalAddress?.chain,
   );
   const {
     data: userDetails,
