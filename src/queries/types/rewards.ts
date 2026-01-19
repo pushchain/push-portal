@@ -422,3 +422,11 @@ export type LeaderboardParams = {
   pageSize?: number;
   pageNumber?: number;
 };
+
+export type UserEligibilityForPreLaunchParams = {
+  address: string;
+};
+
+export type UserEligibilityForPreLaunchResponse = {
+  eligible: boolean;
+};

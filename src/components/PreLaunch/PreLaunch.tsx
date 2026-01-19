@@ -7,7 +7,7 @@ import { PreLaunchBenefits } from "./PreLaunchBenefits"
 import { PreLaunchDivider } from "./PreLaunchDivider"
 import { useVerifySeasonThree } from "../Rewards/hooks/useVerifySeasonThree"
 
-import { useGetSeasonOneUserDetails, useGetUserRewardsDetails } from "../../queries"
+import { useGetSeasonOneUserDetails, useGetUserEligibilityForPreLaunch, useGetUserRewardsDetails } from "../../queries"
 import { walletToFullCAIP10, walletToPCAIP10 } from "../../helpers/web3helper"
 
 import { Box, Skeleton } from "../../blocks"
@@ -36,6 +36,13 @@ export const PreLaunch = () => {
   const { data: userSeasonOneRewardsDetails, isLoading: isLoadingUserSeasonOneDetails } = useGetSeasonOneUserDetails({
     caip10WalletAddress: p10WalletAddress,
   });
+
+
+  const { data: isUserEligibleForPreLaunch } = useGetUserEligibilityForPreLaunch({
+    address: universalAddress?.address
+  });
+
+  console.log(isUserEligibleForPreLaunch, 'user user');
 
 
   const {
