@@ -237,6 +237,7 @@ function App() {
       <GlobalStyle />
       <PushWalletProvider env={CONSTANTS.ENV.PROD}>
         <AccountProvider>
+          <PushWalletIFrame />
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>
