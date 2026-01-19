@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   Box,
   Lozenge,
@@ -14,11 +14,12 @@ import {
   DotsThree,
   CaretLeftCircle,
   Cross,
+  SquadsIcon,
 } from '../../blocks';
 import type { IconProps } from '../../blocks/icons/Icons.types';
 import { device } from '../../config/globals';
 import useMediaQuery from '../../hooks/useMediaQuery';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 type MenuItem = {
   id: string;
@@ -38,9 +39,23 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
-  const [activeItemId, setActiveItemId] = useState<string>('discover');
   const isLaptop = useMediaQuery(device.laptopL);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const getActiveItemId = (): string => {
+    const path = location.pathname;
+    
+    if (path === '/rewards' || path === '/rewards/') return 'discover';
+    if (path.startsWith('/rewards/pushpass')) return 'push-pass';
+    if (path.startsWith('/rewards/squads')) return 'squads';
+    if (path.startsWith('/rewards/leaderboard')) return 'leaderboards';
+    if (path.startsWith('/rewards/pre-launch')) return 'pre-launch';
+    
+    return 'discover';
+  };
+
+  const activeItemId = getActiveItemId();
 
   useEffect(() => {
     if (isOpen && isLaptop) {
@@ -83,6 +98,12 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
       icon: PushPass,
       label: 'Push Pass',
       route: '/rewards/pushpass'
+    },
+    {
+      id: 'squads',
+      icon: SquadsIcon,
+      label: 'Invites/Squads',
+      route: '/rewards/squads'
     },
     {
       id: 'leaderboards',
@@ -128,8 +149,14 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
   `;
 
   const handleItemClick = (itemId: string, onClick?: () => void, route?: string) => {
-    setActiveItemId(itemId);
-    navigate(route);
+    if (route) {
+      // Check if it's an external URL
+      if (route.startsWith('http')) {
+        window.open(route, '_blank');
+      } else {
+        navigate(route);
+      }
+    }
     onClick?.();
     if (isLaptop) {
       onClose?.();
