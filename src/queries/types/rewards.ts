@@ -428,5 +428,7 @@ export type UserEligibilityForPreLaunchParams = {
 };
 
 export type UserEligibilityForPreLaunchResponse = {
-  eligible: boolean;
+  discordVerified: boolean;
+  exists: boolean;
+  season: string;
 };

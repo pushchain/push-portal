@@ -1,17 +1,14 @@
 import { css } from "styled-components"
-import { PushWalletButton, usePushWalletContext } from "@pushprotocol/pushchain-ui-kit"
+import { PushUniversalAccountButton, usePushWalletContext } from "@pushchain/ui-kit"
 import { Alert, Box, Button,  CrossFilled, GlowStreaks, SealCheckFilled, Skeleton, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
-import { UserRewardsDetailResponse, UserSeasonOneResponse } from "../../queries/types"
 import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
 import useMediaQuery from "../../hooks/useMediaQuery"
 import { device } from "../../config/globals"
 
 type PreLaunchHeaderProps = {
-  userRewardsDetails?: UserRewardsDetailResponse;
-  userSeasonOneRewardsDetails?: UserSeasonOneResponse;
   verifyingSeasonThree: boolean;
-  handleSeasonThreeVerification: (userId: string) => void;
+  handleSeasonThreeVerification: () => void;
   verificationSuccess: boolean;
   isUserEligible?: boolean;
   errorMessage?: string;
@@ -19,8 +16,6 @@ type PreLaunchHeaderProps = {
 }
 
 export const PreLaunchHeader = ({
-  userRewardsDetails,
-  userSeasonOneRewardsDetails,
   verifyingSeasonThree,
   handleSeasonThreeVerification,
   verificationSuccess,
@@ -29,12 +24,10 @@ export const PreLaunchHeader = ({
   isLoading
 }: PreLaunchHeaderProps) => {
   const isMobile = useMediaQuery(device.mobileL);
-  const { universalAddress, connectionStatus } = usePushWalletContext();
+  const { universalAccount, connectionStatus } = usePushWalletContext();
   const isWalletConnected = connectionStatus === 'connected';
 
 
-  // Use userId from userRewardsDetails, or fall back to userSeasonOneRewardsDetails
-  const userId = userRewardsDetails?.userId || userSeasonOneRewardsDetails?.userId;
 
   return (
     <Box
@@ -205,7 +198,7 @@ export const PreLaunchHeader = ({
                     </Box>
 
 
-              {universalAddress && connectionStatus == "connected" ? (
+              {universalAccount && connectionStatus == "connected" ? (
                 <Skeleton
                   isLoading={isLoading}
                 >
@@ -258,16 +251,7 @@ export const PreLaunchHeader = ({
                   )}
                 </Skeleton>
               ) : (
-                       <PushWalletButton
-                         universalAddress={universalAddress}
-                         title="Connect Account"
-                         styling={{
-                           width: "fit-content",
-                           fontFamily: "DM Sans !important",
-                           margin: "0 0 0 auto",
-                           borderRadius: "12px"
-                         }}
-                       />
+                       <PushUniversalAccountButton />
               )}
               </Box>
             </Box>
@@ -304,8 +288,8 @@ export const PreLaunchHeader = ({
                     variant="tertiary"
                     size="small"
                     onClick={() => {
-                      if (userId && isUserEligible) {
-                        handleSeasonThreeVerification(userId);
+                      if (isUserEligible) {
+                        handleSeasonThreeVerification();
                       }
                     }}
                     disabled={verifyingSeasonThree || !isUserEligible}

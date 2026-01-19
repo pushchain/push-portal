@@ -3,9 +3,9 @@
 import React, { FC } from "react";
 import styled, { css } from "styled-components";
 import {
-  PushWalletButton,
+  PushUniversalAccountButton,
   usePushWalletContext,
-} from "@pushprotocol/pushchain-ui-kit";
+} from "@pushchain/ui-kit";
 
 import { useGetUserRewardsDetails } from "../../queries";
 
@@ -17,11 +17,10 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 
 const RewardsDashboard: FC = () => {
   const isTablet = useMediaQuery(device.tablet);
-  const { universalAddress } = usePushWalletContext();
+  const { universalAccount } = usePushWalletContext();
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAddress?.address as string,
-    universalAddress?.chainId,
-    universalAddress?.chain,
+    universalAccount?.address as string,
+    universalAccount?.chain,
   );
 
   const {
@@ -55,13 +54,7 @@ const RewardsDashboard: FC = () => {
             `}
           >
             {isTablet && (
-              <PushWalletButton
-                universalAddress={universalAddress}
-                title="Connect Push Wallet"
-                styling={{
-                  fontFamily: "inherit",
-                }}
-              />
+              <PushUniversalAccountButton />
             )}
 
             <Link to="/rewards/leaderboard" title="Terms of Service">

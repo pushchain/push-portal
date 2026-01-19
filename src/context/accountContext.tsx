@@ -9,8 +9,8 @@ import React, {
 
 import { ethers } from "ethers";
 import { PushNetwork } from "@pushprotocol/push-chain";
-import { ENV } from "@pushprotocol/push-chain/src/lib/constants";
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { ENV } from "@pushprotocol/restapi/src/lib/constants";
+import { usePushWalletContext } from "@pushchain/ui-kit";
 import { CONSTANTS, ProgressHookType, PushAPI } from "@pushprotocol/restapi";
 
 import {
@@ -99,7 +99,7 @@ const AccountContext = createContext<AccountContextType | undefined>(undefined);
 export const AccountProvider = ({ children }: { children: ReactNode }) => {
   // To ensure intialize via [account] is not run on certain logic points
   const shouldInitializeRef = useRef(true); // Using a ref to control useEffect execution
-  const { universalAddress, handleSignMessage } =
+  const { universalAccount, handleSignMessage } =
     usePushWalletContext();
   const [pushNetwork, setPushNetwork] = useState<PushNetwork | null>(null);
   // const [pgpPvtKey, setPgpPvtKey] = useState(null);
@@ -230,15 +230,15 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
 
     // get decrypted pgp keys from local storage
     const decryptedPGPKeys = retrieveUserPGPKeyFromStorage(
-      universalAddress?.address,
+      universalAccount?.address,
     );
 
     // Return if new push user is not necessary
     if (
       !shouldCreateNewPushUser(
-        universalAddress?.address,
+        universalAccount?.address,
         decryptedPGPKeys
-          ? provider?.getSigner(universalAddress?.address)
+          ? provider?.getSigner(universalAccount?.address)
           : null,
       )
     )
@@ -250,14 +250,14 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
         "src::contexts::AppContext::initializePushSdkReadMode::Called initializePushSDK()",
       );
 
-      return initializePushSDK(universalAddress?.address);
+      return initializePushSDK(universalAccount?.address);
     }
 
     // else initialize push sdk in read mode
     const userInstance = await PushAPI.initialize(null, {
       decryptedPGPPrivateKey: null,
       env: appConfig.APP_ENV as ENV,
-      account: universalAddress?.address,
+      account: universalAccount?.address,
       alpha: { feature: ["SCALABILITY_V2"] },
     });
 
@@ -486,12 +486,12 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
     const initialize = async () => {
       // const librarySigner = await provider?.getSigner(account); // If you need to use librarySigner in async operations
       // if (!account || !appConfig?.appEnv) return;
-      if (universalAddress) {
+      if (universalAccount) {
         await initializePushSdkReadMode();
       }
     };
     initialize();
-  }, [universalAddress]);
+  }, [universalAccount]);
 
   useEffect(() => {
     const setNetwork = async () => {
@@ -508,7 +508,7 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AccountContext.Provider
       value={{
-        account: universalAddress ? universalAddress.address : null,
+        account: universalAccount ? universalAccount.address : null,
         pushNetwork,
         handleSignMessage,
         removePGPKeyForUser,
