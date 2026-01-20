@@ -1,13 +1,13 @@
 import { useState } from "react"
 import { css } from "styled-components"
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit"
+import { usePushWalletContext } from "@pushchain/ui-kit"
 
 import { PreLaunchHeader } from "./PreLaunchHeader"
 import { PreLaunchBenefits } from "./PreLaunchBenefits"
 import { PreLaunchDivider } from "./PreLaunchDivider"
 import { useVerifySeasonThree } from "../Rewards/hooks/useVerifySeasonThree"
 
-import { useGetSeasonOneUserDetails, useGetUserRewardsDetails } from "../../queries"
+import { useGetSeasonOneUserDetails, useGetUserEligibilityForPreLaunch, useGetUserRewardsDetails } from "../../queries"
 import { walletToFullCAIP10, walletToPCAIP10 } from "../../helpers/web3helper"
 
 import { Box, Skeleton } from "../../blocks"
@@ -15,26 +15,30 @@ import { Box, Skeleton } from "../../blocks"
 
 export const PreLaunch = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const { universalAddress } = usePushWalletContext();
+  const { universalAccount } = usePushWalletContext();
 
 
   const caip10WalletAddress = walletToFullCAIP10(
-    universalAddress?.address as string,
-    universalAddress?.chainId,
-    universalAddress?.chain,
+    universalAccount?.address as string,
+    universalAccount?.chain,
   );
 
 
   const p10WalletAddress = walletToPCAIP10(
-    universalAddress?.address as string,
+    universalAccount?.address as string,
   );
 
-  const { data: userRewardsDetails, isLoading: isLoadingUserDetails } = useGetUserRewardsDetails({
+  const { data: userRewardsDetails } = useGetUserRewardsDetails({
     caip10WalletAddress: caip10WalletAddress,
   });
 
-  const { data: userSeasonOneRewardsDetails, isLoading: isLoadingUserSeasonOneDetails } = useGetSeasonOneUserDetails({
+  const { data: userSeasonOneRewardsDetails } = useGetSeasonOneUserDetails({
     caip10WalletAddress: p10WalletAddress,
+  });
+
+
+  const { data: userEligibilityData, isLoading: isLoadingUserEligibility} = useGetUserEligibilityForPreLaunch({
+    address: universalAccount?.address
   });
 
 
@@ -44,16 +48,15 @@ export const PreLaunch = () => {
     verificationSuccess,
   } = useVerifySeasonThree({
     activityTypeId: "season-3-prelaunch",
-    refetchActivity: () => {},
     setErrorMessage,
   });
 
   const isUserDataLoading =
-    isLoadingUserDetails || isLoadingUserSeasonOneDetails;
+    isLoadingUserEligibility;
   const isUserVerified = !isUserDataLoading && (
-    verificationSuccess || userRewardsDetails?.discordReverified || userSeasonOneRewardsDetails?.discordReverified);
+    verificationSuccess || userEligibilityData?.discordVerified || userEligibilityData?.discordVerified);
   const isUserEligible = !isUserDataLoading &&
-    (!!userRewardsDetails || !!userSeasonOneRewardsDetails);
+    (userEligibilityData?.exists);
 
   return (
     <Box
@@ -72,8 +75,6 @@ export const PreLaunch = () => {
         `}
       >
         <PreLaunchHeader
-          userRewardsDetails={userRewardsDetails}
-          userSeasonOneRewardsDetails={userSeasonOneRewardsDetails}
           verifyingSeasonThree={verifyingSeasonThree}
           handleSeasonThreeVerification={handleSeasonThreeVerification}
           verificationSuccess={isUserVerified}

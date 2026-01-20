@@ -23,3 +23,4 @@ export const userRewardsDetails = "userRewardsDetails";
 export const userRewardsStats = 'userRewardsStats';
 export const userTwitterDetails = 'userTwitterDetails';
 export const seasonOneUserDetails = "seasonOneUserDetails";
+export const eligibleForPreLaunch = "eligibleForPreLaunch";

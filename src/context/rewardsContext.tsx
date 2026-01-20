@@ -1,4 +1,4 @@
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { usePushWalletContext } from "@pushchain/ui-kit";
 import React, {
   createContext,
   useContext,
@@ -40,13 +40,13 @@ export const RewardsContextProvider = ({
   // sign signature
   const [signature, setSignature] = useState(null);
 
-  const { universalAddress } = usePushWalletContext();
+  const { universalAccount } = usePushWalletContext();
 
   useEffect(() => {
-    if (!universalAddress) {
+    if (!universalAccount) {
       setIsLocked(true);
     }
-  }, [universalAddress]);
+  }, [universalAccount]);
 
   return (
     <AuthModalContext.Provider

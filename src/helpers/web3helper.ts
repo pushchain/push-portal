@@ -120,25 +120,29 @@ export const walletToPCAIP10 = (account: string): string => {
 
 export const walletToFullCAIP10 = (
   account: string,
-  chainId: string,
   chain: string,
+  chainId?: string
 ): string => {
   if (account?.includes(":")) {
     return account;
   }
 
-  let prefix = "eip155";
-
-  if (chain == "solana" || chainId === "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp") {
-    prefix = "solana";
+  // If chain already has prefix (e.g. "eip155:11155111"), just append account
+  if (chain?.includes(":")) {
+    return `${chain}:${account}`;
   }
 
+  // Fallback to old logic if chainId is provided
+  let prefix = "eip155";
+  if (chain === "solana" || chainId === "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp") {
+    prefix = "solana";
+  }
   if (chainId === "devnet") {
     prefix = "push";
   }
 
-  return `${prefix}:${chainId}:${account}`;
-};
+  return `${prefix}:${chainId || chain}:${account}`;
+};;
 
 export const fullCAIP10ToWallet = (wallet: string): string => {
   if (!wallet) return "";

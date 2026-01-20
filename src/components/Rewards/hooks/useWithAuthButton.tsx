@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 // third party libraries
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { usePushWalletContext } from "@pushchain/ui-kit";
 
 //Hooks
 import { useCreateRewardsUser } from "./useCreateRewardsUser";
@@ -29,10 +29,10 @@ export const useAuthWithButton = ({
     "idle",
   );
 
-  const { universalAddress, handleConnectToPushWallet, connectionStatus } =
+  const { universalAccount, handleConnectToPushWallet, connectionStatus } =
     usePushWalletContext();
   const { setIsVerifyClicked } = useRewardsContext();
-  const isWalletConnected = Boolean(universalAddress?.address);
+  const isWalletConnected = Boolean(universalAccount?.address);
 
   const { handleCreateUser, userDetails } = useCreateRewardsUser();
 

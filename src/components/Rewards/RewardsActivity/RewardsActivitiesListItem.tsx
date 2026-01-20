@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { usePushWalletContext } from "@pushchain/ui-kit";
 import React, { FC, useState, useMemo, useEffect } from "react";
 
 import {
@@ -63,8 +63,8 @@ const RewardsActivitiesListItem: FC<RewardActivitiesListItemProps> = ({
   isAllActivitiesLoading,
   refetchActivity,
 }) => {
-  const { universalAddress, connectionStatus } = usePushWalletContext();
-  const isWalletConnected = Boolean(universalAddress?.address);
+  const { universalAccount, connectionStatus } = usePushWalletContext();
+  const isWalletConnected = Boolean(universalAccount?.address);
 
   const usersSingleActivity = allUsersActivity?.[activity?.activityType];
   const isLoading = isAllActivitiesLoading;

@@ -15,7 +15,7 @@ import { css } from "styled-components";
 
 import { RewardsActivityTitle } from "../RewardsActivity/RewardsActivityTitle";
 import EmailImg from "../../../static/assets/website/rewards/email-app.webp";
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { usePushWalletContext } from "@pushchain/ui-kit";
 import { useRewardsContext } from "../../context/rewardsContext";
 import { useFilteredActivities } from "../hooks/useFilteredActivities";
 import { useGetUserXP, UsersActivity } from "../../../queries";
@@ -32,8 +32,8 @@ export type AnyChainEmailCardProps = {
 };
 
 const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
-  const { universalAddress } = usePushWalletContext();
-  const account = universalAddress?.address as string;
+  const { universalAccount } = usePushWalletContext();
+  const account = universalAccount?.address as string;
   const { isLocked } = useRewardsContext();
   const [currentLevel, setCurrentLevel] = useState(null);
   const [processingClaim, setProcessingClaim] = useState(false);
@@ -103,7 +103,7 @@ const AnyChainEmailCard: FC<AnyChainEmailCardProps> = ({ setErrorMessage }) => {
 
   const isEnded = isExpired ? isExpired : nextUnclaimedLevel > numberOfLevels;
   const isLoading =
-    isLoadingActivities || (isPending && Boolean(universalAddress));
+    isLoadingActivities || (isPending && Boolean(universalAccount));
 
   const startClaimProcess = (level, activityType) => {
     setClaimedLevelInfo((prevInfo) => ({

@@ -15,7 +15,7 @@ import {
   Skeleton,
   Text,
 } from "../../../blocks";
-import { usePushWalletContext } from "@pushprotocol/pushchain-ui-kit";
+import { usePushWalletContext } from "@pushchain/ui-kit";
 
 export type DashboardSectionPointsProps = {
   title: string;
@@ -40,8 +40,8 @@ const DashboardSectionPoints: FC<DashboardSectionPointsProps> = ({
   data,
   multiplier,
 }) => {
-  const { universalAddress } = usePushWalletContext();
-  const isWalletConnected = Boolean(universalAddress?.address);
+  const { universalAccount } = usePushWalletContext();
+  const isWalletConnected = Boolean(universalAccount?.address);
 
   return (
     <Box
