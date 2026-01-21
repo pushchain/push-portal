@@ -42,10 +42,10 @@ const useVerifyTwitter = ({
   const [updatedId, setUpdatedId] = useState<string | null>(null);
 
   const { universalAccount } = usePushWalletContext();
-  const { chainId } = parseCAIP(universalAccount?.chain);
   const { signMessage } = useSignMessageWithEthereum();
 
   const account = universalAccount?.address;
+  const { chainId } = parseCAIP(universalAccount?.chain);
   const caip10WalletAddress = walletToFullCAIP10(
     universalAccount?.address as string,
     universalAccount?.chain,

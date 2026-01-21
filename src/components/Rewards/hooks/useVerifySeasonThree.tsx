@@ -8,24 +8,21 @@ import { usePushWalletContext } from "@pushchain/ui-kit";
 import appConfig from "../../../config";
 import {
   useClaimSeasonThree,
-  useGetSeasonOneUserDetails,
-  useGetUserRewardsDetails,
+  useGetUserEligibilityForPreLaunch,
 } from "../../../queries";
 
 // helpers
-import { parseCAIP, walletToFullCAIP10, walletToPCAIP10 } from "../../../helpers/web3helper";
+import { parseCAIP } from "../../../helpers/web3helper";
 import { useSignMessageWithEthereum } from "./useSignMessage";
 import { WalletChainType } from "../utils/wallet";
 
 type UseDiscordActivityVerificationProps = {
   activityTypeId: string;
-  refetchActivity: () => void;
   setErrorMessage: (errorMessage: string) => void;
 };
 
 const useVerifySeasonThree = ({
   activityTypeId,
-  refetchActivity,
   setErrorMessage,
 }: UseDiscordActivityVerificationProps) => {
   const token = localStorage.getItem("access_token");
@@ -36,46 +33,32 @@ const useVerifySeasonThree = ({
   const [verifyingSeasonThree, setVerifyingSeasonThree] = useState(
     token ? true : false,
   );
-  const [updatedId, setUpdatedId] = useState<string | null>(null);
   const [verificationSuccess, setVerificationSuccess] = useState(false);
 
   const { universalAccount } = usePushWalletContext();
-  const { chainId } = parseCAIP(universalAccount?.chain);
   const { signMessage } = useSignMessageWithEthereum();
 
   const account = universalAccount?.address;
-  const caip10WalletAddress = walletToFullCAIP10(
-    universalAccount?.address as string,
-    universalAccount?.chain,
-  );
-
-  const p10WalletAddress = walletToPCAIP10(
-    universalAccount?.address as string,
-  );
+  const { chainId } = parseCAIP(universalAccount?.chain);
 
   useEffect(() => {
     setErrorMessage("");
   }, [setErrorMessage]);
 
-  const { refetch: refetchUserDetails } = useGetUserRewardsDetails({
-    caip10WalletAddress: caip10WalletAddress,
-  });
-
-  const { refetch: refetchUserSeasonOneDetails} = useGetSeasonOneUserDetails({
-    caip10WalletAddress: p10WalletAddress,
+  const { refetch: refetchUserEligibility} = useGetUserEligibilityForPreLaunch({
+    address: account
   });
 
   const { mutate: claimSeasonThree } = useClaimSeasonThree();
 
-  const handleSeasonThreeVerification = (userId: string) => {
-    setUpdatedId(userId);
+  const handleSeasonThreeVerification = () => {
     setErrorMessage("");
     setVerifyingSeasonThree(true);
 
-    handleConnect(userId);
+    handleConnect();
   };
 
-  const handleConnect = (userId: string) => {
+  const handleConnect = () => {
     const clientID = appConfig.discord_client_id;
     const baseURL = import.meta.env.VITE_PR_PREVIEW_BASE
       ? `https://push-protocol.github.io/push-website/pr-preview/${import.meta.env.VITE_PR_PREVIEW_BASE}`
@@ -96,13 +79,13 @@ const useVerifySeasonThree = ({
     const checkAuth = setInterval(() => {
       if (newWindow?.closed) {
         clearInterval(checkAuth);
-        handleVerify(userId);
+        handleVerify();
       }
     }, 1000);
   };
 
   const handleVerify = useCallback(
-    async (userId: string) => {
+    async () => {
       const token = localStorage.getItem("access_token");
       const username = localStorage.getItem("username");
       const email = localStorage.getItem("discord_email");
@@ -147,7 +130,7 @@ const useVerifySeasonThree = ({
 
         claimSeasonThree(
           {
-            userWallet: caip10WalletAddress,
+            userWallet: universalAccount?.address,
             discordEmail: email,
             discordUsername: username,
             data: messageToSend,
@@ -159,9 +142,7 @@ const useVerifySeasonThree = ({
               if (response.status === "COMPLETED" || response.success) {
                 setSeasonThreeActivityStatus("Claimed");
                 setVerificationSuccess(true);
-                refetchActivity();
-                refetchUserDetails();
-                refetchUserSeasonOneDetails()
+                refetchUserEligibility()
                 setVerifyingSeasonThree(false);
                 setErrorMessage("");
               } else {

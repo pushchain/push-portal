@@ -2,16 +2,13 @@ import { css } from "styled-components"
 import { PushUniversalAccountButton, usePushWalletContext } from "@pushchain/ui-kit"
 import { Alert, Box, Button,  CrossFilled, GlowStreaks, SealCheckFilled, Skeleton, Text } from "../../blocks"
 import { RewardsActivityIcon } from "../Rewards/RewardsActivity/RewardsActivityIcon"
-import { UserRewardsDetailResponse, UserSeasonOneResponse } from "../../queries/types"
 import { RewardsActivityTitle } from "../Rewards/RewardsActivity/RewardsActivityTitle"
 import useMediaQuery from "../../hooks/useMediaQuery"
 import { device } from "../../config/globals"
 
 type PreLaunchHeaderProps = {
-  userRewardsDetails?: UserRewardsDetailResponse;
-  userSeasonOneRewardsDetails?: UserSeasonOneResponse;
   verifyingSeasonThree: boolean;
-  handleSeasonThreeVerification: (userId: string) => void;
+  handleSeasonThreeVerification: () => void;
   verificationSuccess: boolean;
   isUserEligible?: boolean;
   errorMessage?: string;
@@ -19,8 +16,6 @@ type PreLaunchHeaderProps = {
 }
 
 export const PreLaunchHeader = ({
-  userRewardsDetails,
-  userSeasonOneRewardsDetails,
   verifyingSeasonThree,
   handleSeasonThreeVerification,
   verificationSuccess,
@@ -33,8 +28,6 @@ export const PreLaunchHeader = ({
   const isWalletConnected = connectionStatus === 'connected';
 
 
-  // Use userId from userRewardsDetails, or fall back to userSeasonOneRewardsDetails
-  const userId = userRewardsDetails?.userId || userSeasonOneRewardsDetails?.userId;
 
   return (
     <Box
@@ -258,9 +251,7 @@ export const PreLaunchHeader = ({
                   )}
                 </Skeleton>
               ) : (
-                <Box>
-                  <PushUniversalAccountButton />
-                </Box>
+                       <PushUniversalAccountButton />
               )}
               </Box>
             </Box>
@@ -297,8 +288,8 @@ export const PreLaunchHeader = ({
                     variant="tertiary"
                     size="small"
                     onClick={() => {
-                      if (userId && isUserEligible) {
-                        handleSeasonThreeVerification(userId);
+                      if (isUserEligible) {
+                        handleSeasonThreeVerification();
                       }
                     }}
                     disabled={verifyingSeasonThree || !isUserEligible}

@@ -142,7 +142,7 @@ export const walletToFullCAIP10 = (
   }
 
   return `${prefix}:${chainId || chain}:${account}`;
-};
+};;
 
 export const fullCAIP10ToWallet = (wallet: string): string => {
   if (!wallet) return "";

@@ -13,9 +13,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createGlobalStyle, css } from "styled-components";
 import {
-  PushUI,
-  PushUniversalWalletProvider,
-  ProviderConfigProps,
+   PushUI,
+   PushUniversalWalletProvider,
+   ProviderConfigProps,
 } from '@pushchain/ui-kit';
 
 import { getPreviewBasePath } from "../basePath";
@@ -237,13 +237,13 @@ function App() {
       {/* Global style */}
       <GlobalStyle />
       <PushUniversalWalletProvider
-        config={walletConfig}
-        themeMode={PushUI.CONSTANTS.THEME.DARK}
-        themeOverrides={{
-          '--pw-core-font-family': "'DM Sans', sans-serif",
-          '--pwauth-btn-connected-bg-color': '#D548EC'
-        }}
-      >
+             config={walletConfig}
+             themeMode={PushUI.CONSTANTS.THEME.DARK}
+             themeOverrides={{
+               '--pw-core-font-family': "'DM Sans', sans-serif",
+               '--pwauth-btn-connected-bg-color': '#D548EC'
+             }}
+           >
         <AccountProvider>
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>

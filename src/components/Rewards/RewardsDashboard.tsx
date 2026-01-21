@@ -3,7 +3,7 @@
 import React, { FC } from "react";
 import styled, { css } from "styled-components";
 import {
-  PushWalletButton,
+  PushUniversalAccountButton,
   usePushWalletContext,
 } from "@pushchain/ui-kit";
 
@@ -54,13 +54,7 @@ const RewardsDashboard: FC = () => {
             `}
           >
             {isTablet && (
-              <PushWalletButton
-                universalAccount={universalAccount}
-                title="Connect Push Wallet"
-                styling={{
-                  fontFamily: "inherit",
-                }}
-              />
+              <PushUniversalAccountButton />
             )}
 
             <Link to="/rewards/leaderboard" title="Terms of Service">

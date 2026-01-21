@@ -35,6 +35,7 @@ const useCreateRewardsUser = () => {
     account,
     universalAccount?.chain,
   );
+
   const { chainId } = parseCAIP(universalAccount?.chain);
 
   const {
@@ -44,6 +45,7 @@ const useCreateRewardsUser = () => {
   } = useGetUserRewardsDetails({
     caip10WalletAddress: fullCaip10WalletAddress,
   });
+
 
   const { mutate: createUser } = useCreateRewardsUserQuery();
 

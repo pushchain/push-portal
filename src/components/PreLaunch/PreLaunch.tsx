@@ -7,7 +7,7 @@ import { PreLaunchBenefits } from "./PreLaunchBenefits"
 import { PreLaunchDivider } from "./PreLaunchDivider"
 import { useVerifySeasonThree } from "../Rewards/hooks/useVerifySeasonThree"
 
-import { useGetSeasonOneUserDetails, useGetUserRewardsDetails } from "../../queries"
+import { useGetSeasonOneUserDetails, useGetUserEligibilityForPreLaunch, useGetUserRewardsDetails } from "../../queries"
 import { walletToFullCAIP10, walletToPCAIP10 } from "../../helpers/web3helper"
 
 import { Box, Skeleton } from "../../blocks"
@@ -28,12 +28,17 @@ export const PreLaunch = () => {
     universalAccount?.address as string,
   );
 
-  const { data: userRewardsDetails, isLoading: isLoadingUserDetails } = useGetUserRewardsDetails({
+  const { data: userRewardsDetails } = useGetUserRewardsDetails({
     caip10WalletAddress: caip10WalletAddress,
   });
 
-  const { data: userSeasonOneRewardsDetails, isLoading: isLoadingUserSeasonOneDetails } = useGetSeasonOneUserDetails({
+  const { data: userSeasonOneRewardsDetails } = useGetSeasonOneUserDetails({
     caip10WalletAddress: p10WalletAddress,
+  });
+
+
+  const { data: userEligibilityData, isLoading: isLoadingUserEligibility} = useGetUserEligibilityForPreLaunch({
+    address: universalAccount?.address
   });
 
 
@@ -43,16 +48,15 @@ export const PreLaunch = () => {
     verificationSuccess,
   } = useVerifySeasonThree({
     activityTypeId: "season-3-prelaunch",
-    refetchActivity: () => {},
     setErrorMessage,
   });
 
   const isUserDataLoading =
-    isLoadingUserDetails || isLoadingUserSeasonOneDetails;
+    isLoadingUserEligibility;
   const isUserVerified = !isUserDataLoading && (
-    verificationSuccess || userRewardsDetails?.discordReverified || userSeasonOneRewardsDetails?.discordReverified);
+    verificationSuccess || userEligibilityData?.discordVerified || userEligibilityData?.discordVerified);
   const isUserEligible = !isUserDataLoading &&
-    (!!userRewardsDetails || !!userSeasonOneRewardsDetails);
+    (userEligibilityData?.exists);
 
   return (
     <Box
@@ -71,8 +75,6 @@ export const PreLaunch = () => {
         `}
       >
         <PreLaunchHeader
-          userRewardsDetails={userRewardsDetails}
-          userSeasonOneRewardsDetails={userSeasonOneRewardsDetails}
           verifyingSeasonThree={verifyingSeasonThree}
           handleSeasonThreeVerification={handleSeasonThreeVerification}
           verificationSuccess={isUserVerified}
