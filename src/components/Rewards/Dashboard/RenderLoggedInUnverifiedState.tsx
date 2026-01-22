@@ -1,9 +1,17 @@
 import { css } from "styled-components"
-import { ArrowDown, Box, Button, GlowStreaks, Text } from "../../../blocks"
+import { ArrowDown, Box, Button, CrossFilled, GlowStreaks, SealCheckFilled, Text } from "../../../blocks"
 import { RewardsActivityIcon } from "../RewardsActivity/RewardsActivityIcon"
 import { RewardsActivityTitle } from "../RewardsActivity/RewardsActivityTitle"
+import { useAdvancedSybilCheck } from "../../../queries"
+import { usePushWalletContext } from "@pushchain/ui-kit"
+import { parseCAIP } from "../../../helpers/web3helper"
+import { useState } from "react"
 
 export const RenderLoggedInUnverifiedState = () => {
+
+  const { universalAccount } = usePushWalletContext();
+  const { chainId } = parseCAIP(universalAccount?.chain);
+  const [isUserEligible, setIsUserEligible] = useState(null);
 
   const activityList = [
     {
@@ -22,6 +30,29 @@ export const RenderLoggedInUnverifiedState = () => {
       activityType: 'follow_push_on_discord',
     },
   ]
+
+  const { mutate: advancedSybilCheck, isPending: isVerifying } = useAdvancedSybilCheck();
+
+  const handleVerifyAccount = () => {
+
+    advancedSybilCheck(
+      {
+        address: universalAccount?.address,
+        chainId: parseInt(chainId)
+      },
+      {
+        onSuccess: (response) => {
+          console.log(response)
+          setIsUserEligible(response?.eligible)
+        },
+        onError: (error: any) => {
+          console.log("Error", error);
+        },
+      },
+    );
+  }
+
+
   return (
     <Box
     display="flex"
@@ -46,12 +77,11 @@ export const RenderLoggedInUnverifiedState = () => {
     justifyContent="center"
     position="relative"
     borderRadius="radius-md"
-    padding="spacing-xxxl spacing-md"
+    padding="spacing-md"
     overflow="hidden"
     width="100%"
+    height="auto"
     css={css`
-      min-height: 333px;
-      max-height: 333px;
       background: #F1D5FF;
       box-sizing: border-box;
     `}
@@ -76,7 +106,7 @@ export const RenderLoggedInUnverifiedState = () => {
     <Box
         css={css`
           position: absolute;
-          top: 0;
+          bottom: -50px;
           left: 0;
           width: 100%;
           height: 100%;
@@ -90,7 +120,7 @@ export const RenderLoggedInUnverifiedState = () => {
       <Box
           css={css`
             position: absolute;
-            top: 0px;
+            bottom: -50px;
             left: 150px;
             width: 100%;
             height: 100%;
@@ -104,7 +134,7 @@ export const RenderLoggedInUnverifiedState = () => {
         <Box
             css={css`
               position: absolute;
-              top: 0px;
+              bottom: -50px;
               left: 300px;
               width: 100%;
               height: 100%;
@@ -227,6 +257,77 @@ export const RenderLoggedInUnverifiedState = () => {
             />
             <Text variant="bm-regular" color="#313338">Linked wallet will be bound to Push account for Season 3</Text>
           </Box>
+
+          {isUserEligible === null && (
+            <Button
+              variant="tertiary"
+              size="small"
+              disabled={isVerifying}
+              css={css`
+                color: #fff !important;
+                margin-left: auto
+                `}
+              onClick={handleVerifyAccount}
+            >
+              {isVerifying ? 'Verifying...' : 'Link Account to Verify'}
+            </Button>
+          )}
+
+          {isUserEligible === true && (
+            <Box
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              gap="spacing-xxs"
+              padding="spacing-xs spacing-md"
+              css={css`
+                margin-left: auto;
+              `}
+            >
+              <SealCheckFilled color="#00A47F" size={16} />
+              <Text
+                color="#00A47F"
+                css={css`
+                  white-space: nowrap;
+                  leading-trim: both;
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 16px;
+                `}
+              >
+                Account Verified
+              </Text>
+            </Box>
+          )}
+
+          {isUserEligible === false && (
+            <Box
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              gap="spacing-xxs"
+              padding="spacing-xs spacing-md"
+              css={css`
+                margin-left: auto;
+              `}
+            >
+              <CrossFilled color="#E53935" size={16} />
+              <Text
+                color="#E53935"
+                css={css`
+                  white-space: nowrap;
+                  leading-trim: both;
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 16px;
+                `}
+              >
+                Not Eligible
+              </Text>
+            </Box>
+          )}
 
         </Box>
       )}

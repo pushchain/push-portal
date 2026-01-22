@@ -69,7 +69,7 @@ export const getButtonVariantStyles = (
             color: var(--components-button-secondary-text-disabled);
           };`
         };
-        
+
       `;
     }
     case 'tertiary': {
@@ -83,7 +83,7 @@ export const getButtonVariantStyles = (
               color: var(--components-button-tertiary-text-default);
               background-color: var(--components-button-tertiary-background-hover);
             }
-       
+
             &:active {
               background-color: var(--components-button-tertiary-background-pressed);
               color: var(--components-button-secondary-text-default);
@@ -145,7 +145,7 @@ export const getButtonVariantStyles = (
             &:hover {
               background-color: var(--components-button-danger-secondary-background-hover);
             }
-       
+
           &:active {
             background-color: var(--components-button-danger-secondary-background-pressed);
           }`
@@ -178,7 +178,7 @@ export const getButtonVariantStyles = (
             border: var(--border-sm) solid var(--components-button-outline-stroke-hover);
             background-color: var(--components-button-outline-background-hover);
           }
-        
+
           &:active {
             border:  var(--border-sm) solid var(--components-button-outline-stroke-pressed);
             background-color: var(--components-button-outline-background-pressed);

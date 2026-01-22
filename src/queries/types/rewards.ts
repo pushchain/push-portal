@@ -471,3 +471,73 @@ export type SeasonThreeUserByWalletResponse = {
   isSeasonOneUser: boolean;
   isSeasonTwoUser: boolean;
 };
+
+export type AdvancedSybilCheckParams = {
+  address: string;
+  chainId: number;
+};
+
+export type WalletAgeCheck = {
+  passed: boolean;
+  reason: string;
+  details: {
+    firstTxTimestamp: number;
+    firstTxHash: string;
+    walletCreationDate: string;
+    walletAgeDays: number;
+    cutoffDate: string;
+    requiredAgeDays: number;
+  };
+};
+
+export type MinimumBalanceCheck = {
+  passed: boolean;
+  reason: string;
+  usdCheck: {
+    passed: boolean;
+    reason: string;
+    details: {
+      error?: string;
+    };
+  };
+  nativeTokenCheck: {
+    passed: boolean;
+    reason: string;
+    details: {
+      blockNumber: number;
+      checkDate: string;
+      balanceWei: string;
+      balanceInNative: string;
+      requiredNativeToken: number;
+      shortfall: number;
+    };
+  };
+};
+
+export type TransactionCountCheck = {
+  passed: boolean;
+  reason: string;
+  details: {
+    blockNumber: number;
+    cutoffDate: string;
+    transactionCount: number;
+    requiredCount: number;
+    shortfall: number;
+    firstTxDate: string;
+    lastTxDate: string;
+  };
+};
+
+export type AdvancedSybilCheckResponse = {
+  eligible: boolean;
+  address: string;
+  chainId: number;
+  chainName: string;
+  checks: {
+    walletAge: WalletAgeCheck;
+    minimumBalance: MinimumBalanceCheck;
+    transactionCount: TransactionCountCheck;
+  };
+  checkedAt: string;
+  duration: string;
+};

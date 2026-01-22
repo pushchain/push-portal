@@ -10,10 +10,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   getRewardsLeaderboardS1,
   getRewardsLeaderboardS2,
-  // getRewardsLeaderboardS3,
+  getRewardsLeaderboardS3,
   rewardsLeaderboardS1,
   rewardsLeaderboardS2,
-  // rewardsLeaderboardS3,
+  rewardsLeaderboardS3,
 } from "../../queries";
 
 export type LeaderBoardSectionProps = Record<string, never>;
@@ -40,14 +40,14 @@ const LeaderBoardSection: FC<LeaderBoardSectionProps> = () => {
     // Clear all other season caches
     if (newSeason === "S1") {
       queryClient.removeQueries({ queryKey: [rewardsLeaderboardS2] });
-      // queryClient.removeQueries({ queryKey: [rewardsLeaderboardS3] });
+      queryClient.removeQueries({ queryKey: [rewardsLeaderboardS3] });
       queryClient.prefetchInfiniteQuery({
         queryKey: [rewardsLeaderboardS1],
         queryFn: getRewardsLeaderboardS1,
       });
     } else if (newSeason === "S2") {
       queryClient.removeQueries({ queryKey: [rewardsLeaderboardS1] });
-      // queryClient.removeQueries({ queryKey: [rewardsLeaderboardS3] });
+      queryClient.removeQueries({ queryKey: [rewardsLeaderboardS3] });
       queryClient.prefetchInfiniteQuery({
         queryKey: [rewardsLeaderboardS2],
         queryFn: getRewardsLeaderboardS2,
@@ -55,10 +55,10 @@ const LeaderBoardSection: FC<LeaderBoardSectionProps> = () => {
     } else {
       queryClient.removeQueries({ queryKey: [rewardsLeaderboardS1] });
       queryClient.removeQueries({ queryKey: [rewardsLeaderboardS2] });
-      // queryClient.prefetchInfiniteQuery({
-      //   queryKey: [rewardsLeaderboardS3],
-      //   queryFn: getRewardsLeaderboardS3,
-      // });
+      queryClient.prefetchInfiniteQuery({
+        queryKey: [rewardsLeaderboardS3],
+        queryFn: getRewardsLeaderboardS3,
+      });
     }
   }, [location.pathname, queryClient]);
 

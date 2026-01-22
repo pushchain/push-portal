@@ -30,3 +30,5 @@ export const characterMint = "characterMint";
 export const characterReshuffle = "characterReshuffle";
 export const eligibleForPreLaunch = "eligibleForPreLaunch";
 export const seasonThreeUserByWallet = "seasonThreeUserByWallet";
+export const advancedSybilCheck = "advancedSybilCheck";
+export const rewardsLeaderboardS3 = "rewardsLeaderboardS3";

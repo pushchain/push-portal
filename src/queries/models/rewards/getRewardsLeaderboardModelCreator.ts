@@ -1,4 +1,4 @@
-import { LeaderboardModelledResponse, LeaderboardResponse } from '../types';
+import { LeaderboardModelledResponse, LeaderboardResponse } from '../../types/rewards';
 
 export const getRewardsLeaderboardModalCreator = (
   response: LeaderboardResponse

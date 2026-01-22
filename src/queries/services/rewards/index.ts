@@ -18,3 +18,5 @@ export * from "./getSeasonOneUserDetails";
 export * from './getUserRewardsStats';
 export * from './getUserEligibilityForPreLaunch';
 export * from './getSeasonThreeUserByWallet';
+export * from './callAdvancedSybilCheck';
+export * from './getRewardsLeaderboardS3';

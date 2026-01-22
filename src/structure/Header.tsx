@@ -39,10 +39,6 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
     walletAddress: caip10WalletAddress
   })
 
-
-
-  console.log(userSeasonThreeDetails, 'details');
-
   return (
     <Box
       width="100%"
