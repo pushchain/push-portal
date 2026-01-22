@@ -29,6 +29,8 @@ import {
   YellowBonusActivitySubscribers,
   PushAlpha,
   FiveSubscribedDefiChannel,
+  TwitterDark,
+  FingerPrint,
 } from "../../../blocks";
 
 type RewardsActivityIconProp = {
@@ -41,7 +43,11 @@ const RewardsActivityIcon: FC<RewardsActivityIconProp> = ({ type }) => {
   }
 
   if (type === "follow_push_on_twitter") {
-    return <Twitter width={36} height={36} />;
+    return <TwitterDark width={36} height={36} />;
+  }
+
+  if (type === "link_an_active_wallet") {
+    return <FingerPrint width={36} height={36} />;
   }
 
   if (type === "tweet_about_push_chain" || type === "tweet_about_200k_points") {

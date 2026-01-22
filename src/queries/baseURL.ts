@@ -21,13 +21,13 @@ export const getRewardsBaseURL = () => {
 export const getSeasonThreeBaseURL = () => {
   switch (appEnv) {
     case "prod":
-      return `http://localhost:8080/api/v3`;
+      return `http://localhost:8080`;
     case "staging":
-      return `http://localhost:8080/api/v3`;
+      return `http://localhost:8080`;
     case "dev":
-      return `http://localhost:8080/api/v3`;
+      return `http://localhost:8080`;
     default:
-      return `http://localhost:8080/api/v3`;
+      return `http://localhost:8080`;
 
   }
 };

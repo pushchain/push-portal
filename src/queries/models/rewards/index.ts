@@ -15,3 +15,4 @@ export * from "./updateUserXPModel";
 export * from "./getSeasonOneUserDetailsModel";
 export * from './getUserRewardsStatsModel';
 export * from './getUserEligibilityForPreLaunchModel';
+export * from './getSeasonThreeUserByWalletModel';

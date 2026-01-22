@@ -432,3 +432,42 @@ export type UserEligibilityForPreLaunchResponse = {
   exists: boolean;
   season: string;
 };
+
+export type SeasonThreeUserByWalletParams = {
+  walletAddress: string;
+};
+
+export type SeasonThreeUserByWalletResponse = {
+  userId: string;
+  userWallet: string;
+  userUEAWallet: string;
+  activityPoints: number;
+  referralPoints: number;
+  frozenPoints: number;
+  totalPoints: number;
+  cachePCTokens: number;
+  xp: number;
+  level: number;
+  paragonModeEnabled: boolean;
+  rareActiveCount: number;
+  rareDormantCount: number;
+  shinyCount: number;
+  ashCount: number;
+  streak: number;
+  lastCheckIn: string | null;
+  spinCount: number;
+  spinDate: string | null;
+  totalSpins: number;
+  permaMultiplier: number;
+  previousPermaMultiplier: number;
+  tempMultiplier: number;
+  hasEternalTorch: boolean;
+  inviteCodes: number;
+  inviteCodeUsed: string;
+  phase: string;
+  rank: number;
+  createdAt: string;
+  lastUpdated: string;
+  isSeasonOneUser: boolean;
+  isSeasonTwoUser: boolean;
+};

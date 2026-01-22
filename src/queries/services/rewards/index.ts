@@ -17,3 +17,4 @@ export * from "./updateUserXP";
 export * from "./getSeasonOneUserDetails";
 export * from './getUserRewardsStats';
 export * from './getUserEligibilityForPreLaunch';
+export * from './getSeasonThreeUserByWallet';

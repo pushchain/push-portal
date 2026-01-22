@@ -29,3 +29,4 @@ export const characterGenerate = "characterGenerate";
 export const characterMint = "characterMint";
 export const characterReshuffle = "characterReshuffle";
 export const eligibleForPreLaunch = "eligibleForPreLaunch";
+export const seasonThreeUserByWallet = "seasonThreeUserByWallet";
