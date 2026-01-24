@@ -1,73 +1,11 @@
 import { css } from "styled-components"
-import { Box, Text, Button } from "../../../blocks"
+import { Box, Text, Button, RarePassIcon } from "../../../blocks"
 import { device } from "../../../config/globals"
 
 type SquadHeaderProps = {
   onInviteMembers?: () => void;
 }
 
-// S3 Squad Icon component
-const SquadIcon = () => (
-  <Box
-    css={css`
-      position: relative;
-      width: 36px;
-      height: 47px;
-      border-radius: 8px;
-      background: linear-gradient(180deg, rgba(210, 103, 252, 1) 0%, rgba(137, 111, 255, 1) 48%, rgba(113, 240, 177, 1) 94%);
-      flex-shrink: 0;
-    `}
-  >
-    <Box
-      css={css`
-        position: absolute;
-        top: 3px;
-        left: 3px;
-        width: 30px;
-        height: 41px;
-        background: #000;
-        border-radius: 6px;
-      `}
-    />
-    <Box
-      css={css`
-        position: absolute;
-        top: 6px;
-        left: 3px;
-        width: 30px;
-        height: 39px;
-        border-radius: 5px;
-        background: linear-gradient(180deg, rgba(210, 103, 252, 1) 0%, rgba(137, 111, 255, 1) 48%, rgba(113, 240, 177, 1) 94%);
-      `}
-    />
-    <Box
-      css={css`
-        position: absolute;
-        top: 24px;
-        left: 8px;
-        width: 19px;
-        height: 23px;
-        background: linear-gradient(180deg, rgba(169, 255, 238, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
-      `}
-    />
-    {/* Placeholder for vector icon */}
-    <Box
-      css={css`
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 16px;
-        height: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      `}
-    >
-      <Text variant="bs-bold" color="text-primary" css={css`font-size: 10px;`}>S3</Text>
-    </Box>
-  </Box>
-);
 
 export const SquadHeader = ({ onInviteMembers }: SquadHeaderProps) => {
   return (
@@ -78,8 +16,8 @@ export const SquadHeader = ({ onInviteMembers }: SquadHeaderProps) => {
       gap="spacing-xs"
       width="100%"
     >
-      <SquadIcon />
-      
+      <RarePassIcon />
+
       <Box
         display="flex"
         flexDirection="column"
@@ -97,7 +35,7 @@ export const SquadHeader = ({ onInviteMembers }: SquadHeaderProps) => {
         >
           S3 Squad
         </Text>
-        <Text 
+        <Text
           variant="bm-regular"
           css={css`color: rgba(255, 255, 255, 0.75);`}
         >
@@ -121,13 +59,13 @@ export const SquadHeader = ({ onInviteMembers }: SquadHeaderProps) => {
           css={css`
             border-color: rgba(255, 255, 255, 0.75);
             min-width: 100px;
-            
+
             @media ${device.mobileL} {
               width: 100%;
             }
           `}
         >
-          Invite Members
+          Create Squad
         </Button>
       </Box>
     </Box>

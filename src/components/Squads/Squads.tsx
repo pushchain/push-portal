@@ -1,5 +1,5 @@
 import { css } from "styled-components"
-import { Box } from "../../blocks"
+import { Box, Link, Text } from "../../blocks"
 import { ReferralStats, ReferralProgram, InviteCodes } from "./Referral"
 import { SquadSection } from "./SquadDetails"
 import { device } from "../../config/globals"
@@ -77,8 +77,8 @@ export const Squads = () => {
       flexDirection="column"
       gap="spacing-sm"
       width="100%"
+      height="auto"
     >
-      {/* Referral Section */}
       <Box
         display="flex"
         flexDirection="column"
@@ -103,7 +103,6 @@ export const Squads = () => {
           gap="spacing-md"
           width="100%"
         >
-          {/* Left Column - Stats and Referral Program */}
           <Box
             display="flex"
             flexDirection="column"
@@ -117,7 +116,7 @@ export const Squads = () => {
               }
             `}
           >
-            <ReferralStats 
+            <ReferralStats
               totalActiveReferrals={statsData.totalActiveReferrals}
               pointsEarned={statsData.pointsEarned}
             />
@@ -135,7 +134,7 @@ export const Squads = () => {
               }
             `}
           >
-            <InviteCodes 
+            <InviteCodes
               inviteCodes={inviteCodes}
               onCopyCode={handleCopyCode}
             />
@@ -143,7 +142,6 @@ export const Squads = () => {
         </Box>
       </Box>
 
-      {/* Squad Section */}
       <Box
         display="flex"
         flexDirection="column"
@@ -162,11 +160,32 @@ export const Squads = () => {
           box-sizing: border-box;
         `}
       >
-        <SquadSection 
+        <SquadSection
           squadData={squadData}
           onInviteMembers={handleInviteMembers}
           onCopyAddress={handleCopyAddress}
         />
+      </Box>
+
+      <Box
+        width="100%"
+        padding="spacing-none"
+        css={css`
+          z-index: 999;
+          margin-bottom: 24px;
+          `}
+      >
+        <Text
+          variant='h5-regular'
+          textAlign='center'>
+            Find and Join a squad on #s3squad channel via
+            <Link
+              to="https://discord.com/invite/pushchain"
+              textProps={{ variant: "bm-semibold", color: "#C742DD" }}
+            >
+              {' '}Push Chain Discord{' '}
+            </Link>
+        </Text>
       </Box>
     </Box>
   );

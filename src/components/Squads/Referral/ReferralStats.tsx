@@ -8,7 +8,7 @@ type StatCardProps = {
 }
 
 const StatCard = ({ value, label, variant }: StatCardProps) => {
-  const gradientBg = variant === 'purple' 
+  const gradientBg = variant === 'purple'
     ? 'radial-gradient(50% 50% at 73% 50%, rgba(19, 18, 32, 1) 52%, rgba(16, 13, 68, 1) 100%)'
     : 'radial-gradient(50% 50% at 73% 50%, rgba(19, 18, 32, 1) 54%, rgba(68, 53, 13, 1) 100%)';
 
@@ -34,14 +34,14 @@ const StatCard = ({ value, label, variant }: StatCardProps) => {
         alignItems="center"
         gap="spacing-xxxs"
       >
-        <Text 
-          variant="h1-bold" 
+        <Text
+          variant="h1-bold"
           color="text-primary"
         >
           {value}
         </Text>
-        <Text 
-          variant="h5-semibold" 
+        <Text
+          variant="h5-semibold"
           css={css`
             color: rgba(255, 255, 255, 0.75);
             text-align: center;
@@ -67,15 +67,15 @@ export const ReferralStats = ({ totalActiveReferrals, pointsEarned }: ReferralSt
       gap="spacing-md"
       width="100%"
     >
-      <StatCard 
-        value={totalActiveReferrals} 
-        label="Total Active Referrals" 
-        variant="purple" 
+      <StatCard
+        value={totalActiveReferrals}
+        label="Total Active Referrals"
+        variant="purple"
       />
-      <StatCard 
-        value={pointsEarned.toLocaleString()} 
-        label="Points Earned" 
-        variant="gold" 
+      <StatCard
+        value={pointsEarned.toLocaleString()}
+        label="Points Earned"
+        variant="gold"
       />
     </Box>
   );

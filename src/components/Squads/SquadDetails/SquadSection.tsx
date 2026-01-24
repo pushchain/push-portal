@@ -1,5 +1,5 @@
 import { css } from "styled-components"
-import { Box } from "../../../blocks"
+import { Box, Link, Text } from "../../../blocks"
 import { SquadHeader } from "./SquadHeader"
 import { SquadLevelCard } from "./SquadLevelCard"
 import { SquadStatsRow } from "./SquadStatsRow"
@@ -39,21 +39,38 @@ export const SquadSection = ({ squadData, onInviteMembers, onCopyAddress }: Squa
       gap="spacing-md"
       width="100%"
     >
-      {/* Header - S3 Squad title and invite button */}
       <SquadHeader onInviteMembers={onInviteMembers} />
 
-      {/* Stats Row - Level Card + Stats */}
       <Box
+        width="100%"
+        minHeight="169px"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Text variant="bm-semibold" color="rgba(255, 255, 255, 0.25)">You are not a part of a squad yet.</Text>
+        <Text variant="bm-semibold" color="rgba(255, 255, 255, 0.25)">
+          Create a squad or find one on #s3squad channel via{" "}
+          <Link
+            to="https://discord.com/invite/pushchain"
+            textProps={{ variant: "bm-semibold", color: "#C742DD" }}
+          >
+            Push Chain Discord.
+          </Link>
+        </Text>
+      </Box>
+
+      {/*<Box
         display="flex"
         flexDirection={{ initial: "row", tb: "column" }}
         gap="spacing-md"
         width="100%"
       >
-        {/* Level Card */}
         <Box
           css={css`
             flex-shrink: 0;
-            
+
             @media ${device.tablet} {
               width: 100%;
               max-width: 100%;
@@ -68,8 +85,10 @@ export const SquadSection = ({ squadData, onInviteMembers, onCopyAddress }: Squa
           />
         </Box>
 
-        {/* Stats Cards */}
-        <Box css={css`flex: 1; min-width: 0;`}>
+        <Box css={css`
+            flex: 1;
+            min-width: 0;
+            `}>
           <SquadStatsRow
             totalMembers={squadData.totalMembers}
             maxMembers={squadData.maxMembers}
@@ -79,11 +98,10 @@ export const SquadSection = ({ squadData, onInviteMembers, onCopyAddress }: Squa
         </Box>
       </Box>
 
-      {/* Members Table */}
       <SquadMembersTable
         members={squadData.members}
         onCopyAddress={onCopyAddress}
-      />
+      />*/}
     </Box>
   );
 };
