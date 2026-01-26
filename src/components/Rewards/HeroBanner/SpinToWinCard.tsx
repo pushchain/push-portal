@@ -3,6 +3,7 @@ import { css } from 'styled-components';
 import { Box, Button, Text } from '../../../blocks';
 import SpinToWinModal from './SpinToWinModal';
 import { useGetSpinStatus } from '../../../queries/hooks';
+import spinboardImage from '/static/assets/website/rewards/spinboard.webp';
 
 const SpinToWinCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,6 +44,30 @@ const SpinToWinCard = () => {
           }
         `}
       >
+        <Box
+          position="absolute"
+          css={css`
+            top: 45%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            opacity: 0.9;
+            pointer-events: none;
+            z-index: 0;
+          `}
+        >
+          <img
+            src={spinboardImage}
+            alt=""
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+            }}
+          />
+        </Box>
+
         <Box
           display="flex"
           flexDirection="column"
