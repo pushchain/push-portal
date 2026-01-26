@@ -564,3 +564,5 @@ export type SpinStatusResponse = {
   needsReset: boolean;
   resetsAt: string;
 };
+
+export type SpinTheWheelResponse = any;

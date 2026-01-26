@@ -3,6 +3,7 @@ import { css } from 'styled-components';
 import { Box, Button, Modal, Text } from '../../../blocks';
 import Spinboard, { SpinboardHandle } from './Spinboard';
 import { useSpinStatus } from '../hooks/useSpinStatus';
+import { useSpinTheWheel } from '../../../queries/hooks';
 
 type SpinToWinModalProps = {
   isOpen: boolean;
@@ -15,7 +16,8 @@ const SpinToWinModal = ({ isOpen, onClose }: SpinToWinModalProps) => {
   const [wonPrize, setWonPrize] = useState('');
   const spinboardRef = useRef<SpinboardHandle>(null);
 
-  const { spinStatus } = useSpinStatus();
+  const { spinStatus, authHeaders, refetch } = useSpinStatus();
+  const { mutate: spin, isPending: isSpinPending } = useSpinTheWheel();
 
   const prizes = [
     '80 Points',
@@ -31,10 +33,24 @@ const SpinToWinModal = ({ isOpen, onClose }: SpinToWinModalProps) => {
   ];
 
   const handleSpinClick = () => {
-    if (isSpinning || !spinStatus?.canSpin) return;
+    console.log('1')
+    if (isSpinning || !spinStatus?.canSpin || !authHeaders) return;
     setShowResult(false);
     setIsSpinning(true);
-    spinboardRef.current?.spin();
+
+    console.log('2')
+
+
+    spin(authHeaders, {
+      onSuccess: (data) => {
+        spinboardRef.current?.spin();
+        refetch();
+      },
+      onError: (error) => {
+        setIsSpinning(false);
+        console.error('Spin failed:', error);
+      },
+    });
   };
 
   const handleSpinComplete = (prizeIndex: number) => {

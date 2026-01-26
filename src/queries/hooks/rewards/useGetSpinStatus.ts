@@ -5,7 +5,6 @@ import { AuthHeaders } from "../../types";
 
 export const useGetSpinStatus = (authHeaders?: AuthHeaders) => {
   const isValid = authHeaders?.message && authHeaders?.signature && authHeaders?.walletAddress;
-  console.log(isValid,'val val', authHeaders)
 
   return useQuery({
     queryKey: [spinStatus, authHeaders?.walletAddress],

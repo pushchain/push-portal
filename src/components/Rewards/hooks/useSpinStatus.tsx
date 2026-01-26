@@ -18,5 +18,6 @@ export const useSpinStatus = () => {
     error,
     refetch,
     signAndStore,
+    authHeaders,
   };
 };

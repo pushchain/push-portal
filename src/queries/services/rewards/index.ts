@@ -21,3 +21,4 @@ export * from './getSeasonThreeUserByWallet';
 export * from './callAdvancedSybilCheck';
 export * from './getRewardsLeaderboardS3';
 export * from './getSpinStatus';
+export * from './spinTheWheel';
