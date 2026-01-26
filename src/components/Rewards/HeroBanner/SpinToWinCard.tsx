@@ -4,12 +4,15 @@ import { Box, Button, Text } from '../../../blocks';
 import SpinToWinModal from './SpinToWinModal';
 import { useGetSpinStatus } from '../../../queries/hooks';
 import spinboardImage from '/static/assets/website/rewards/spinboard.webp';
+import stopperImage from '/static/assets/website/rewards/stopper.webp';
 
 const SpinToWinCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: spinStatus } = useGetSpinStatus();
 
   const remainingSpins = spinStatus?.remainingSpins ?? 0;
+
+  console.log(spinStatus, 'spin spin')
 
   return (
     <>
@@ -44,25 +47,39 @@ const SpinToWinCard = () => {
           }
         `}
       >
+        {/* Background spinboard with stopper */}
         <Box
           position="absolute"
           css={css`
-            top: 45%;
+            top: 40%;
             left: 50%;
             transform: translateX(-50%);
-            width: 300px;
-            height: 300px;
             opacity: 0.9;
             pointer-events: none;
             z-index: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
           `}
         >
+          <img
+            src={stopperImage}
+            alt=""
+            style={{
+              width: '40px',
+              height: '40px',
+              objectFit: 'contain',
+              marginBottom: '-20px',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          />
           <img
             src={spinboardImage}
             alt=""
             style={{
-              width: '100%',
-              height: '100%',
+              width: '300px',
+              height: '300px',
               objectFit: 'contain',
             }}
           />

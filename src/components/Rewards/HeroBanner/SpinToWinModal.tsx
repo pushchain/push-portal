@@ -69,7 +69,7 @@ const SpinToWinModal = ({ isOpen, onClose }: SpinToWinModalProps) => {
           inset: 0;
           border-radius: inherit;
           padding: 1px;
-          background: rgba(255, 255, 255, 0.25);
+          /*background: rgba(255, 255, 255, 0.25);*/
           -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
