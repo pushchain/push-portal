@@ -2,17 +2,15 @@ import { useState } from 'react';
 import { css } from 'styled-components';
 import { Box, Button, Text } from '../../../blocks';
 import SpinToWinModal from './SpinToWinModal';
-import { useGetSpinStatus } from '../../../queries/hooks';
+import { useSpinStatus } from '../hooks/useSpinStatus';
 import spinboardImage from '/static/assets/website/rewards/spinboard.webp';
 import stopperImage from '/static/assets/website/rewards/stopper.webp';
 
 const SpinToWinCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: spinStatus } = useGetSpinStatus();
+  const { spinStatus } = useSpinStatus();
 
   const remainingSpins = spinStatus?.remainingSpins ?? 0;
-
-  console.log(spinStatus, 'spin spin')
 
   return (
     <>
@@ -47,7 +45,6 @@ const SpinToWinCard = () => {
           }
         `}
       >
-        {/* Background spinboard with stopper */}
         <Box
           position="absolute"
           css={css`
@@ -137,7 +134,11 @@ const SpinToWinCard = () => {
           <Button
             size="medium"
             variant="primary"
-            onClick={() => setIsModalOpen(true)}
+            disabled={!spinStatus?.canSpin}
+            onClick={() => {
+              if (!spinStatus?.canSpin) return;
+              setIsModalOpen(true)
+            }}
             css={css`
               width: 100%;
               position: relative;

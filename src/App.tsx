@@ -20,7 +20,6 @@ import {
 
 import { getPreviewBasePath } from "../basePath";
 import { ThemeProviderWrapper } from "./context/themeContext";
-import { AccountProvider } from "./context/accountContext";
 import { RewardsContextProvider } from "./context/rewardsContext";
 
 import { blocksColors, Box, getBlocksCSSVariables } from "../src/blocks";
@@ -244,7 +243,6 @@ function App() {
                '--pwauth-btn-connected-bg-color': '#D548EC'
              }}
            >
-        <AccountProvider>
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>
@@ -253,7 +251,6 @@ function App() {
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
           </RewardsContextProvider>
-        </AccountProvider>
       </PushUniversalWalletProvider>
     </ThemeProviderWrapper>
   );

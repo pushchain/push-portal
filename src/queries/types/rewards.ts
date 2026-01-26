@@ -1,3 +1,9 @@
+export type AuthHeaders = {
+  message: any;
+  signature: string;
+  walletAddress: string;
+};
+
 export type RewardsAcitivitesResponse = {
   activities: Activity[];
   total: number;

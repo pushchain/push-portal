@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { css } from 'styled-components';
 import { Box, Button, Modal, Text } from '../../../blocks';
 import Spinboard, { SpinboardHandle } from './Spinboard';
-import { useGetSpinStatus } from '../../../queries/hooks';
+import { useSpinStatus } from '../hooks/useSpinStatus';
 
 type SpinToWinModalProps = {
   isOpen: boolean;
@@ -15,7 +15,7 @@ const SpinToWinModal = ({ isOpen, onClose }: SpinToWinModalProps) => {
   const [wonPrize, setWonPrize] = useState('');
   const spinboardRef = useRef<SpinboardHandle>(null);
 
-  const { data: spinStatus } = useGetSpinStatus();
+  const { spinStatus } = useSpinStatus();
 
   const prizes = [
     '80 Points',
@@ -69,7 +69,6 @@ const SpinToWinModal = ({ isOpen, onClose }: SpinToWinModalProps) => {
           inset: 0;
           border-radius: inherit;
           padding: 1px;
-          /*background: rgba(255, 255, 255, 0.25);*/
           -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
