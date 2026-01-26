@@ -19,3 +19,4 @@ export * from './useGetUserEligibilityForPreLaunch';
 export * from './useGetSeasonThreeUserByWallet';
 export * from './useAdvancedSybilCheck';
 export * from './useGetRewardsLeaderboardS3';
+export * from './useGetSpinStatus';

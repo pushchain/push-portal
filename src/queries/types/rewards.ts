@@ -541,3 +541,20 @@ export type AdvancedSybilCheckResponse = {
   checkedAt: string;
   duration: string;
 };
+
+
+export type SpinStatusResponse = {
+  success: boolean;
+  currentSpinCount: number;
+  remainingSpins: number;
+  maxSpinsPerDay: number;
+  nextSpinCost: number;
+  canSpin: boolean;
+  hasEnoughPoints: boolean;
+  userPoints: number;
+  totalLifetimeSpins: number;
+  rarePassCount: number;
+  squadInfo: any;
+  needsReset: boolean;
+  resetsAt: string;
+};

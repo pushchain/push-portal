@@ -38,3 +38,4 @@ export const sendSquadInvite = "sendSquadInvite";
 export const acceptSquadInvite = "acceptSquadInvite";
 export const rejectSquadInvite = "rejectSquadInvite";
 export const squadsLeaderboard = "squadsLeaderboard";
+export const spinStatus = "spinStatus";
