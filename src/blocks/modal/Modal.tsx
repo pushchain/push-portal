@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import styled from 'styled-components';
+import styled, { FlattenSimpleInterpolation } from 'styled-components';
 import { Button, ButtonProps } from '../button';
 import { Back, Cross } from '../icons';
 import { ModalSize } from './Modal.types';
@@ -14,6 +14,7 @@ export type ModalProps = {
   cancelButtonProps?: ButtonProps | null;
   children: ReactNode;
   closeOnOverlayClick?: boolean;
+  css?: FlattenSimpleInterpolation;
   isOpen: boolean;
   onBack?: () => void;
   onClose: () => void;
@@ -28,7 +29,7 @@ const Overlay = styled(Dialog.Overlay)`
   z-index: 1000;
 `;
 
-const ContentContainer = styled(Dialog.Content)<{ size: ModalSize }>`
+const ContentContainer = styled(Dialog.Content)<{ size: ModalSize; css?: FlattenSimpleInterpolation }>`
   display: flex;
   border-radius: var(--radius-sm);
   border: var(--border-sm) solid var(--stroke-secondary);
@@ -48,6 +49,9 @@ const ContentContainer = styled(Dialog.Content)<{ size: ModalSize }>`
   @media ${deviceMediaQ.mobileL} {
     width: 80%;
   }
+
+  /* Extra CSS props */
+  ${(props) => props.css || ''}
 `;
 
 const ContentChildren = styled.div<{ size: ModalSize }>`
@@ -101,6 +105,7 @@ const Modal: FC<ModalProps> = ({
   buttonAlignment = 'center',
   cancelButtonProps = { children: 'Cancel', onClick: () => onClose() },
   children,
+  css: cssProp,
   isOpen,
   onBack,
   onClose,
@@ -119,6 +124,7 @@ const Modal: FC<ModalProps> = ({
         <Overlay onClick={handleOverlayClick} />
         <ContentContainer
           size={size}
+          css={cssProp}
           onInteractOutside={(e) => e.preventDefault()}
         >
           <HeaderContainer>

@@ -17,9 +17,8 @@ export type SquadsListResponse = {
   members: SquadMember[];
 };
 
-// Create Squad
 export type CreateSquadParams = {
-  squadName: string;
+  name: string;
 };
 
 export type CreateSquadResponse = {
@@ -27,7 +26,6 @@ export type CreateSquadResponse = {
   squadName: string;
 };
 
-// Send Squad Invite
 export type SendSquadInviteParams = {
   squadId: string;
 };

@@ -22,7 +22,7 @@ export const CreateSquadModal = ({ isOpen, onClose }: CreateSquadModalProps) => 
 
     setError("");
     createSquad(
-      { squadName: squadName.trim() },
+      { name: squadName.trim() },
       {
         onSuccess: () => {
           setSquadName("");
@@ -46,34 +46,49 @@ export const CreateSquadModal = ({ isOpen, onClose }: CreateSquadModalProps) => 
       isOpen={isOpen}
       onClose={handleClose}
       size="small"
+      css={css`
+        border-radius: var(--radius-lg, 32px);
+        outline: none;
+        background: linear-gradient(180deg, #000 0%, #4C2A6B 100%);
+
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          padding: 1px;
+          background: rgba(255, 255, 255, 0.25);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+      `}
       acceptButtonProps={{
-        children: isPending ? "Creating..." : "Create",
+        children: isPending ? "Creating..." : "Create Squad",
         onClick: handleCreate,
         disabled: isPending,
       }}
-      cancelButtonProps={{
-        children: "Cancel",
-        onClick: handleClose,
-      }}
+      cancelButtonProps={null}
     >
       <Box
         display="flex"
         flexDirection="column"
         gap="spacing-md"
         width="100%"
-        height="100%"
-        css={css`
-            border-radius: var(--radius-lg, 32px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            background: linear-gradient(180deg, #000 0%, #4C2A6B 100%);
-        `}
       >
-        <Text variant="h4-semibold">Create Squad</Text>
         <Text
-          variant="bs-regular"
-          css={css`color: var(--text-secondary);`}
+          variant="h2-semibold"
+          textAlign="center"
+          css={css`
+            background: linear-gradient(180deg, #FFF 0%, #FFE397 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            `}
         >
-          Create a new squad and invite up to 10 players to unlock special boosts.
+            Create Squad
         </Text>
         <TextInput
           label="Squad Name"
@@ -82,8 +97,17 @@ export const CreateSquadModal = ({ isOpen, onClose }: CreateSquadModalProps) => 
           onChange={(e) => setSquadName(e.target.value)}
           error={!!error}
           errorMessage={error}
-          required
         />
+
+        <Text
+          variant="bs-semibold"
+          textAlign="center"
+          css={css`
+              color: var(--text-secondary);
+        `}
+        >
+          Squads are permanent. You will be unable to join other squads after creating your own.
+        </Text>
       </Box>
     </Modal>
   );
