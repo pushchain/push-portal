@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { css } from "styled-components";
-import { usePushWalletContext } from "@pushchain/ui-kit";
+import { usePushChainClient, usePushWalletContext } from "@pushchain/ui-kit";
 
 import { Box, Link, Modal, Text, TextInput } from "../blocks";
 import ModalBg from "../../static/assets/website/shared/modal-bg.webp";
@@ -16,6 +16,7 @@ type InviteCodeModalProps = {
 
 export const InviteCodeModal = ({ isOpen, onClose }: InviteCodeModalProps) => {
   const { universalAccount } = usePushWalletContext();
+  const { pushChainClient } = usePushChainClient();
   const [inviteCode, setInviteCode] = useState("");
   const [error, setError] = useState("");
   const { mutate: createUser } = useCreateSeasonThreeUser();
@@ -30,6 +31,8 @@ export const InviteCodeModal = ({ isOpen, onClose }: InviteCodeModalProps) => {
   } = useGetSeasonThreeUserByWallet({
     walletAddress: caip10WalletAddress,
   });
+
+  const ueaAccount = pushChainClient?.universal?.account;
   const { signMessage } = useSignMessageWithEthereum();
 
 
@@ -45,6 +48,7 @@ export const InviteCodeModal = ({ isOpen, onClose }: InviteCodeModalProps) => {
     createUser(
       {
         userWallet: caip10WalletAddress,
+        userUEAWallet: `eip155:42101:${ ueaAccount }`,
         phase: "HYPE",
         data: signedMessage,
         inviteCodeUsed: inviteCode,
@@ -59,6 +63,7 @@ export const InviteCodeModal = ({ isOpen, onClose }: InviteCodeModalProps) => {
         },
         onError: (error: any) => {
           console.log("Error in creating activity", error);
+          setError(error?.response?.data.error)
         },
       },
     );
@@ -81,11 +86,17 @@ export const InviteCodeModal = ({ isOpen, onClose }: InviteCodeModalProps) => {
         outline: none;
         background: url(${ModalBg}) no-repeat center center;
         background-size: cover;
+
+        & > div:last-child {
+          width: 100%;
+          margin-bottom: 16px;
+        }
       `}
       acceptButtonProps={{
         children: "Get Started",
         onClick: handleSubmit,
-      }}
+        block: true,
+        }}
       cancelButtonProps={null}
     >
       <Box
@@ -107,11 +118,12 @@ export const InviteCodeModal = ({ isOpen, onClose }: InviteCodeModalProps) => {
          Invite Code
         </Text>
         <TextInput
-          placeholder="Enter your invite code"
+          placeholder="Enter your code"
           value={inviteCode}
           onChange={(e) => setInviteCode(e.target.value)}
           error={!!error}
           errorMessage={error}
+          backgroundColor={"rgba(0, 0, 0, 0.25)"}
         />
       </Box>
 
