@@ -44,7 +44,7 @@ export { default as ErrorGraphic } from "./components/ErrorGraphic";
 
 export { default as FiveSubscribedDefiChannel } from "./components/FiveSubscribedDefiChannel";
 
-export { default as FingerPrint } from "./components/FingerPrint";
+export { default as FingerPrint } from "./components/Fingerprint";
 
 export { default as GatedGroupPoints } from "./components/GatedGroupPoints";
 
