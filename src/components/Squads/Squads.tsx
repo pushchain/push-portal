@@ -1,23 +1,36 @@
 import { css } from "styled-components"
-import { Box, Link, Text } from "../../blocks"
+import { usePushWalletContext } from "@pushchain/ui-kit"
+
+import { useGetAllInvites, useGetSeasonThreeUserByWallet } from "../../queries"
+import { walletToFullCAIP10 } from "../../helpers/web3helper"
+import { useAuthHeaders } from "../Rewards/hooks/useAuthHeaders"
+
+import { device } from "../../config/globals"
 import { ReferralStats, ReferralProgram, InviteCodes } from "./Referral"
 import { SquadSection } from "./SquadDetails"
-import { device } from "../../config/globals"
+import { Box, Link, Text } from "../../blocks"
+
 
 export const Squads = () => {
+  const { connectionStatus, universalAccount } = usePushWalletContext();
+  const { authHeaders } = useAuthHeaders();
+
+  const caip10WalletAddress = walletToFullCAIP10(
+    universalAccount?.address as string,
+    universalAccount?.chain,
+  );
+  const { data: seasonThreeDetails } = useGetSeasonThreeUserByWallet({
+    walletAddress: caip10WalletAddress
+  });
+
+  const { data: inviteCodeDetails } = useGetAllInvites(authHeaders);
+
+
   // Mock data - replace with actual data from API
   const statsData = {
     totalActiveReferrals: 2,
     pointsEarned: 10000
   };
-
-  const inviteCodes = [
-    { code: 'PC-X152CT', status: 'available' as const },
-    { code: 'PC-TY7UJK', status: 'available' as const },
-    { code: 'PC-AB3DEF', status: 'available' as const },
-    { code: 'PC-GH4IJK', status: 'claimed' as const },
-    { code: 'PC-LM5NOP', status: 'claimed' as const },
-  ];
 
   const squadData = {
     squadName: 'HellFire',
@@ -54,11 +67,6 @@ export const Squads = () => {
         isCurrentUser: false
       }
     ]
-  };
-
-  const handleCopyCode = (code: string) => {
-    console.log(`Copied code: ${code}`);
-    // You can add toast notification here
   };
 
   const handleCopyAddress = (address: string) => {
@@ -117,13 +125,12 @@ export const Squads = () => {
             `}
           >
             <ReferralStats
-              totalActiveReferrals={statsData.totalActiveReferrals}
-              pointsEarned={statsData.pointsEarned}
+              totalActiveReferrals={ inviteCodeDetails?.data?.stats.used }
+              pointsEarned={ seasonThreeDetails?.referralPoints }
             />
             <ReferralProgram />
           </Box>
 
-          {/* Right Column - Invite Codes */}
           <Box
             css={css`
               flex: 1;
@@ -134,10 +141,7 @@ export const Squads = () => {
               }
             `}
           >
-            <InviteCodes
-              inviteCodes={inviteCodes}
-              onCopyCode={handleCopyCode}
-            />
+            <InviteCodes />
           </Box>
         </Box>
       </Box>

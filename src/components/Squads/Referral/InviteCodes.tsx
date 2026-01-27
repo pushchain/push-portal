@@ -1,23 +1,19 @@
+import { useState } from "react";
 import { css } from "styled-components"
-import { Box, Text, Copy, Lozenge } from "../../../blocks"
+import { Box, Text, Copy } from "../../../blocks"
 import { useGetAllInvites } from "../../../queries";
 import { useAuthHeaders } from "../../Rewards/hooks/useAuthHeaders";
-
-type InviteCodeStatus = 'available' | 'claimed';
-
-type InviteCode = {
-  code: string;
-  status: InviteCodeStatus;
-}
 
 type InviteCodeRowProps = {
   code: string;
   isUsed: boolean;
-  onCopy?: (code: string) => void;
+  copiedCode: string | null;
+  onCopy: (code: string, e: React.MouseEvent) => void;
 }
 
-const InviteCodeRow = ({ code, isUsed, onCopy }: InviteCodeRowProps) => {
+const InviteCodeRow = ({ code, isUsed, copiedCode, onCopy }: InviteCodeRowProps) => {
   const isAvailable = !isUsed;
+  const isCopied = copiedCode === code;
 
   return (
     <Box
@@ -52,14 +48,22 @@ const InviteCodeRow = ({ code, isUsed, onCopy }: InviteCodeRowProps) => {
             alignItems="center"
             gap="spacing-xxxs"
             cursor="pointer"
-            onClick={() => onCopy?.(code)}
+            onClick={(e: React.MouseEvent) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onCopy(code, e);
+            }}
+            css={css`
+              user-select: none;
+              z-index: 1;
+            `}
           >
-            <Copy size={16} color="icon-brand-medium" />
+            <Copy size={16} color={isCopied ? "icon-state-success-bold" : "icon-brand-medium"} />
             <Text
               variant="bs-semibold"
-              color="text-brand-medium"
+              color={isCopied ? "text-state-success-bold" : "text-brand-medium"}
             >
-              Copy Code
+              {isCopied ? 'Copied' : 'Copy Code'}
             </Text>
           </Box>
         )}
@@ -99,18 +103,23 @@ const InviteCodeRow = ({ code, isUsed, onCopy }: InviteCodeRowProps) => {
   );
 };
 
-type InviteCodesProps = {
-  onCopyCode?: (code: string) => void;
-}
 
-export const InviteCodes = ({ onCopyCode }: InviteCodesProps) => {
-  const handleCopy = (code: string) => {
-    navigator.clipboard.writeText(code);
-    onCopyCode?.(code);
-  };
+export const InviteCodes = () => {
+  const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
   const { authHeaders } = useAuthHeaders();
   const { data: inviteCodeDetails } = useGetAllInvites(authHeaders);
+
+  const handleCopy = async (code: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    await navigator.clipboard.writeText(code);
+    setCopiedCode(code);
+    setTimeout(() => {
+      setCopiedCode(null);
+    }, 2000);
+  };
 
   return (
     <Box
@@ -174,11 +183,12 @@ export const InviteCodes = ({ onCopyCode }: InviteCodesProps) => {
         gap="spacing-xs"
         css={css`flex: 1;`}
       >
-        {inviteCodeDetails.data.invites?.map((invite, index) => (
+        {inviteCodeDetails?.data?.invites?.map((invite, index) => (
           <InviteCodeRow
             key={index}
             code={invite.code}
             isUsed={invite.isUsed}
+            copiedCode={copiedCode}
             onCopy={handleCopy}
           />
         ))}
