@@ -578,3 +578,14 @@ export type CreateSeasonThreeUserPayload = {
 };
 
 export type CreateSeasonThreeUserResponse = any;
+
+export type DailyCheckInDetailsResponse = {
+  success: boolean;
+  streak: number;
+  lastCheckIn: any | null;
+  canCheckInToday: boolean;
+  nextCheckInAvailable: any | null;
+  [key: string]: any;
+};
+
+export type ClaimDailyRewardsSeasonThreeResponse = any;

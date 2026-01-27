@@ -1,35 +1,26 @@
 // React and other libraries
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useState } from "react";
 import { css } from "styled-components";
 
 // hooks
-import { useDailyRewards } from "../hooks/useDailyRewards";
 import { useRewardsContext } from "../../../context/rewardsContext";
 import { useCountdown } from "../hooks/useCountdown";
 
 // type
-import { ActvityType } from "../../../queries";
+import { ActvityType, useClaimDailyRewardsSeasonThree, useGetDailyCheckInDetails } from "../../../queries";
 
 // components
 import { Alert, Box, Button, Text } from "../../../blocks";
 import { DailyRewardsItem } from "./DailyRewardsItem";
 
 import { ActivityVerificationButton } from "../RewardsActivity/ActivityVerificationButton";
+import { useAuthHeaders } from "../hooks/useAuthHeaders";
 
 export type DailyRewardsSectionProps = Record<string, never>;
 
 const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
-
-  const {
-    activeItem,
-    activeDay,
-    isActivityDisabled,
-    isLoading,
-    userDetails,
-    dailyRewardsActivities,
-    refetchSendActivities,
-  } = useDailyRewards();
+  const { authHeaders } = useAuthHeaders();
 
   const { isLocked } = useRewardsContext();
 
@@ -40,12 +31,34 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
 
   const hasRewardsExpired = isExpired;
 
-  const isDailyRewardClaimed =
-    isActivityDisabled && activeDay > 1 && userDetails;
+  const { data: getDailyCheckInDetails, refetch, isLoading: isLoadingRewards } = useGetDailyCheckInDetails(authHeaders);
+  const { mutate: claimDailyRewards, isPending: isClaimingRewards } = useClaimDailyRewardsSeasonThree();
+  console.log(getDailyCheckInDetails, 'daily')
 
-  const displayDailyRewards = useMemo(() => {
-    return !isActivityDisabled && activeDay > 0 && activeItem && userDetails;
-  }, [isActivityDisabled, activeDay, userDetails, activeItem]);
+  const canClaimRewards = getDailyCheckInDetails?.canCheckInToday;
+
+
+  const handleClaimRewards = () => {
+    claimDailyRewards(authHeaders, {
+      onSuccess: (data) => {
+        console.log(data);
+        refetch();
+      },
+      onError: (error) => {
+        console.error(error);
+      }
+    });
+}
+
+  const dailyRewardsActivities = [
+    { id: 1, text: "Day 1" },
+    { id: 2, text: "Day 2" },
+    { id: 3, text: "Day 3" },
+    { id: 4, text: "Day 4" },
+    { id: 5, text: "Day 5" },
+    { id: 6, text: "Day 6" },
+    { id: 7, text: "Day 7" },
+  ];
 
   return (
     <Box
@@ -80,34 +93,44 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
         </Box>
 
         {/* daily checkIn button state */}
-        {!hasRewardsExpired && isLocked && (
+        {/*{!isLocked && (
           <Button variant="tertiary" size="small" disabled>
             Locked
           </Button>
-        )}
-        {hasRewardsExpired && (
+        )}*/}
+
+        {/*{hasRewardsExpired && (
           <Button variant="tertiary" size="small" disabled>
             Ended
           </Button>
-        )}
-        {!hasRewardsExpired && !isLocked && (
+        )}*/}
+
+        {(
           <>
-            {isDailyRewardClaimed && (
+            {!canClaimRewards && (
               <Button variant="tertiary" size="small" disabled>
                 Claimed
               </Button>
             )}
 
-            {displayDailyRewards && (
-              <ActivityVerificationButton
-                activityType={activeItem?.activityType as ActvityType}
-                userId={userDetails?.userId as string}
-                activityTypeId={activeItem?.id as string}
-                refetchActivity={() => refetchSendActivities()}
-                setErrorMessage={setErrorMessage}
-                isLoadingActivity={false}
-                label="Check In"
-              />
+            {canClaimRewards && (
+              <Button
+                variant="tertiary"
+                size="small"
+                onClick={handleClaimRewards}
+                disabled={isClaimingRewards}
+              >
+                Claim
+              </Button>
+              // <ActivityVerificationButton
+              //   activityType={activeItem?.activityType as ActvityType}
+              //   userId={userDetails?.userId as string}
+              //   activityTypeId={activeItem?.id as string}
+              //   refetchActivity={() => refetchSendActivities()}
+              //   setErrorMessage={setErrorMessage}
+              //   isLoadingActivity={false}
+              //   label="Claim"
+              // />
             )}
           </>
         )}
@@ -146,7 +169,7 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
             }
 
             .item:last-child .inner-item {
-              grid-row: span 2; /* Adjust to span 2 rows on small screens */
+              grid-row: span 2;
 
               span {
                 width: 85%;
@@ -170,11 +193,9 @@ const DailyRewardsSection: FC<DailyRewardsSectionProps> = () => {
       >
         {dailyRewardsActivities?.map((activity) => (
           <DailyRewardsItem
-            key={activity.activityType}
+            dailyCheckInDetails={getDailyCheckInDetails}
+            isLoading={isLoadingRewards}
             activity={activity}
-            activeDay={activeDay}
-            isLoading={isLoading}
-            isActivityDisabled={isActivityDisabled}
           />
         ))}
       </Box>

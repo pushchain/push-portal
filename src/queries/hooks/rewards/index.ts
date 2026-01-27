@@ -22,3 +22,5 @@ export * from './useGetRewardsLeaderboardS3';
 export * from './useGetSpinStatus';
 export * from './useSpinTheWheel';
 export * from './useCreateSeasonThreeUser';
+export * from './useGetDailyCheckInDetails';
+export * from './useClaimDailyRewardsSeasonThree';

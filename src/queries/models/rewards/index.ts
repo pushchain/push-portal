@@ -20,3 +20,5 @@ export * from './advancedSybilCheckModel';
 export * from './getSpinStatusModel';
 export * from './spinTheWheelModel';
 export * from './createSeasonThreeUserModel';
+export * from './getDailyCheckInDetailsModel';
+export * from './claimDailyRewardsSeasonThreeModel';

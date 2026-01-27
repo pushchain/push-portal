@@ -19,7 +19,7 @@ export const InviteCodeModal = ({ isOpen, onClose }: InviteCodeModalProps) => {
   const { pushChainClient } = usePushChainClient();
   const [inviteCode, setInviteCode] = useState("");
   const [error, setError] = useState("");
-  const { mutate: createUser } = useCreateSeasonThreeUser();
+  const { mutate: createUser, isPending } = useCreateSeasonThreeUser();
 
   const caip10WalletAddress = walletToFullCAIP10(
     universalAccount?.address as string,
@@ -96,6 +96,7 @@ export const InviteCodeModal = ({ isOpen, onClose }: InviteCodeModalProps) => {
         children: "Get Started",
         onClick: handleSubmit,
         block: true,
+        disabled: isPending
         }}
       cancelButtonProps={null}
     >

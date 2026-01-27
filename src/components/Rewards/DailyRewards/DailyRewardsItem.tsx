@@ -1,11 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// React and other libraries
 import React, { FC, useMemo } from 'react';
-
-// types
-import { Activity } from '../../../queries';
-
-// components
+import { css } from 'styled-components';
 import {
   Box,
   CheckCircle,
@@ -15,75 +9,79 @@ import {
   TripleRewardsCoin,
   MultipleRewardsCoin,
 } from '../../../blocks';
-import { css } from 'styled-components';
+import { DailyCheckInDetailsResponse } from '../../../queries';
 
 export type DailyRewardsItemProps = {
-  activity: Activity;
-  activeDay: number;
-  isLoading: boolean;
-  isActivityDisabled: boolean;
+  dailyCheckInDetails?: DailyCheckInDetailsResponse;
+  isLoading?: boolean;
+  activity: { id: number; text: string };
 };
 
 const DailyRewardsItem: FC<DailyRewardsItemProps> = ({
-  activity,
-  activeDay,
+  dailyCheckInDetails,
   isLoading,
-  isActivityDisabled,
+  activity,
 }) => {
-  const day = parseInt(activity?.activityTitle?.split('- Day')[1]);
-  const isActive = day === activeDay && !isActivityDisabled;
-  const isCompleted = activeDay <= day;
+  const currentStreak = dailyCheckInDetails?.streak || 0;
+  const canCheckIn = dailyCheckInDetails?.canCheckInToday || false;
+  const dayNumber = activity.id;
 
-  // style variables
-  const borderColor = useMemo(() => {
-    return isActive
-      ? '1px solid #D548EC' : 'none';
-  }, [isActive]);
+  const status = useMemo(() => {
+    if (dayNumber <= currentStreak) return 'completed';
+    if (dayNumber === currentStreak + 1 && canCheckIn) return 'active';
+    return 'locked';
+  }, [dayNumber, currentStreak, canCheckIn]);
+
+  const borderColor = status === 'active' ? '1px solid #D548EC' : 'none';
 
   const textColor = useMemo(() => {
-    return isActive
-      ? '#FFFFFF'
-      : activeDay > day
-        ? 'rgba(255, 255, 255, 0.5)'
-        : day === 7 && isCompleted
-          ? 'rgba(255, 255, 255, 0.75)'
-          : 'rgba(255, 255, 255, 0.75)';
-  }, [isActive, activeDay, day, isCompleted]);
+    switch (status) {
+      case 'completed':
+        return 'rgba(255, 255, 255, 0.50)';
+      case 'active':
+        return '#FFFFFF';
+      case 'locked':
+      default:
+        return 'rgba(255, 255, 255, 0.75)';
+    }
+  }, [status]);
 
   const getIconComponent = (day: number) => {
     if (day < 3) return <RewardsCoin />;
-    if (day >= 3 && day < 6) return <TripleRewardsCoin />;
+    if (day < 6) return <TripleRewardsCoin />;
     return <MultipleRewardsCoin />;
   };
 
   return (
-    <Skeleton isLoading={isLoading} borderRadius='radius-md'>
+    <Skeleton isLoading={isLoading} borderRadius="radius-md">
       <Box
-        padding='spacing-sm spacing-md'
-        borderRadius='radius-sm'
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        className='item'
+        padding="spacing-sm spacing-md"
+        borderRadius="radius-sm"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="space-between"
+        className="item"
         css={css`
           gap: 11px;
-          border: ${borderColor}
+          border: ${borderColor};
         `}
       >
         <Text
-          variant='bm-regular'
-          className='day-text'
+          variant="bm-regular"
+          className="day-text"
           css={css`
-              white-space: nowrap;
-              color: ${textColor}
-            `} >
-          {activity?.activityTitle?.split('-')[1]}
+            white-space: nowrap;
+            color: ${textColor};
+          `}
+        >
+          {activity.text}
         </Text>
 
-        {isCompleted ? (
-          <Box className='inner-item'>{getIconComponent(day)}</Box>
+        {status === 'completed' ? (
+          <CheckCircle color="#C742DD" />
         ) : (
-          <CheckCircle />
+          <Box className="inner-item">{getIconComponent(dayNumber)}</Box>
         )}
       </Box>
     </Skeleton>
