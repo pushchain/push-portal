@@ -21,7 +21,7 @@ export const getRewardsBaseURL = () => {
 export const getSeasonThreeBaseURL = () => {
   switch (appEnv) {
     case "prod":
-      return `http://localhost:8080`;
+      return `https://push-points-system-backend.onrender.com`;
     case "staging":
       return `http://localhost:8080`;
     case "dev":
