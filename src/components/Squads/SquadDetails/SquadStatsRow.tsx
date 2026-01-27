@@ -54,7 +54,7 @@ const StatCard = ({ value, label }: StatCardProps) => {
           variant="h5-semibold"
           css={css`
             color: rgba(255, 255, 255, 0.75);
-            text-align: center;
+            white-space: pre-line;
           `}
         >
           {label}
@@ -86,15 +86,15 @@ export const SquadStatsRow = ({
     >
       <StatCard
         value={`${totalMembers}/${maxMembers}`}
-        label="Total Members"
+        label={"Total\nMembers"}
       />
       <StatCard
         value={`${spinLuckBonus}x`}
-        label="Spin Luck Bonus"
+        label={"Spin\nLuck Bonus"}
       />
       <StatCard
         value={xpCollected.toLocaleString()}
-        label="XP Collected"
+        label={"XP\nCollected"}
       />
     </Box>
   );

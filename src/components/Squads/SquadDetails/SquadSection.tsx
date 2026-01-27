@@ -60,14 +60,16 @@ export const SquadSection = ({ squadData, onInviteMembers, onCopyAddress }: Squa
           </Link>
         </Text>
       </Box>
-
-      {/*<Box
+{/*
+      <Box
         display="flex"
         flexDirection={{ initial: "row", tb: "column" }}
         gap="spacing-md"
         width="100%"
+        height="100%"
       >
         <Box
+          height="100%"
           css={css`
             flex-shrink: 0;
 
@@ -85,7 +87,9 @@ export const SquadSection = ({ squadData, onInviteMembers, onCopyAddress }: Squa
           />
         </Box>
 
-        <Box css={css`
+        <Box
+          height="100%"
+          css={css`
             flex: 1;
             min-width: 0;
             `}>

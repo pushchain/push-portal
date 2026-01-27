@@ -1,5 +1,5 @@
 import { css } from "styled-components"
-import { Box, Text } from "../../../blocks"
+import { Box, ProgressBar, RewardsStarGradient, Text } from "../../../blocks"
 
 type SquadLevelCardProps = {
   squadName: string;
@@ -39,14 +39,13 @@ export const SquadLevelCard = ({ squadName, level, xpToLevelUp, currentXp = 0 }:
         gap="spacing-xs"
         width="100%"
       >
-        {/* Squad Name and Level */}
         <Box
           display="flex"
           alignItems="center"
           justifyContent="center"
           gap="spacing-xxs"
         >
-          <Text 
+          <Text
             variant="h4-semibold"
             css={css`color: rgba(255, 255, 255, 0.75);`}
           >
@@ -57,7 +56,6 @@ export const SquadLevelCard = ({ squadName, level, xpToLevelUp, currentXp = 0 }:
           </Text>
         </Box>
 
-        {/* XP to level up */}
         <Box
           display="flex"
           flexDirection="column"
@@ -65,7 +63,7 @@ export const SquadLevelCard = ({ squadName, level, xpToLevelUp, currentXp = 0 }:
           gap="spacing-xs"
           width="100%"
         >
-          <Text 
+          <Text
             variant="bs-semibold"
             css={css`
               color: rgba(255, 255, 255, 0.75);
@@ -75,24 +73,12 @@ export const SquadLevelCard = ({ squadName, level, xpToLevelUp, currentXp = 0 }:
             Earn {xpToLevelUp.toLocaleString()} XP to level up
           </Text>
 
-          {/* Progress bar placeholder */}
-          <Box
-            width="100%"
-            css={css`
-              height: 8px;
-              background: rgba(0, 0, 0, 0.3);
-              border-radius: 4px;
-              overflow: hidden;
-            `}
-          >
-            <Box
-              css={css`
-                width: ${progressPercent}%;
-                height: 100%;
-                background: linear-gradient(90deg, #D548EC 0%, #71F0B1 100%);
-                border-radius: 4px;
-                transition: width 0.3s ease;
-              `}
+          <Box width="100%" height="8px" margin="spacing-sm spacing-none">
+            <ProgressBar
+              progress={(20) || null}
+              max={100}
+              size="large"
+              progressIcon={<RewardsStarGradient size={35} />}
             />
           </Box>
         </Box>

@@ -1,5 +1,7 @@
 import { css } from "styled-components"
 import { Box, Text, Copy, Lozenge } from "../../../blocks"
+import { useGetAllInvites } from "../../../queries";
+import { useAuthHeaders } from "../../Rewards/hooks/useAuthHeaders";
 
 type InviteCodeStatus = 'available' | 'claimed';
 
@@ -10,13 +12,13 @@ type InviteCode = {
 
 type InviteCodeRowProps = {
   code: string;
-  status: InviteCodeStatus;
+  isUsed: boolean;
   onCopy?: (code: string) => void;
 }
 
-const InviteCodeRow = ({ code, status, onCopy }: InviteCodeRowProps) => {
-  const isAvailable = status === 'available';
-  
+const InviteCodeRow = ({ code, isUsed, onCopy }: InviteCodeRowProps) => {
+  const isAvailable = !isUsed;
+
   return (
     <Box
       display="flex"
@@ -35,7 +37,7 @@ const InviteCodeRow = ({ code, status, onCopy }: InviteCodeRowProps) => {
           background: rgba(0, 0, 0, 0.8);
         `}
       >
-        <Text 
+        <Text
           variant="bs-semibold"
           css={css`
             color: ${isAvailable ? '#fff' : 'rgba(255, 255, 255, 0.25)'};
@@ -43,7 +45,7 @@ const InviteCodeRow = ({ code, status, onCopy }: InviteCodeRowProps) => {
         >
           {code}
         </Text>
-        
+
         {isAvailable && (
           <Box
             display="flex"
@@ -53,8 +55,8 @@ const InviteCodeRow = ({ code, status, onCopy }: InviteCodeRowProps) => {
             onClick={() => onCopy?.(code)}
           >
             <Copy size={16} color="icon-brand-medium" />
-            <Text 
-              variant="bs-semibold" 
+            <Text
+              variant="bs-semibold"
               color="text-brand-medium"
             >
               Copy Code
@@ -98,15 +100,17 @@ const InviteCodeRow = ({ code, status, onCopy }: InviteCodeRowProps) => {
 };
 
 type InviteCodesProps = {
-  inviteCodes: InviteCode[];
   onCopyCode?: (code: string) => void;
 }
 
-export const InviteCodes = ({ inviteCodes, onCopyCode }: InviteCodesProps) => {
+export const InviteCodes = ({ onCopyCode }: InviteCodesProps) => {
   const handleCopy = (code: string) => {
     navigator.clipboard.writeText(code);
     onCopyCode?.(code);
   };
+
+  const { authHeaders } = useAuthHeaders();
+  const { data: inviteCodeDetails } = useGetAllInvites(authHeaders);
 
   return (
     <Box
@@ -115,15 +119,27 @@ export const InviteCodes = ({ inviteCodes, onCopyCode }: InviteCodesProps) => {
       gap="spacing-md"
       padding="spacing-md"
       borderRadius="radius-md"
+      position="relative"
       width="100%"
       css={css`
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: radial-gradient(50% 50% at 73% 50%, rgba(19, 18, 32, 1) 75%, rgba(41, 29, 57, 1) 100%);
         box-sizing: border-box;
+        background: radial-gradient(109.87% 94.08% at 50% 5.92%, #131220 75.21%, #291D39 100%);
         min-height: 300px;
+
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          padding: 1px;
+          background: rgba(255, 255, 255, 0.10);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+        }
       `}
     >
-      {/* Header */}
       <Box
         display="flex"
         alignItems="center"
@@ -135,7 +151,7 @@ export const InviteCodes = ({ inviteCodes, onCopyCode }: InviteCodesProps) => {
         `}
       >
         <Box css={css`flex: 1;`}>
-          <Text 
+          <Text
             variant="h5-semibold"
             css={css`color: rgba(255, 255, 255, 0.75);`}
           >
@@ -143,7 +159,7 @@ export const InviteCodes = ({ inviteCodes, onCopyCode }: InviteCodesProps) => {
           </Text>
         </Box>
         <Box css={css`min-width: 85px; text-align: center;`}>
-          <Text 
+          <Text
             variant="h5-semibold"
             css={css`color: rgba(255, 255, 255, 0.75);`}
           >
@@ -152,18 +168,17 @@ export const InviteCodes = ({ inviteCodes, onCopyCode }: InviteCodesProps) => {
         </Box>
       </Box>
 
-      {/* Invite Code Rows */}
       <Box
         display="flex"
         flexDirection="column"
         gap="spacing-xs"
         css={css`flex: 1;`}
       >
-        {inviteCodes.map((invite, index) => (
+        {inviteCodeDetails.data.invites?.map((invite, index) => (
           <InviteCodeRow
             key={index}
             code={invite.code}
-            status={invite.status}
+            isUsed={invite.isUsed}
             onCopy={handleCopy}
           />
         ))}
