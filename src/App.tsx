@@ -1,5 +1,5 @@
 // React + Web3 Essentials
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // External Packages
 import {
@@ -16,6 +16,7 @@ import {
    PushUI,
    PushUniversalWalletProvider,
    ProviderConfigProps,
+   usePushWalletContext,
 } from '@pushchain/ui-kit';
 
 import { getPreviewBasePath } from "../basePath";
@@ -36,6 +37,9 @@ import SeasonBg from "../static/assets/website/shared/season-bg.webp";
 import PreLaunchPage from "./pages/PreLaunchPage";
 import AdminPage from "./pages/AdminPage";
 import SquadsPage from "./pages/SquadsPage";
+import { InviteCodeModal } from "./components/InviteCodeModal";
+import { walletToFullCAIP10 } from "./helpers/web3helper";
+import { useGetSeasonThreeUserByWallet } from "./queries";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -111,7 +115,30 @@ const queryClient = new QueryClient({});
 
 const AppContent = () => {
   const location = useLocation();
+  const { connectionStatus, universalAccount } = usePushWalletContext();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isInviteCodeModalOpen, setIsInviteCodeModalOpen] = useState(false);
+
+  const caip10WalletAddress = walletToFullCAIP10(
+    universalAccount?.address as string,
+    universalAccount?.chain,
+  );
+
+  const { data: seasonThreeDetails, isLoading } = useGetSeasonThreeUserByWallet({
+    walletAddress: caip10WalletAddress,
+  });
+
+  useEffect(() => {
+    if (connectionStatus !== 'connected') return;
+
+    if (isLoading) return;
+
+    if (seasonThreeDetails) {
+      setIsInviteCodeModalOpen(false);
+    } else {
+      setIsInviteCodeModalOpen(true);
+    }
+  }, [connectionStatus, seasonThreeDetails, isLoading]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -203,6 +230,11 @@ const AppContent = () => {
           </Routes>
         </Box>
       </Box>
+
+      <InviteCodeModal
+        isOpen={isInviteCodeModalOpen}
+        onClose={() => setIsInviteCodeModalOpen(false)}
+      />
     </Box>
   );
 };

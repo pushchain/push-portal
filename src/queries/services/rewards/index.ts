@@ -22,3 +22,4 @@ export * from './callAdvancedSybilCheck';
 export * from './getRewardsLeaderboardS3';
 export * from './getSpinStatus';
 export * from './spinTheWheel';
+export * from './createSeasonThreeUser';

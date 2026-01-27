@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { usePushWalletContext } from "@pushchain/ui-kit";
 import { useSignMessageWithEthereum } from "./useSignMessage";
 import { AuthHeaders } from "../../../queries/types";
-import { parseCAIP } from "../../../helpers/web3helper";
+import { parseCAIP, walletToFullCAIP10 } from "../../../helpers/web3helper";
+import { useGetSeasonThreeUserByWallet } from "../../../queries";
 
 const AUTH_HEADERS_KEY = "push_auth_headers";
 
@@ -47,6 +48,16 @@ export const useAuthHeaders = () => {
   const walletAddress = universalAccount?.address;
   const chain = universalAccount?.chain;
   const { chainId } = parseCAIP(chain);
+  const caip10WalletAddress = walletToFullCAIP10(
+    universalAccount?.address as string,
+    universalAccount?.chain,
+  );
+
+  const {
+    data: userDetails
+  } = useGetSeasonThreeUserByWallet({
+    walletAddress: caip10WalletAddress,
+  });
 
   const hasSigned = !!authHeaders;
 
@@ -99,12 +110,13 @@ export const useAuthHeaders = () => {
   ]);
 
   useEffect(() => {
+    if (!userDetails) return;
     if (!universalAccount) return;
     if (authHeaders) return;
     if (isSigningMessage) return;
 
     signAndStore();
-  }, [universalAccount, authHeaders, isSigningMessage, signAndStore]);
+  }, [universalAccount, authHeaders, isSigningMessage, signAndStore, userDetails]);
 
   const clearAuthHeaders = useCallback(() => {
     setAuthHeaders(undefined);

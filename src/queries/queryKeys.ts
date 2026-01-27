@@ -42,3 +42,4 @@ export const spinStatus = "spinStatus";
 export const spinTheWheel = "spinTheWheel";
 export const getAllInvites = "getAllInvites";
 export const requestInviteCode = "requestInviteCode";
+export const createNewSeasonThreeUser = "createNewSeasonThreeUser";

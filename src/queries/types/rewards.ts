@@ -566,3 +566,15 @@ export type SpinStatusResponse = {
 };
 
 export type SpinTheWheelResponse = any;
+
+export type CreateSeasonThreeUserPayload = {
+  userWallet: string;
+  userUEAWallet?: string;
+  email?: string;
+  inviteCodeUsed?: string;
+  phase?: string;
+  verificationProof: string;
+  data: any;
+};
+
+export type CreateSeasonThreeUserResponse = any;

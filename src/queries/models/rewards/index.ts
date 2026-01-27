@@ -19,3 +19,4 @@ export * from './getSeasonThreeUserByWalletModel';
 export * from './advancedSybilCheckModel';
 export * from './getSpinStatusModel';
 export * from './spinTheWheelModel';
+export * from './createSeasonThreeUserModel';

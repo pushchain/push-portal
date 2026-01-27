@@ -21,3 +21,4 @@ export * from './useAdvancedSybilCheck';
 export * from './useGetRewardsLeaderboardS3';
 export * from './useGetSpinStatus';
 export * from './useSpinTheWheel';
+export * from './useCreateSeasonThreeUser';

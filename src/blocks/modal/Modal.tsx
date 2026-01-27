@@ -19,6 +19,7 @@ export type ModalProps = {
   onBack?: () => void;
   onClose: () => void;
   size?: ModalSize;
+  showCloseButton?: boolean;
 };
 
 const Overlay = styled(Dialog.Overlay)`
@@ -110,6 +111,7 @@ const Modal: FC<ModalProps> = ({
   onBack,
   onClose,
   size = 'medium',
+  showCloseButton = true,
 }) => {
   const handleOverlayClick = () => {
     if (closeOnOverlayClick) {
@@ -133,9 +135,10 @@ const Modal: FC<ModalProps> = ({
                 <Back size={iconSize} />
               </BackButton>
             )}
-            <CloseButton onClick={onClose}>
+            {showCloseButton &&
+              (<CloseButton onClick={onClose}>
               <Cross size={iconSize} />
-            </CloseButton>
+            </CloseButton>)}
           </HeaderContainer>
           <ContentChildren size={size}>{children}</ContentChildren>
           <ButtonsContainer buttonAlignment={buttonAlignment}>
