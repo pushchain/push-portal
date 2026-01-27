@@ -72,7 +72,7 @@ const StatCard = ({ value, label, variant }: StatCardProps) => {
 
 type ReferralStatsProps = {
   totalActiveReferrals: number;
-  pointsEarned: number;
+  pointsEarned: number | '-';
 }
 
 export const ReferralStats = ({ totalActiveReferrals, pointsEarned }: ReferralStatsProps) => {
