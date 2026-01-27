@@ -33,17 +33,16 @@ const SpinToWinModal = ({ isOpen, onClose }: SpinToWinModalProps) => {
   ];
 
   const handleSpinClick = () => {
-    console.log('1')
     if (isSpinning || !spinStatus?.canSpin || !authHeaders) return;
     setShowResult(false);
     setIsSpinning(true);
 
-    console.log('2')
-
-
     spin(authHeaders, {
       onSuccess: (data) => {
-        spinboardRef.current?.spin();
+        // Pass the prize index from API response to the spinboard
+        // Adjust data.prizeIndex based on actual API response structure
+        const prizeIndex = data?.prizeIndex ?? data?.data?.prizeIndex;
+        spinboardRef.current?.spin(prizeIndex);
         refetch();
       },
       onError: (error) => {
