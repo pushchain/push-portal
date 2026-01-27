@@ -125,8 +125,8 @@ export const Squads = () => {
             `}
           >
             <ReferralStats
-              totalActiveReferrals={ inviteCodeDetails?.data?.stats.used }
-              pointsEarned={ seasonThreeDetails?.referralPoints }
+              totalActiveReferrals={ inviteCodeDetails?.data?.stats.used ?? '-' }
+              pointsEarned={ seasonThreeDetails?.referralPoints ?? '-' }
             />
             <ReferralProgram />
           </Box>
