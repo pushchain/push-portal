@@ -44,6 +44,8 @@ export { default as ErrorGraphic } from "./components/ErrorGraphic";
 
 export { default as FiveSubscribedDefiChannel } from "./components/FiveSubscribedDefiChannel";
 
+export { default as FingerPrint } from "./components/Fingerprint";
+
 export { default as GatedGroupPoints } from "./components/GatedGroupPoints";
 
 export { default as GradientBonusActivitySubscribers } from "./components/GradientBonusActivitySubscribers";
@@ -92,6 +94,8 @@ export { default as RockstarNFT } from "./components/RockstarNFT";
 
 export { default as Referral } from "./components/Referral";
 
+export { default as SeasonThreePoints } from "./components/SeasonThreePoints";
+
 export { default as SetupProfilePoints } from "./components/SetupProfilePoints";
 
 export { default as StakePushBlueCoin } from "./components/StakePushBlueCoin";
@@ -127,6 +131,8 @@ export { default as TelegramProfile } from "./components/TelegramProfile";
 export { default as TripleRewardsCoin } from "./components/TripleRewardsCoin";
 
 export { default as Twitter } from "./components/Twitter";
+
+export { default as TwitterDark } from "./components/TwitterDark";
 
 export { default as RewardsActivity } from "./components/RewardsActivity";
 

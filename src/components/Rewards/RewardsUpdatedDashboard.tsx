@@ -1,12 +1,13 @@
 import { css } from "styled-components";
 
 import {
-    PushUniversalAccountButton
-    , usePushWalletContext,
+  PushUniversalAccountButton,
+  usePushWalletContext,
 } from "@pushchain/ui-kit";
 
 import { Box, Text, ArrowDown, GlowStreaks } from "../../blocks";
 import { RenderLoggedInVerifiedState } from "./Dashboard/RenderLoggedInVerifiedState";
+import { RenderLoggedInUnverifiedState } from "./Dashboard/RenderLoggedInUnverifiedState";
 
 export const RewardsUpdatedDashboard = () => {
   const { universalAccount } = usePushWalletContext();
@@ -153,15 +154,15 @@ export const RewardsUpdatedDashboard = () => {
     </Box>
   );
 
-  // const renderLoggedInUnverifiedState = () => (
-  //   <Box>
-  //     <Text>Logged In Unverified State - Coming Soon</Text>
-  //   </Box>
-  // );
+  const renderLoggedInUnverifiedState = () => (
+    <RenderLoggedInUnverifiedState />
+  );
 
   const renderLoggedInVerifiedState = () => (
     <RenderLoggedInVerifiedState />
   );
 
-  return isWalletConnected ? renderLoggedInVerifiedState() : renderLoggedOutState();
+  if(isWalletConnected) return renderLoggedInUnverifiedState()
+
+  return renderLoggedOutState();
 };

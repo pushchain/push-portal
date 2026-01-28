@@ -1,5 +1,5 @@
 // React + Web3 Essentials
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // External Packages
 import {
@@ -16,11 +16,11 @@ import {
    PushUI,
    PushUniversalWalletProvider,
    ProviderConfigProps,
+   usePushWalletContext,
 } from '@pushchain/ui-kit';
 
 import { getPreviewBasePath } from "../basePath";
 import { ThemeProviderWrapper } from "./context/themeContext";
-import { AccountProvider } from "./context/accountContext";
 import { RewardsContextProvider } from "./context/rewardsContext";
 
 import { blocksColors, Box, getBlocksCSSVariables } from "../src/blocks";
@@ -36,6 +36,10 @@ import Header from "./structure/Header";
 import SeasonBg from "../static/assets/website/shared/season-bg.webp";
 import PreLaunchPage from "./pages/PreLaunchPage";
 import AdminPage from "./pages/AdminPage";
+import SquadsPage from "./pages/SquadsPage";
+import { InviteCodeModal } from "./components/InviteCodeModal";
+import { walletToFullCAIP10 } from "./helpers/web3helper";
+import { useGetSeasonThreeUserByWallet } from "./queries";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -111,7 +115,30 @@ const queryClient = new QueryClient({});
 
 const AppContent = () => {
   const location = useLocation();
+  const { connectionStatus, universalAccount } = usePushWalletContext();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isInviteCodeModalOpen, setIsInviteCodeModalOpen] = useState(false);
+
+  const caip10WalletAddress = walletToFullCAIP10(
+    universalAccount?.address as string,
+    universalAccount?.chain,
+  );
+
+  const { data: seasonThreeDetails, isLoading } = useGetSeasonThreeUserByWallet({
+    walletAddress: caip10WalletAddress,
+  });
+
+  useEffect(() => {
+    if (connectionStatus !== 'connected') return;
+
+    if (isLoading) return;
+
+    if (seasonThreeDetails) {
+      setIsInviteCodeModalOpen(false);
+    } else {
+      setIsInviteCodeModalOpen(true);
+    }
+  }, [connectionStatus, seasonThreeDetails, isLoading]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -172,12 +199,13 @@ const AppContent = () => {
           `}
         >
           <Routes>
-            <Route path="/" element={<Navigate to="/rewards/pre-launch" replace />} />
-            <Route path="/rewards" element={<Navigate to="/rewards/pre-launch" replace />} />
+            {/*<Route path="/rewards" element={<Navigate to="/rewards/pre-launch" replace />} />*/}
+            <Route path="/" element={<Navigate to="/rewards" replace />} />
             <Route path="/admin/controls" element={<AdminPage />} />
-            {/*<Route path="/rewards" element={<RewardsPage />} />
-            <Route path="/rewards/pushpass" element={<PushPassPage />} />*/}
-            <Route path="/rewards/pre-launch" element={<PreLaunchPage />} />
+            <Route path="/rewards" element={<RewardsPage />} />
+            <Route path="/rewards/pushpass" element={<PushPassPage />} />
+            <Route path="/rewards/squads" element={<SquadsPage />} />
+            {/*<Route path="/rewards/pre-launch" element={<PreLaunchPage />} />*/}
             <Route
               path="/rewards/pushpass/:id"
               element={<PushPassItemPage />}
@@ -202,6 +230,11 @@ const AppContent = () => {
           </Routes>
         </Box>
       </Box>
+
+      <InviteCodeModal
+        isOpen={isInviteCodeModalOpen}
+        onClose={() => setIsInviteCodeModalOpen(false)}
+      />
     </Box>
   );
 };
@@ -242,7 +275,6 @@ function App() {
                '--pwauth-btn-connected-bg-color': '#D548EC'
              }}
            >
-        <AccountProvider>
           <RewardsContextProvider>
             <QueryClientProvider client={queryClient}>
               <Router basename={basename}>
@@ -251,7 +283,6 @@ function App() {
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
           </RewardsContextProvider>
-        </AccountProvider>
       </PushUniversalWalletProvider>
     </ThemeProviderWrapper>
   );

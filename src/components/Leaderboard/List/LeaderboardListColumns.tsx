@@ -2,6 +2,7 @@
 // @ts-nocheck
 import { FC } from "react";
 import { Box, Text } from "../../../blocks";
+import { css } from "styled-components";
 
 const LeaderboardListColumns: FC = () => {
   return (
@@ -10,7 +11,11 @@ const LeaderboardListColumns: FC = () => {
         <Text variant="c-bold" color="text-tertiary">
           RANK
         </Text>
-        <Text variant="c-bold" color="text-tertiary">
+        <Text variant="c-bold" color="text-tertiary"
+        css={css`
+          margin-left: 30px;
+          `}
+        >
           USER
         </Text>
       </Box>

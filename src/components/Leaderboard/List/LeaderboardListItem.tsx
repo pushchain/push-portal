@@ -45,9 +45,9 @@ const LeaderboardListItem: FC<LeaderboardListItemProps> = ({
     >
       <Skeleton isLoading={isLoading} width={{ initial: "250px", tb: "auto" }}>
         <Box display="flex" gap="spacing-xs" alignItems="center">
-          <Box width="34px" justifyContent="center" display="flex">
+          <Box minWidth="48px" justifyContent="center" display="flex">
             <Text variant="bm-bold" color="text-primary">
-              {rank > 0 && rank}
+              {rank > 0 && rank?.toLocaleString()}
             </Text>
           </Box>
           <Box display="flex" gap="spacing-xs" alignItems="center">

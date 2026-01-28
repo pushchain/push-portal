@@ -16,28 +16,28 @@ import { RewardsUpdatedDashboard } from "./RewardsUpdatedDashboard";
 
 const Rewards: FC = () => {
   // //fetch ref from url
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
 
-  const ref = searchParams.get("ref");
-  if (ref) sessionStorage.setItem("ref", ref);
+  // const ref = searchParams.get("ref");
+  // if (ref) sessionStorage.setItem("ref", ref);
 
-  const {
-    errorMessage,
-    autoCreateUser,
-    shouldRun,
-    handleCreateUser,
-    resetState,
-  } = useCreateRewardsUser();
-  const { isVerifyClicked } = useRewardsContext();
+  // const {
+  //   errorMessage,
+  //   autoCreateUser,
+  //   shouldRun,
+  //   handleCreateUser,
+  //   resetState,
+  // } = useCreateRewardsUser();
+  // const { isVerifyClicked } = useRewardsContext();
 
-  useEffect(() => {
-    if (isVerifyClicked) return;
-    autoCreateUser();
-  }, [shouldRun]);
+  // useEffect(() => {
+  //   if (isVerifyClicked) return;
+  //   autoCreateUser();
+  // }, [shouldRun]);
 
   return (
     <RewardsWrapper>
-      {errorMessage && (
+      {/*{errorMessage && (
         <Alert
           heading={errorMessage}
           variant="error"
@@ -47,7 +47,7 @@ const Rewards: FC = () => {
             handleCreateUser({});
           }}
         />
-      )}
+      )}*/}
 
       <RewardsUpdatedDashboard />
 

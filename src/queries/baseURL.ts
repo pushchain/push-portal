@@ -17,3 +17,17 @@ export const getRewardsBaseURL = () => {
       return `https://us-east1-push-dev-apps.cloudfunctions.net/helloWorld`;
   }
 };
+
+export const getSeasonThreeBaseURL = () => {
+  switch (appEnv) {
+    case "prod":
+      return `https://push-points-system-backend.onrender.com`;
+    case "staging":
+      return `http://localhost:8080`;
+    case "dev":
+      return `http://localhost:8080`;
+    default:
+      return `http://localhost:8080`;
+
+  }
+};

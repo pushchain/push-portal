@@ -11,7 +11,7 @@ interface SpinboardProps {
 }
 
 export interface SpinboardHandle {
-  spin: () => void;
+  spin: (targetPrizeIndex?: number) => void;
 }
 
 const Spinboard = forwardRef<SpinboardHandle, SpinboardProps>(({ onSpinComplete, disabled = false }, ref) => {
@@ -22,22 +22,29 @@ const Spinboard = forwardRef<SpinboardHandle, SpinboardProps>(({ onSpinComplete,
     spin: handleSpin,
   }));
 
-  const handleSpin = () => {
+  const handleSpin = (targetPrizeIndex?: number) => {
     if (isSpinning || disabled || !wheelRef.current) return;
 
     setIsSpinning(true);
 
-    const segmentWeights = [30, 15, 18, 0.5, 12, 2, 10, 8, 0.5, 4];
+    let prizeIndex: number;
 
-    const totalWeight = segmentWeights.reduce((sum, weight) => sum + weight, 0);
-    let random = Math.random() * totalWeight;
-    let prizeIndex = 0;
+    if (targetPrizeIndex !== undefined) {
+      // Use the prize index from the API response
+      prizeIndex = targetPrizeIndex;
+    } else {
+      // Fallback to weighted random selection
+      const segmentWeights = [30, 15, 18, 0.5, 12, 2, 10, 8, 0.5, 4];
+      const totalWeight = segmentWeights.reduce((sum, weight) => sum + weight, 0);
+      let random = Math.random() * totalWeight;
+      prizeIndex = 0;
 
-    for (let i = 0; i < segmentWeights.length; i++) {
-      random -= segmentWeights[i];
-      if (random <= 0) {
-        prizeIndex = i;
-        break;
+      for (let i = 0; i < segmentWeights.length; i++) {
+        random -= segmentWeights[i];
+        if (random <= 0) {
+          prizeIndex = i;
+          break;
+        }
       }
     }
 

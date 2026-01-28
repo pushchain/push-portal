@@ -1,3 +1,9 @@
+export type AuthHeaders = {
+  message: any;
+  signature: string;
+  walletAddress: string;
+};
+
 export type RewardsAcitivitesResponse = {
   activities: Activity[];
   total: number;
@@ -432,3 +438,154 @@ export type UserEligibilityForPreLaunchResponse = {
   exists: boolean;
   season: string;
 };
+
+export type SeasonThreeUserByWalletParams = {
+  walletAddress: string;
+};
+
+export type SeasonThreeUserByWalletResponse = {
+  userId: string;
+  userWallet: string;
+  userUEAWallet: string;
+  activityPoints: number;
+  referralPoints: number;
+  frozenPoints: number;
+  totalPoints: number;
+  cachePCTokens: number;
+  xp: number;
+  level: number;
+  paragonModeEnabled: boolean;
+  rareActiveCount: number;
+  rareDormantCount: number;
+  shinyCount: number;
+  ashCount: number;
+  streak: number;
+  lastCheckIn: string | null;
+  spinCount: number;
+  spinDate: string | null;
+  totalSpins: number;
+  permaMultiplier: number;
+  previousPermaMultiplier: number;
+  tempMultiplier: number;
+  hasEternalTorch: boolean;
+  inviteCodes: number;
+  inviteCodeUsed: string;
+  phase: string;
+  rank: number;
+  createdAt: string;
+  lastUpdated: string;
+  isSeasonOneUser: boolean;
+  isSeasonTwoUser: boolean;
+};
+
+export type AdvancedSybilCheckParams = {
+  address: string;
+  chainId: number;
+};
+
+export type WalletAgeCheck = {
+  passed: boolean;
+  reason: string;
+  details: {
+    firstTxTimestamp: number;
+    firstTxHash: string;
+    walletCreationDate: string;
+    walletAgeDays: number;
+    cutoffDate: string;
+    requiredAgeDays: number;
+  };
+};
+
+export type MinimumBalanceCheck = {
+  passed: boolean;
+  reason: string;
+  usdCheck: {
+    passed: boolean;
+    reason: string;
+    details: {
+      error?: string;
+    };
+  };
+  nativeTokenCheck: {
+    passed: boolean;
+    reason: string;
+    details: {
+      blockNumber: number;
+      checkDate: string;
+      balanceWei: string;
+      balanceInNative: string;
+      requiredNativeToken: number;
+      shortfall: number;
+    };
+  };
+};
+
+export type TransactionCountCheck = {
+  passed: boolean;
+  reason: string;
+  details: {
+    blockNumber: number;
+    cutoffDate: string;
+    transactionCount: number;
+    requiredCount: number;
+    shortfall: number;
+    firstTxDate: string;
+    lastTxDate: string;
+  };
+};
+
+export type AdvancedSybilCheckResponse = {
+  eligible: boolean;
+  address: string;
+  chainId: number;
+  chainName: string;
+  checks: {
+    walletAge: WalletAgeCheck;
+    minimumBalance: MinimumBalanceCheck;
+    transactionCount: TransactionCountCheck;
+  };
+  checkedAt: string;
+  duration: string;
+};
+
+
+export type SpinStatusResponse = {
+  success: boolean;
+  currentSpinCount: number;
+  remainingSpins: number;
+  maxSpinsPerDay: number;
+  nextSpinCost: number;
+  canSpin: boolean;
+  hasEnoughPoints: boolean;
+  userPoints: number;
+  totalLifetimeSpins: number;
+  rarePassCount: number;
+  squadInfo: any;
+  needsReset: boolean;
+  resetsAt: string;
+};
+
+export type SpinTheWheelResponse = any;
+
+export type CreateSeasonThreeUserPayload = {
+  userWallet: string;
+  userUEAWallet?: string;
+  email?: string;
+  inviteCodeUsed?: string;
+  phase?: string;
+  verificationProof: string;
+  data: any;
+};
+
+export type CreateSeasonThreeUserResponse = any;
+
+export type DailyCheckInDetailsResponse = {
+  success: boolean;
+  streak: number;
+  lastCheckIn: any | null;
+  canCheckInToday: boolean;
+  nextCheckInAvailable: any | null;
+  [key: string]: any;
+};
+
+export type ClaimDailyRewardsSeasonThreeResponse = any;

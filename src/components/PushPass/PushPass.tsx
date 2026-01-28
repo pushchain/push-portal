@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { css } from 'styled-components';
-import { Box, Text } from '../../blocks';
+import { Box, Link, Text } from '../../blocks';
 import PushPassHeroBanner from './HeroBanner/PushPassHeroBanner';
 import PushPassTabs from './Tabs/PushPassTabs';
 import UnopenedPassesContent from './Passes/UnopenedPassesContent';
@@ -124,9 +124,12 @@ const PushPass = () => {
         <Text
           variant='h5-regular'
           textAlign='center'>Keep an eye on
-            <Text
-              as='span'
-              variant='h5-semibold' color='#C742DD'>{' '}@PushChain{' '}</Text>
+            <Link
+              to="https://x.com/pushchain"
+              textProps={{ variant: "bm-semibold", color: "#C742DD" }}
+            >
+              {' '}@PushChain{' '}
+            </Link>
             for more ways to score more Rare Passes</Text>
       </Box>
     </Box>

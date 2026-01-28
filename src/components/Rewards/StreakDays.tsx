@@ -1,8 +1,16 @@
 import { css } from "styled-components"
+
+import { useGetDailyCheckInDetails } from "../../queries";
+import { useAuthHeaders } from "./hooks/useAuthHeaders";
+
 import { Box, Text } from "../../blocks"
 import StreakBg from "../../../static/assets/website/rewards/streak-bg.webp"
+import ActiveStreakBg from "../../../static/assets/website/rewards/active-streak.webp"
 
 export const StreakDays = () => {
+  const { authHeaders } = useAuthHeaders();
+  const { data: getDailyCheckInDetails } = useGetDailyCheckInDetails(authHeaders);
+
   return(
     <Box
       borderRadius="radius-md"
@@ -13,12 +21,26 @@ export const StreakDays = () => {
       overflow="hidden"
       width={{ initial: '188px', tb: '100%' }}
       css={css`
-            border: 1px solid rgba(171, 70, 248, 0.40);
-            background: rgba(0, 0, 0, 0.10);
+            background: ${getDailyCheckInDetails?.streak > 0
+              ? 'radial-gradient(163.4% 88% at 50% 12%, rgba(0, 0, 0, 0.20) 47.64%, #5D180E 100%)'
+              : 'rgba(0, 0, 0, 0.10)'};
             background-blend-mode: plus-lighter;
             box-shadow: 2.788px -8px 12px 0 rgba(255, 255, 255, 0.15) inset, 1.858px 1.732px 6px 0 rgba(255, 255, 255, 0.15) inset;
             backdrop-filter: blur(10px);
             box-sizing: border-box;
+
+            &::before {
+              content: '';
+              position: absolute;
+              inset: 0;
+              border-radius: inherit;
+              padding: 1px;
+              background: rgba(171, 70, 248, 0.40);
+              -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+              mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+              -webkit-mask-composite: xor;
+              mask-composite: exclude;
+            }
         `}>
         <Box
           css={css`
@@ -27,7 +49,7 @@ export const StreakDays = () => {
             right: 0;
             width: 65%;
             height: 65%;
-            background: url(${StreakBg}) no-repeat bottom right;
+            background: url(${getDailyCheckInDetails?.streak > 0 ? ActiveStreakBg : StreakBg}) no-repeat bottom right;
             background-size: contain;
             pointer-events: none;
             z-index: 0;
@@ -41,7 +63,7 @@ export const StreakDays = () => {
           `}
         >
           <Text variant="h1-bold">
-            0
+            {getDailyCheckInDetails?.streak}
           </Text>
 
           <Text css={css`

@@ -108,7 +108,7 @@ export const secondaryButtonSemantics = {
 export const tertiaryButtonSemantics = {
   'background-default': {
     light: colorBrands['neutral-1000'],
-    dark: colorBrands['neutral-700'],
+    dark: colorBrands['neutral-1000'],
   },
   'background-inverse': {
     light: colorPrimitives['white-100'],

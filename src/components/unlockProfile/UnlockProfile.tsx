@@ -69,7 +69,7 @@ const UnlockProfile = ({
   // Ensures if profile is stored then true is returned else false
   const [rememberMe, setRememberMe] = useState(false);
 
-  const [activeStatus, setActiveStatus] = useState({
+  const [ Status, setActiveStatus] = useState({
     status: PROFILESTATE.CONNECT_WALLET,
     title: "Connect Wallet",
     body: "Sign with wallet to continue.",

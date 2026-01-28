@@ -19,6 +19,7 @@ export type TextInputProps = {
   success?: boolean;
   totalCount?: number;
   value: string | number;
+  backgroundColor?: string;
 };
 
 const Container = styled.div<{
@@ -39,8 +40,9 @@ const StyledTextInput = styled.div<{
   error?: boolean;
   success?: boolean;
   disabled?: boolean;
+  backgroundColor?: string;
 }>`
-  ${({ success, error, disabled }) => {
+  ${({ success, error, disabled, backgroundColor }) => {
     const defaultState = error
       ? 'danger'
       : success
@@ -55,7 +57,7 @@ const StyledTextInput = styled.div<{
       align-items: flex-start;
       border-radius: var(--radius-xs, 12px);
       border: 1.5px solid var(--components-inputs-stroke-${defaultState});
-      background: var(--components-inputs-background-${defaultState});
+      background: ${backgroundColor || `var(--components-inputs-background-${defaultState})`};
 
       display: flex;
 
@@ -156,6 +158,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       success,
       totalCount,
       value,
+      backgroundColor,
     },
     ref
   ) => {
@@ -196,6 +199,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           onChange={onChange}
           ref={ref}
           success={success}
+          backgroundColor={backgroundColor}
         >
           <InputContainer>
             {icon}

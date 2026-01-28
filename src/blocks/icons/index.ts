@@ -198,7 +198,10 @@ export { default as Smiley } from "./components/Smiley";
 
 export { default as SquaresFour } from "./components/SquaresFour";
 
+export { default as SquadsIcon } from './components/SquadsIcon';
+
 export { default as Star } from "./components/Star";
+
 export { default as StarFilled } from "./components/StarFilled";
 
 export { default as Settings } from "./components/Settings";

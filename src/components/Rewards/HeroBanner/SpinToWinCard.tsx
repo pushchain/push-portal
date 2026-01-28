@@ -1,122 +1,111 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { css } from 'styled-components';
 import { Box, Button, Text } from '../../../blocks';
-import Spinboard, { SpinboardHandle } from './Spinboard';
+import SpinToWinModal from './SpinToWinModal';
+import { useSpinStatus } from '../hooks/useSpinStatus';
+import spinboardImage from '/static/assets/website/rewards/spinboard.webp';
+import stopperImage from '/static/assets/website/rewards/stopper.webp';
 
 const SpinToWinCard = () => {
-  const [isSpinning, setIsSpinning] = useState(false);
-  const [spinCount, setSpinCount] = useState(0);
-  const [showResult, setShowResult] = useState(false);
-  const [wonPrize, setWonPrize] = useState('');
-  const spinboardRef = useRef<SpinboardHandle>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { spinStatus } = useSpinStatus();
 
-  const prizes = [
-    '80 Points',
-    '0.1x Multiplier',
-    '10 PC Tokens',
-    'Rare Pass',
-    '150 Points',
-    '500 PC Tokens',
-    '0.1x Multiplier',
-    '500 Points',
-    'Rare Pass',
-    '5 PC Tokens'
-  ];
-
-  const handleSpinClick = () => {
-    if (isSpinning) return;
-    setShowResult(false);
-    setIsSpinning(true);
-    spinboardRef.current?.spin();
-  };
-
-  const handleSpinComplete = (prizeIndex: number) => {
-    setIsSpinning(false);
-    setSpinCount((prev) => prev + 1);
-    setWonPrize(prizes[prizeIndex]);
-    setShowResult(true);
-
-    console.log('🎉 Prize Result:', {
-      index: prizeIndex,
-      prize: prizes[prizeIndex],
-      totalSpins: spinCount + 1
-    });
-  };
+  const remainingSpins = spinStatus?.remainingSpins ?? 0;
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      width={{ initial: '280px', tb: '100%' }}
-      height={{ initial: '374px', tb: 'auto' }}
-      minHeight={{ tb: '300px' }}
-      padding="spacing-md"
-      borderRadius="radius-xl"
-      position="relative"
-      overflow="hidden"
-      css={css`
-        border: none;
-        background: ${isSpinning || spinCount === 0
-          ? 'linear-gradient(241deg, rgba(253, 253, 218, 1) 28%, rgba(212, 255, 193, 1) 100%)'
-          : 'linear-gradient(180deg, #000 0%, #4C2A6B 100%)'};
-        box-sizing: border-box;
-        position: relative;
-
-        &::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          padding: 1px;
-          background: ${isSpinning || spinCount === 0
-            ? 'rgba(255, 255, 255, 0.40)'
-            : 'rgba(255, 255, 255, 0.25)'};
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
-          pointer-events: none;
-        }
-      `}
-    >
-
+    <>
       <Box
         display="flex"
         flexDirection="column"
-        alignItems="center"
-        gap="spacing-xs"
+        width={{ initial: '280px', tb: '100%' }}
+        height={{ initial: '374px', tb: 'auto' }}
+        minHeight={{ tb: '300px' }}
+        padding="spacing-md"
+        borderRadius="radius-xl"
         position="relative"
-        height="100%"
+        overflow="hidden"
         css={css`
-          flex: 1;
-          z-index: 1;
+          border: none;
+          background: linear-gradient(241deg, rgba(253, 253, 218, 1) 28%, rgba(212, 255, 193, 1) 100%);
+          box-sizing: border-box;
+          position: relative;
+
+          &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: rgba(255, 255, 255, 0.40);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+          }
         `}
       >
         <Box
+          position="absolute"
+          css={css`
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.9;
+            pointer-events: none;
+            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          `}
+        >
+          <img
+            src={stopperImage}
+            alt=""
+            style={{
+              width: '40px',
+              height: '40px',
+              objectFit: 'contain',
+              marginBottom: '-20px',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          />
+          <img
+            src={spinboardImage}
+            alt=""
+            style={{
+              width: '300px',
+              height: '300px',
+              objectFit: 'contain',
+            }}
+          />
+        </Box>
+
+        <Box
           display="flex"
           flexDirection="column"
-          alignItems="flex-start"
+          alignItems="center"
+          justifyContent="space-between"
           gap="spacing-xs"
+          position="relative"
           height="100%"
-          width="100%"
           css={css`
             flex: 1;
+            z-index: 1;
           `}
         >
           <Box
             display="flex"
             flexDirection="column"
             alignItems="center"
-            gap="spacing-xxs"
+            gap="spacing-xs"
             width="100%"
           >
             <Text
               variant="h3-semibold"
               css={css`
-                background: ;
-                background: ${isSpinning || spinCount === 0
-                  ? 'linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(48, 119, 36, 1) 100%)'
-                  : 'linear-gradient(180deg, #FFF 0%, #FFE397 100%)'};
+                background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(48, 119, 36, 1) 100%);
                 -webkit-background-clip: text;
                 background-clip: text;
                 -webkit-text-fill-color: transparent;
@@ -126,93 +115,45 @@ const SpinToWinCard = () => {
               Spin to Win
             </Text>
 
-            {!showResult || (isSpinning || spinCount === 0) && (
-              <Box
-                display="inline-flex"
-                alignItems="center"
-                justifyContent="center"
-                padding="spacing-xxs spacing-xs"
-                backgroundColor="surface-primary"
-                borderRadius="radius-xl"
-              >
-                <Text variant="bs-bold" color="text-on-dark-bg">
-                  1 FREE Spin/Day
-                </Text>
-              </Box>
-            )}
+            <Box
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+              padding="spacing-xxs spacing-xs"
+              backgroundColor="surface-primary"
+              borderRadius="radius-xl"
+            >
+              <Text variant="bs-bold" color="text-on-dark-bg">
+                {remainingSpins} FREE Spin{remainingSpins !== 1 ? 's' : ''}/Day
+              </Text>
+            </Box>
 
-            {showResult && (
-              <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                gap="spacing-xxs"
-                padding="spacing-sm"
-                backgroundColor="surface-brand"
-                borderRadius="radius-lg"
-                css={css`
-                  animation: fadeIn 0.3s ease-in;
-                  @keyframes fadeIn {
-                    from { opacity: 0; transform: scale(0.9); }
-                    to { opacity: 1; transform: scale(1); }
-                  }
-                `}
-              >
-                <Text variant="c-semibold" color="text-on-dark-bg">
-                  You Won!
-                </Text>
-                <Text variant="h4-bold" color="text-on-dark-bg">
-                  {wonPrize}
-                </Text>
-              </Box>
-            )}
+
           </Box>
-        </Box>
 
-
-        <Box
-          css={css`
-            display: ${showResult ? 'none' : 'flex'};
-            width: 100%;
-            overflow: ${spinCount === 0 && !isSpinning ? 'visible' : 'visible'};
-            position: relative;
-            min-height: ${spinCount === 0 && !isSpinning ? '120px' : 'auto'};
-          `}
-        >
-          <Box
+          <Button
+            size="medium"
+            variant="primary"
+            disabled={!spinStatus?.canSpin}
+            onClick={() => {
+              if (!spinStatus?.canSpin) return;
+              setIsModalOpen(true)
+            }}
             css={css`
-              transform: ${spinCount === 0 && !isSpinning ? 'scale(2) translateY(30%)' : 'scale(1) translateY(0)'};
-              opacity: ${spinCount === 0 && !isSpinning ? 0.8 : 1};
-              transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-              z-index: ${spinCount === 0 && !isSpinning ? 0 : 1};
               width: 100%;
+              position: relative;
             `}
           >
-            <Spinboard
-              ref={spinboardRef}
-              onSpinComplete={handleSpinComplete}
-              disabled={isSpinning}
-            />
-          </Box>
+            Spin Now
+          </Button>
         </Box>
-
-        <Button
-          size="medium"
-          variant="primary"
-          onClick={handleSpinClick}
-          disabled={isSpinning}
-          css={css`
-            width: 100%;
-            opacity: ${isSpinning ? 0.6 : 1};
-            cursor: ${isSpinning ? 'not-allowed' : 'pointer'};
-            z-index: ${spinCount === 0 && !isSpinning ? 2 : 1};
-            position: relative;
-          `}
-        >
-          {isSpinning ? 'Spinning...' : showResult ? 'Spin Again' : 'Spin Now'}
-        </Button>
       </Box>
-    </Box>
+
+      <SpinToWinModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </>
   );
 };
 
